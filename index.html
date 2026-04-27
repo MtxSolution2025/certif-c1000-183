@@ -19138,12 +19138,46 @@ updateUI();
       xAxis: { axisLine: { lineStyle: { color: '#94A3B8' } }, axisLabel: { color: '#475569' }, splitLine: { lineStyle: { color: '#E2E8F0' } } },
       yAxis: { axisLine: { lineStyle: { color: '#94A3B8' } }, axisLabel: { color: '#475569' }, splitLine: { lineStyle: { color: '#E2E8F0' } } },
     });
-    document.querySelectorAll('.echart-init').forEach(el => {
+    // Fix: charts inside hidden [data-cert-content] start with width 0.
+    // Use IntersectionObserver to init only when actually visible, then resize on cert switch.
+    const initialized = new WeakMap();
+    function tryInit(el){
+      if(initialized.get(el)) return;
+      if(el.offsetWidth === 0) return; // still hidden
       try {
         const cfg = JSON.parse(el.dataset.config);
-        echarts.init(el, 'relvio', { renderer: 'svg' }).setOption(cfg);
+        const inst = echarts.init(el, 'relvio', { renderer: 'svg' });
+        inst.setOption(cfg);
+        initialized.set(el, inst);
       } catch(e) { console.error('ECharts init failed for', el.dataset.lesson, e); }
+    }
+    function resizeAll(){
+      document.querySelectorAll('.echart-init').forEach(el => {
+        const inst = initialized.get(el);
+        if(inst){
+          inst.resize();
+        } else {
+          tryInit(el);
+        }
+      });
+    }
+    // Observe visibility transitions
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) tryInit(e.target); });
+      }, { threshold: 0.01 });
+      document.querySelectorAll('.echart-init').forEach(el => io.observe(el));
+    }
+    // Also try immediate init for any chart already visible (c1000-183 active cert)
+    document.querySelectorAll('.echart-init').forEach(tryInit);
+    // Re-resize when cert switches
+    document.querySelectorAll('.cert-tab').forEach(tab => {
+      tab.addEventListener('click', () => setTimeout(resizeAll, 60));
     });
+    // Re-resize on window resize
+    let rzTo;
+    window.addEventListener('resize', () => { clearTimeout(rzTo); rzTo = setTimeout(resizeAll, 150); });
+    window._echartsResizeAll = resizeAll;
   });
 </script>
 
