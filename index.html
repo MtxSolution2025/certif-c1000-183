@@ -373,6 +373,138 @@
   .mcq-mini-figure figure.lesson-diagram, .mcq-mini-figure figure.lesson-chart, .mcq-mini-figure figure.lesson-table { margin: 0 !important; padding: 12px 14px !important; }
   .mcq-mini-figure .mermaid svg, .mcq-mini-figure .lesson-chart svg { max-height: 280px !important; }
   .mcq-mini-figure figcaption { font-size: 11.5px !important; }
+
+  /* Phase 3 — Zoom lightbox (bouton loupe plein écran) + animations fade-in pour tous les visuels */
+
+  /* 3a — Skeleton + fade-in pour chart, diagram, table (lesson-hero a déjà son shimmer en Phase 2.5) */
+  .lesson-chart, .lesson-diagram, .lesson-table { opacity: 0; transition: opacity 0.45s ease; }
+  .lesson-chart.is-visible, .lesson-diagram.is-visible, .lesson-table.is-visible { opacity: 1; }
+
+  /* 3b — Bouton loupe overlay sur chaque figure */
+  .lesson-hero, .lesson-chart, .lesson-diagram, .lesson-table { position: relative; }
+  .zoom-trigger {
+    position: absolute; top: 8px; right: 8px; z-index: 5;
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(15, 23, 42, 0.62); color: #fff; border: none;
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease, background 0.18s ease;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    padding: 0;
+  }
+  .zoom-trigger svg { width: 18px; height: 18px; pointer-events: none; }
+  .zoom-trigger:hover, .zoom-trigger:focus-visible { background: rgba(15, 23, 42, 0.88); opacity: 1 !important; transform: translateY(0); outline: 2px solid var(--brand); outline-offset: 2px; }
+  .lesson-hero:hover .zoom-trigger,
+  .lesson-chart:hover .zoom-trigger,
+  .lesson-diagram:hover .zoom-trigger,
+  .lesson-table:hover .zoom-trigger { opacity: 0.88; transform: translateY(0); }
+  @media (max-width: 768px) {
+    .zoom-trigger { opacity: 0.85; transform: translateY(0); width: 32px; height: 32px; top: 6px; right: 6px; }
+    .zoom-trigger svg { width: 16px; height: 16px; }
+  }
+  .mcq-mini-figure .zoom-trigger { width: 28px; height: 28px; top: 4px; right: 4px; }
+  .mcq-mini-figure .zoom-trigger svg { width: 14px; height: 14px; }
+
+  /* 3c — Modal lightbox plein écran */
+  .zoom-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(15, 23, 42, 0.94);
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .zoom-modal.is-open { opacity: 1; pointer-events: auto; }
+  body.zoom-locked { overflow: hidden; }
+
+  .zoom-toolbar {
+    flex: 0 0 auto;
+    display: flex; align-items: center; gap: 4px;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.32);
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .zoom-toolbar .zoom-title {
+    flex: 1; min-width: 0; margin: 0 12px;
+    font-size: 13.5px; font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .zoom-toolbar button {
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.08); color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    width: 36px; height: 36px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 17px; font-weight: 600;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    padding: 0; line-height: 1;
+  }
+  .zoom-toolbar button:hover { background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.28); }
+  .zoom-toolbar button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+  .zoom-toolbar .zoom-zoom-level {
+    min-width: 56px; text-align: center; font-size: 12px;
+    color: rgba(255, 255, 255, 0.7); font-variant-numeric: tabular-nums;
+    margin: 0 4px;
+  }
+
+  .zoom-stage {
+    flex: 1 1 auto;
+    overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    cursor: grab;
+    touch-action: none;
+  }
+  .zoom-stage.is-panning { cursor: grabbing; }
+  .zoom-content {
+    transform-origin: center center;
+    transform: translate(0px, 0px) scale(1);
+    transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
+    user-select: none; pointer-events: none;
+    will-change: transform;
+    max-width: 95vw;
+    max-height: 80vh;
+  }
+  .zoom-content.no-transition { transition: none !important; }
+  .zoom-content > * { display: block; pointer-events: none; }
+  .zoom-content img {
+    width: auto; height: auto;
+    max-width: 95vw; max-height: 80vh;
+    display: block;
+  }
+  .zoom-content svg { width: 90vw; height: auto; max-width: 1500px; max-height: 78vh; display: block; }
+  .zoom-content .echart-init { background: rgba(255, 255, 255, 0.98); border-radius: 8px; padding: 12px; }
+  .zoom-content table { background: #fff; color: #0F172A; border-collapse: collapse; padding: 16px; border-radius: 8px; max-width: 95vw; }
+
+  .zoom-caption {
+    flex: 0 0 auto;
+    padding: 14px 24px;
+    background: rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px; line-height: 1.55;
+    text-align: center;
+    max-height: 20vh; overflow-y: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .zoom-caption:empty { display: none; }
+
+  /* 3d — Fade-in à l'ouverture du contenu */
+  @keyframes zoom-content-enter {
+    from { opacity: 0; transform: translate(0, 0) scale(0.85); }
+    to   { opacity: 1; transform: translate(0, 0) scale(1); }
+  }
+  .zoom-modal.is-open .zoom-content { animation: zoom-content-enter 0.28s cubic-bezier(.2,.8,.2,1); }
+
+  /* 3e — Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .zoom-modal, .zoom-content, .zoom-trigger, .lesson-chart, .lesson-diagram, .lesson-table { transition: none !important; animation: none !important; }
+  }
+
+  /* 3f — Lesson tab/panel transition smoother */
+  .lesson-panel { transition: opacity 0.25s ease; }
+  .lesson-panel.is-switching { opacity: 0; }
 </style>
 </head>
 <body>
@@ -20598,6 +20730,375 @@ updateUI();
       img.addEventListener('error', () => markLoaded(img), { once: true });
     }
   });
+})();
+</script>
+
+<script>
+// =====================================================================
+// Phase 3 — Zoom lightbox plein écran + animations fade-in pour tous les visuels
+// Cibles : .lesson-hero, .lesson-chart, .lesson-diagram, .lesson-table, .mcq-mini-figure
+// Pure vanilla JS, aucune dépendance externe.
+// =====================================================================
+(function(){
+  'use strict';
+
+  const TARGET_SELECTOR = '.lesson-hero, .lesson-chart, .lesson-diagram, .lesson-table';
+  const VISIBLE_SELECTOR = '.lesson-chart, .lesson-diagram, .lesson-table';
+  const ZOOM_MIN = 0.4, ZOOM_MAX = 6;
+  const ZOOM_KEY_FACTOR = 1.25, ZOOM_WHEEL_FACTOR = 1.15;
+  const ICON_ZOOM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>';
+
+  // 3a — Inject loupe button on each target figure
+  function injectButtons(root){
+    (root || document).querySelectorAll(TARGET_SELECTOR).forEach(fig => {
+      if (fig.querySelector(':scope > .zoom-trigger')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'zoom-trigger';
+      btn.setAttribute('aria-label', 'Agrandir l’illustration');
+      btn.title = 'Agrandir';
+      btn.innerHTML = ICON_ZOOM;
+      btn.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        openLightbox(fig);
+      });
+      fig.appendChild(btn);
+    });
+  }
+
+  // 3b — Mark .lesson-chart / .lesson-diagram / .lesson-table as visible once their content renders
+  function markVisible(fig){ fig.classList.add('is-visible'); }
+  function watchVisibility(root){
+    (root || document).querySelectorAll(VISIBLE_SELECTOR).forEach(fig => {
+      if (fig.classList.contains('is-visible')) return;
+      const ready = !!fig.querySelector('svg, canvas, table');
+      if (ready) { markVisible(fig); return; }
+      const obs = new MutationObserver(() => {
+        if (fig.querySelector('svg, canvas, table')) {
+          markVisible(fig);
+          obs.disconnect();
+        }
+      });
+      obs.observe(fig, { childList: true, subtree: true });
+      // safety net : show after 4 s even si le rendu ECharts/Mermaid n'arrive pas
+      setTimeout(() => { markVisible(fig); obs.disconnect(); }, 4000);
+    });
+  }
+
+  // 3c — Lightbox state + DOM
+  let modal = null, stage = null, content = null, captionEl = null, titleEl = null, levelEl = null;
+  let scale = 1, panX = 0, panY = 0;
+  let dragging = false, dragStartX = 0, dragStartY = 0, panStartX = 0, panStartY = 0;
+  let pinchInitialDist = 0, pinchInitialScale = 1;
+  let lastFocus = null;
+  let resizeChartFn = null;
+
+  function ensureModal(){
+    if (modal) return;
+    modal = document.createElement('div');
+    modal.className = 'zoom-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Visionneuse plein écran');
+    modal.innerHTML = '\
+      <div class="zoom-toolbar">\
+        <span class="zoom-title" aria-live="polite"></span>\
+        <button class="zoom-zoom-out" type="button" aria-label="Dézoomer">−</button>\
+        <span class="zoom-zoom-level" aria-live="polite">100%</span>\
+        <button class="zoom-zoom-in" type="button" aria-label="Zoomer">+</button>\
+        <button class="zoom-reset" type="button" aria-label="Réinitialiser le zoom">⟲</button>\
+        <button class="zoom-close" type="button" aria-label="Fermer la visionneuse">×</button>\
+      </div>\
+      <div class="zoom-stage" role="img"><div class="zoom-content"></div></div>\
+      <div class="zoom-caption" aria-live="polite"></div>';
+    document.body.appendChild(modal);
+
+    stage = modal.querySelector('.zoom-stage');
+    content = modal.querySelector('.zoom-content');
+    captionEl = modal.querySelector('.zoom-caption');
+    titleEl = modal.querySelector('.zoom-title');
+    levelEl = modal.querySelector('.zoom-zoom-level');
+
+    modal.querySelector('.zoom-close').addEventListener('click', closeLightbox);
+    modal.querySelector('.zoom-zoom-in').addEventListener('click', () => zoomBy(ZOOM_KEY_FACTOR));
+    modal.querySelector('.zoom-zoom-out').addEventListener('click', () => zoomBy(1/ZOOM_KEY_FACTOR));
+    modal.querySelector('.zoom-reset').addEventListener('click', resetView);
+    stage.addEventListener('click', e => { if (e.target === stage) closeLightbox(); });
+
+    // Wheel zoom (desktop)
+    stage.addEventListener('wheel', e => {
+      e.preventDefault();
+      const f = e.deltaY < 0 ? ZOOM_WHEEL_FACTOR : 1/ZOOM_WHEEL_FACTOR;
+      zoomBy(f, e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Pointer drag pan
+    stage.addEventListener('pointerdown', startDrag);
+    document.addEventListener('pointermove', onDrag);
+    document.addEventListener('pointerup', endDrag);
+    document.addEventListener('pointercancel', endDrag);
+
+    // Touch pinch zoom
+    stage.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        pinchInitialDist = Math.hypot(dx, dy);
+        pinchInitialScale = scale;
+      }
+    }, { passive: true });
+    stage.addEventListener('touchmove', e => {
+      if (e.touches.length === 2 && pinchInitialDist) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.hypot(dx, dy);
+        scale = clamp(pinchInitialScale * (dist / pinchInitialDist), ZOOM_MIN, ZOOM_MAX);
+        applyTransform(true);
+        updateLevel();
+      }
+    }, { passive: false });
+    stage.addEventListener('touchend', () => { pinchInitialDist = 0; });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!modal.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+      else if (e.key === '+' || e.key === '=') { e.preventDefault(); zoomBy(ZOOM_KEY_FACTOR); }
+      else if (e.key === '-' || e.key === '_') { e.preventDefault(); zoomBy(1/ZOOM_KEY_FACTOR); }
+      else if (e.key === '0') { e.preventDefault(); resetView(); }
+    });
+
+    // Resize chart instances on viewport change
+    window.addEventListener('resize', () => {
+      if (modal.classList.contains('is-open') && typeof resizeChartFn === 'function') {
+        resizeChartFn();
+      }
+    });
+  }
+
+  function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+  function updateLevel(){ if (levelEl) levelEl.textContent = Math.round(scale * 100) + '%'; }
+
+  function applyTransform(noTrans){
+    if (!content) return;
+    if (noTrans) content.classList.add('no-transition');
+    content.style.transform = 'translate(' + panX + 'px, ' + panY + 'px) scale(' + scale + ')';
+    if (noTrans) requestAnimationFrame(() => content.classList.remove('no-transition'));
+  }
+
+  function zoomBy(factor, ax, ay){
+    const newScale = clamp(scale * factor, ZOOM_MIN, ZOOM_MAX);
+    if (ax !== undefined && stage) {
+      const rect = stage.getBoundingClientRect();
+      const localAx = ax - rect.left - rect.width/2;
+      const localAy = ay - rect.top - rect.height/2;
+      // Adjust pan so the anchor stays at the same screen position after scale change
+      panX = (panX - localAx) * (newScale / scale) + localAx;
+      panY = (panY - localAy) * (newScale / scale) + localAy;
+    }
+    scale = newScale;
+    applyTransform();
+    updateLevel();
+  }
+
+  function resetView(){ scale = 1; panX = 0; panY = 0; applyTransform(); updateLevel(); }
+
+  function startDrag(e){
+    if (e.button !== undefined && e.button !== 0) return;
+    if (e.target.closest('.zoom-toolbar')) return;
+    dragging = true;
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    panStartX = panX; panStartY = panY;
+    stage.classList.add('is-panning');
+    content.classList.add('no-transition');
+    try { stage.setPointerCapture && stage.setPointerCapture(e.pointerId); } catch(_) {}
+    e.preventDefault();
+  }
+  function onDrag(e){
+    if (!dragging) return;
+    panX = panStartX + (e.clientX - dragStartX);
+    panY = panStartY + (e.clientY - dragStartY);
+    applyTransform(true);
+  }
+  function endDrag(){
+    if (!dragging) return;
+    dragging = false;
+    stage && stage.classList.remove('is-panning');
+    content && content.classList.remove('no-transition');
+  }
+
+  function getCaption(fig){
+    const cap = fig.querySelector(':scope > figcaption');
+    return cap ? cap.textContent.trim() : '';
+  }
+  function getTitle(fig){
+    const cap = fig.querySelector('caption');
+    if (cap) return cap.textContent.trim();
+    const img = fig.querySelector(':scope img');
+    if (img && img.alt) return img.alt;
+    if (fig.dataset && fig.dataset.lesson) return 'Figure — ' + fig.dataset.lesson;
+    if (fig.classList.contains('lesson-hero')) return 'Illustration de la leçon';
+    if (fig.classList.contains('lesson-chart')) return 'Graphique';
+    if (fig.classList.contains('lesson-diagram')) return 'Diagramme';
+    if (fig.classList.contains('lesson-table')) return 'Tableau';
+    return 'Figure';
+  }
+
+  // Build a clone suitable for the lightbox stage. Returns DOM node + optional refresh fn.
+  function buildClone(fig){
+    resizeChartFn = null;
+
+    // 1. ECharts chart : re-init on a fresh container using the data-config
+    const echart = fig.querySelector('.echart-init');
+    if (echart && window.echarts && echart.dataset.config) {
+      const wrap = document.createElement('div');
+      wrap.style.background = '#FFFFFF';
+      wrap.style.borderRadius = '12px';
+      wrap.style.padding = '20px';
+      wrap.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
+      const inner = document.createElement('div');
+      const sizePx = computeChartSize();
+      inner.style.width = sizePx.width + 'px';
+      inner.style.height = sizePx.height + 'px';
+      wrap.appendChild(inner);
+      // Defer init until the node is actually in the DOM (after appendChild in openLightbox)
+      let inst = null;
+      resizeChartFn = function() {
+        if (!inst) return;
+        const s = computeChartSize();
+        inner.style.width = s.width + 'px';
+        inner.style.height = s.height + 'px';
+        inst.resize();
+      };
+      // We init in a microtask after DOM append
+      Promise.resolve().then(() => {
+        try {
+          inst = window.echarts.init(inner, null, { renderer: 'canvas' });
+          inst.setOption(JSON.parse(echart.dataset.config));
+        } catch (err) { console.warn('Lightbox ECharts init failed', err); }
+      });
+      return wrap;
+    }
+
+    // 2. Mermaid diagram : wrap the rendered <svg> in a white background card
+    const mermSvg = fig.querySelector('.mermaid svg');
+    if (mermSvg) {
+      const targetW = Math.min(window.innerWidth - 80, 1400);
+      const wrap = document.createElement('div');
+      wrap.style.background = '#FFFFFF';
+      wrap.style.padding = '24px';
+      wrap.style.borderRadius = '12px';
+      wrap.style.boxShadow = '0 4px 24px rgba(0,0,0,0.18)';
+      wrap.style.maxHeight = '85vh';
+      wrap.style.overflow = 'auto';
+      wrap.style.width = (targetW + 48) + 'px'; // +48 padding
+      const clone = mermSvg.cloneNode(true);
+      const vb = clone.getAttribute('viewBox');
+      clone.removeAttribute('width');
+      clone.removeAttribute('height');
+      if (vb) clone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      clone.style.cssText = 'display:block; width:' + targetW + 'px !important; height:auto !important; max-width:none !important; max-height:none !important;';
+      wrap.appendChild(clone);
+      return wrap;
+    }
+
+    // 3. SVG image (lesson-hero)
+    const img = fig.querySelector(':scope img');
+    if (img) {
+      const c = img.cloneNode(true);
+      c.removeAttribute('loading');
+      c.removeAttribute('width');
+      c.removeAttribute('height');
+      c.style.maxWidth = '95vw';
+      c.style.maxHeight = '80vh';
+      c.style.width = 'auto';
+      c.style.height = 'auto';
+      c.style.opacity = '1';
+      c.classList.add('loaded');
+      return c;
+    }
+
+    // 4. Table
+    const table = fig.querySelector('table');
+    if (table) {
+      const wrap = document.createElement('div');
+      wrap.style.background = '#FFFFFF';
+      wrap.style.padding = '24px';
+      wrap.style.borderRadius = '12px';
+      wrap.style.maxWidth = '95vw';
+      wrap.style.maxHeight = '80vh';
+      wrap.style.overflow = 'auto';
+      wrap.appendChild(table.cloneNode(true));
+      return wrap;
+    }
+
+    // 5. Fallback: clone whole figure (without the trigger button)
+    const c = fig.cloneNode(true);
+    c.querySelectorAll('.zoom-trigger').forEach(b => b.remove());
+    return c;
+  }
+
+  function computeChartSize(){
+    const vw = window.innerWidth, vh = window.innerHeight;
+    return { width: Math.min(vw - 80, 1280), height: Math.min(vh - 220, 720) };
+  }
+
+  function openLightbox(fig){
+    ensureModal();
+    lastFocus = document.activeElement;
+    content.innerHTML = '';
+    const clone = buildClone(fig);
+    content.appendChild(clone);
+    titleEl.textContent = getTitle(fig);
+    captionEl.textContent = getCaption(fig);
+    resetView();
+    document.body.classList.add('zoom-locked');
+    modal.classList.add('is-open');
+    setTimeout(() => modal.querySelector('.zoom-close').focus(), 60);
+  }
+
+  function closeLightbox(){
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    document.body.classList.remove('zoom-locked');
+    setTimeout(() => {
+      if (modal && content) content.innerHTML = '';
+      resizeChartFn = null;
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        try { lastFocus.focus(); } catch(_) {}
+      }
+    }, 240);
+  }
+
+  // 3d — Init + observer pour le lazy-render des lessons
+  function init(){
+    injectButtons();
+    watchVisibility();
+    const observer = new MutationObserver(muts => {
+      let shouldScan = false;
+      for (const m of muts) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === 1) {
+            if (node.matches && node.matches(TARGET_SELECTOR)) { shouldScan = true; break; }
+            if (node.querySelector && node.querySelector(TARGET_SELECTOR)) { shouldScan = true; break; }
+          }
+        }
+        if (shouldScan) break;
+      }
+      if (shouldScan) {
+        injectButtons();
+        watchVisibility();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 </body>
