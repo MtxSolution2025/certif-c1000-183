@@ -9702,7 +9702,7 @@ graph TB
 
 <figure class="lesson-chart" data-lesson="c1000-208-2-1-eoq-round">
   <div class="echart-init" data-lesson="c1000-208-2-1-eoq-round" style="width:100%;height:260px;"
-       data-config='{"title":{"text":"EOQ rounding — order quantity is rounded UP to the next multiple of EOQ","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"item"},"grid":{"left":40,"right":40,"top":80,"bottom":56},"xAxis":{"type":"value","name":"Order quantity (units)","nameLocation":"middle","nameGap":28,"min":0,"max":65,"interval":10,"axisLine":{"show":true},"splitLine":{"show":false}},"yAxis":{"type":"value","min":0,"max":1,"show":false},"series":[{"name":"EOQ multiples","type":"scatter","symbolSize":18,"itemStyle":{"color":"#1D9E75"},"label":{"show":true,"position":"bottom","formatter":"{@[0]}","color":"#178A66","fontWeight":600},"data":[[10,0.4],[20,0.4],[30,0.4],[40,0.4],[50,0.4],[60,0.4]],"markLine":{"symbol":"none","data":[{"yAxis":0.4,"lineStyle":{"color":"#94A3B8","type":"solid","width":1.5}}]}},{"name":"Need = 47","type":"scatter","symbolSize":24,"itemStyle":{"color":"#EF4444"},"label":{"show":true,"position":"top","formatter":"Need = 47","color":"#EF4444","fontWeight":700,"fontSize":13},"data":[[47,0.4]],"markPoint":{"symbol":"arrow","symbolSize":[18,28],"symbolRotate":270,"itemStyle":{"color":"#F59E0B"},"label":{"show":true,"position":"top","formatter":"round UP","color":"#B45309","fontWeight":600},"data":[{"coord":[48.5,0.55]}]}},{"name":"Order = 50","type":"scatter","symbolSize":26,"itemStyle":{"color":"#1D9E75","borderColor":"#178A66","borderWidth":3},"label":{"show":true,"position":"top","formatter":"Order = 50","color":"#1D9E75","fontWeight":700,"fontSize":13},"data":[[50,0.4]]}]}'></div>
+       data-config='{"title":{"text":"EOQ rounding — Need=47, EOQ=10 → Order=50 (next multiple ≥ 47)","left":"center","top":6,"textStyle":{"fontSize":13}},"tooltip":{"show":false},"grid":{"left":40,"right":40,"top":72,"bottom":62},"xAxis":{"type":"value","name":"Order quantity (units)","nameLocation":"middle","nameGap":30,"min":0,"max":65,"interval":10,"axisTick":{"show":true,"length":8,"lineStyle":{"color":"#475569"}},"axisLabel":{"color":"#475569","fontWeight":600},"splitLine":{"show":false}},"yAxis":{"type":"value","min":0,"max":1,"show":false,"axisLine":{"show":false},"splitLine":{"show":false},"axisTick":{"show":false},"axisLabel":{"show":false}},"series":[{"name":"EOQ multiples","type":"scatter","symbolSize":12,"itemStyle":{"color":"#94A3B8","opacity":0.85},"label":{"show":false},"silent":true,"data":[[10,0.5],[20,0.5],[30,0.5],[40,0.5],[60,0.5]],"markLine":{"silent":true,"symbol":"none","label":{"show":false},"data":[{"yAxis":0.5,"lineStyle":{"color":"#CBD5E1","type":"solid","width":2}}]}},{"name":"Need = 47","type":"scatter","symbolSize":18,"itemStyle":{"color":"#EF4444"},"label":{"show":true,"position":"top","formatter":"Need = 47","color":"#EF4444","fontWeight":700,"fontSize":13,"distance":12},"silent":true,"data":[[47,0.5]]},{"name":"Order = 50","type":"scatter","symbolSize":28,"itemStyle":{"color":"#1D9E75","borderColor":"#178A66","borderWidth":3},"label":{"show":true,"position":"bottom","formatter":"Order = 50","color":"#1D9E75","fontWeight":700,"fontSize":13,"distance":12},"silent":true,"data":[[50,0.5]]}],"graphic":[{"type":"text","left":"center","top":34,"style":{"text":"round UP →","fontSize":12,"fill":"#B45309","fontWeight":700}}]}'></div>
   <figcaption>Maximo rounds the calculated reorder quantity <strong>UP</strong> to the next multiple of EOQ (≥ 1). Per SAM Q3 — answer c: <em>"It is used to round the order quantity up so that it is a multiple of the EOQ value."</em> Need = 47, EOQ = 10, so Maximo orders 50 (not 47, not 40).</figcaption>
 </figure>
 <h2>⚠️ IBM Trap</h2>
@@ -14775,16 +14775,20 @@ flowchart TD
   <pre class="mermaid">
 stateDiagram-v2
   direction LR
-  [*] --> OPEN: Create Inventory<br/>Usage record
-  OPEN --> PICKED: Pick<br/>(physical removal from bin;<br/>balance still in storeroom,<br/>"picked" sub-bucket)
-  PICKED --> OPEN: Un-pick<br/>(restock to bin)
-  PICKED --> STAGED: Stage<br/>(move to staging location;<br/><b>storeroom balance −</b>,<br/>staging balance +)
-  STAGED --> PICKED: Un-stage<br/>(restock to picked)
-  STAGED --> ISSUED: Issue<br/>(charge to WO;<br/>staging balance −,<br/>WO actuals +,<br/>INVTRANS type=ISSUE)
-  OPEN --> ISSUED: Direct Issue<br/>(skip pick/stage)
-  OPEN --> CANCELLED: Cancel<br/>(no balance impact)
+  [*] --> OPEN: Create
+  OPEN --> PICKED: Pick
+  PICKED --> OPEN: Un-pick
+  PICKED --> STAGED: Stage
+  STAGED --> PICKED: Un-stage
+  STAGED --> ISSUED: Issue (INVTRANS)
+  OPEN --> ISSUED: Direct Issue
+  OPEN --> CANCELLED: Cancel
   ISSUED --> [*]
   CANCELLED --> [*]
+  note right of OPEN: New Inventory Usage record\\nNo balance impact
+  note right of PICKED: Items earmarked\\nBalance still in main bin\\nAvailable balance decreases
+  note right of STAGED: Items moved to staging bin\\nMain bin balance decreases\\nStaging bin balance increases
+  note right of ISSUED: Permanent decrement\\nGL voucher posted\\nWO actuals updated
   </pre>
   <figcaption>The four-state machine per STU §4.5 and RAG Query 12. <strong>Trap</strong>: items in <strong>STAGED</strong> reduce the available balance even though they're physically still on storeroom premises — this affects ROP triggering. Reverse transitions (Un-pick / Un-stage / Restock) exist for scope changes before issue; once <strong>ISSUED</strong>, only a formal Return-to-Store transaction reverses the move. CANCELLED is reachable only from OPEN.</figcaption>
 </figure>
