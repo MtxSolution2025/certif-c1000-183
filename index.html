@@ -366,6 +366,13 @@
   .compare-table tbody tr:hover { background: var(--brand-soft); }
   .compare-table code { background: var(--surface-2); padding: 1px 6px; border-radius: 3px; font-size: 12px; color: var(--brand); }
 
+
+  /* Phase 2.7 — Inline mini-figures inside MCQ rationales */
+  .mcq-mini-figure { margin: 16px 0 4px 0; border-top: 1px dashed var(--border); padding-top: 12px; }
+  .mcq-mini-figure::before { content: "\1F4CE  Visualisation"; display: block; font-size: 11px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .mcq-mini-figure figure.lesson-diagram, .mcq-mini-figure figure.lesson-chart, .mcq-mini-figure figure.lesson-table { margin: 0 !important; padding: 12px 14px !important; }
+  .mcq-mini-figure .mermaid svg, .mcq-mini-figure .lesson-chart svg { max-height: 280px !important; }
+  .mcq-mini-figure figcaption { font-size: 11.5px !important; }
 </style>
 </head>
 <body>
@@ -8492,6 +8499,25 @@ graph TD
           <li>Kit = IAS + flag Kit?, déclenche issue/return groupé sur WO.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-1-ias" data-mcq-uid="c1000-208-mcq-1-1-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-1-1-ias-c1000-208-mcq-1-1-001">
+  <pre class="mermaid">
+graph TD
+  A["MOTOR-ASSY<br/><i>Rotating parent item</i><br/>qty: 1"]:::parent
+  A --> B["PUMP-CENTRIFUGAL<br/>qty: 1"]:::child
+  A --> C["BEARING-6205<br/>qty: 2"]:::child
+  A --> D["SEAL-MECH<br/>qty: 1"]:::child
+  E[/"Mutable tree<br/>Add / delete children<br/>Change quantities<br/>(SAM Q1 — answer c)"/]:::note
+  A -.-> E
+
+  classDef parent fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef child fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef note fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-style:italic;
+  </pre>
+  <figcaption>Item Assembly Structure (IAS) : un parent rotating (MOTOR-ASSY, flag Rotating? = Y) avec trois composants enfants et leurs quantités. Selon le STU §1.1 et SAM Q1 : <em>"Child elements can be added or deleted, and quantities can be changed"</em> — la structure est modifiable après création. Appliquer cette IAS à un nouvel asset crée automatiquement les enfants comme sub-assets.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Sample Question 1 — IBM C1000-208 Sample Test (Section 1.1).</li>
@@ -8564,6 +8590,73 @@ graph TD
           <li>Différent de Inspect (QA), Capitalized (GL Capital), Attach (sub-asset on issue).</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-1" data-mcq-uid="c1000-208-mcq-1-1-002">
+        <figure class="lesson-table" data-lesson="c1000-208-1-1-c1000-208-mcq-1-1-002">
+  <table class="compare-table">
+    <caption>Les 8 flags d'un Item Master record — effet à la réception et en aval.</caption>
+    <thead>
+      <tr>
+        <th>Flag</th>
+        <th>Effect when checked</th>
+        <th>Reversible?</th>
+        <th>Trigger event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rotating?</strong></td>
+        <td>Every receipt creates an Asset record with a unique <code>ASSETNUM</code>. Required for ASSET cost type and Item Assembly Structures.</td>
+        <td>No (locked once first asset received)</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Condition Enabled?</strong></td>
+        <td>Activates the Condition Codes tab. Stock balance is maintained per condition (NEW, USED, REFURB). Issue value = base_cost × condition_rate.</td>
+        <td>No (locked once balance &gt; 0)</td>
+        <td>Issue + Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Kit?</strong></td>
+        <td>Marks the parent of an Item Assembly Structure as a kit. Issuing the kit decrements all child items in one transaction.</td>
+        <td>Yes</td>
+        <td>Issue</td>
+      </tr>
+      <tr>
+        <td><strong>Capitalized?</strong></td>
+        <td>Routes the value of the item to the Capital GL account at receipt instead of the Expense account. Typical for assets that will be depreciated.</td>
+        <td>No (locked once first receipt)</td>
+        <td>Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Inspect on Receipt?</strong></td>
+        <td>Forces every PO receipt of this item to land in a Holding Location with status <code>WINSP</code>. Stock balance not incremented at the active storeroom until QA approves.</td>
+        <td>Yes</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Add as Spare Part?</strong></td>
+        <td>When the item is issued to a Work Order on a parent asset, Maximo proposes to add it to that asset's Spare Parts list automatically.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Attach to Parent Asset on Issue?</strong></td>
+        <td>On issue to a WO, Maximo prompts for a parent asset and, if provided, attaches the item as a child asset record. Used with rotating sub-assemblies.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Tax Exempt?</strong></td>
+        <td>Suppresses the application of tax codes at PO/PR generation. Required for charity, government, intra-company transfers in some jurisdictions.</td>
+        <td>Yes</td>
+        <td>PR / PO generation</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source : IBM Maximo Manage v9.1 Study Guide §1.1.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>master-map.pdf p.787-832, IBM Maximo Manage 9 — Inventory module : Rotating Items.</li>
@@ -8765,6 +8858,37 @@ graph TD
           <li>Flag Consignment sur Inventory record (Storeroom × Item), pas sur Item Master.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-1-status" data-mcq-uid="c1000-208-mcq-1-1-005">
+        <figure class="lesson-diagram" data-lesson="c1000-208-1-1-status-c1000-208-mcq-1-1-005">
+  <pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> PENDING: Insert new<br/>Item record
+  PENDING --> PLANNING: Promote for<br/>planning use
+  PLANNING --> PENDING: Revert<br/>(no transactions yet)
+  PLANNING --> ACTIVE: Change to Active<br/>(item usable)
+  PENDING --> ACTIVE: Direct activation<br/>(skip Planning)
+  ACTIVE --> PENDING_OBSOLETE: Mark for<br/>obsolescence
+  PENDING_OBSOLETE --> ACTIVE: Reactivate<br/>(reverse intent)
+  PENDING_OBSOLETE --> OBSOLETE: Balance = 0<br/>AND no open txns
+  OBSOLETE --> [*]
+  note right of PENDING
+    No PR / PO / issue / transfer
+    Used for special-order seed
+  end note
+  note right of ACTIVE
+    Full transactions allowed
+    PR, PO, issue, transfer, count
+  end note
+  note left of OBSOLETE
+    Terminal. No reactivation.
+    No transactions allowed.
+  end note
+  </pre>
+  <figcaption>Transitions légales du Item Status selon le STU §1.1. Les règles d'héritage cascadent à travers Organization → Item Master → Inventory : le statut d'un item au niveau Inventory ne peut pas dépasser (être plus permissif que) son statut Item Master, qui lui-même ne peut pas dépasser son statut Organization. Passer un item à OBSOLETE exige un balance à zéro et aucune transaction ouverte.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>[EOTRAG query 8 — IBM-Maximo-9 glossaire "consignment" + SAP Material Master Krishna Rungta : "We are not creating an invoice using MIRO transaction for consignment goods. Instead, liabilities are settled when consumed"].</li>
@@ -9037,6 +9161,73 @@ graph TD
           <li>Issue cost = NEW × condition_rate ; non rétroactif sur stock existant.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-1" data-mcq-uid="c1000-208-mcq-1-1-009">
+        <figure class="lesson-table" data-lesson="c1000-208-1-1-c1000-208-mcq-1-1-009">
+  <table class="compare-table">
+    <caption>Les 8 flags d'un Item Master record — effet à la réception et en aval.</caption>
+    <thead>
+      <tr>
+        <th>Flag</th>
+        <th>Effect when checked</th>
+        <th>Reversible?</th>
+        <th>Trigger event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rotating?</strong></td>
+        <td>Every receipt creates an Asset record with a unique <code>ASSETNUM</code>. Required for ASSET cost type and Item Assembly Structures.</td>
+        <td>No (locked once first asset received)</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Condition Enabled?</strong></td>
+        <td>Activates the Condition Codes tab. Stock balance is maintained per condition (NEW, USED, REFURB). Issue value = base_cost × condition_rate.</td>
+        <td>No (locked once balance &gt; 0)</td>
+        <td>Issue + Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Kit?</strong></td>
+        <td>Marks the parent of an Item Assembly Structure as a kit. Issuing the kit decrements all child items in one transaction.</td>
+        <td>Yes</td>
+        <td>Issue</td>
+      </tr>
+      <tr>
+        <td><strong>Capitalized?</strong></td>
+        <td>Routes the value of the item to the Capital GL account at receipt instead of the Expense account. Typical for assets that will be depreciated.</td>
+        <td>No (locked once first receipt)</td>
+        <td>Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Inspect on Receipt?</strong></td>
+        <td>Forces every PO receipt of this item to land in a Holding Location with status <code>WINSP</code>. Stock balance not incremented at the active storeroom until QA approves.</td>
+        <td>Yes</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Add as Spare Part?</strong></td>
+        <td>When the item is issued to a Work Order on a parent asset, Maximo proposes to add it to that asset's Spare Parts list automatically.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Attach to Parent Asset on Issue?</strong></td>
+        <td>On issue to a WO, Maximo prompts for a parent asset and, if provided, attaches the item as a child asset record. Used with rotating sub-assemblies.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Tax Exempt?</strong></td>
+        <td>Suppresses the application of tax codes at PO/PR generation. Required for charity, government, intra-company transfers in some jurisdictions.</td>
+        <td>Yes</td>
+        <td>PR / PO generation</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source : IBM Maximo Manage v9.1 Study Guide §1.1.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Sample Question 9 — IBM C1000-208 Sample Test (Section 1.1).</li>
@@ -9219,6 +9410,31 @@ graph TB
           <li>"Is Satellite Storeroom" : n'existe PAS dans Maximo.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-2-storerooms" data-mcq-uid="c1000-208-mcq-1-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms-c1000-208-mcq-1-2-001">
+  <pre class="mermaid">
+graph TB
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+
+  SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO"| SAT_B
+  HUB ==>|"Use in PR/PO"| SAT_C
+
+  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_B -.->|"Reorder Storeroom"| HUB
+  SAT_C -.->|"Reorder Storeroom"| HUB
+
+  classDef hub fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600,stroke-width:2px;
+  classDef sat fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Deux mécanismes complémentaires en directions opposées. Flèches pleines (haut → bas) : le storeroom central a <strong>Use in PR/PO ✔</strong> sur son record (selon SAM Q2 — réponse a), le rendant visible comme fournisseur interne sur les PR/PO des satellites. Flèches pointillées (bas → haut) : chaque satellite porte <strong>Reorder Storeroom = CENTRAL-STORE</strong>, nommant le hub comme source de réapprovisionnement. Selon STU §1.2 "Setup a Parent Storeroom for centralized ordering".</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Sample Question 2 — IBM C1000-208 Sample Test (Section 1.2).</li>
@@ -9356,6 +9572,31 @@ graph TB
           <li>Sert pour Item Master add-to-storeroom et Tools transactions sans storeroom explicite.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-1-2-storerooms" data-mcq-uid="c1000-208-mcq-1-2-003">
+        <figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms-c1000-208-mcq-1-2-003">
+  <pre class="mermaid">
+graph TB
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+
+  SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO"| SAT_B
+  HUB ==>|"Use in PR/PO"| SAT_C
+
+  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_B -.->|"Reorder Storeroom"| HUB
+  SAT_C -.->|"Reorder Storeroom"| HUB
+
+  classDef hub fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600,stroke-width:2px;
+  classDef sat fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Deux mécanismes complémentaires en directions opposées. Flèches pleines (haut → bas) : le storeroom central a <strong>Use in PR/PO ✔</strong> sur son record (selon SAM Q2 — réponse a), le rendant visible comme fournisseur interne sur les PR/PO des satellites. Flèches pointillées (bas → haut) : chaque satellite porte <strong>Reorder Storeroom = CENTRAL-STORE</strong>, nommant le hub comme source de réapprovisionnement. Selon STU §1.2 "Setup a Parent Storeroom for centralized ordering".</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>master-map.pdf, IBM Maximo Manage 9 — Sites application : Default Storeroom field.</li>
@@ -9795,6 +10036,14 @@ graph TB
           <li>Wilson math = à faire externe (Excel, Inventory Insights ML).</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-2-1-eoq-round" data-mcq-uid="c1000-208-mcq-2-1-001">
+        <figure class="lesson-chart" data-lesson="c1000-208-2-1-eoq-round-c1000-208-mcq-2-1-001">
+  <div class="echart-init" data-lesson="c1000-208-2-1-eoq-round-c1000-208-mcq-2-1-001" style="width:100%;height:260px;"
+       data-config='{"title":{"text":"EOQ rounding — Need=47, EOQ=10 → Order=50 (next multiple ≥ 47)","left":"center","top":6,"textStyle":{"fontSize":13}},"tooltip":{"show":false},"grid":{"left":40,"right":40,"top":72,"bottom":62},"xAxis":{"type":"value","name":"Order quantity (units)","nameLocation":"middle","nameGap":30,"min":0,"max":65,"interval":10,"axisTick":{"show":true,"length":8,"lineStyle":{"color":"#475569"}},"axisLabel":{"color":"#475569","fontWeight":600},"splitLine":{"show":false}},"yAxis":{"type":"value","min":0,"max":1,"show":false,"axisLine":{"show":false},"splitLine":{"show":false},"axisTick":{"show":false},"axisLabel":{"show":false}},"series":[{"name":"EOQ multiples","type":"scatter","symbolSize":12,"itemStyle":{"color":"#94A3B8","opacity":0.85},"label":{"show":false},"silent":true,"data":[[10,0.5],[20,0.5],[30,0.5],[40,0.5],[60,0.5]],"markLine":{"silent":true,"symbol":"none","label":{"show":false},"data":[{"yAxis":0.5,"lineStyle":{"color":"#CBD5E1","type":"solid","width":2}}]}},{"name":"Need = 47","type":"scatter","symbolSize":18,"itemStyle":{"color":"#EF4444"},"label":{"show":true,"position":"top","formatter":"Need = 47","color":"#EF4444","fontWeight":700,"fontSize":13,"distance":12},"silent":true,"data":[[47,0.5]]},{"name":"Order = 50","type":"scatter","symbolSize":28,"itemStyle":{"color":"#1D9E75","borderColor":"#178A66","borderWidth":3},"label":{"show":true,"position":"bottom","formatter":"Order = 50","color":"#1D9E75","fontWeight":700,"fontSize":13,"distance":12},"silent":true,"data":[[50,0.5]]}],"graphic":[{"type":"text","left":"center","top":34,"style":{"text":"round UP →","fontSize":12,"fill":"#B45309","fontWeight":700}}]}'></div>
+  <figcaption>Maximo arrondit <strong>à la hausse</strong> la quantité de reorder calculée au prochain multiple d'EOQ (≥ 1). Selon SAM Q3 — réponse c : <em>"It is used to round the order quantity up so that it is a multiple of the EOQ value."</em> Besoin = 47, EOQ = 10, donc Maximo commande 50 (pas 47, pas 40).</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Sample Question 3 — IBM C1000-208 Sample Test (Section 2.1).</li>
@@ -9863,6 +10112,14 @@ graph TB
           <li>Trigger reorder quand stock-on-hand + on-order ≤ ROP.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-2-1-rop" data-mcq-uid="c1000-208-mcq-2-1-002">
+        <figure class="lesson-chart" data-lesson="c1000-208-2-1-rop-c1000-208-mcq-2-1-002">
+  <div class="echart-init" data-lesson="c1000-208-2-1-rop-c1000-208-mcq-2-1-002" style="width:100%;height:380px;"
+       data-config='{"title":{"text":"Stock level over time — ROP triggers, EOQ replenishes","left":"center","top":4},"tooltip":{"trigger":"axis","valueFormatter":"units"},"legend":{"data":["Stock on hand"],"bottom":4},"grid":{"left":56,"right":24,"top":48,"bottom":56},"xAxis":{"type":"category","name":"Day","nameLocation":"middle","nameGap":28,"data":["0","2","4","6","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","60"]},"yAxis":{"type":"value","name":"Units","min":0,"max":85,"interval":10},"series":[{"name":"Stock on hand","type":"line","step":false,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#1D9E75"},"areaStyle":{"opacity":0.10,"color":"#1D9E75"},"data":[80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80],"markLine":{"symbol":"none","label":{"position":"insideEndTop","color":"#475569"},"data":[{"yAxis":30,"name":"ROP = 30","lineStyle":{"color":"#F59E0B","type":"dashed","width":1.5}},{"yAxis":5,"name":"Safety stock = 5","lineStyle":{"color":"#EF4444","type":"dashed","width":1.5}}]},"markPoint":{"symbolSize":52,"label":{"color":"#FFFFFF","fontSize":10,"fontWeight":600},"data":[{"name":"Reorder fired","coord":["8",30],"itemStyle":{"color":"#F59E0B"},"value":"PR"},{"name":"Goods received","coord":["18",30],"itemStyle":{"color":"#1D9E75"},"value":"+EOQ"},{"name":"Reorder fired","coord":["18",30],"itemStyle":{"color":"#F59E0B"},"value":""}]}}]}'></div>
+  <figcaption>Réapprovisionnement en dents de scie selon le STU §2.1 et RAG Query 1. Consommation moyenne quotidienne = 3 unités, lead time = 10 jours, donc ROP = 3 × 10 = 30 avec safety stock = 5. Chaque cycle : consommation continue à 3 unités/jour → croise le ROP au jour 8 → la PR se déclenche → 10 jours de lead time → les goods arrivent au jour 18 avec un EOQ batch de 50 (Wilson EOQ arrondi au multiple fournisseur). Trois cycles complets affichés.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>master-map.pdf p.787-832, IBM Maximo Manage 9 — Inventory : Reorder Details tab.</li>
@@ -10066,6 +10323,14 @@ graph TB
           <li>Configuré au niveau Storeroom (pas Inventory).</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-2-1-rop" data-mcq-uid="c1000-208-mcq-2-1-005">
+        <figure class="lesson-chart" data-lesson="c1000-208-2-1-rop-c1000-208-mcq-2-1-005">
+  <div class="echart-init" data-lesson="c1000-208-2-1-rop-c1000-208-mcq-2-1-005" style="width:100%;height:380px;"
+       data-config='{"title":{"text":"Stock level over time — ROP triggers, EOQ replenishes","left":"center","top":4},"tooltip":{"trigger":"axis","valueFormatter":"units"},"legend":{"data":["Stock on hand"],"bottom":4},"grid":{"left":56,"right":24,"top":48,"bottom":56},"xAxis":{"type":"category","name":"Day","nameLocation":"middle","nameGap":28,"data":["0","2","4","6","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","60"]},"yAxis":{"type":"value","name":"Units","min":0,"max":85,"interval":10},"series":[{"name":"Stock on hand","type":"line","step":false,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#1D9E75"},"areaStyle":{"opacity":0.10,"color":"#1D9E75"},"data":[80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80],"markLine":{"symbol":"none","label":{"position":"insideEndTop","color":"#475569"},"data":[{"yAxis":30,"name":"ROP = 30","lineStyle":{"color":"#F59E0B","type":"dashed","width":1.5}},{"yAxis":5,"name":"Safety stock = 5","lineStyle":{"color":"#EF4444","type":"dashed","width":1.5}}]},"markPoint":{"symbolSize":52,"label":{"color":"#FFFFFF","fontSize":10,"fontWeight":600},"data":[{"name":"Reorder fired","coord":["8",30],"itemStyle":{"color":"#F59E0B"},"value":"PR"},{"name":"Goods received","coord":["18",30],"itemStyle":{"color":"#1D9E75"},"value":"+EOQ"},{"name":"Reorder fired","coord":["18",30],"itemStyle":{"color":"#F59E0B"},"value":""}]}}]}'></div>
+  <figcaption>Réapprovisionnement en dents de scie selon le STU §2.1 et RAG Query 1. Consommation moyenne quotidienne = 3 unités, lead time = 10 jours, donc ROP = 3 × 10 = 30 avec safety stock = 5. Chaque cycle : consommation continue à 3 unités/jour → croise le ROP au jour 8 → la PR se déclenche → 10 jours de lead time → les goods arrivent au jour 18 avec un EOQ batch de 50 (Wilson EOQ arrondi au multiple fournisseur). Trois cycles complets affichés.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>master-map.pdf p.787-832, IBM Maximo Manage 9 — Storerooms : Recent Lead Time Weight in %.</li>
@@ -10469,6 +10734,51 @@ flowchart TD
           <li>Additional Lead Time (Days) = buffer LT, pas un schedule.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-2-2-reorder" data-mcq-uid="c1000-208-mcq-2-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder-c1000-208-mcq-2-2-001">
+  <pre class="mermaid">
+flowchart TD
+  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
+  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  STOP["No action<br/>(stock sufficient)"]:::stop
+  SPECIAL{"Special-order<br/>item ?"}:::decision
+  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
+  PR_EXT["External PR<br/>to vendor"]:::action
+  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
+  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+
+  CRON --> STATUS
+  STATUS -- "Yes (eligible)" --> CHECK
+  STATUS -- "No" --> SKIPSTATUS
+  CHECK -- No --> STOP
+  CHECK -- Yes --> SPECIAL
+  SPECIAL -- Yes --> CREATE_ITEM
+  CREATE_ITEM --> ROUND
+  SPECIAL -- No --> ROUND
+  ROUND --> USEPRPO
+  USEPRPO -- Yes --> PR_INT
+  USEPRPO -- No --> PR_EXT
+  PR_INT --> RECEIVE
+  PR_EXT --> VENDOR
+  VENDOR --> RECEIVE
+  RECEIVE --> BALANCE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Exécution du reorder selon le STU §2.2. Le déclencheur utilise la available position (balance + on-order − reservations). Les special-order items créent automatiquement un Item Master en <strong>PENDING</strong> (donc invisible dans les futurs reorder cycles) plus un ItemOrgDetails ACTIVE. La quantité d'ordre est toujours arrondie à la hausse au multiple d'EOQ (EOQ ≥ 1, selon SAM Q3 — réponse c). Le flag <strong>Use in PR/PO</strong> du Storeroom route la PR en interne (parent storeroom) ou en externe (vendor).</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Sample Question 4 — IBM C1000-208 Sample Test (Section 2.2).</li>
@@ -10603,6 +10913,51 @@ flowchart TD
           <li>Les deux coexistent et se complètent.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-2-2-reorder" data-mcq-uid="c1000-208-mcq-2-2-003">
+        <figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder-c1000-208-mcq-2-2-003">
+  <pre class="mermaid">
+flowchart TD
+  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
+  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  STOP["No action<br/>(stock sufficient)"]:::stop
+  SPECIAL{"Special-order<br/>item ?"}:::decision
+  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
+  PR_EXT["External PR<br/>to vendor"]:::action
+  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
+  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+
+  CRON --> STATUS
+  STATUS -- "Yes (eligible)" --> CHECK
+  STATUS -- "No" --> SKIPSTATUS
+  CHECK -- No --> STOP
+  CHECK -- Yes --> SPECIAL
+  SPECIAL -- Yes --> CREATE_ITEM
+  CREATE_ITEM --> ROUND
+  SPECIAL -- No --> ROUND
+  ROUND --> USEPRPO
+  USEPRPO -- Yes --> PR_INT
+  USEPRPO -- No --> PR_EXT
+  PR_INT --> RECEIVE
+  PR_EXT --> VENDOR
+  VENDOR --> RECEIVE
+  RECEIVE --> BALANCE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Exécution du reorder selon le STU §2.2. Le déclencheur utilise la available position (balance + on-order − reservations). Les special-order items créent automatiquement un Item Master en <strong>PENDING</strong> (donc invisible dans les futurs reorder cycles) plus un ItemOrgDetails ACTIVE. La quantité d'ordre est toujours arrondie à la hausse au multiple d'EOQ (EOQ ≥ 1, selon SAM Q3 — réponse c). Le flag <strong>Use in PR/PO</strong> du Storeroom route la PR en interne (parent storeroom) ou en externe (vendor).</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>master-map.pdf p.787-832, IBM Maximo Manage 9 — Cron Task Setup app + Inventory Reorder Items action.</li>
@@ -11014,6 +11369,14 @@ flowchart TD
           <li>ASSET = par-serial pour rotating uniquement</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-3-1-cost-methods" data-mcq-uid="c1000-208-mcq-3-1-001">
+        <figure class="lesson-chart" data-lesson="c1000-208-3-1-cost-methods-c1000-208-mcq-3-1-001">
+  <div class="echart-init" data-lesson="c1000-208-3-1-cost-methods-c1000-208-mcq-3-1-001" style="width:100%;height:380px;"
+       data-config='{"title":{"text":"FIFO vs LIFO vs WAC — inflation scenario ($5 → $9 / unit, sold 100, 50 in stock)","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"shadow"},"valueFormatter":"$"},"legend":{"data":["FIFO","LIFO","WAC"],"bottom":4},"grid":{"left":72,"right":24,"top":56,"bottom":56},"xAxis":{"type":"category","data":["COGS","Ending Inventory Value","Reported Profit"]},"yAxis":{"type":"value","name":"USD","axisLabel":{"formatter":"${value}"}},"series":[{"name":"FIFO","type":"bar","itemStyle":{"color":"#1D9E75"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[500,450,500]},{"name":"LIFO","type":"bar","itemStyle":{"color":"#F59E0B"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[900,250,100]},{"name":"WAC","type":"bar","itemStyle":{"color":"#3B82F6"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[700,350,300]}]}'></div>
+  <figcaption>Même flux physique, trois méthodes de valorisation, trois impacts P&amp;L différents. Hypothèse : 100 unités achetées @$5 (ancien layer), 50 unités achetées @$9 (nouveau layer) ; 100 vendues, 50 en stock ; revenue = $1 000. <strong>FIFO</strong> : COGS = $500 (layer cheap d'abord), Ending = $450 (50 unités chères), Profit le plus élevé. <strong>LIFO</strong> : COGS = $900 (layer cher d'abord), Ending = $250 (50 unités cheap), Profit le plus bas. <strong>WAC</strong> : moyenne $7 → COGS = $700, Ending = $350, Profit moyen. Selon RAG Query 4 : <strong>LIFO est banni par l'IFRS (IAS 2 depuis 2003)</strong> ; le US GAAP le permet encore avec disclosure.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 4] Cost Methods FIFO/LIFO/WAC/Standard/ASSET — IBM Maximo Manage 9, Materials Management with SAP S/4HANA, Infor EAM</li>
@@ -11133,6 +11496,61 @@ flowchart TD
           <li>Specific Identification IAS 2 § 23</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-3-1" data-mcq-uid="c1000-208-mcq-3-1-003">
+        <figure class="lesson-table" data-lesson="c1000-208-3-1-c1000-208-mcq-3-1-003">
+  <table class="compare-table">
+    <caption>Les 5 Cost Types disponibles dans Maximo Inventory — appliqués par item × storeroom.</caption>
+    <thead>
+      <tr>
+        <th>Cost type</th>
+        <th>Calculation logic</th>
+        <th>IFRS allowed?</th>
+        <th>Maximo path</th>
+        <th>Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>AVG</strong> (Weighted Average)</td>
+        <td>Recalculates the cost on every receipt: <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Each issue is valued at the current weighted average.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = AVG</td>
+        <td>Default for most consumable items. Smooths price volatility.</td>
+      </tr>
+      <tr>
+        <td><strong>STD</strong> (Standard)</td>
+        <td>Uses a fixed standard cost per item set manually. Variance between actual receipt cost and standard cost is posted to a Variance GL account.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = STANDARD</td>
+        <td>Manufacturing environments where budgeted cost matters more than actual.</td>
+      </tr>
+      <tr>
+        <td><strong>LIFO</strong> (Last In, First Out)</td>
+        <td>Each issue is valued at the cost of the most recent receipt. Old layers stay in inventory at their original cost.</td>
+        <td><strong>No</strong> (banned by IFRS; allowed by US GAAP)</td>
+        <td>Inventory &gt; Item &gt; Cost Type = LIFO</td>
+        <td>US-only environments seeking tax deferral in inflation.</td>
+      </tr>
+      <tr>
+        <td><strong>FIFO</strong> (First In, First Out)</td>
+        <td>Each issue is valued at the cost of the oldest receipt. Newest layers stay in inventory.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = FIFO</td>
+        <td>Perishables, regulated industries, IFRS-compliant orgs.</td>
+      </tr>
+      <tr>
+        <td><strong>ASSET</strong></td>
+        <td>Cost is tracked per individual rotating <code>ASSETNUM</code>, not per storeroom average. Each asset has its own purchase price and depreciation history.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item (Rotating? = true) &gt; Cost Type = ASSET</td>
+        <td>Mandatory for rotating items (motors, pumps) with serialized tracking.</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source : IBM Maximo Manage v9.1 Study Guide §3.1 + master-map.pdf p.1798 (System Properties &gt; Inventory).</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 6] Rotating Items / Item Assembly Structures — IBM Maximo Manage 9</li>
@@ -11631,6 +12049,49 @@ flowchart TD
           <li>100 − 30 − 10 = 60</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-3-2-adjust" data-mcq-uid="c1000-208-mcq-3-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-3-2-adjust-c1000-208-mcq-3-2-001">
+  <pre class="mermaid">
+flowchart TD
+  TRIGGER["Operator opens<br/>Inventory app<br/>(item × storeroom)"]:::start
+  CHOICE{"Which adjustment<br/><b>method</b> ?"}:::decision
+
+  PHYS["<b>Adjust by Physical Count</b><br/>Enter counted quantity<br/>balance := count_value<br/>(replaces current balance)"]:::action
+  PHYS_TX["INVADJ row<br/>type=PHYSCNT<br/>delta = count − balance_before"]:::ok
+
+  CURR["<b>Adjust by Current Balance</b><br/>Enter the new balance directly<br/>(no count reference)<br/>balance := user_value"]:::action
+  CURR_TX["INVADJ row<br/>type=CURBAL<br/>delta = user_value − balance_before"]:::ok
+
+  YTD["<b>Zero Year-to-Date Quantities</b><br/>Reset YTD usage / receipt counters<br/>current balance UNCHANGED<br/>(period-end housekeeping)"]:::action
+  YTD_TX["INVTRANS row<br/>type=ZEROYTD<br/>no balance delta"]:::warn
+
+  ROT["<b>Adjust Rotating Item</b><br/>Move ASSETNUM to / from storeroom<br/>balance derived from asset count<br/>(rotating = serialized 1-per-asset)"]:::action
+  ROT_TX["ASSETMOVE row<br/>+ INVTRANS audit<br/>delta = ±1 per asset"]:::ok
+
+  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::end_
+
+  TRIGGER --> CHOICE
+  CHOICE -- "Physical count cycle" --> PHYS
+  CHOICE -- "Direct correction" --> CURR
+  CHOICE -- "Period-end YTD reset" --> YTD
+  CHOICE -- "Rotating asset move" --> ROT
+  PHYS --> PHYS_TX --> END
+  CURR --> CURR_TX --> END
+  YTD --> YTD_TX --> END
+  ROT --> ROT_TX --> END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  </pre>
+  <figcaption>Les 4 méthodes officielles d'ajustement de balance per STU §3.2. <strong>Adjust by Physical Count</strong> et <strong>Adjust by Current Balance</strong> écrivent directement le balance numérique (INVADJ row) — la première s'aligne sur un compte physique observé, la seconde corrige directement à une valeur saisie. <strong>Zero Year-to-Date Quantities</strong> ne touche PAS le balance courant — elle remet à zéro les compteurs YTD (usage, réception) à la clôture de période et trace une INVTRANS type=ZEROYTD. <strong>Adjust Rotating Item</strong> ne passe pas par un INVADJ : comme les rotating items sont sérialisés (un ASSETNUM par unité), Maximo enregistre un ASSETMOVE qui déplace l'asset entre storerooms — le balance se déduit du nombre d'ASSETNUM rattachés. Trap : confondre les deux premières méthodes et écraser le balance par erreur.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 12] Picking Staging Issue / Inventory Balance — IBM Maximo Manage 9</li>
@@ -12119,6 +12580,46 @@ flowchart LR
           <li>SOX exige separation duties</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-3-3-reconcile" data-mcq-uid="c1000-208-mcq-3-3-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-3-3-reconcile-c1000-208-mcq-3-3-001">
+  <pre class="mermaid">
+flowchart LR
+  COUNT["Physical count<br/>completed on the floor<br/>(counted vs system balance)"]:::start
+
+  subgraph INV ["Path A — <b>Inventory app</b> reconcile"]
+    direction TB
+    A1["Open <b>Inventory</b> app<br/>filter to a single item × storeroom"]:::action
+    A2["Enter counted qty<br/>(per-item granularity)"]:::action
+    A3["Click <b>Reconcile Balance</b><br/>variance applied immediately"]:::action
+    A4["INVTRANS row per item<br/>(audit trail = 1 line / SKU)"]:::ok
+  end
+
+  subgraph CB ["Path B — <b>Count Books</b> reconcile"]
+    direction TB
+    B1["Generate Count Book<br/>filter via <b>Sample Type</b><br/>(ALL / BIN / CNTFREQ /<br/>ICG / ITEM / ROTATING / TOOLS)"]:::action
+    B2["Bulk-enter counted qty<br/>for the whole sample group"]:::action
+    B3["Click <b>Reconcile Balances</b><br/>at book level (one-shot batch)"]:::action
+    B4["INVTRANS rows per item<br/>+ Count Book status<br/>(POSTED / PARTIAL)"]:::ok
+  end
+
+  COUNT --> A1
+  COUNT --> B1
+  A1 --> A2 --> A3 --> A4
+  B1 --> B2 --> B3 --> B4
+
+  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::end_
+  A4 --> END
+  B4 --> END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Deux chemins de reconciliation per STU §3.3. <strong>Path A (Inventory app)</strong> : reconcile item-par-item, immédiat, idéal pour un spot-count après suspicion (recompte ciblé). Audit trail granulaire — une INVTRANS par SKU. <strong>Path B (Count Books)</strong> : reconcile en batch via un Sample Type (CNTFREQ pour le cycle régulier, ICG pour un groupe métier, ROTATING pour audit asset, etc.). Plus efficient pour les campagnes périodiques (cycle counts, annual full count). Les deux chemins produisent les mêmes INVTRANS rows en aval ; le Count Book ajoute une couche d'orchestration (statut POSTED / PARTIAL, séparation des duties counter / approver). Trap : utiliser Inventory app pour un cycle count complet — perte de traçabilité au niveau du livre, et pas de séparation des duties SOX.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 10] Physical Count Reconciliation — IBM Maximo Manage 9</li>
@@ -12569,6 +13070,54 @@ flowchart TD
           <li>SAM Q6 verbatim IBM</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-1-issues" data-mcq-uid="c1000-208-mcq-4-1-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-4-1-issues-c1000-208-mcq-4-1-001">
+  <pre class="mermaid">
+flowchart TD
+  WO["Approved Work Order<br/>or Issue request"]:::start
+  TYPE{"<b>Item type ?</b><br/>(STU §4.1)"}:::decision
+
+  TOOL["Branch <b>TOOL</b><br/>Non-rotating tool item"]:::action
+  TOOL_REQ["<b>Issue To Person mandatory</b><br/>(SAM Q6 — answer C)<br/>tool tracked to a named worker<br/>not a Location nor a WO alone"]:::warn
+
+  SVC["Branch <b>SERVICE</b><br/>Service-type item<br/>(no physical inventory)"]:::action
+  SVC_TX["Direct charge to WO actuals<br/>(no balance impact)"]:::ok
+
+  ITEM["Branch <b>ITEM</b><br/>Standard inventory item"]:::action
+  GL{"GL Debit Account<br/>resolved ?<br/>(WO / location / item default)"}:::decision
+  GL_FAIL["Stop — issue blocked<br/>missing GL debit account"]:::stop
+  BIN{"Default bin has<br/><b>enough qty</b> ?"}:::decision
+
+  SPLIT["<b>Bin splitting required</b><br/>(SAM Q8 — answer B)<br/>Split Usage Quantity dialog<br/>draws from multiple bins / lots<br/>InvUseSplit row created"]:::warn
+  PICK["Pick from default bin<br/>(single InvUseLine)"]:::action
+
+  STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
+  STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
+  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::end_
+
+  WO --> TYPE
+  TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
+  TYPE -- Service --> SVC --> SVC_TX
+  TYPE -- Item --> ITEM --> GL
+  GL -- No --> GL_FAIL
+  GL -- Yes --> BIN
+  BIN -- No --> SPLIT --> STAGE
+  BIN -- Yes --> PICK --> STAGE
+  STAGE -- Yes --> STAGED --> ISSUE
+  STAGE -- No --> ISSUE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  </pre>
+  <figcaption>Arbre de décision Item Issues per STU §4.1. La branche <strong>Tool</strong> impose <strong>Issue To Person</strong> obligatoire (SAM Q6 — réponse C) : un outil ne peut pas être sorti vers une simple Location ou un WO sans nom de personne — c'est une exigence de traçabilité (responsabilité du tool, retour attendu). La branche <strong>Service</strong> ne touche pas le stock — charge directe au WO. Pour la branche <strong>Item</strong>, le GL Debit Account doit être résolu (WO > Location > Item default), sinon l'issue est bloquée. Si le default bin n'a pas assez de qty, le <strong>bin splitting</strong> est requis (SAM Q8 — réponse B) via le dialog Split Usage Quantity, qui crée un InvUseSplit row par bin source. Le passage par STAGED (Document Status = STAGED) déplace les qty dans le Staging Bin avant l'issue finale.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 6] Rotating items / Tools — IBM Maximo Manage 9</li>
@@ -12635,6 +13184,54 @@ flowchart TD
           <li>SAM Q8 verbatim IBM</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-1-issues" data-mcq-uid="c1000-208-mcq-4-1-002">
+        <figure class="lesson-diagram" data-lesson="c1000-208-4-1-issues-c1000-208-mcq-4-1-002">
+  <pre class="mermaid">
+flowchart TD
+  WO["Approved Work Order<br/>or Issue request"]:::start
+  TYPE{"<b>Item type ?</b><br/>(STU §4.1)"}:::decision
+
+  TOOL["Branch <b>TOOL</b><br/>Non-rotating tool item"]:::action
+  TOOL_REQ["<b>Issue To Person mandatory</b><br/>(SAM Q6 — answer C)<br/>tool tracked to a named worker<br/>not a Location nor a WO alone"]:::warn
+
+  SVC["Branch <b>SERVICE</b><br/>Service-type item<br/>(no physical inventory)"]:::action
+  SVC_TX["Direct charge to WO actuals<br/>(no balance impact)"]:::ok
+
+  ITEM["Branch <b>ITEM</b><br/>Standard inventory item"]:::action
+  GL{"GL Debit Account<br/>resolved ?<br/>(WO / location / item default)"}:::decision
+  GL_FAIL["Stop — issue blocked<br/>missing GL debit account"]:::stop
+  BIN{"Default bin has<br/><b>enough qty</b> ?"}:::decision
+
+  SPLIT["<b>Bin splitting required</b><br/>(SAM Q8 — answer B)<br/>Split Usage Quantity dialog<br/>draws from multiple bins / lots<br/>InvUseSplit row created"]:::warn
+  PICK["Pick from default bin<br/>(single InvUseLine)"]:::action
+
+  STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
+  STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
+  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::end_
+
+  WO --> TYPE
+  TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
+  TYPE -- Service --> SVC --> SVC_TX
+  TYPE -- Item --> ITEM --> GL
+  GL -- No --> GL_FAIL
+  GL -- Yes --> BIN
+  BIN -- No --> SPLIT --> STAGE
+  BIN -- Yes --> PICK --> STAGE
+  STAGE -- Yes --> STAGED --> ISSUE
+  STAGE -- No --> ISSUE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  </pre>
+  <figcaption>Arbre de décision Item Issues per STU §4.1. La branche <strong>Tool</strong> impose <strong>Issue To Person</strong> obligatoire (SAM Q6 — réponse C) : un outil ne peut pas être sorti vers une simple Location ou un WO sans nom de personne — c'est une exigence de traçabilité (responsabilité du tool, retour attendu). La branche <strong>Service</strong> ne touche pas le stock — charge directe au WO. Pour la branche <strong>Item</strong>, le GL Debit Account doit être résolu (WO > Location > Item default), sinon l'issue est bloquée. Si le default bin n'a pas assez de qty, le <strong>bin splitting</strong> est requis (SAM Q8 — réponse B) via le dialog Split Usage Quantity, qui crée un InvUseSplit row par bin source. Le passage par STAGED (Document Status = STAGED) déplace les qty dans le Staging Bin avant l'issue finale.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 12] Picking Staging Issue / Multi-bin allocation — IBM Maximo Manage 9</li>
@@ -13321,6 +13918,42 @@ flowchart TD
           <li>SAM Q7 verbatim IBM</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-2-returns" data-mcq-uid="c1000-208-mcq-4-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-4-2-returns-c1000-208-mcq-4-2-001">
+  <pre class="mermaid">
+flowchart TD
+  TRIGGER["Operator opens<br/><b>Inventory Usage</b> app<br/>(or Issues and Transfers RBA)"]:::start
+  WHICH{"<b>Which return scenario ?</b><br/>(STU §4.2)"}:::decision
+
+  N1["Branch 1 — <b>Return Item</b><br/>Non-rotating item<br/>previously issued"]:::action
+  N2["Add a <b>Return type</b> row<br/>reference original issue<br/>enter qty to return"]:::action
+  N3["balance += qty<br/>WO actuals -= qty<br/>INVTRANS type=RETURN"]:::ok
+
+  R1["Branch 2 — <b>Return Rotating Item</b><br/>(SAM Q7 — answer D)"]:::action
+  R2["Add a <b>Return type</b> row<br/>specify the <b>ASSETNUM</b><br/>at full value (NEW cost layer)"]:::action
+  R3["ASSETMOVE row<br/>+ balance += 1<br/>+ INVTRANS type=RETURN<br/>asset back in storeroom"]:::ok
+
+  F1["Branch 3 — <b>Add Found Item back</b><br/>previously written off / lost"]:::action
+  F2["Add a Return type row<br/>NO original issue reference<br/>audit note = found"]:::action
+  F3["balance += qty<br/>INVTRANS type=RETURN<br/>(reason code = FOUND)"]:::ok
+
+  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::end_
+
+  TRIGGER --> WHICH
+  WHICH -- "Standard item return" --> N1 --> N2 --> N3 --> END
+  WHICH -- "Rotating item return" --> R1 --> R2 --> R3 --> END
+  WHICH -- "Add found item back" --> F1 --> F2 --> F3 --> END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Trois chemins de retour per STU §4.2. <strong>Branche 1 (non-rotating)</strong> : un Return type row dans Inventory Usage référence l'issue originale — balance += qty, INVTRANS type=RETURN. <strong>Branche 2 (rotating, SAM Q7 — réponse D)</strong> : Return type row + ASSETNUM obligatoire — l'asset reprend sa place au storeroom à sa pleine valeur (couche NEW cost), avec un ASSETMOVE row qui trace la relocalisation. C'est la seule façon correcte de remettre un rotating asset en stock à pleine valeur — pas via un Asset Move manuel, pas via une mise à jour directe de la table Inventory Balances. <strong>Branche 3 (found item)</strong> : item physiquement retrouvé sans référence d'issue — Return type row sans original issue, reason code = FOUND, balance += qty. Trap : utiliser un Asset Move standalone pour un rotating item — le balance ne se met pas à jour côté Inventory.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 6] Rotating Items / Return-to-store of a rotating asset — IBM Maximo Manage 9</li>
@@ -13880,6 +14513,34 @@ flowchart TD
           <li>JAMAIS Adjust Balance pour transfer</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-3-transfer" data-mcq-uid="c1000-208-mcq-4-3-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-4-3-transfer-c1000-208-mcq-4-3-001">
+  <pre class="mermaid">
+flowchart TD
+  START["Need to transfer<br/>item / tool from<br/>storeroom A → storeroom B"]:::start
+  Q1{"Same SITE ?"}:::decision
+
+  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
+  SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
+
+  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::end_
+
+  START --> Q1
+  Q1 -- Yes --> DIRECT
+  Q1 -- No --> SHIPMENT
+  DIRECT --> END
+  SHIPMENT --> END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
+  classDef warn fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Décision de transfert inter-sites selon le STU §4.3. Les déplacements même-site se résolvent comme un Direct Transfer (Inventory app, swap de balance instantané). Les déplacements inter-sites <strong>doivent</strong> utiliser un Shipment Transfer : crée un shipment record, décrémente la source au ship-out, garde en transit, puis incrémente la destination au shipment receipt. Les inspections (flag Inspect on Receipt?) sont honorées côté destination.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 14] Maximo Inventory Transaction Tables — IBM Maximo Manage 9</li>
@@ -14515,6 +15176,47 @@ flowchart TD
           <li>Audit preservation = priorité</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-4" data-mcq-uid="c1000-208-mcq-4-4-001">
+        <figure class="lesson-table" data-lesson="c1000-208-4-4-c1000-208-mcq-4-4-001">
+  <table class="compare-table">
+    <caption>The 3 reservation types in Maximo Inventory — comparison and lifecycle.</caption>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Blocks others?</th>
+        <th>Available balance impact</th>
+        <th>Typical source</th>
+        <th>Cancel rules</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>HARD</strong></td>
+        <td><strong>Yes</strong> — quantity is committed and unavailable to other WOs / pick lists.</td>
+        <td><code>available_balance −= reserved_qty</code> (subtracted from on-hand for ROP and other reservation requests).</td>
+        <td>Approved <strong>WO</strong> with materials list (typically created on WO approve via job plan).</td>
+        <td>Manual via <strong>Add/Modify Reservations</strong> action in Inventory app or on the WO. Auto-cleared when the issue completes or the WO is cancelled.</td>
+      </tr>
+      <tr>
+        <td><strong>SOFT</strong></td>
+        <td>No — informational only, intent to consume but no commitment.</td>
+        <td><strong>No impact</strong> on available balance. Visible on reservation reports for planning.</td>
+        <td>Pending / planning-phase WO (not yet approved). Forecast / job-plan templates.</td>
+        <td>Auto-cleared when the WO is approved (becomes HARD) or cancelled. Per SAM Q4 — answer B: PLANNING-status items can be reordered, and SOFT reservations can be considered when the storeroom <em>"Reorder includes soft reservations"</em> flag is set.</td>
+      </tr>
+      <tr>
+        <td><strong>AUTOMATIC</strong></td>
+        <td>Depends on item Reorder rules and the storeroom's reservation policy (effectively HARD-equivalent once triggered).</td>
+        <td>Varies — generally subtracts from available balance once auto-promoted to HARD.</td>
+        <td>System-generated based on the item's <strong>auto-reservation</strong> flag and ROP triggers. Common for fast-moving consumables.</td>
+        <td>Lifecycle-managed by Maximo (auto-created at WO approval, auto-cleared at issue or cancel). Not manually created — to override, switch the item flag.</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source : IBM Maximo Manage v9.1 Study Guide §4.4 (Manage Item Reservations — Delete or Modify Reservation) + RAG Query 12. Trap classique : confondre une SOFT reservation (visible mais pas bloquante) avec une HARD — un planificateur peut croire qu'un stock est sécurisé alors qu'il n'est que <em>"intent"</em>, et un autre WO peut le consommer en premier. Vérifier le type via <code>Inventory app &gt; Reservations tab &gt; Reservation Type column</code>.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 12] Reservations management — IBM Maximo Manage 9</li>
@@ -15074,6 +15776,30 @@ stateDiagram-v2
           <li>Cancel possible avant ISSUED</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-5-states" data-mcq-uid="c1000-208-mcq-4-5-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-4-5-states-c1000-208-mcq-4-5-001">
+  <pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> OPEN: Create
+  OPEN --> PICKED: Pick
+  PICKED --> OPEN: Un-pick
+  PICKED --> STAGED: Stage
+  STAGED --> PICKED: Un-stage
+  STAGED --> ISSUED: Issue (INVTRANS)
+  OPEN --> ISSUED: Direct Issue
+  OPEN --> CANCELLED: Cancel
+  ISSUED --> [*]
+  CANCELLED --> [*]
+  note right of OPEN: Nouveau record Inventory Usage\\nAucun impact sur le balance
+  note right of PICKED: Items réservés\\nBalance toujours dans la main bin\\nLe available balance diminue
+  note right of STAGED: Items déplacés vers staging bin\\nLa balance de la main bin diminue\\nLa balance staging bin augmente
+  note right of ISSUED: Décrément permanent\\nGL voucher posté\\nWO actuals mis à jour
+  </pre>
+  <figcaption>La machine à 4 états selon le STU §4.5 et RAG Query 12. <strong>Trap</strong> : les items en <strong>STAGED</strong> réduisent le available balance même s'ils sont physiquement toujours dans le storeroom — cela affecte le déclenchement du ROP. Les transitions inverses (Un-pick / Un-stage / Restock) existent pour les changements de scope avant l'issue ; une fois <strong>ISSUED</strong>, seule une transaction Return-to-Store formelle réverse le mouvement. CANCELLED n'est atteignable qu'à partir de OPEN.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><ul>
       <li>[EOTRAG Query 12] 4 states of Pick List — IBM Maximo Manage 9</li>
@@ -15554,6 +16280,33 @@ graph LR
           <li>Item-specific conversion = override pour un item particulier.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-5-1-uom" data-mcq-uid="c1000-208-mcq-5-1-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-5-1-uom-c1000-208-mcq-5-1-001">
+  <pre class="mermaid">
+graph LR
+  PR["<b>PR</b> for 5 CARTON<br/>(Order Unit)<br/>vendor sees 5 units"]:::start
+  PO["<b>PO</b> approved<br/>5 CARTON ordered"]:::action
+  CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(item-specific override)"]:::warn
+  RECV["<b>Receipt</b><br/>5 × 12 = <b>60 EACH</b><br/>recorded in storeroom"]:::ok
+  STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stored as Issue Unit)"]:::action
+  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::end_
+
+  PR ==> PO ==> CONV ==> RECV ==> STORE ==> ISSUE
+
+  NOTE[/"<b>Two units per Item Master</b><br/>Order Unit = vendor-facing<br/>Issue Unit = WO-facing<br/>Item-specific conversion<br/>overrides global UoM table"/]:::note
+  CONV -.-> NOTE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef note fill:#F1F5F9,stroke:#94A3B8,color:#475569,font-style:italic;
+  </pre>
+  <figcaption>Conversion Order Unit ↔ Issue Unit per STU §5.1. L'Item Master porte deux UoM : <strong>Order Unit</strong> (CARTON, ce que voit le fournisseur) et <strong>Issue Unit</strong> (EACH, ce que voit le technicien). Le facteur de conversion (1 CARTON = 12 EACH) peut être défini globalement (UoM table) OU spécifiquement sur l'item — la conversion item-specific <strong>override</strong> la conversion globale. Cas concret : PR pour 5 CARTON → PO 5 CARTON → réception enregistre 60 EACH dans le balance → issues à 1 EACH par WO. Trap classique : l'opérateur saisit la qty en EACH dans un PR au lieu d'en CARTON — il pense commander 5 CARTON et ne reçoit que 5 EACH (donc 12× moins que l'intention). Maximo respecte toujours la conversion lors du passage receipt → balance.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 5.1 — Add/Modify Units of Measure + Add/Modify Conversions</li>
@@ -15961,6 +16714,50 @@ graph TD
           <li>Action : Add/Modify Commodity Codes.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-5-2-commodity" data-mcq-uid="c1000-208-mcq-5-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-5-2-commodity-c1000-208-mcq-5-2-001">
+  <pre class="mermaid">
+graph TD
+  ROOT["<b>Commodity hierarchy</b><br/>2 levels FIXED<br/>(STU §5.2)"]:::root
+
+  ELEC["<b>Commodity Group</b><br/>ELEC — Electrical"]:::group
+  MECH["<b>Commodity Group</b><br/>MECH — Mechanical"]:::group
+  INSTR["<b>Commodity Group</b><br/>INSTR — Instrumentation"]:::group
+
+  EM["Code: ELEC-MOTOR<br/>GL 6210"]:::code
+  EB["Code: ELEC-BEARING<br/>GL 6220"]:::code
+  MP["Code: MECH-PUMP<br/>GL 6310"]:::code
+  MV["Code: MECH-VALVE<br/>GL 6320"]:::code
+  IT["Code: INSTR-TRANS<br/>GL 6410"]:::code
+
+  ITEM["Item Master record<br/>references<br/>Commodity Group + Code"]:::item
+  POPR["PR / PO / Issue<br/>auto-pulls<br/>GL account"]:::flow
+
+  ROOT --> ELEC
+  ROOT --> MECH
+  ROOT --> INSTR
+  ELEC --> EM
+  ELEC --> EB
+  MECH --> MP
+  MECH --> MV
+  INSTR --> IT
+  EM -.-> ITEM
+  EB -.-> ITEM
+  MP -.-> ITEM
+  MV -.-> ITEM
+  IT -.-> ITEM
+  ITEM --> POPR
+
+  classDef root fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef group fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef code fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef item fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef flow fill:#D1FAE5,stroke:#178A66,color:#0F172A,font-weight:600;
+  </pre>
+  <figcaption>Hiérarchie Commodity per STU §5.2 — <strong>2 niveaux figés, pas de 3e niveau permis</strong>. Niveau 1 : Commodity Group (ex. ELEC, MECH, INSTR). Niveau 2 : Commodity Code (ex. ELEC-MOTOR, MECH-PUMP). Chaque Commodity Code peut être lié à un <strong>GL account</strong> (6210, 6310, etc.) qui sera automatiquement repris lors de la création d'un PR/PO ou d'une issue référençant un item porteur de ce Code. Maintenance via l'action <strong>Add/Modify Commodity Codes</strong>. Les service items (type Service) peuvent aussi porter un Commodity Code — utilisé pour catégoriser les prestations externes. Trap : essayer de créer une 3e niveau (sub-code) — Maximo ne le supporte pas, il faut multiplier les codes plats.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 5.2 — Reference items to a Commodity Group and Commodity Code (2-level hierarchy)</li>
@@ -16333,6 +17130,14 @@ graph TD
           <li>Le rate impacte la transaction, pas seulement le reporting.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-5-3-condition" data-mcq-uid="c1000-208-mcq-5-3-001">
+        <figure class="lesson-chart" data-lesson="c1000-208-5-3-condition-c1000-208-mcq-5-3-001">
+  <div class="echart-init" data-lesson="c1000-208-5-3-condition-c1000-208-mcq-5-3-001" style="width:100%;height:340px;"
+       data-config='{"title":{"text":"Condition codes — issue cost = base_cost × condition_rate","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"shadow"},"formatter":"{b}<br/>Cost: ${c}<br/>Rate vs NEW: shown on bar"},"grid":{"left":64,"right":24,"top":48,"bottom":56},"xAxis":{"type":"category","name":"Condition code","nameLocation":"middle","nameGap":28,"data":["NEW","USED","REFURB"]},"yAxis":{"type":"value","name":"Item cost (USD)","min":0,"max":120,"axisLabel":{"formatter":"${value}"}},"series":[{"name":"Item cost","type":"bar","barWidth":"55%","itemStyle":{"color":"#1D9E75"},"data":[{"value":100,"itemStyle":{"color":"#1D9E75"}},{"value":70,"itemStyle":{"color":"#F59E0B"}},{"value":50,"itemStyle":{"color":"#3B82F6"}}],"label":{"show":true,"position":"top","formatter":"${@}","color":"#0F172A","fontWeight":600},"markPoint":{"symbol":"rect","symbolSize":[80,22],"itemStyle":{"color":"transparent"},"label":{"show":true,"color":"#475569","fontSize":11},"data":[{"coord":["NEW",100],"value":"rate 1.0"},{"coord":["USED",70],"value":"rate 0.7"},{"coord":["REFURB",50],"value":"rate 0.5"}]}}]}'></div>
+  <figcaption>Les condition rates cascadent depuis un coût de base (NEW = $100). Selon STU §5.3 et SAM Q9 — réponse c : les condition codes sont configurés sur l'application <strong>Item Master</strong>. Chaque taux est un pourcentage du coût NEW, stocké sur l'onglet Condition Codes de l'Item Master ; le taux est appliqué à la réception et à l'issue, donc une pièce refurbished débite le work order correctement à $50 au lieu de $100. Trap : changer un taux rétroactivement ne re-cost PAS le stock on-hand existant.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 5.3 — Condition rate impacts inventory costs</li>
@@ -16747,6 +17552,50 @@ flowchart TD
           <li>QA approval = transition WINSP → COMP + transfert auto.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-6-1-receiving" data-mcq-uid="c1000-208-mcq-6-1-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-6-1-receiving-c1000-208-mcq-6-1-001">
+  <pre class="mermaid">
+flowchart TD
+  PO["PO created<br/>(approved + sent to vendor)"]:::start
+  RECV["Goods physically received<br/>at receiving dock"]:::action
+  Q1{"Item flag<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
+  HOLD["<b>Holding Location</b><br/>status = WINSP<br/>(waiting inspection)<br/>NOT in active balance"]:::warn
+  QA{"QA inspection<br/>result ?"}:::decision
+  QUAR["Quarantine bin<br/>Receipt status: REJECTED<br/>→ Void or Return-to-Vendor<br/>(per STU §6.2)"]:::stop
+  STORE["Active storeroom bin<br/>balance += receipt_qty<br/>status = STORES"]:::ok
+  Q2{"Item flag<br/><b>Rotating ?</b>"}:::decision
+  SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
+  Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
+  IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
+  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::end_
+
+  PO --> RECV
+  RECV --> Q1
+  Q1 -- Yes --> HOLD
+  HOLD --> QA
+  QA -- Reject --> QUAR
+  QA -- Approve --> STORE
+  Q1 -- No --> STORE
+  STORE --> Q2
+  Q2 -- No --> DONE
+  Q2 -- Yes --> SERIAL
+  SERIAL --> Q3
+  Q3 -- No --> DONE
+  Q3 -- Yes --> IAS
+  IAS --> DONE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
+  classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Cascade de réception selon le STU §6.1. Le flag <strong>Inspect on Receipt</strong> redirige les goods vers la Holding Location avec status <strong>WINSP</strong> jusqu'à ce que QA approve ; seulement après ils atteignent la active bin. Pour les rotating items, chaque unité reçue déclenche une Asset Serialization (un ASSETNUM par unité, ASSET cost method). Si une Item Assembly Structure est définie sur le parent, l'IAS est auto-appliquée — les child ASSETNUM records sont créés dans la même cascade.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 6.1 — Holding Location + Receiving statuses</li>
@@ -17321,6 +18170,36 @@ flowchart TD
           <li>Jamais de DELETE direct ; toujours via reversing row.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-6-2-voidreturn" data-mcq-uid="c1000-208-mcq-6-2-001">
+        <figure class="lesson-diagram" data-lesson="c1000-208-6-2-voidreturn-c1000-208-mcq-6-2-001">
+  <pre class="mermaid">
+flowchart TD
+  RECEIPT["MATRECTRANS row exists<br/>(receipt completed)"]:::start
+  CHECK{"Does this receipt have<br/>any <b>downstream transaction</b> ?<br/>(issue / transfer / inspection<br/>completed / WO charge)"}:::decision
+
+  VOID_OK["<b>Void Receipt</b> path<br/>(STU §6.2)"]:::ok
+  VOID_TX["MATRECTRANS reversed<br/>balance -= receipt_qty<br/>Receipt status = VOIDED<br/>GL receipt entry reversed"]:::action
+  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::end_
+
+  RETURN_REQ["<b>Return path mandatory</b><br/>cannot Void — would orphan<br/>downstream transactions"]:::warn
+  RETURN_TX["Inventory Usage<br/><b>Return type</b> row<br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(or Return-to-Vendor PO line)"]:::action
+  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::end_
+
+  RECEIPT --> CHECK
+  CHECK -- No --> VOID_OK --> VOID_TX --> VOID_END
+  CHECK -- Yes --> RETURN_REQ --> RETURN_TX --> RETURN_END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Décision Void vs Return per STU §6.2. La règle est binaire et stricte : <strong>Void Receipt</strong> n'est autorisé que si le receipt n'a <em>aucune transaction downstream</em> (pas d'issue, pas de transfert, pas d'inspection terminée, pas de charge à un WO). Dans ce cas, Maximo opère une réversion complète (MATRECTRANS reversed, balance et GL entry annulés, status VOIDED). Si une transaction downstream existe, le Void est <strong>refusé</strong> — il faut passer par le <strong>Return path</strong> via Inventory Usage (Return type row) ou Return-to-Vendor (PO ligne dédiée). Pourquoi ? Voider un receipt qui a déjà alimenté une issue laisserait l'issue orpheline (référençant un receipt inexistant), et la GL deviendrait incohérente (l'inventory expense aurait été débité sur un receipt annulé). Le Return path préserve l'historique : le receipt reste valide, le retour est tracé séparément.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 6.2 — Void Receipts: define rules for voiding receipts</li>
@@ -17752,6 +18631,14 @@ flowchart TD
           <li>Drives cycle count frequency automatically.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-7-1-abc" data-mcq-uid="c1000-208-mcq-7-1-001">
+        <figure class="lesson-chart" data-lesson="c1000-208-7-1-abc-c1000-208-mcq-7-1-001">
+  <div class="echart-init" data-lesson="c1000-208-7-1-abc-c1000-208-mcq-7-1-001" style="width:100%;height:400px;"
+       data-config='{"title":{"text":"ABC Pareto — ~20% of items hold ~80% of inventory value","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"cross"}},"legend":{"data":["Item value (USD)","Cumulative % value"],"bottom":4},"grid":{"left":64,"right":64,"top":56,"bottom":56},"xAxis":{"type":"category","name":"Items ranked by value (descending)","nameLocation":"middle","nameGap":28,"data":["1","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]},"yAxis":[{"type":"value","name":"Item value (USD)","position":"left","axisLabel":{"formatter":"${value}"}},{"type":"value","name":"Cumulative %","position":"right","min":0,"max":100,"axisLabel":{"formatter":"{value}%"},"splitLine":{"show":false}}],"series":[{"name":"Item value (USD)","type":"bar","yAxisIndex":0,"itemStyle":{"color":"#1D9E75"},"data":[1200,950,820,700,600,500,420,360,300,250,210,180,150,130,110,95,80,68,58,50,42],"markArea":{"silent":true,"data":[[{"name":"Class A (top 20% items, ~80% value)","xAxis":"1","itemStyle":{"color":"rgba(245,158,11,0.18)"},"label":{"position":"top","color":"#B45309","fontWeight":600}},{"xAxis":"20"}],[{"name":"Class B (next 30%, ~15% value)","xAxis":"20","itemStyle":{"color":"rgba(29,158,117,0.14)"},"label":{"position":"top","color":"#178A66","fontWeight":600}},{"xAxis":"50"}],[{"name":"Class C (last 50%, ~5% value)","xAxis":"50","itemStyle":{"color":"rgba(148,163,184,0.18)"},"label":{"position":"top","color":"#475569","fontWeight":600}},{"xAxis":"100"}]]}},{"name":"Cumulative % value","type":"line","yAxisIndex":1,"smooth":true,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#EF4444"},"data":[18,38,55,68,77,82,86,89,91,93,94.5,95.5,96.3,96.9,97.4,97.8,98.2,98.5,98.7,98.9,99]}]}'></div>
+  <figcaption>Principe de Pareto (selon STU §7.1 et RAG Query 3). Les axes du chart montrent Class A ≈ <strong>top 20% des items</strong> représentant ~80% de la valeur d'inventaire — ce sont des proportions par item count (règle empirique du domaine). Les defaults configurables de Maximo expriment les breakpoints différemment : <strong>cumulative-value cuts</strong> à A=30% / B=30% / C=40% définis dans <code>Organizations app → Inventory Options → ABC Breakpoints</code>. Les deux coexistent sur des axes différents (item count % vs cumulative value %) et ne se contredisent pas. La cadence de cycle-count cascade automatiquement depuis la classe : items A tous les 30 jours, B tous les 60, C tous les 90. Selon SAM Q10 — réponse a : les ABC categories sont mises à jour manuellement dans l'application <strong>Inventory</strong>.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 7.1 — Identify and explain ABC Analysis</li>
@@ -17923,6 +18810,14 @@ flowchart TD
           <li>L'edit se fait sur le record item dans Inventory.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-7-1-abc" data-mcq-uid="c1000-208-mcq-7-1-004">
+        <figure class="lesson-chart" data-lesson="c1000-208-7-1-abc-c1000-208-mcq-7-1-004">
+  <div class="echart-init" data-lesson="c1000-208-7-1-abc-c1000-208-mcq-7-1-004" style="width:100%;height:400px;"
+       data-config='{"title":{"text":"ABC Pareto — ~20% of items hold ~80% of inventory value","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"cross"}},"legend":{"data":["Item value (USD)","Cumulative % value"],"bottom":4},"grid":{"left":64,"right":64,"top":56,"bottom":56},"xAxis":{"type":"category","name":"Items ranked by value (descending)","nameLocation":"middle","nameGap":28,"data":["1","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]},"yAxis":[{"type":"value","name":"Item value (USD)","position":"left","axisLabel":{"formatter":"${value}"}},{"type":"value","name":"Cumulative %","position":"right","min":0,"max":100,"axisLabel":{"formatter":"{value}%"},"splitLine":{"show":false}}],"series":[{"name":"Item value (USD)","type":"bar","yAxisIndex":0,"itemStyle":{"color":"#1D9E75"},"data":[1200,950,820,700,600,500,420,360,300,250,210,180,150,130,110,95,80,68,58,50,42],"markArea":{"silent":true,"data":[[{"name":"Class A (top 20% items, ~80% value)","xAxis":"1","itemStyle":{"color":"rgba(245,158,11,0.18)"},"label":{"position":"top","color":"#B45309","fontWeight":600}},{"xAxis":"20"}],[{"name":"Class B (next 30%, ~15% value)","xAxis":"20","itemStyle":{"color":"rgba(29,158,117,0.14)"},"label":{"position":"top","color":"#178A66","fontWeight":600}},{"xAxis":"50"}],[{"name":"Class C (last 50%, ~5% value)","xAxis":"50","itemStyle":{"color":"rgba(148,163,184,0.18)"},"label":{"position":"top","color":"#475569","fontWeight":600}},{"xAxis":"100"}]]}},{"name":"Cumulative % value","type":"line","yAxisIndex":1,"smooth":true,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#EF4444"},"data":[18,38,55,68,77,82,86,89,91,93,94.5,95.5,96.3,96.9,97.4,97.8,98.2,98.5,98.7,98.9,99]}]}'></div>
+  <figcaption>Principe de Pareto (selon STU §7.1 et RAG Query 3). Les axes du chart montrent Class A ≈ <strong>top 20% des items</strong> représentant ~80% de la valeur d'inventaire — ce sont des proportions par item count (règle empirique du domaine). Les defaults configurables de Maximo expriment les breakpoints différemment : <strong>cumulative-value cuts</strong> à A=30% / B=30% / C=40% définis dans <code>Organizations app → Inventory Options → ABC Breakpoints</code>. Les deux coexistent sur des axes différents (item count % vs cumulative value %) et ne se contredisent pas. La cadence de cycle-count cascade automatiquement depuis la classe : items A tous les 30 jours, B tous les 60, C tous les 90. Selon SAM Q10 — réponse a : les ABC categories sont mises à jour manuellement dans l'application <strong>Inventory</strong>.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Q10 — verbatim</li>
@@ -18294,6 +19189,59 @@ flowchart TD
           <li>Driven by CYCLECNTDAYS + LASTCOUNTDATE.</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-7-2" data-mcq-uid="c1000-208-mcq-7-2-001">
+        <figure class="lesson-table" data-lesson="c1000-208-7-2-c1000-208-mcq-7-2-001">
+  <table class="compare-table">
+    <caption>Les 7 Sample Types lors de la génération d'un Count Book dans Maximo Inventory.</caption>
+    <thead>
+      <tr>
+        <th>Sample type</th>
+        <th>Filter criterion</th>
+        <th>Use case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ALL</code></td>
+        <td>Every active item in the storeroom regardless of category.</td>
+        <td>Annual full physical count.</td>
+      </tr>
+      <tr>
+        <td><code>BIN</code></td>
+        <td>Items in a specific bin number (or list of bins).</td>
+        <td>Targeted recount when a specific bin shows variance.</td>
+      </tr>
+      <tr>
+        <td><code>CNTFREQ</code></td>
+        <td>Items whose Cycle Count Frequency is due based on the date stamp.</td>
+        <td>Routine cycle counting; combined with ABC, drives the calendar.</td>
+      </tr>
+      <tr>
+        <td><code>ICG</code></td>
+        <td>Items belonging to a specific Inventory Count Group.</td>
+        <td>Group-driven counts (by criticality, project, location).</td>
+      </tr>
+      <tr>
+        <td><code>ITEM</code></td>
+        <td>One specific item number (or a defined list).</td>
+        <td>Spot-count after suspicious transaction history.</td>
+      </tr>
+      <tr>
+        <td><code>ROTATING</code></td>
+        <td>Only items with the Rotating? flag = true.</td>
+        <td>Asset audit — verify each rotating asset is physically present.</td>
+      </tr>
+      <tr>
+        <td><code>TOOLS</code></td>
+        <td>Only Tool-type items.</td>
+        <td>Tool crib audit; tools are high-loss-risk and require frequent counts.</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source : IBM Maximo Manage v9.1 Study Guide §7.2.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>STU 7.2 — Sample Types verbatim</li>
@@ -18853,6 +19801,84 @@ flowchart TD
           <li>Comparison : count vs balance (PAS hard reserved, PAS calculated).</li>
         </ul>
       </div>
+    
+      <aside class="mcq-mini-figure" data-source-figure="c1000-208-7-3-polarity" data-mcq-uid="c1000-208-mcq-7-3-001">
+        <figure class="lesson-chart" data-lesson="c1000-208-7-3-polarity-c1000-208-mcq-7-3-001">
+  <svg viewBox="0 0 880 360" width="100%" height="auto" role="img"
+       aria-label="Polarité des flèches sur la Reconciliation Mismatched tab — Item A surplus vert, Item B déficit rouge"
+       style="display:block;max-width:100%;background:transparent;font-family:Inter, sans-serif;">
+
+    <!-- Title -->
+    <text x="440" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#0F172A">
+      Reconciliation Mismatched tab — arrow polarity (per SAM Q5)
+    </text>
+    <text x="440" y="48" text-anchor="middle" font-size="12" fill="#475569">
+      Green up arrow = last count &gt; current balance · Red down arrow = current balance &gt; last count
+    </text>
+
+    <!-- ITEM A — surplus (green up) -->
+    <rect x="60" y="80" width="340" height="240" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="230" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#0F172A">Item A — BEARING-6205</text>
+    <text x="230" y="126" text-anchor="middle" font-size="11" fill="#475569">Storeroom: CENTRAL-STORE</text>
+
+    <!-- Item A: bars -->
+    <text x="120" y="160" text-anchor="middle" font-size="10" fill="#475569">Current balance</text>
+    <rect x="100" y="170" width="40" height="100" fill="#94A3B8" stroke="#64748B" stroke-width="1" rx="4"/>
+    <text x="120" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#0F172A">10</text>
+
+    <text x="220" y="160" text-anchor="middle" font-size="10" fill="#475569">Last count</text>
+    <rect x="200" y="130" width="40" height="140" fill="#1D9E75" stroke="#178A66" stroke-width="1" rx="4"/>
+    <text x="220" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#0F172A">14</text>
+
+    <!-- Item A: green up arrow -->
+    <g transform="translate(310,200)">
+      <polygon points="0,-30 -22,0 -10,0 -10,30 10,30 10,0 22,0"
+               fill="#1D9E75" stroke="#178A66" stroke-width="2"/>
+    </g>
+    <text x="310" y="260" text-anchor="middle" font-size="14" font-weight="700" fill="#1D9E75">+4</text>
+    <text x="310" y="278" text-anchor="middle" font-size="10" fill="#178A66">SURPLUS</text>
+
+    <!-- Item A: caption -->
+    <text x="230" y="310" text-anchor="middle" font-size="11" fill="#475569" font-style="italic">
+      Last count (14) &gt; current balance (10) → green up
+    </text>
+
+    <!-- ITEM B — deficit (red down) -->
+    <rect x="480" y="80" width="340" height="240" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+    <text x="650" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="#0F172A">Item B — SEAL-MECH</text>
+    <text x="650" y="126" text-anchor="middle" font-size="11" fill="#475569">Storeroom: CENTRAL-STORE</text>
+
+    <!-- Item B: bars -->
+    <text x="540" y="160" text-anchor="middle" font-size="10" fill="#475569">Current balance</text>
+    <rect x="520" y="150" width="40" height="120" fill="#94A3B8" stroke="#64748B" stroke-width="1" rx="4"/>
+    <text x="540" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#0F172A">12</text>
+
+    <text x="640" y="160" text-anchor="middle" font-size="10" fill="#475569">Last count</text>
+    <rect x="620" y="190" width="40" height="80" fill="#EF4444" stroke="#991B1B" stroke-width="1" rx="4"/>
+    <text x="640" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#0F172A">8</text>
+
+    <!-- Item B: red down arrow -->
+    <g transform="translate(730,200)">
+      <polygon points="0,30 -22,0 -10,0 -10,-30 10,-30 10,0 22,0"
+               fill="#EF4444" stroke="#991B1B" stroke-width="2"/>
+    </g>
+    <text x="730" y="260" text-anchor="middle" font-size="14" font-weight="700" fill="#EF4444">−4</text>
+    <text x="730" y="278" text-anchor="middle" font-size="10" fill="#991B1B">DEFICIT</text>
+
+    <!-- Item B: caption -->
+    <text x="650" y="310" text-anchor="middle" font-size="11" fill="#475569" font-style="italic">
+      Current balance (12) &gt; last count (8) → red down
+    </text>
+
+    <!-- Footer rule -->
+    <line x1="60" y1="340" x2="820" y2="340" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="440" y="356" text-anchor="middle" font-size="11" fill="#94A3B8">
+      Inventory Counting Role-Based Application &gt; Reconciliation Mismatched tab
+    </text>
+  </svg>
+  <figcaption>Polarité des indicateurs sur la <strong>Reconciliation Mismatched tab</strong> de l'Inventory Counting Role-Based Application per STU §7.3 et SAM Q5 — réponse B. La règle est : <strong>flèche verte ↑ = last physical count &gt; current balance</strong> (surplus, on en a trouvé plus que prévu) ; <strong>flèche rouge ↓ = current balance &gt; last physical count</strong> (déficit, il en manque). Item A illustre le cas surplus (compté 14, balance 10 → +4) ; Item B illustre le cas déficit (balance 12, compté 8 → −4). Trap classique : interpréter la flèche verte comme "stock élevé est bien" alors qu'elle signale un écart positif à investiguer (réception non saisie ? double-comptage ? items rangés sans mouvement de stock ?). Tout écart, qu'il soit positif ou négatif, déclenche la même routine de reconciliation et le même posting GL de variance.</figcaption>
+</figure>
+      </aside>
     </div>
     <div class="mcq-sources"><strong>Sources:</strong><ul>
       <li>SAM Q5 — verbatim</li>
