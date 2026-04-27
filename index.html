@@ -10741,7 +10741,7 @@ flowchart TD
   CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
   STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
   SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
-  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
   STOP["No action<br/>(stock sufficient)"]:::stop
   SPECIAL{"Special-order<br/>item ?"}:::decision
   CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
@@ -10751,7 +10751,7 @@ flowchart TD
   PR_EXT["External PR<br/>to vendor"]:::action
   VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
   RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
   STATUS -- "Yes (eligible)" --> CHECK
@@ -10773,7 +10773,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Exécution du reorder selon le STU §2.2. Le déclencheur utilise la available position (balance + on-order − reservations). Les special-order items créent automatiquement un Item Master en <strong>PENDING</strong> (donc invisible dans les futurs reorder cycles) plus un ItemOrgDetails ACTIVE. La quantité d'ordre est toujours arrondie à la hausse au multiple d'EOQ (EOQ ≥ 1, selon SAM Q3 — réponse c). Le flag <strong>Use in PR/PO</strong> du Storeroom route la PR en interne (parent storeroom) ou en externe (vendor).</figcaption>
 </figure>
@@ -10874,7 +10874,7 @@ flowchart TD
   CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
   STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
   SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
-  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
   STOP["No action<br/>(stock sufficient)"]:::stop
   SPECIAL{"Special-order<br/>item ?"}:::decision
   CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
@@ -10884,7 +10884,7 @@ flowchart TD
   PR_EXT["External PR<br/>to vendor"]:::action
   VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
   RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
   STATUS -- "Yes (eligible)" --> CHECK
@@ -10906,7 +10906,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Exécution du reorder selon le STU §2.2. Le déclencheur utilise la available position (balance + on-order − reservations). Les special-order items créent automatiquement un Item Master en <strong>PENDING</strong> (donc invisible dans les futurs reorder cycles) plus un ItemOrgDetails ACTIVE. La quantité d'ordre est toujours arrondie à la hausse au multiple d'EOQ (EOQ ≥ 1, selon SAM Q3 — réponse c). Le flag <strong>Use in PR/PO</strong> du Storeroom route la PR en interne (parent storeroom) ou en externe (vendor).</figcaption>
 </figure>
@@ -11053,7 +11053,7 @@ flowchart TD
   CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
   STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
   SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
-  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
   STOP["No action<br/>(stock sufficient)"]:::stop
   SPECIAL{"Special-order<br/>item ?"}:::decision
   CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
@@ -11063,7 +11063,7 @@ flowchart TD
   PR_EXT["External PR<br/>to vendor"]:::action
   VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
   RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
   STATUS -- "Yes (eligible)" --> CHECK
@@ -11085,7 +11085,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Exécution du reorder selon le STU §2.2. Le déclencheur utilise la available position (balance + on-order − reservations). Les special-order items créent automatiquement un Item Master en <strong>PENDING</strong> (donc invisible dans les futurs reorder cycles) plus un ItemOrgDetails ACTIVE. La quantité d'ordre est toujours arrondie à la hausse au multiple d'EOQ (EOQ ≥ 1, selon SAM Q3 — réponse c). Le flag <strong>Use in PR/PO</strong> du Storeroom route la PR en interne (parent storeroom) ou en externe (vendor).</figcaption>
 </figure>
@@ -12080,7 +12080,7 @@ flowchart TD
   ROT["<b>Adjust Rotating Item</b><br/>Move ASSETNUM to / from storeroom<br/>balance derived from asset count<br/>(rotating = serialized 1-per-asset)"]:::action
   ROT_TX["ASSETMOVE row<br/>+ INVTRANS audit<br/>delta = ±1 per asset"]:::ok
 
-  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::end_
+  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::endNode
 
   TRIGGER --> CHOICE
   CHOICE -- "Physical count cycle" --> PHYS
@@ -12096,7 +12096,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   </pre>
@@ -12201,7 +12201,7 @@ flowchart TD
   ROT["<b>Adjust Rotating Item</b><br/>Move ASSETNUM to / from storeroom<br/>balance derived from asset count<br/>(rotating = serialized 1-per-asset)"]:::action
   ROT_TX["ASSETMOVE row<br/>+ INVTRANS audit<br/>delta = ±1 per asset"]:::ok
 
-  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::end_
+  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::endNode
 
   TRIGGER --> CHOICE
   CHOICE -- "Physical count cycle" --> PHYS
@@ -12217,7 +12217,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   </pre>
@@ -12625,14 +12625,14 @@ flowchart LR
   A1 --> A2 --> A3 --> A4
   B1 --> B2 --> B3 --> B4
 
-  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::end_
+  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::endNode
   A4 --> END
   B4 --> END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Deux chemins de reconciliation per STU §3.3. <strong>Path A (Inventory app)</strong> : reconcile item-par-item, immédiat, idéal pour un spot-count après suspicion (recompte ciblé). Audit trail granulaire — une INVTRANS par SKU. <strong>Path B (Count Books)</strong> : reconcile en batch via un Sample Type (CNTFREQ pour le cycle régulier, ICG pour un groupe métier, ROTATING pour audit asset, etc.). Plus efficient pour les campagnes périodiques (cycle counts, annual full count). Les deux chemins produisent les mêmes INVTRANS rows en aval ; le Count Book ajoute une couche d'orchestration (statut POSTED / PARTIAL, séparation des duties counter / approver). Trap : utiliser Inventory app pour un cycle count complet — perte de traçabilité au niveau du livre, et pas de séparation des duties SOX.</figcaption>
 </figure>
@@ -12740,14 +12740,14 @@ flowchart LR
   A1 --> A2 --> A3 --> A4
   B1 --> B2 --> B3 --> B4
 
-  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::end_
+  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::endNode
   A4 --> END
   B4 --> END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Deux chemins de reconciliation per STU §3.3. <strong>Path A (Inventory app)</strong> : reconcile item-par-item, immédiat, idéal pour un spot-count après suspicion (recompte ciblé). Audit trail granulaire — une INVTRANS par SKU. <strong>Path B (Count Books)</strong> : reconcile en batch via un Sample Type (CNTFREQ pour le cycle régulier, ICG pour un groupe métier, ROTATING pour audit asset, etc.). Plus efficient pour les campagnes périodiques (cycle counts, annual full count). Les deux chemins produisent les mêmes INVTRANS rows en aval ; le Count Book ajoute une couche d'orchestration (statut POSTED / PARTIAL, séparation des duties counter / approver). Trap : utiliser Inventory app pour un cycle count complet — perte de traçabilité au niveau du livre, et pas de séparation des duties SOX.</figcaption>
 </figure>
@@ -13102,7 +13102,7 @@ flowchart TD
 
   STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
   STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::end_
+  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
@@ -13119,7 +13119,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   </pre>
@@ -13226,7 +13226,7 @@ flowchart TD
 
   STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
   STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::end_
+  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
@@ -13243,7 +13243,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   </pre>
@@ -13340,7 +13340,7 @@ flowchart TD
 
   STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
   STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::end_
+  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
@@ -13357,7 +13357,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   </pre>
@@ -13957,7 +13957,7 @@ flowchart TD
   F2["Add a Return type row<br/>NO original issue reference<br/>audit note = found"]:::action
   F3["balance += qty<br/>INVTRANS type=RETURN<br/>(reason code = FOUND)"]:::ok
 
-  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::end_
+  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::endNode
 
   TRIGGER --> WHICH
   WHICH -- "Standard item return" --> N1 --> N2 --> N3 --> END
@@ -13968,7 +13968,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Trois chemins de retour per STU §4.2. <strong>Branche 1 (non-rotating)</strong> : un Return type row dans Inventory Usage référence l'issue originale — balance += qty, INVTRANS type=RETURN. <strong>Branche 2 (rotating, SAM Q7 — réponse D)</strong> : Return type row + ASSETNUM obligatoire — l'asset reprend sa place au storeroom à sa pleine valeur (couche NEW cost), avec un ASSETMOVE row qui trace la relocalisation. C'est la seule façon correcte de remettre un rotating asset en stock à pleine valeur — pas via un Asset Move manuel, pas via une mise à jour directe de la table Inventory Balances. <strong>Branche 3 (found item)</strong> : item physiquement retrouvé sans référence d'issue — Return type row sans original issue, reason code = FOUND, balance += qty. Trap : utiliser un Asset Move standalone pour un rotating item — le balance ne se met pas à jour côté Inventory.</figcaption>
 </figure>
@@ -14070,7 +14070,7 @@ flowchart TD
   F2["Add a Return type row<br/>NO original issue reference<br/>audit note = found"]:::action
   F3["balance += qty<br/>INVTRANS type=RETURN<br/>(reason code = FOUND)"]:::ok
 
-  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::end_
+  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::endNode
 
   TRIGGER --> WHICH
   WHICH -- "Standard item return" --> N1 --> N2 --> N3 --> END
@@ -14081,7 +14081,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Trois chemins de retour per STU §4.2. <strong>Branche 1 (non-rotating)</strong> : un Return type row dans Inventory Usage référence l'issue originale — balance += qty, INVTRANS type=RETURN. <strong>Branche 2 (rotating, SAM Q7 — réponse D)</strong> : Return type row + ASSETNUM obligatoire — l'asset reprend sa place au storeroom à sa pleine valeur (couche NEW cost), avec un ASSETMOVE row qui trace la relocalisation. C'est la seule façon correcte de remettre un rotating asset en stock à pleine valeur — pas via un Asset Move manuel, pas via une mise à jour directe de la table Inventory Balances. <strong>Branche 3 (found item)</strong> : item physiquement retrouvé sans référence d'issue — Return type row sans original issue, reason code = FOUND, balance += qty. Trap : utiliser un Asset Move standalone pour un rotating item — le balance ne se met pas à jour côté Inventory.</figcaption>
 </figure>
@@ -14553,7 +14553,7 @@ flowchart TD
   DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
   SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
 
-  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::end_
+  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::endNode
 
   START --> Q1
   Q1 -- Yes --> DIRECT
@@ -14565,7 +14565,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
   classDef warn fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef endNode fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
   </pre>
   <figcaption>Décision de transfert inter-sites selon le STU §4.3. Les déplacements même-site se résolvent comme un Direct Transfer (Inventory app, swap de balance instantané). Les déplacements inter-sites <strong>doivent</strong> utiliser un Shipment Transfer : crée un shipment record, décrémente la source au ship-out, garde en transit, puis incrémente la destination au shipment receipt. Les inspections (flag Inspect on Receipt?) sont honorées côté destination.</figcaption>
 </figure>
@@ -14656,7 +14656,7 @@ flowchart TD
   DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
   SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
 
-  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::end_
+  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::endNode
 
   START --> Q1
   Q1 -- Yes --> DIRECT
@@ -14668,7 +14668,7 @@ flowchart TD
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
   classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
   classDef warn fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef endNode fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
   </pre>
   <figcaption>Décision de transfert inter-sites selon le STU §4.3. Les déplacements même-site se résolvent comme un Direct Transfer (Inventory app, swap de balance instantané). Les déplacements inter-sites <strong>doivent</strong> utiliser un Shipment Transfer : crée un shipment record, décrémente la source au ship-out, garde en transit, puis incrémente la destination au shipment receipt. Les inspections (flag Inspect on Receipt?) sont honorées côté destination.</figcaption>
 </figure>
@@ -16321,7 +16321,7 @@ graph LR
   CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(item-specific override)"]:::warn
   RECV["<b>Receipt</b><br/>5 × 12 = <b>60 EACH</b><br/>recorded in storeroom"]:::ok
   STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stored as Issue Unit)"]:::action
-  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::end_
+  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::endNode
 
   PR ==> PO ==> CONV ==> RECV ==> STORE ==> ISSUE
 
@@ -16332,7 +16332,7 @@ graph LR
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef note fill:#F1F5F9,stroke:#94A3B8,color:#475569,font-style:italic;
   </pre>
   <figcaption>Conversion Order Unit ↔ Issue Unit per STU §5.1. L'Item Master porte deux UoM : <strong>Order Unit</strong> (CARTON, ce que voit le fournisseur) et <strong>Issue Unit</strong> (EACH, ce que voit le technicien). Le facteur de conversion (1 CARTON = 12 EACH) peut être défini globalement (UoM table) OU spécifiquement sur l'item — la conversion item-specific <strong>override</strong> la conversion globale. Cas concret : PR pour 5 CARTON → PO 5 CARTON → réception enregistre 60 EACH dans le balance → issues à 1 EACH par WO. Trap classique : l'opérateur saisit la qty en EACH dans un PR au lieu d'en CARTON — il pense commander 5 CARTON et ne reçoit que 5 EACH (donc 12× moins que l'intention). Maximo respecte toujours la conversion lors du passage receipt → balance.</figcaption>
@@ -16422,7 +16422,7 @@ graph LR
   CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(item-specific override)"]:::warn
   RECV["<b>Receipt</b><br/>5 × 12 = <b>60 EACH</b><br/>recorded in storeroom"]:::ok
   STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stored as Issue Unit)"]:::action
-  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::end_
+  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::endNode
 
   PR ==> PO ==> CONV ==> RECV ==> STORE ==> ISSUE
 
@@ -16433,7 +16433,7 @@ graph LR
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   classDef note fill:#F1F5F9,stroke:#94A3B8,color:#475569,font-style:italic;
   </pre>
   <figcaption>Conversion Order Unit ↔ Issue Unit per STU §5.1. L'Item Master porte deux UoM : <strong>Order Unit</strong> (CARTON, ce que voit le fournisseur) et <strong>Issue Unit</strong> (EACH, ce que voit le technicien). Le facteur de conversion (1 CARTON = 12 EACH) peut être défini globalement (UoM table) OU spécifiquement sur l'item — la conversion item-specific <strong>override</strong> la conversion globale. Cas concret : PR pour 5 CARTON → PO 5 CARTON → réception enregistre 60 EACH dans le balance → issues à 1 EACH par WO. Trap classique : l'opérateur saisit la qty en EACH dans un PR au lieu d'en CARTON — il pense commander 5 CARTON et ne reçoit que 5 EACH (donc 12× moins que l'intention). Maximo respecte toujours la conversion lors du passage receipt → balance.</figcaption>
@@ -17584,7 +17584,7 @@ flowchart TD
   SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
   Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
   IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
-  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::end_
+  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::endNode
 
   PO --> RECV
   RECV --> Q1
@@ -17607,7 +17607,7 @@ flowchart TD
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
   classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef endNode fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
   </pre>
   <figcaption>Cascade de réception selon le STU §6.1. Le flag <strong>Inspect on Receipt</strong> redirige les goods vers la Holding Location avec status <strong>WINSP</strong> jusqu'à ce que QA approve ; seulement après ils atteignent la active bin. Pour les rotating items, chaque unité reçue déclenche une Asset Serialization (un ASSETNUM par unité, ASSET cost method). Si une Item Assembly Structure est définie sur le parent, l'IAS est auto-appliquée — les child ASSETNUM records sont créés dans la même cascade.</figcaption>
 </figure>
@@ -17700,7 +17700,7 @@ flowchart TD
   SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
   Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
   IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
-  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::end_
+  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::endNode
 
   PO --> RECV
   RECV --> Q1
@@ -17723,7 +17723,7 @@ flowchart TD
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
   classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
   classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
-  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef endNode fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
   </pre>
   <figcaption>Cascade de réception selon le STU §6.1. Le flag <strong>Inspect on Receipt</strong> redirige les goods vers la Holding Location avec status <strong>WINSP</strong> jusqu'à ce que QA approve ; seulement après ils atteignent la active bin. Pour les rotating items, chaque unité reçue déclenche une Asset Serialization (un ASSETNUM par unité, ASSET cost method). Si une Item Assembly Structure est définie sur le parent, l'IAS est auto-appliquée — les child ASSETNUM records sont créés dans la même cascade.</figcaption>
 </figure>
@@ -18210,11 +18210,11 @@ flowchart TD
 
   VOID_OK["<b>Void Receipt</b> path<br/>(STU §6.2)"]:::ok
   VOID_TX["MATRECTRANS reversed<br/>balance -= receipt_qty<br/>Receipt status = VOIDED<br/>GL receipt entry reversed"]:::action
-  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::end_
+  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::endNode
 
   RETURN_REQ["<b>Return path mandatory</b><br/>cannot Void — would orphan<br/>downstream transactions"]:::warn
   RETURN_TX["Inventory Usage<br/><b>Return type</b> row<br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(or Return-to-Vendor PO line)"]:::action
-  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::end_
+  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::endNode
 
   RECEIPT --> CHECK
   CHECK -- No --> VOID_OK --> VOID_TX --> VOID_END
@@ -18225,7 +18225,7 @@ flowchart TD
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Décision Void vs Return per STU §6.2. La règle est binaire et stricte : <strong>Void Receipt</strong> n'est autorisé que si le receipt n'a <em>aucune transaction downstream</em> (pas d'issue, pas de transfert, pas d'inspection terminée, pas de charge à un WO). Dans ce cas, Maximo opère une réversion complète (MATRECTRANS reversed, balance et GL entry annulés, status VOIDED). Si une transaction downstream existe, le Void est <strong>refusé</strong> — il faut passer par le <strong>Return path</strong> via Inventory Usage (Return type row) ou Return-to-Vendor (PO ligne dédiée). Pourquoi ? Voider un receipt qui a déjà alimenté une issue laisserait l'issue orpheline (référençant un receipt inexistant), et la GL deviendrait incohérente (l'inventory expense aurait été débité sur un receipt annulé). Le Return path préserve l'historique : le receipt reste valide, le retour est tracé séparément.</figcaption>
 </figure>
@@ -18312,11 +18312,11 @@ flowchart TD
 
   VOID_OK["<b>Void Receipt</b> path<br/>(STU §6.2)"]:::ok
   VOID_TX["MATRECTRANS reversed<br/>balance -= receipt_qty<br/>Receipt status = VOIDED<br/>GL receipt entry reversed"]:::action
-  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::end_
+  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::endNode
 
   RETURN_REQ["<b>Return path mandatory</b><br/>cannot Void — would orphan<br/>downstream transactions"]:::warn
   RETURN_TX["Inventory Usage<br/><b>Return type</b> row<br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(or Return-to-Vendor PO line)"]:::action
-  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::end_
+  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::endNode
 
   RECEIPT --> CHECK
   CHECK -- No --> VOID_OK --> VOID_TX --> VOID_END
@@ -18327,7 +18327,7 @@ flowchart TD
   classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
   classDef ok fill:#D1FAE5,stroke:#178A66,color:#0F172A;
   classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-weight:600;
-  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef endNode fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
   </pre>
   <figcaption>Décision Void vs Return per STU §6.2. La règle est binaire et stricte : <strong>Void Receipt</strong> n'est autorisé que si le receipt n'a <em>aucune transaction downstream</em> (pas d'issue, pas de transfert, pas d'inspection terminée, pas de charge à un WO). Dans ce cas, Maximo opère une réversion complète (MATRECTRANS reversed, balance et GL entry annulés, status VOIDED). Si une transaction downstream existe, le Void est <strong>refusé</strong> — il faut passer par le <strong>Return path</strong> via Inventory Usage (Return type row) ou Return-to-Vendor (PO ligne dédiée). Pourquoi ? Voider un receipt qui a déjà alimenté une issue laisserait l'issue orpheline (référençant un receipt inexistant), et la GL deviendrait incohérente (l'inventory expense aurait été débité sur un receipt annulé). Le Return path préserve l'historique : le receipt reste valide, le retour est tracé séparément.</figcaption>
 </figure>
@@ -20635,8 +20635,13 @@ updateUI();
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // Save mermaid source BEFORE init so we can recover if a render fails
+    document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => {
+      if (!el.dataset.mermaidSrc) el.dataset.mermaidSrc = el.textContent.trim();
+    });
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,
+      securityLevel: 'loose',
       theme: 'base',
       themeVariables: {
         primaryColor: '#1D9E75',
@@ -20652,6 +20657,10 @@ updateUI();
       },
       flowchart: { curve: 'basis', padding: 16 },
       stateDiagram: { padding: 16 },
+    });
+    // Run mermaid manually after config is fully applied
+    mermaid.run({ querySelector: 'pre.mermaid, div.mermaid' }).catch(err => {
+      console.warn('Mermaid run failed:', err);
     });
   });
 </script>
