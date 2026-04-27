@@ -157,6 +157,15 @@
     .app { grid-template-columns: 1fr; }
     aside { position: static; height: auto; max-height: 300px; }
     main { padding: 24px 20px; }
+    .cert-switcher .cert-tab { padding: 6px 4px; font-size: 10px; min-width: 0; }
+    .cert-switcher .cert-tab .cert-tab-status { font-size: 8px; }
+    .section-group summary { font-size: 11px; }
+    .section-group li a { font-size: 12px; padding-right: 6px; }
+  }
+  @media (max-width: 480px) {
+    .cert-switcher { flex-direction: column; gap: 2px; }
+    .cert-switcher .cert-tab { width: 100%; padding: 5px 8px; }
+    .cert-switcher .cert-tab .cert-tab-status { display: inline; margin-left: 6px; }
   }
 
 
@@ -336,6 +345,22 @@
   .cert-switcher .cert-tab.active { background: var(--brand); color: white; box-shadow: 0 1px 3px rgba(29,158,117,0.3); }
   .cert-switcher .cert-tab[disabled] { opacity: 0.4; cursor: not-allowed; }
   .cert-switcher .cert-tab .cert-tab-status { display: block; font-size: 9px; font-weight: 600; opacity: 0.7; margin-top: 2px; text-transform: none; letter-spacing: 0; }
+
+
+  /* ========= Phase 2: illustrations + diagrams + charts + compare tables ========= */
+  .lesson-hero { margin: 12px 0 24px 0; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); background: var(--surface-2); }
+  .lesson-hero img { width: 100%; height: auto; display: block; }
+  .lesson-diagram, .lesson-chart, .lesson-table { margin: 20px 0; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; width: 100%; max-width: 100%; box-sizing: border-box; }
+  .lesson-diagram .scroll-x, .lesson-chart .scroll-x, .lesson-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .lesson-diagram .mermaid { background: transparent; min-height: 200px; }
+  .lesson-diagram svg, .lesson-chart svg { max-width: 100%; height: auto !important; }
+  .lesson-diagram figcaption, .lesson-chart figcaption, .lesson-table figcaption { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+  .compare-table { width: 100%; border-collapse: collapse; margin: 8px 0 4px 0; font-size: 13px; }
+  .compare-table caption { caption-side: top; text-align: left; font-weight: 600; color: var(--text-1); margin-bottom: 8px; font-size: 14px; }
+  .compare-table th { background: var(--brand); color: white; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.2px; }
+  .compare-table td { padding: 8px 12px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .compare-table tbody tr:hover { background: var(--brand-soft); }
+  .compare-table code { background: var(--surface-2); padding: 1px 6px; border-radius: 3px; font-size: 12px; color: var(--brand); }
 
 </style>
 </head>
@@ -8213,6 +8238,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Knowledge</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-1-1.svg" alt="C1000-208 lesson 1-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-1-1" id="lt-c1000-208-1-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-1-1" id="lt-c1000-208-1-1-s" class="lt-sit">
@@ -8264,6 +8292,117 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Numerical example — Condition-enabled valuation</strong>: NEW cost of a motor = $10,000. Condition codes: NEW = 100%, REFURBISHED = 70%, USED = 50%. A REFURBISHED issue charges the WO at $7,000. Stock balances are kept per condition (e.g. 5 NEW, 3 REFURBISHED, 1 USED), each line valued at its rate. Changing the rate retroactively does <strong>not</strong> re-cost the on-hand stock — only future issues use the new rate [EOTRAG query 9].</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-1-1-status">
+  <pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> PENDING: Insert new<br/>Item record
+  PENDING --> PLANNING: Promote for<br/>planning use
+  PLANNING --> PENDING: Revert<br/>(no transactions yet)
+  PLANNING --> ACTIVE: Change to Active<br/>(item usable)
+  PENDING --> ACTIVE: Direct activation<br/>(skip Planning)
+  ACTIVE --> PENDING_OBSOLETE: Mark for<br/>obsolescence
+  PENDING_OBSOLETE --> ACTIVE: Reactivate<br/>(reverse intent)
+  PENDING_OBSOLETE --> OBSOLETE: Balance = 0<br/>AND no open txns
+  OBSOLETE --> [*]
+  note right of PENDING
+    No PR / PO / issue / transfer
+    Used for special-order seed
+  end note
+  note right of ACTIVE
+    Full transactions allowed
+    PR, PO, issue, transfer, count
+  end note
+  note left of OBSOLETE
+    Terminal. No reactivation.
+    No transactions allowed.
+  end note
+  </pre>
+  <figcaption>Item Status legal transitions per STU §1.1. Inheritance rules cascade across Organization → Item Master → Inventory levels: an item's status at Inventory level cannot exceed (be more permissive than) its Item Master status, which cannot exceed its Organization status. Setting an item to OBSOLETE requires zero balance and no open transactions.</figcaption>
+</figure>
+
+<figure class="lesson-diagram" data-lesson="c1000-208-1-1-ias">
+  <pre class="mermaid">
+graph TD
+  A["MOTOR-ASSY<br/><i>Rotating parent item</i><br/>qty: 1"]:::parent
+  A --> B["PUMP-CENTRIFUGAL<br/>qty: 1"]:::child
+  A --> C["BEARING-6205<br/>qty: 2"]:::child
+  A --> D["SEAL-MECH<br/>qty: 1"]:::child
+  E[/"Mutable tree<br/>Add / delete children<br/>Change quantities<br/>(SAM Q1 — answer c)"/]:::note
+  A -.-> E
+
+  classDef parent fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  classDef child fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  classDef note fill:#FEF3C7,stroke:#F59E0B,color:#78350F,font-style:italic;
+  </pre>
+  <figcaption>Item Assembly Structure (IAS): a rotating parent (MOTOR-ASSY, flag Rotating? = Y) with three child components and their quantities. Per STU §1.1 and SAM Q1: <em>"Child elements can be added or deleted, and quantities can be changed"</em> — the structure is mutable after creation. Applying this IAS to a new asset auto-creates the children as sub-assets.</figcaption>
+</figure>
+
+<figure class="lesson-table" data-lesson="c1000-208-1-1">
+  <table class="compare-table">
+    <caption>The 8 flags on an Item Master record — effect at receipt and downstream.</caption>
+    <thead>
+      <tr>
+        <th>Flag</th>
+        <th>Effect when checked</th>
+        <th>Reversible?</th>
+        <th>Trigger event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rotating?</strong></td>
+        <td>Every receipt creates an Asset record with a unique <code>ASSETNUM</code>. Required for ASSET cost type and Item Assembly Structures.</td>
+        <td>No (locked once first asset received)</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Condition Enabled?</strong></td>
+        <td>Activates the Condition Codes tab. Stock balance is maintained per condition (NEW, USED, REFURB). Issue value = base_cost × condition_rate.</td>
+        <td>No (locked once balance &gt; 0)</td>
+        <td>Issue + Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Kit?</strong></td>
+        <td>Marks the parent of an Item Assembly Structure as a kit. Issuing the kit decrements all child items in one transaction.</td>
+        <td>Yes</td>
+        <td>Issue</td>
+      </tr>
+      <tr>
+        <td><strong>Capitalized?</strong></td>
+        <td>Routes the value of the item to the Capital GL account at receipt instead of the Expense account. Typical for assets that will be depreciated.</td>
+        <td>No (locked once first receipt)</td>
+        <td>Receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Inspect on Receipt?</strong></td>
+        <td>Forces every PO receipt of this item to land in a Holding Location with status <code>WINSP</code>. Stock balance not incremented at the active storeroom until QA approves.</td>
+        <td>Yes</td>
+        <td>PO receipt</td>
+      </tr>
+      <tr>
+        <td><strong>Add as Spare Part?</strong></td>
+        <td>When the item is issued to a Work Order on a parent asset, Maximo proposes to add it to that asset's Spare Parts list automatically.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Attach to Parent Asset on Issue?</strong></td>
+        <td>On issue to a WO, Maximo prompts for a parent asset and, if provided, attaches the item as a child asset record. Used with rotating sub-assemblies.</td>
+        <td>Yes</td>
+        <td>Issue to WO</td>
+      </tr>
+      <tr>
+        <td><strong>Tax Exempt?</strong></td>
+        <td>Suppresses the application of tax codes at PO/PR generation. Required for charity, government, intra-company transfers in some jurisdictions.</td>
+        <td>Yes</td>
+        <td>PR / PO generation</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source: IBM Maximo Manage v9.1 Study Guide §1.1.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>"Active at the Item Master = orderable everywhere"</strong> — wrong, and IBM tests this exact misconception in multiple variants.</p>
@@ -8923,6 +9062,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-1-2.svg" alt="C1000-208 lesson 1-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-1-2" id="lt-c1000-208-1-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-1-2" id="lt-c1000-208-1-2-s" class="lt-sit">
@@ -8964,6 +9106,29 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Numerical example — Multi-storeroom flow</strong> : Vendor SteelCo delivers to <em>Storeroom CENTRAL</em> (parent, Use in PR/PO=Y) 1,000 bearings, $50 each. Two satellites (NORTH, SOUTH) consume 200/month each. Reorder Storeroom for NORTH inventory of bearings = CENTRAL. When NORTH balance falls below ROP=50, Maximo creates an Internal PR (NORTH source = CENTRAL), fulfilled as a Stock Transfer. Cost flows from CENTRAL's inventory account to NORTH's. Vendor sees only the central order, freight is consolidated.</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms">
+  <pre class="mermaid">
+graph TB
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+
+  SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+  SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
+
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO"| SAT_B
+  HUB ==>|"Use in PR/PO"| SAT_C
+
+  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_B -.->|"Reorder Storeroom"| HUB
+  SAT_C -.->|"Reorder Storeroom"| HUB
+
+  classDef hub fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600,stroke-width:2px;
+  classDef sat fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Two complementary, opposite-direction mechanisms. Solid arrows (top-down): the central storeroom has <strong>Use in PR/PO ✔</strong> on its record (per SAM Q2 — answer a), making it visible as an internal supplier on PR/PO of satellites. Dashed arrows (bottom-up): each satellite carries <strong>Reorder Storeroom = CENTRAL-STORE</strong>, naming the hub as its replenishment source. Per STU §1.2 "Setup a Parent Storeroom for centralized ordering".</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>Three SIMILAR-sounding storeroom concepts that do DIFFERENT things</strong> — IBM tests this distinction in multiple variants on the C1000-208.</p>
@@ -9485,6 +9650,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-2-1.svg" alt="C1000-208 lesson 2-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-2-1" id="lt-c1000-208-2-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-2-1" id="lt-c1000-208-2-1-s" class="lt-sit">
@@ -9525,6 +9693,18 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>EOQ flat zone</strong> [EOTRAG query 2] : the total cost curve is U-shaped but VERY flat near the optimum. Orders within ±25% of Wilson's EOQ produce less than 5% extra total cost. This means <em>rounding to vendor-friendly pack sizes is acceptable</em> from a cost standpoint, justifying Maximo's pragmatic approach.</li>
 </ul></div>
 
+
+<figure class="lesson-chart" data-lesson="c1000-208-2-1-rop">
+  <div class="echart-init" data-lesson="c1000-208-2-1-rop" style="width:100%;height:380px;"
+       data-config='{"title":{"text":"Stock level over time — ROP triggers, EOQ replenishes","left":"center","top":4},"tooltip":{"trigger":"axis","valueFormatter":"units"},"legend":{"data":["Stock on hand"],"bottom":4},"grid":{"left":56,"right":24,"top":48,"bottom":56},"xAxis":{"type":"category","name":"Day","nameLocation":"middle","nameGap":28,"data":["0","2","4","6","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","60"]},"yAxis":{"type":"value","name":"Units","min":0,"max":85,"interval":10},"series":[{"name":"Stock on hand","type":"line","step":false,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#1D9E75"},"areaStyle":{"opacity":0.10,"color":"#1D9E75"},"data":[80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80,74,68,62,56,50,44,38,32,30,80],"markLine":{"symbol":"none","label":{"position":"insideEndTop","color":"#475569"},"data":[{"yAxis":30,"name":"ROP = 30","lineStyle":{"color":"#F59E0B","type":"dashed","width":1.5}},{"yAxis":5,"name":"Safety stock = 5","lineStyle":{"color":"#EF4444","type":"dashed","width":1.5}}]},"markPoint":{"symbolSize":52,"label":{"color":"#FFFFFF","fontSize":10,"fontWeight":600},"data":[{"name":"Reorder fired","coord":["8",30],"itemStyle":{"color":"#F59E0B"},"value":"PR"},{"name":"Goods received","coord":["18",30],"itemStyle":{"color":"#1D9E75"},"value":"+EOQ"},{"name":"Reorder fired","coord":["18",30],"itemStyle":{"color":"#F59E0B"},"value":""}]}}]}'></div>
+  <figcaption>Sawtooth replenishment per STU §2.1 and RAG Query 1. Avg daily usage = 3 units, lead time = 10 days, so ROP = 3 × 10 = 30 with safety stock = 5. Each cycle: continuous draw at 3 units/day → crosses ROP at day 8 → PR fires → 10-day lead → goods land at day 18 with EOQ batch of 50 (Wilson EOQ rounded to vendor multiple). Three full cycles shown.</figcaption>
+</figure>
+
+<figure class="lesson-chart" data-lesson="c1000-208-2-1-eoq-round">
+  <div class="echart-init" data-lesson="c1000-208-2-1-eoq-round" style="width:100%;height:260px;"
+       data-config='{"title":{"text":"EOQ rounding — order quantity is rounded UP to the next multiple of EOQ","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"item"},"grid":{"left":40,"right":40,"top":80,"bottom":56},"xAxis":{"type":"value","name":"Order quantity (units)","nameLocation":"middle","nameGap":28,"min":0,"max":65,"interval":10,"axisLine":{"show":true},"splitLine":{"show":false}},"yAxis":{"type":"value","min":0,"max":1,"show":false},"series":[{"name":"EOQ multiples","type":"scatter","symbolSize":18,"itemStyle":{"color":"#1D9E75"},"label":{"show":true,"position":"bottom","formatter":"{@[0]}","color":"#178A66","fontWeight":600},"data":[[10,0.4],[20,0.4],[30,0.4],[40,0.4],[50,0.4],[60,0.4]],"markLine":{"symbol":"none","data":[{"yAxis":0.4,"lineStyle":{"color":"#94A3B8","type":"solid","width":1.5}}]}},{"name":"Need = 47","type":"scatter","symbolSize":24,"itemStyle":{"color":"#EF4444"},"label":{"show":true,"position":"top","formatter":"Need = 47","color":"#EF4444","fontWeight":700,"fontSize":13},"data":[[47,0.4]],"markPoint":{"symbol":"arrow","symbolSize":[18,28],"symbolRotate":270,"itemStyle":{"color":"#F59E0B"},"label":{"show":true,"position":"top","formatter":"round UP","color":"#B45309","fontWeight":600},"data":[{"coord":[48.5,0.55]}]}},{"name":"Order = 50","type":"scatter","symbolSize":26,"itemStyle":{"color":"#1D9E75","borderColor":"#178A66","borderWidth":3},"label":{"show":true,"position":"top","formatter":"Order = 50","color":"#1D9E75","fontWeight":700,"fontSize":13},"data":[[50,0.4]]}]}'></div>
+  <figcaption>Maximo rounds the calculated reorder quantity <strong>UP</strong> to the next multiple of EOQ (≥ 1). Per SAM Q3 — answer c: <em>"It is used to round the order quantity up so that it is a multiple of the EOQ value."</em> Need = 47, EOQ = 10, so Maximo orders 50 (not 47, not 40).</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>EOQ in Maximo is NOT Wilson's formula</strong> — this is the most-tested misconception in Section 2.1.</p>
@@ -10115,6 +10295,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-2-2.svg" alt="C1000-208 lesson 2-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-2-2" id="lt-c1000-208-2-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-2-2" id="lt-c1000-208-2-2-s" class="lt-sit">
@@ -10150,6 +10333,49 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Numerical example — full reorder cycle</strong> : Cron task runs at 02:00. Item BEARING-001 at NORTH : ROP = 90, on-hand = 80, on-order = 0, EOQ = 25. Reorder flag = Y. Reorder Storeroom = CENTRAL (which has Use in PR/PO = Y). Cron computes deficit = 10, rounds UP to multiple of 25 = 25. Creates Internal PR : source CENTRAL, dest NORTH, qty 25 BEARING-001. PR auto-approved overnight (if workflow allows) → Stock Transfer Order. Truck delivers next morning, NORTH receives → on-hand = 105.</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder">
+  <pre class="mermaid">
+flowchart TD
+  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
+  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>&lt; ROP ?</b>"}:::decision
+  STOP["No action<br/>(stock sufficient)"]:::stop
+  SPECIAL{"Special-order<br/>item ?"}:::decision
+  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
+  PR_EXT["External PR<br/>to vendor"]:::action
+  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
+  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
+  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::end_
+
+  CRON --> STATUS
+  STATUS -- "Yes (eligible)" --> CHECK
+  STATUS -- "No" --> SKIPSTATUS
+  CHECK -- No --> STOP
+  CHECK -- Yes --> SPECIAL
+  SPECIAL -- Yes --> CREATE_ITEM
+  CREATE_ITEM --> ROUND
+  SPECIAL -- No --> ROUND
+  ROUND --> USEPRPO
+  USEPRPO -- Yes --> PR_INT
+  USEPRPO -- No --> PR_EXT
+  PR_INT --> RECEIVE
+  PR_EXT --> VENDOR
+  VENDOR --> RECEIVE
+  RECEIVE --> BALANCE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef stop fill:#F1F5F9,stroke:#94A3B8,color:#475569;
+  classDef end_ fill:#1D9E75,stroke:#178A66,color:#FFFFFF,font-weight:600;
+  </pre>
+  <figcaption>Reorder execution per STU §2.2. Trigger uses the available position (balance + on-order − reservations). Special-order items auto-create an Item Master in <strong>PENDING</strong> (so they don't appear in future reorder cycles) plus an ACTIVE ItemOrgDetails. Order quantity is always rounded UP to a multiple of EOQ (EOQ ≥ 1, per SAM Q3 — answer c). The Storeroom's <strong>Use in PR/PO</strong> flag routes the PR internally (parent storeroom) vs externally (vendor).</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>"PLANNING items are not reorderable"</strong> — wrong. SAM Q4 explicitly tests this trap.</p>
@@ -10603,6 +10829,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-3-1.svg" alt="C1000-208 lesson 3-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-1" id="lt-c1000-208-3-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-3-1" id="lt-c1000-208-3-1-s" class="lt-sit">
@@ -10644,6 +10873,65 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Trap Maximo</strong> — Maximo n'a pas de mode « hybride » : un article a UN Cost Type pour toute l'organisation. Si on veut FIFO sur certains storerooms et WAC sur d'autres, il faut deux items distincts ou deux organisations.</li>
 </ul></div>
 
+
+<figure class="lesson-chart" data-lesson="c1000-208-3-1-cost-methods">
+  <div class="echart-init" data-lesson="c1000-208-3-1-cost-methods" style="width:100%;height:380px;"
+       data-config='{"title":{"text":"FIFO vs LIFO vs WAC — inflation scenario ($5 → $9 / unit, sold 100, 50 in stock)","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"shadow"},"valueFormatter":"$"},"legend":{"data":["FIFO","LIFO","WAC"],"bottom":4},"grid":{"left":72,"right":24,"top":56,"bottom":56},"xAxis":{"type":"category","data":["COGS","Ending Inventory Value","Reported Profit"]},"yAxis":{"type":"value","name":"USD","axisLabel":{"formatter":"${value}"}},"series":[{"name":"FIFO","type":"bar","itemStyle":{"color":"#1D9E75"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[500,450,500]},{"name":"LIFO","type":"bar","itemStyle":{"color":"#F59E0B"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[900,250,100]},{"name":"WAC","type":"bar","itemStyle":{"color":"#3B82F6"},"label":{"show":true,"position":"top","formatter":"${@}"},"data":[700,350,300]}]}'></div>
+  <figcaption>Same physical flow, three valuation methods, three different P&amp;L outcomes. Setup: 100 units bought @$5 (old layer), 50 units bought @$9 (new layer); sold 100, 50 still in stock; revenue assumed $1,000. <strong>FIFO</strong>: COGS=$500 (cheap layer first), Ending=$450 (50 expensive units), Profit highest. <strong>LIFO</strong>: COGS=$900 (expensive layer first), Ending=$250 (50 cheap units), Profit lowest. <strong>WAC</strong>: $7 average → COGS=$700, Ending=$350, Profit middle. Per RAG Query 4: <strong>LIFO is banned by IFRS (IAS 2 since 2003)</strong>; US GAAP still permits it with disclosure.</figcaption>
+</figure>
+
+<figure class="lesson-table" data-lesson="c1000-208-3-1">
+  <table class="compare-table">
+    <caption>The 5 Cost Types available in Maximo Inventory — applied per item × storeroom.</caption>
+    <thead>
+      <tr>
+        <th>Cost type</th>
+        <th>Calculation logic</th>
+        <th>IFRS allowed?</th>
+        <th>Maximo path</th>
+        <th>Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>AVG</strong> (Weighted Average)</td>
+        <td>Recalculates the cost on every receipt: <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Each issue is valued at the current weighted average.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = AVG</td>
+        <td>Default for most consumable items. Smooths price volatility.</td>
+      </tr>
+      <tr>
+        <td><strong>STD</strong> (Standard)</td>
+        <td>Uses a fixed standard cost per item set manually. Variance between actual receipt cost and standard cost is posted to a Variance GL account.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = STANDARD</td>
+        <td>Manufacturing environments where budgeted cost matters more than actual.</td>
+      </tr>
+      <tr>
+        <td><strong>LIFO</strong> (Last In, First Out)</td>
+        <td>Each issue is valued at the cost of the most recent receipt. Old layers stay in inventory at their original cost.</td>
+        <td><strong>No</strong> (banned by IFRS; allowed by US GAAP)</td>
+        <td>Inventory &gt; Item &gt; Cost Type = LIFO</td>
+        <td>US-only environments seeking tax deferral in inflation.</td>
+      </tr>
+      <tr>
+        <td><strong>FIFO</strong> (First In, First Out)</td>
+        <td>Each issue is valued at the cost of the oldest receipt. Newest layers stay in inventory.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item &gt; Cost Type = FIFO</td>
+        <td>Perishables, regulated industries, IFRS-compliant orgs.</td>
+      </tr>
+      <tr>
+        <td><strong>ASSET</strong></td>
+        <td>Cost is tracked per individual rotating <code>ASSETNUM</code>, not per storeroom average. Each asset has its own purchase price and depreciation history.</td>
+        <td>Yes</td>
+        <td>Inventory &gt; Item (Rotating? = true) &gt; Cost Type = ASSET</td>
+        <td>Mandatory for rotating items (motors, pumps) with serialized tracking.</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source: IBM Maximo Manage v9.1 Study Guide §3.1 + master-map.pdf p.1798 (System Properties &gt; Inventory).</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>Confondre AVERAGE et STANDARD lors d'un ajustement</strong> — les deux actions s'appellent « Cost Adjustment » mais leurs effets GL et leur usage sont radicalement différents. IBM teste très souvent cette confusion sur les exam C1000-208.</p>
@@ -11177,6 +11465,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-3-2.svg" alt="C1000-208 lesson 3-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-2" id="lt-c1000-208-3-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-3-2" id="lt-c1000-208-3-2-s" class="lt-sit">
@@ -11631,6 +11922,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-3-3.svg" alt="C1000-208 lesson 3-3 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-3" id="lt-c1000-208-3-3-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-3-3" id="lt-c1000-208-3-3-s" class="lt-sit">
@@ -12023,6 +12317,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-4-1.svg" alt="C1000-208 lesson 4-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-1" id="lt-c1000-208-4-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-4-1" id="lt-c1000-208-4-1-s" class="lt-sit">
@@ -12744,6 +13041,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-4-2.svg" alt="C1000-208 lesson 4-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-2" id="lt-c1000-208-4-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-4-2" id="lt-c1000-208-4-2-s" class="lt-sit">
@@ -13274,6 +13574,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-4-3.svg" alt="C1000-208 lesson 4-3 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-3" id="lt-c1000-208-4-3-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-4-3" id="lt-c1000-208-4-3-s" class="lt-sit">
@@ -13312,6 +13615,32 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Restrictions vendor / commodity</strong> : certains storerooms peuvent restreindre les items qu'ils acceptent (par commodity group, par vendor approuvé). Le transfer échoue si l'item n'est pas autorisé au destination.</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-4-3-transfer">
+  <pre class="mermaid">
+flowchart TD
+  START["Need to transfer<br/>item / tool from<br/>storeroom A → storeroom B"]:::start
+  Q1{"Same SITE ?"}:::decision
+
+  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
+  SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
+
+  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::end_
+
+  START --> Q1
+  Q1 -- Yes --> DIRECT
+  Q1 -- No --> SHIPMENT
+  DIRECT --> END
+  SHIPMENT --> END
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
+  classDef warn fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Cross-site transfer decision per STU §4.3. Same-site moves resolve as a Direct Transfer (Inventory app, instant balance swap). Cross-site moves <strong>must</strong> use a Shipment Transfer: creates a shipment record, decrements source on ship-out, holds in transit, then increments destination on shipment receipt. Inspections (Inspect on Receipt? flag) are honoured at the destination side.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>Same-site transfer ≠ cross-site transfer</strong> — la mécanique est radicalement différente. IBM teste régulièrement la distinction.</p>
@@ -13864,6 +14193,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-4-4.svg" alt="C1000-208 lesson 4-4 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-4" id="lt-c1000-208-4-4-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-4-4" id="lt-c1000-208-4-4-s" class="lt-sit">
@@ -14395,6 +14727,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-4-5.svg" alt="C1000-208 lesson 4-5 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-5" id="lt-c1000-208-4-5-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-4-5" id="lt-c1000-208-4-5-s" class="lt-sit">
@@ -14435,6 +14770,24 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>GL postings par état</strong> : seul ISSUED écrit GL voucher (Dr WO Cost / Cr Inventory). Les états PICKED et STAGED sont purement des mouvements physiques sans impact GL.</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-4-5-states">
+  <pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> OPEN: Create Inventory<br/>Usage record
+  OPEN --> PICKED: Pick<br/>(physical removal from bin;<br/>balance still in storeroom,<br/>"picked" sub-bucket)
+  PICKED --> OPEN: Un-pick<br/>(restock to bin)
+  PICKED --> STAGED: Stage<br/>(move to staging location;<br/><b>storeroom balance −</b>,<br/>staging balance +)
+  STAGED --> PICKED: Un-stage<br/>(restock to picked)
+  STAGED --> ISSUED: Issue<br/>(charge to WO;<br/>staging balance −,<br/>WO actuals +,<br/>INVTRANS type=ISSUE)
+  OPEN --> ISSUED: Direct Issue<br/>(skip pick/stage)
+  OPEN --> CANCELLED: Cancel<br/>(no balance impact)
+  ISSUED --> [*]
+  CANCELLED --> [*]
+  </pre>
+  <figcaption>The four-state machine per STU §4.5 and RAG Query 12. <strong>Trap</strong>: items in <strong>STAGED</strong> reduce the available balance even though they're physically still on storeroom premises — this affects ROP triggering. Reverse transitions (Un-pick / Un-stage / Restock) exist for scope changes before issue; once <strong>ISSUED</strong>, only a formal Return-to-Store transaction reverses the move. CANCELLED is reachable only from OPEN.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>STAGED reduces Available Balance even though items are still in storeroom complex</strong> — IBM teste cette subtilité directement.</p>
@@ -14856,6 +15209,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Knowledge</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-5-1.svg" alt="C1000-208 lesson 5-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-1" id="lt-c1000-208-5-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-5-1" id="lt-c1000-208-5-1-s" class="lt-sit">
@@ -15224,6 +15580,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Knowledge</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-5-2.svg" alt="C1000-208 lesson 5-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-2" id="lt-c1000-208-5-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-5-2" id="lt-c1000-208-5-2-s" class="lt-sit">
@@ -15586,6 +15945,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Knowledge</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-5-3.svg" alt="C1000-208 lesson 5-3 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-3" id="lt-c1000-208-5-3-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-5-3" id="lt-c1000-208-5-3-s" class="lt-sit">
@@ -15620,6 +15982,12 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Industry use case</strong> — rotating items (motors, pumps) that go through repair/refurb cycles especially benefit from condition tracking; it lets you carry separate stock of "NEW spare" + "REBUILT-2nd-tier spare" with accurate costing.</li>
 </ul></div>
 
+
+<figure class="lesson-chart" data-lesson="c1000-208-5-3-condition">
+  <div class="echart-init" data-lesson="c1000-208-5-3-condition" style="width:100%;height:340px;"
+       data-config='{"title":{"text":"Condition codes — issue cost = base_cost × condition_rate","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"shadow"},"formatter":"{b}<br/>Cost: ${c}<br/>Rate vs NEW: shown on bar"},"grid":{"left":64,"right":24,"top":48,"bottom":56},"xAxis":{"type":"category","name":"Condition code","nameLocation":"middle","nameGap":28,"data":["NEW","USED","REFURB"]},"yAxis":{"type":"value","name":"Item cost (USD)","min":0,"max":120,"axisLabel":{"formatter":"${value}"}},"series":[{"name":"Item cost","type":"bar","barWidth":"55%","itemStyle":{"color":"#1D9E75"},"data":[{"value":100,"itemStyle":{"color":"#1D9E75"}},{"value":70,"itemStyle":{"color":"#F59E0B"}},{"value":50,"itemStyle":{"color":"#3B82F6"}}],"label":{"show":true,"position":"top","formatter":"${@}","color":"#0F172A","fontWeight":600},"markPoint":{"symbol":"rect","symbolSize":[80,22],"itemStyle":{"color":"transparent"},"label":{"show":true,"color":"#475569","fontSize":11},"data":[{"coord":["NEW",100],"value":"rate 1.0"},{"coord":["USED",70],"value":"rate 0.7"},{"coord":["REFURB",50],"value":"rate 0.5"}]}}]}'></div>
+  <figcaption>Condition rates cascade from a base cost (NEW = $100). Per STU §5.3 and SAM Q9 — answer c: condition codes are configured on the <strong>Item Master</strong> application. Each rate is a percentage of NEW cost, stored on the Item Master's Condition Codes tab; the rate is applied at receipt and at issue, so a refurbished part charges the work order accurately at $50 instead of $100. Trap: changing a rate retroactively does NOT re-cost existing on-hand stock.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>Where is "condition-enabled" set?</strong> — SAM Q9 verbatim. The flag lives on <em>Item Master</em>, not in Inventory or in Condition Codes. This trips up candidates who confuse the role of each application.</p>
@@ -15949,6 +16317,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-6-1.svg" alt="C1000-208 lesson 6-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-6-1" id="lt-c1000-208-6-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-6-1" id="lt-c1000-208-6-1-s" class="lt-sit">
@@ -15988,6 +16359,48 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Industry context</strong> — the Maximo project at Centrale d'équipements (MEQ) explicitly distinguishes high-value items requiring serialization from consumables [EOTRAG Query 14]: "Les articles de grande valeur ou dont le numéro de série doit être suivi seront des actifs tournants".</li>
 </ul></div>
 
+
+<figure class="lesson-diagram" data-lesson="c1000-208-6-1-receiving">
+  <pre class="mermaid">
+flowchart TD
+  PO["PO created<br/>(approved + sent to vendor)"]:::start
+  RECV["Goods physically received<br/>at receiving dock"]:::action
+  Q1{"Item flag<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
+  HOLD["<b>Holding Location</b><br/>status = WINSP<br/>(waiting inspection)<br/>NOT in active balance"]:::warn
+  QA{"QA inspection<br/>result ?"}:::decision
+  QUAR["Quarantine bin<br/>Receipt status: REJECTED<br/>→ Void or Return-to-Vendor<br/>(per STU §6.2)"]:::stop
+  STORE["Active storeroom bin<br/>balance += receipt_qty<br/>status = STORES"]:::ok
+  Q2{"Item flag<br/><b>Rotating ?</b>"}:::decision
+  SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
+  Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
+  IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
+  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::end_
+
+  PO --> RECV
+  RECV --> Q1
+  Q1 -- Yes --> HOLD
+  HOLD --> QA
+  QA -- Reject --> QUAR
+  QA -- Approve --> STORE
+  Q1 -- No --> STORE
+  STORE --> Q2
+  Q2 -- No --> DONE
+  Q2 -- Yes --> SERIAL
+  SERIAL --> Q3
+  Q3 -- No --> DONE
+  Q3 -- Yes --> IAS
+  IAS --> DONE
+
+  classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
+  classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
+  classDef action fill:#FFFFFF,stroke:#94A3B8,color:#0F172A;
+  classDef warn fill:#FEF3C7,stroke:#F59E0B,color:#78350F;
+  classDef ok fill:#1D9E75,stroke:#178A66,color:#FFFFFF;
+  classDef stop fill:#EF4444,stroke:#991B1B,color:#FFFFFF;
+  classDef end_ fill:#F1F5F9,stroke:#94A3B8,color:#0F172A;
+  </pre>
+  <figcaption>Receiving cascade per STU §6.1. The <strong>Inspect on Receipt</strong> flag diverts goods to the Holding Location with status <strong>WINSP</strong> until QA approves; only then do they hit the active bin. For rotating items, every received unit triggers Asset Serialization (one ASSETNUM per unit, ASSET cost method). If an Item Assembly Structure is defined on the parent, the IAS is auto-applied — child ASSETNUM records are created in the same cascade.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>Holding Location confusion</strong> — Candidates often miss that Holding Location is a virtual transit point. Stock there is RECEIVED but NOT YET AVAILABLE for issue.</p>
@@ -16497,6 +16910,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-6-2.svg" alt="C1000-208 lesson 6-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-6-2" id="lt-c1000-208-6-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-6-2" id="lt-c1000-208-6-2-s" class="lt-sit">
@@ -16918,6 +17334,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-7-1.svg" alt="C1000-208 lesson 7-1 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-1" id="lt-c1000-208-7-1-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-7-1" id="lt-c1000-208-7-1-s" class="lt-sit">
@@ -16953,6 +17372,12 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Tolerances per class</strong>: A items often ±2%, B ±5%, C ±10% (variance allowed at count). Safety/regulated items 0%.</li>
 </ul></div>
 
+
+<figure class="lesson-chart" data-lesson="c1000-208-7-1-abc">
+  <div class="echart-init" data-lesson="c1000-208-7-1-abc" style="width:100%;height:400px;"
+       data-config='{"title":{"text":"ABC Pareto — ~20% of items hold ~80% of inventory value","left":"center","top":4,"textStyle":{"fontSize":13}},"tooltip":{"trigger":"axis","axisPointer":{"type":"cross"}},"legend":{"data":["Item value (USD)","Cumulative % value"],"bottom":4},"grid":{"left":64,"right":64,"top":56,"bottom":56},"xAxis":{"type":"category","name":"Items ranked by value (descending)","nameLocation":"middle","nameGap":28,"data":["1","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]},"yAxis":[{"type":"value","name":"Item value (USD)","position":"left","axisLabel":{"formatter":"${value}"}},{"type":"value","name":"Cumulative %","position":"right","min":0,"max":100,"axisLabel":{"formatter":"{value}%"},"splitLine":{"show":false}}],"series":[{"name":"Item value (USD)","type":"bar","yAxisIndex":0,"itemStyle":{"color":"#1D9E75"},"data":[1200,950,820,700,600,500,420,360,300,250,210,180,150,130,110,95,80,68,58,50,42],"markArea":{"silent":true,"data":[[{"name":"Class A (top 20% items, ~80% value)","xAxis":"1","itemStyle":{"color":"rgba(245,158,11,0.18)"},"label":{"position":"top","color":"#B45309","fontWeight":600}},{"xAxis":"20"}],[{"name":"Class B (next 30%, ~15% value)","xAxis":"20","itemStyle":{"color":"rgba(29,158,117,0.14)"},"label":{"position":"top","color":"#178A66","fontWeight":600}},{"xAxis":"50"}],[{"name":"Class C (last 50%, ~5% value)","xAxis":"50","itemStyle":{"color":"rgba(148,163,184,0.18)"},"label":{"position":"top","color":"#475569","fontWeight":600}},{"xAxis":"100"}]]}},{"name":"Cumulative % value","type":"line","yAxisIndex":1,"smooth":true,"showSymbol":false,"lineStyle":{"width":2.5,"color":"#EF4444"},"data":[18,38,55,68,77,82,86,89,91,93,94.5,95.5,96.3,96.9,97.4,97.8,98.2,98.5,98.7,98.9,99]}]}'></div>
+  <figcaption>Pareto principle (per STU §7.1 and RAG Query 3). The chart axes show Class A ≈ <strong>top 20% of items</strong> accounting for ~80% of inventory value — these are item-count proportions (industry rule of thumb). Maximo's configurable defaults express the breakpoints differently: <strong>cumulative-value cuts</strong> at A=30% / B=30% / C=40% set in <code>Organizations app → Inventory Options → ABC Breakpoints</code>. The two coexist on different axes (item count % vs cumulative value %) and are not contradictory. Cycle-count cadence cascades automatically from the class: A items every 30 days, B every 60, C every 90. Per SAM Q10 — answer a: ABC categories are manually updated in the <strong>Inventory</strong> application.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>SAM Q10: where is ABC manually updated?</strong> — The answer is the <strong>Inventory</strong> application, NOT Reporting, Count Books, or Inventory Usage. This trips up candidates who confuse class generation (where the report runs) with class override (where the manual change is applied).</p>
@@ -17397,6 +17822,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Procedural</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-7-2.svg" alt="C1000-208 lesson 7-2 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-2" id="lt-c1000-208-7-2-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-7-2" id="lt-c1000-208-7-2-s" class="lt-sit">
@@ -17441,6 +17869,57 @@ mxe.int.aibrokertenantid</code></pre>
   <li><strong>Mobile counting</strong> — Maximo Mobile + Inventory Counting RBA allow handheld scanning of bins; counts entered on the spot, validated against tolerance immediately.</li>
 </ul></div>
 
+
+<figure class="lesson-table" data-lesson="c1000-208-7-2">
+  <table class="compare-table">
+    <caption>The 7 Sample Types when generating a Count Book in Maximo Inventory.</caption>
+    <thead>
+      <tr>
+        <th>Sample type</th>
+        <th>Filter criterion</th>
+        <th>Use case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ALL</code></td>
+        <td>Every active item in the storeroom regardless of category.</td>
+        <td>Annual full physical count.</td>
+      </tr>
+      <tr>
+        <td><code>BIN</code></td>
+        <td>Items in a specific bin number (or list of bins).</td>
+        <td>Targeted recount when a specific bin shows variance.</td>
+      </tr>
+      <tr>
+        <td><code>CNTFREQ</code></td>
+        <td>Items whose Cycle Count Frequency is due based on the date stamp.</td>
+        <td>Routine cycle counting; combined with ABC, drives the calendar.</td>
+      </tr>
+      <tr>
+        <td><code>ICG</code></td>
+        <td>Items belonging to a specific Inventory Count Group.</td>
+        <td>Group-driven counts (by criticality, project, location).</td>
+      </tr>
+      <tr>
+        <td><code>ITEM</code></td>
+        <td>One specific item number (or a defined list).</td>
+        <td>Spot-count after suspicious transaction history.</td>
+      </tr>
+      <tr>
+        <td><code>ROTATING</code></td>
+        <td>Only items with the Rotating? flag = true.</td>
+        <td>Asset audit — verify each rotating asset is physically present.</td>
+      </tr>
+      <tr>
+        <td><code>TOOLS</code></td>
+        <td>Only Tool-type items.</td>
+        <td>Tool crib audit; tools are high-loss-risk and require frequent counts.</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>Source: IBM Maximo Manage v9.1 Study Guide §7.2.</figcaption>
+</figure>
 <h2>⚠️ IBM Trap</h2>
 <div class="trap-box">
   <p><strong>The 7 Sample Types are exam-targeted</strong>. IBM tests if you can name them and pick the right one for a given scenario.</p>
@@ -17886,6 +18365,9 @@ mxe.int.aibrokertenantid</code></pre>
       <span class="meta-pill">Hybrid</span>
     </div>
   </div>
+<figure class="lesson-hero">
+  <img src="assets/illustrations/lesson-c1000-208-7-3.svg" alt="C1000-208 lesson 7-3 illustration" width="1280" height="480" loading="lazy">
+</figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-3" id="lt-c1000-208-7-3-c" class="lt-course" checked>
     <input type="radio" name="lt-c1000-208-7-3" id="lt-c1000-208-7-3-s" class="lt-sit">
@@ -18612,5 +19094,60 @@ updateUI();
 })();
 
 </script>
+
+<!-- ========= Phase 2: Mermaid + ECharts init ========= -->
+<!-- ============ MERMAID INIT (insert before </body>) ============ -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#1D9E75',
+        primaryTextColor: '#FFFFFF',
+        primaryBorderColor: '#178A66',
+        secondaryColor: '#F1F5F9',
+        secondaryTextColor: '#0F172A',
+        tertiaryColor: '#FFFFFF',
+        lineColor: '#94A3B8',
+        textColor: '#0F172A',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '14px',
+      },
+      flowchart: { curve: 'basis', padding: 16 },
+      stateDiagram: { padding: 16 },
+    });
+  });
+</script>
+
+<!-- ============ DIAGRAM 1.1a — Item Status state machine ============ -->
+<!-- Insert in lt-course-panel of c1000-208-lesson-1-1, just before <h2>⚠️ IBM Trap -->
+
+<!-- ============ ECHARTS INIT (insert before </body>, after Mermaid scripts) ============ -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js" defer></script>
+<script>
+  window.addEventListener('load', () => {
+    echarts.registerTheme('relvio', {
+      color: ['#1D9E75', '#178A66', '#F59E0B', '#3B82F6', '#EF4444', '#94A3B8'],
+      backgroundColor: 'transparent',
+      textStyle: { fontFamily: 'Inter, sans-serif', color: '#0F172A' },
+      title: { textStyle: { color: '#0F172A', fontWeight: 600, fontSize: 14 } },
+      legend: { textStyle: { color: '#475569' } },
+      grid: { borderColor: '#E2E8F0' },
+      xAxis: { axisLine: { lineStyle: { color: '#94A3B8' } }, axisLabel: { color: '#475569' }, splitLine: { lineStyle: { color: '#E2E8F0' } } },
+      yAxis: { axisLine: { lineStyle: { color: '#94A3B8' } }, axisLabel: { color: '#475569' }, splitLine: { lineStyle: { color: '#E2E8F0' } } },
+    });
+    document.querySelectorAll('.echart-init').forEach(el => {
+      try {
+        const cfg = JSON.parse(el.dataset.config);
+        echarts.init(el, 'relvio', { renderer: 'svg' }).setOption(cfg);
+      } catch(e) { console.error('ECharts init failed for', el.dataset.lesson, e); }
+    });
+  });
+</script>
+
+<!-- ============ CHART 2.1a — ROP / EOQ sawtooth ============ -->
+<!-- Insert in lt-course-panel of c1000-208-lesson-2-1, before the IBM Trap section -->
 </body>
 </html>
