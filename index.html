@@ -20663,12 +20663,13 @@ updateUI();
     // Diagrams in hidden cert containers get rendered with viewBox -8 -8 16 16
     // when offsetWidth=0 at run time. We render lazily only when visible
     // and re-render on cert switch.
+    // Mermaid renders SVG from the viewBox in the source — no DOM measurement needed,
+    // so we can render even when parent section is display:none (lesson not active).
     let mermaidId = 0;
     async function renderMermaid(el) {
       if (el.dataset.mermaidRendered === 'true') return;
-      if (el.offsetWidth === 0) return;
       const src = el.dataset.mermaidSrc;
-      if (!src) return;
+      if (!src || src.length < 5) return;
       try {
         const { svg, bindFunctions } = await mermaid.render('mmd-' + (++mermaidId), src);
         el.innerHTML = svg;
@@ -20676,35 +20677,28 @@ updateUI();
         el.dataset.mermaidRendered = 'true';
         el.removeAttribute('data-processed');
       } catch (e) {
-        console.warn('Mermaid render failed:', el.closest('[data-lesson]')?.dataset.lesson, e.message || e);
+        console.warn('Mermaid render failed:', el.closest('[data-lesson]')?.dataset.lesson, (e && e.message) || e);
         el.innerHTML = '<div style="padding:14px;color:#475569;font-size:13px;text-align:center;">Diagramme indisponible</div>';
         el.dataset.mermaidRendered = 'error';
       }
     }
-    function renderAllVisible() {
+    function renderAll() {
       document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => {
-        if (el.dataset.mermaidRendered !== 'true' && el.offsetWidth > 0) renderMermaid(el);
+        if (el.dataset.mermaidRendered !== 'true') renderMermaid(el);
       });
     }
 
-    // Initial pass : render whatever is currently visible (active cert + visible lessons)
-    renderAllVisible();
+    // Render every diagram up-front. Mermaid SVG is layout-agnostic — works even
+    // when the parent section is display:none (lesson tab not yet shown).
+    renderAll();
 
-    // Lazy render on visibility (scroll, lesson switch within cert)
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) renderMermaid(e.target); });
-      }, { threshold: 0.01, rootMargin: '120px' });
-      document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => io.observe(el));
-    }
-
-    // Re-render whatever is now visible after a cert tab click (same pattern as ECharts fix)
+    // Re-render hook for cert switches (in case any failed first time)
     document.querySelectorAll('.cert-tab').forEach(tab => {
-      tab.addEventListener('click', () => setTimeout(renderAllVisible, 120));
+      tab.addEventListener('click', () => setTimeout(renderAll, 120));
     });
 
-    // Expose for manual re-render from console / hooks
-    window._renderAllVisibleMermaid = renderAllVisible;
+    // Expose for manual trigger
+    window._renderAllVisibleMermaid = renderAll;
   });
 </script>
 
