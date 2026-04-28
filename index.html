@@ -20635,7 +20635,7 @@ updateUI();
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Save mermaid source BEFORE init so we can recover if a render fails
+    // Save mermaid source BEFORE init — recoverable for re-render on cert switch
     document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => {
       if (!el.dataset.mermaidSrc) el.dataset.mermaidSrc = el.textContent.trim();
     });
@@ -20658,10 +20658,53 @@ updateUI();
       flowchart: { curve: 'basis', padding: 16 },
       stateDiagram: { padding: 16 },
     });
-    // Run mermaid manually after config is fully applied
-    mermaid.run({ querySelector: 'pre.mermaid, div.mermaid' }).catch(err => {
-      console.warn('Mermaid run failed:', err);
+
+    // Fix : same root cause as ECharts collapse (commit b146df0).
+    // Diagrams in hidden cert containers get rendered with viewBox -8 -8 16 16
+    // when offsetWidth=0 at run time. We render lazily only when visible
+    // and re-render on cert switch.
+    let mermaidId = 0;
+    async function renderMermaid(el) {
+      if (el.dataset.mermaidRendered === 'true') return;
+      if (el.offsetWidth === 0) return;
+      const src = el.dataset.mermaidSrc;
+      if (!src) return;
+      try {
+        const { svg, bindFunctions } = await mermaid.render('mmd-' + (++mermaidId), src);
+        el.innerHTML = svg;
+        if (bindFunctions) bindFunctions(el);
+        el.dataset.mermaidRendered = 'true';
+        el.removeAttribute('data-processed');
+      } catch (e) {
+        console.warn('Mermaid render failed:', el.closest('[data-lesson]')?.dataset.lesson, e.message || e);
+        el.innerHTML = '<div style="padding:14px;color:#475569;font-size:13px;text-align:center;">Diagramme indisponible</div>';
+        el.dataset.mermaidRendered = 'error';
+      }
+    }
+    function renderAllVisible() {
+      document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => {
+        if (el.dataset.mermaidRendered !== 'true' && el.offsetWidth > 0) renderMermaid(el);
+      });
+    }
+
+    // Initial pass : render whatever is currently visible (active cert + visible lessons)
+    renderAllVisible();
+
+    // Lazy render on visibility (scroll, lesson switch within cert)
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) renderMermaid(e.target); });
+      }, { threshold: 0.01, rootMargin: '120px' });
+      document.querySelectorAll('pre.mermaid, div.mermaid').forEach(el => io.observe(el));
+    }
+
+    // Re-render whatever is now visible after a cert tab click (same pattern as ECharts fix)
+    document.querySelectorAll('.cert-tab').forEach(tab => {
+      tab.addEventListener('click', () => setTimeout(renderAllVisible, 120));
     });
+
+    // Expose for manual re-render from console / hooks
+    window._renderAllVisibleMermaid = renderAllVisible;
   });
 </script>
 
