@@ -9374,7 +9374,7 @@ stateDiagram-v2
   <button type="button" class="mark-done-btn" data-done="c1000-208-1-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
     <a href="#c1000-208-home" class="btn-nav"><span class="dir">← Précédent</span><span>Home</span></a>
-    <a href="#c1000-208-lesson-1-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-1-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -9382,15 +9382,15 @@ stateDiagram-v2
 <section class="lesson" id="c1000-208-lesson-1-2">
   <div class="breadcrumb">Section 1 <span class="brand-dot">·</span> 1.2</div>
   <div class="lesson-header">
-    <h1>Storerooms & Labor Inventory Locations</h1>
+    <h1>Storerooms et Labor Inventory Locations</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 17%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-1-2.svg" alt="C1000-208 lesson 1-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-1-2.svg" alt="Illustration de la leçon C1000-208 1-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-1-2" id="lt-c1000-208-1-2-c" class="lt-course" checked>
@@ -9405,49 +9405,49 @@ stateDiagram-v2
 <!-- FRAGMENT A: replaces the placeholder <p style="...">Lesson content pending...</p> in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li><strong>Create a Storeroom</strong> — Add a new Storeroom location · Define GL accounts · Explain default storeroom for a site · Explain Lead-time calculation.</li>
-  <li><strong>Create a Labor Inventory Location</strong> — describe usage.</li>
-  <li><strong>Setup a Parent Storeroom for centralized ordering</strong> — Specify storeroom for internal POs · Specify reorder storeroom.</li>
+  <li><strong>Créer un Storeroom</strong> — Ajouter un nouveau Storeroom location · définir les comptes GL · expliquer le default storeroom d'un site · expliquer le calcul du Lead Time.</li>
+  <li><strong>Créer une Labor Inventory Location</strong> — décrire son usage.</li>
+  <li><strong>Configurer un Parent Storeroom pour le centralized ordering</strong> — spécifier le storeroom pour les internal POs · spécifier le reorder storeroom.</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>A Storeroom is a typed Location</strong>, defined in the <em>Storerooms</em> application but registered behind the scenes as a Location record with <code>type=STOREROOM</code>. It has an address, GL accounts (<em>Inventory Control</em>, <em>Inventory Cost</em>, <em>Cost Variance</em>, <em>Currency Variance</em>, <em>Shrinkage</em>), a Site, and optional <em>Parent Storeroom</em>, <em>Holding Location</em>, and <em>Internal/External</em> flags. The storeroom is the smallest container for stock balances ; bins live <em>inside</em> a storeroom.</li>
-  <li><strong>Default storeroom for a site</strong> — Each Site can designate a default Storeroom (Sites &gt; Default Storeroom). This default is used when creating Inventory records, when issuing tools, and when displaying suggestions on Job Plans. A user can override the default at transaction time, but the default reduces clicks for the 80% case.</li>
-  <li><strong>Five GL accounts every Storeroom must declare</strong> :
+  <li><strong>Un Storeroom est une Location typée</strong>, définie dans l'application <em>Storerooms</em> mais enregistrée en arrière-plan comme un Location record avec <code>type=STOREROOM</code>. Il a une adresse, des comptes GL (<em>Inventory Control</em>, <em>Inventory Cost</em>, <em>Cost Variance</em>, <em>Currency Variance</em>, <em>Shrinkage</em>), un Site, et optionnellement un <em>Parent Storeroom</em>, une <em>Holding Location</em> et des flags <em>Internal/External</em>. Le storeroom est le plus petit conteneur pour les balances de stock ; les bins existent <em>à l'intérieur</em> d'un storeroom.</li>
+  <li><strong>Default storeroom d'un site</strong> — Chaque Site peut désigner un Storeroom par défaut (Sites &gt; Default Storeroom). Ce défaut est utilisé à la création des Inventory records, à l'issue des tools, et pour afficher les suggestions sur les Job Plans. Un utilisateur peut surcharger le défaut au moment de la transaction, mais le défaut réduit le nombre de clics pour le cas standard 80%.</li>
+  <li><strong>Cinq comptes GL que tout Storeroom doit déclarer</strong> :
     <ul>
-      <li><strong>GL Inventory Control Account</strong> — Asset side of the balance sheet ; debited on receipt, credited on issue.</li>
-      <li><strong>GL Inventory Cost Account</strong> — typically the same as Inventory Control or a sub-account ; tracks cost of goods on hand.</li>
-      <li><strong>GL Cost Variance Account</strong> — receives the delta when receipt cost differs from PO cost (purchase price variance) or when standard cost differs from actual.</li>
-      <li><strong>GL Currency Variance Account</strong> — receives FX differences when receipt is in a foreign currency.</li>
-      <li><strong>GL Shrinkage Account</strong> — receives writedowns from cycle-count negative variances and physical losses.</li>
+      <li><strong>GL Inventory Control Account</strong> — côté Asset du bilan ; débité à la réception, crédité à l'issue.</li>
+      <li><strong>GL Inventory Cost Account</strong> — typiquement identique à Inventory Control ou un sous-compte ; trace le coût des biens en stock.</li>
+      <li><strong>GL Cost Variance Account</strong> — reçoit l'écart quand le coût de réception diffère du coût PO (purchase price variance) ou quand le standard cost diffère de l'actuel.</li>
+      <li><strong>GL Currency Variance Account</strong> — reçoit les écarts de change quand la réception est en devise étrangère.</li>
+      <li><strong>GL Shrinkage Account</strong> — reçoit les writedowns dus aux variances négatives de cycle-count et aux pertes physiques.</li>
     </ul>
-    GL accounts can be inherited from the Site or Organization defaults but are typically overridden at the storeroom level for granular financial reporting.</li>
-  <li><strong>Lead-time calculation at the Storeroom level</strong> — Maximo offers a <em>Recent Lead Time Weight in %</em> field that lets the system blend recent receipt lead times with the historic average. e.g. 70% recent / 30% historic. This avoids having to update Lead Time manually after every supplier change. Real-life value : a vendor that delivered in 21 days for years now delivers in 14 days due to a new logistics contract → recent receipts get higher weight, ROP recomputed automatically.</li>
-  <li><strong>Labor Inventory Location</strong> — A special location type that represents "labor stock" : the population of available labor (technicians, contractors) is tracked as if it were inventory, allowing labor to be issued to WOs (with cost rate) and tracked. Used in operations where labor capacity is a planning constraint. Created the same way as a Storeroom but with <code>type=LABOR</code>. Doesn't store physical material.</li>
-  <li><strong>Parent Storeroom (centralized ordering)</strong> — A storeroom can declare a Parent Storeroom. The parent acts as a "hub" : it consolidates POs from multiple satellite storerooms (vendor delivers to hub once, hub redistributes), and it can serve as the reorder source for satellites (internal PO/transfer instead of external PO to vendor). Hub-and-spoke topology, ISO 55000-aligned for managing inventory holding cost across multi-site organisations.</li>
-  <li><strong>Use in PR/PO checkbox (the SAM Q2 critical setting)</strong> — At the Storeroom record level, the <em>Use in PR/PO</em> checkbox declares that this storeroom can be used as a <em>source</em> on a Purchase Requisition or Purchase Order line. Concretely : when you set this flag on Storeroom CENTRAL, you can write a PO line that says "deliver to / source from CENTRAL" and CENTRAL will fulfil to the requesting (satellite) storeroom via internal transfer. Without this flag, the storeroom cannot be specified on PR/PO source fields. SAM Q2 verbatim : "to enable this behavior, the Use in PR/PO checkbox needs to be checked".</li>
-  <li><strong>Reorder Storeroom field (different concept!)</strong> — Distinct from Parent Storeroom. The <em>Reorder Storeroom</em> field on an Inventory record (per item per storeroom) declares which storeroom <em>this item</em> should be reordered from when its ROP triggers. e.g. item BEARING-X exists at Satellite-A and needs replenishment from CENTRAL : on the Inventory record at Satellite-A, set Reorder Storeroom = CENTRAL. The reorder action will then create an internal transfer from CENTRAL to Satellite-A. This is item-specific, while Use in PR/PO is storeroom-wide.</li>
-  <li><strong>Internal PO vs External PO</strong> — When the source on a PO is another Maximo storeroom (Use in PR/PO), the PO is <em>Internal</em> (no AP voucher to a vendor, just a stock transfer). When the source is a Company (vendor), the PO is <em>External</em> (AP voucher created at receipt). Internal POs use a different status flow and don't touch the external accounts payable.</li>
-  <li><strong>Holding Location for inspection-required items</strong> — A storeroom can declare a Holding Location, which is the temporary bin where inspect-on-receipt items wait until QA approval. Stock balance is not active until items move out of the Holding Location. This is set at the Storeroom level even though it's only used by items flagged Inspect on Receipt?.</li>
-  <li><strong>Numerical example — Multi-storeroom flow</strong> : Vendor SteelCo delivers to <em>Storeroom CENTRAL</em> (parent, Use in PR/PO=Y) 1,000 bearings, $50 each. Two satellites (NORTH, SOUTH) consume 200/month each. Reorder Storeroom for NORTH inventory of bearings = CENTRAL. When NORTH balance falls below ROP=50, Maximo creates an Internal PR (NORTH source = CENTRAL), fulfilled as a Stock Transfer. Cost flows from CENTRAL's inventory account to NORTH's. Vendor sees only the central order, freight is consolidated.</li>
+    Les comptes GL peuvent être hérités des défauts Site ou Organization mais sont typiquement surchargés au niveau storeroom pour un reporting financier granulaire.</li>
+  <li><strong>Calcul du Lead Time au niveau Storeroom</strong> — Maximo offre un champ <em>Recent Lead Time Weight in %</em> qui permet au système de mélanger les lead times de réceptions récentes avec la moyenne historique. Ex. : 70% récent / 30% historique. Cela évite de mettre à jour le Lead Time manuellement à chaque changement de fournisseur. Valeur réelle : un fournisseur qui livrait en 21 jours depuis des années livre maintenant en 14 jours grâce à un nouveau contrat logistique → les réceptions récentes prennent un poids supérieur, le ROP est recalculé automatiquement.</li>
+  <li><strong>Labor Inventory Location</strong> — Un type de location spécial qui représente le « stock de main-d'œuvre » : la population de main-d'œuvre disponible (techniciens, sous-traitants) est tracée comme si c'était de l'inventaire, permettant à la main-d'œuvre d'être issuée aux WOs (avec un cost rate) et tracée. Utilisée quand la capacité de main-d'œuvre est une contrainte de planification. Créée comme un Storeroom mais avec <code>type=LABOR</code>. Ne stocke pas de matériel physique.</li>
+  <li><strong>Parent Storeroom (centralized ordering)</strong> — Un storeroom peut déclarer un Parent Storeroom. Le parent agit comme un « hub » : il consolide les POs de plusieurs satellite storerooms (le vendor livre au hub une fois, le hub redistribue), et il peut servir de source de reorder pour les satellites (internal PO / transfert au lieu d'un external PO chez le vendor). Topologie hub-and-spoke, alignée ISO 55000 pour gérer le coût de détention d'inventaire dans des organisations multi-sites.</li>
+  <li><strong>Checkbox Use in PR/PO (le réglage critique de SAM Q2)</strong> — Sur le record Storeroom, la checkbox <em>Use in PR/PO</em> déclare que ce storeroom peut être utilisé comme <em>source</em> sur une ligne de Purchase Requisition ou Purchase Order. Concrètement : quand on coche ce flag sur le Storeroom CENTRAL, on peut écrire une ligne PO qui dit « livrer à / source = CENTRAL » et CENTRAL va alimenter le storeroom satellite demandeur via un transfert interne. Sans ce flag, le storeroom ne peut pas être spécifié dans les champs source des PR/PO. SAM Q2 verbatim : « to enable this behavior, the Use in PR/PO checkbox needs to be checked ».</li>
+  <li><strong>Champ Reorder Storeroom (concept différent !)</strong> — Distinct du Parent Storeroom. Le champ <em>Reorder Storeroom</em> sur un Inventory record (par item par storeroom) déclare depuis quel storeroom <em>cet item</em> doit être reorderé quand son ROP est atteint. Ex. : l'item BEARING-X existe au Satellite-A et a besoin d'être réapprovisionné depuis CENTRAL : sur l'Inventory record au Satellite-A, mettre Reorder Storeroom = CENTRAL. L'action reorder créera alors un transfert interne de CENTRAL vers Satellite-A. C'est item-specific, tandis que Use in PR/PO est storeroom-wide.</li>
+  <li><strong>Internal PO vs External PO</strong> — Quand la source d'un PO est un autre storeroom Maximo (Use in PR/PO), le PO est <em>Internal</em> (pas d'AP voucher vendor, juste un transfert de stock). Quand la source est une Company (vendor), le PO est <em>External</em> (AP voucher créé à la réception). Les Internal POs utilisent un flux de statut différent et ne touchent pas l'accounts payable externe.</li>
+  <li><strong>Holding Location pour les items inspect-on-receipt</strong> — Un storeroom peut déclarer une Holding Location, qui est le bin temporaire où les items inspect-on-receipt attendent l'approbation QA. La balance de stock n'est pas active tant que les items n'ont pas quitté la Holding Location. Cela se règle au niveau Storeroom même si ce n'est utilisé que par les items avec le flag Inspect on Receipt?.</li>
+  <li><strong>Exemple chiffré — Flux multi-storeroom</strong> : le vendor SteelCo livre au <em>Storeroom CENTRAL</em> (parent, Use in PR/PO=Y) 1 000 bearings à 50 $ chacun. Deux satellites (NORTH, SOUTH) consomment 200/mois chacun. Reorder Storeroom pour l'inventaire NORTH des bearings = CENTRAL. Quand la balance NORTH descend sous ROP=50, Maximo crée une Internal PR (NORTH source = CENTRAL), exécutée comme un Stock Transfer. Le coût circule du compte d'inventaire de CENTRAL vers celui de NORTH. Le vendor ne voit que la commande centrale, le freight est consolidé.</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms">
   <pre class="mermaid">
 graph TB
-  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(visible comme fournisseur<br/>par les satellites)"]:::hub
 
   SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
 
-  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL apparaît<br/>comme fournisseur interne)"| SAT_A
   HUB ==>|"Use in PR/PO"| SAT_B
   HUB ==>|"Use in PR/PO"| SAT_C
 
-  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_A -.->|"Reorder Storeroom<br/>(le satellite pointe<br/>en amont vers le hub)"| HUB
   SAT_B -.->|"Reorder Storeroom"| HUB
   SAT_C -.->|"Reorder Storeroom"| HUB
 
@@ -9458,18 +9458,18 @@ graph TB
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>Three SIMILAR-sounding storeroom concepts that do DIFFERENT things</strong> — IBM tests this distinction in multiple variants on the C1000-208.</p>
+  <p><strong>Trois concepts storeroom aux noms SIMILAIRES qui font des choses DIFFÉRENTES</strong> — IBM teste cette distinction sous plusieurs variantes au C1000-208.</p>
   <ul>
-    <li><strong>Use in PR/PO</strong> (Storeroom checkbox) — declares the storeroom can be a <em>source</em> on PR/PO lines (supplies other storerooms). SAM Q2 confirms this is the answer when the question is "what enables this storeroom to supply others".</li>
-    <li><strong>Parent Storeroom</strong> (Storeroom field) — declares the hierarchical hub. Used for consolidated reporting and as a default source for centralized ordering when no other source is set.</li>
-    <li><strong>Reorder Storeroom</strong> (Inventory record per item field) — declares the source for reorder of <em>this specific item</em> at <em>this specific storeroom</em>. Item-level granularity, finer than Parent Storeroom.</li>
+    <li><strong>Use in PR/PO</strong> (checkbox du Storeroom) — déclare que le storeroom peut être une <em>source</em> sur des lignes PR/PO (approvisionne d'autres storerooms). SAM Q2 confirme que c'est la réponse quand la question est « qu'est-ce qui habilite ce storeroom à fournir les autres ».</li>
+    <li><strong>Parent Storeroom</strong> (champ du Storeroom) — déclare le hub hiérarchique. Utilisé pour le reporting consolidé et comme source par défaut du centralized ordering quand aucune autre source n'est définie.</li>
+    <li><strong>Reorder Storeroom</strong> (champ de l'Inventory record par item) — déclare la source de reorder pour <em>cet item particulier</em> dans <em>ce storeroom particulier</em>. Granularité par item, plus fine que Parent Storeroom.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A user wants Storeroom CENTRAL to be allowed as the <em>source</em> on a PR or PO that supplies inventory to satellite storerooms. Which exact field/checkbox enables this?</p>
-  <details><summary>Afficher la réponse</summary><p>The <strong>Use in PR/PO</strong> checkbox on the Storeroom record. Without it, the storeroom cannot appear in the source field on a PR/PO line. Parent Storeroom and Reorder Storeroom are related but solve different problems (hierarchy and per-item reorder source, respectively).</p></details>
+  <p>Q. Un utilisateur veut que le Storeroom CENTRAL soit autorisé comme <em>source</em> sur une PR ou un PO qui fournit de l'inventaire à des storerooms satellites. Quel champ/checkbox exact active cela ?</p>
+  <details><summary>Afficher la réponse</summary><p>La checkbox <strong>Use in PR/PO</strong> sur le record Storeroom. Sans elle, le storeroom ne peut pas apparaître dans le champ source d'une ligne PR/PO. Parent Storeroom et Reorder Storeroom sont reliés mais résolvent des problèmes différents (hiérarchie et source de reorder par item, respectivement).</p></details>
 </div>
 
 <!-- FRAGMENT B: appends after the existing <p>Interactive IBM-style...</p> intro in lt-sit-panel -->
@@ -9488,13 +9488,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A user wishes to configure a new storeroom to supply inventory items and tools on orders to various satellite storerooms across the organization.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What needs to be set on the Storeroom record to enable this behavior?</div>
+  <div class="mcq-context">Un utilisateur souhaite configurer un nouveau storeroom pour qu'il fournisse, sur commande, des items d'inventaire et des tools à divers storerooms satellites de l'organisation.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que faut-il régler sur le record Storeroom pour activer ce comportement ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-001-A"><input type="radio" name="c1000-208-mcq-1-2-001" value="A" id="c1000-208-mcq-1-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The Use in PR/PO checkbox needs to be checked</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-B"><input type="radio" name="c1000-208-mcq-1-2-001" value="B" id="c1000-208-mcq-1-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The Parent Storeroom field needs to be populated</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-C"><input type="radio" name="c1000-208-mcq-1-2-001" value="C" id="c1000-208-mcq-1-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The Reorder Storeroom field needs to be populated</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-D"><input type="radio" name="c1000-208-mcq-1-2-001" value="D" id="c1000-208-mcq-1-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The Is Satellite Storeroom checkbox needs to be checked</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-001-A"><input type="radio" name="c1000-208-mcq-1-2-001" value="A" id="c1000-208-mcq-1-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La checkbox Use in PR/PO doit être cochée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-B"><input type="radio" name="c1000-208-mcq-1-2-001" value="B" id="c1000-208-mcq-1-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le champ Parent Storeroom doit être renseigné</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-C"><input type="radio" name="c1000-208-mcq-1-2-001" value="C" id="c1000-208-mcq-1-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le champ Reorder Storeroom doit être renseigné</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-001-D"><input type="radio" name="c1000-208-mcq-1-2-001" value="D" id="c1000-208-mcq-1-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La checkbox Is Satellite Storeroom doit être cochée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -9547,17 +9547,17 @@ graph TB
         <figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms-c1000-208-mcq-1-2-001">
   <pre class="mermaid">
 graph TB
-  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(visible comme fournisseur<br/>par les satellites)"]:::hub
 
   SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
 
-  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL apparaît<br/>comme fournisseur interne)"| SAT_A
   HUB ==>|"Use in PR/PO"| SAT_B
   HUB ==>|"Use in PR/PO"| SAT_C
 
-  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_A -.->|"Reorder Storeroom<br/>(le satellite pointe<br/>en amont vers le hub)"| HUB
   SAT_B -.->|"Reorder Storeroom"| HUB
   SAT_C -.->|"Reorder Storeroom"| HUB
 
@@ -9582,8 +9582,8 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom administrator is configuring GL accounts on a new Storeroom record. They want to capture the difference between the actual receipt cost and the standard cost defined for the item.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Storeroom GL account receives this purchase price variance?</div>
+  <div class="mcq-context">Un administrateur de storeroom configure les comptes GL sur un nouveau record Storeroom. Il veut capturer l'écart entre le coût de réception réel et le standard cost défini pour l'item.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel compte GL du Storeroom reçoit cet écart de prix d'achat (purchase price variance) ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-002-A"><input type="radio" name="c1000-208-mcq-1-2-002" value="A" id="c1000-208-mcq-1-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">GL Inventory Control Account</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-002-B"><input type="radio" name="c1000-208-mcq-1-2-002" value="B" id="c1000-208-mcq-1-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">GL Shrinkage Account</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -9651,13 +9651,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A site has 3 storerooms : CENTRAL (largest, multi-purpose), TOOLS (tools only), CONSUMABLES (lubricants, fasteners). The site administrator wants Maximo to default to CENTRAL when users create Inventory records or issue tools without specifying a storeroom.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Where is the default storeroom for a Site configured in Maximo?</div>
+  <div class="mcq-context">Un site a 3 storerooms : CENTRAL (le plus grand, multi-usage), TOOLS (outils uniquement), CONSUMABLES (lubrifiants, fixations). L'administrateur du site veut que Maximo prenne CENTRAL par défaut quand les utilisateurs créent des Inventory records ou issuent des tools sans préciser de storeroom.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Où le default storeroom d'un Site se configure-t-il dans Maximo ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-A"><input type="radio" name="c1000-208-mcq-1-2-003" value="A" id="c1000-208-mcq-1-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">On the Item Master record, in the Default Storeroom field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-003-B"><input type="radio" name="c1000-208-mcq-1-2-003" value="B" id="c1000-208-mcq-1-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">In the Sites application, on the Site record, via the Default Storeroom field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-C"><input type="radio" name="c1000-208-mcq-1-2-003" value="C" id="c1000-208-mcq-1-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">In the Storerooms application, by checking a Default checkbox on each storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-D"><input type="radio" name="c1000-208-mcq-1-2-003" value="D" id="c1000-208-mcq-1-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">In the Users application, per user preference</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-A"><input type="radio" name="c1000-208-mcq-1-2-003" value="A" id="c1000-208-mcq-1-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Sur le record Item Master, dans le champ Default Storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-003-B"><input type="radio" name="c1000-208-mcq-1-2-003" value="B" id="c1000-208-mcq-1-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dans l'application Sites, sur le record Site, via le champ Default Storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-C"><input type="radio" name="c1000-208-mcq-1-2-003" value="C" id="c1000-208-mcq-1-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Dans l'application Storerooms, en cochant une checkbox Default sur chaque storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-003-D"><input type="radio" name="c1000-208-mcq-1-2-003" value="D" id="c1000-208-mcq-1-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Dans l'application Users, en préférence par utilisateur</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -9709,17 +9709,17 @@ graph TB
         <figure class="lesson-diagram" data-lesson="c1000-208-1-2-storerooms-c1000-208-mcq-1-2-003">
   <pre class="mermaid">
 graph TB
-  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(supplier visible to satellites)"]:::hub
+  HUB["CENTRAL-STORE<br/><i>Use in PR/PO ✔</i><br/>(visible comme fournisseur<br/>par les satellites)"]:::hub
 
   SAT_A["SAT-A<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_B["SAT-B<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
   SAT_C["SAT-C<br/><i>Reorder Storeroom = CENTRAL-STORE</i>"]:::sat
 
-  HUB ==>|"Use in PR/PO<br/>(CENTRAL appears as<br/>internal supplier)"| SAT_A
+  HUB ==>|"Use in PR/PO<br/>(CENTRAL apparaît<br/>comme fournisseur interne)"| SAT_A
   HUB ==>|"Use in PR/PO"| SAT_B
   HUB ==>|"Use in PR/PO"| SAT_C
 
-  SAT_A -.->|"Reorder Storeroom<br/>(satellite points<br/>upstream to hub)"| HUB
+  SAT_A -.->|"Reorder Storeroom<br/>(le satellite pointe<br/>en amont vers le hub)"| HUB
   SAT_B -.->|"Reorder Storeroom"| HUB
   SAT_C -.->|"Reorder Storeroom"| HUB
 
@@ -9743,13 +9743,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom administrator wants Maximo to weight recent receipt lead times more heavily than older ones in the automatic lead-time recalculation, because a new logistics contract has reduced delivery times.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Storeroom-level field controls how strongly recent receipts influence the calculated lead time?</div>
+  <div class="mcq-context">Un administrateur de storeroom veut que Maximo pondère plus fortement les lead times des réceptions récentes par rapport aux plus anciennes lors du recalcul automatique du lead time, parce qu'un nouveau contrat logistique a réduit les délais de livraison.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel champ au niveau Storeroom contrôle l'influence des réceptions récentes sur le lead time calculé ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-004-A"><input type="radio" name="c1000-208-mcq-1-2-004" value="A" id="c1000-208-mcq-1-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Recent Lead Time Weight in % field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-B"><input type="radio" name="c1000-208-mcq-1-2-004" value="B" id="c1000-208-mcq-1-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Average Lead Time Threshold field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-C"><input type="radio" name="c1000-208-mcq-1-2-004" value="C" id="c1000-208-mcq-1-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Lead Time Smoothing Factor field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-D"><input type="radio" name="c1000-208-mcq-1-2-004" value="D" id="c1000-208-mcq-1-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Forecast Decay Coefficient field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-004-A"><input type="radio" name="c1000-208-mcq-1-2-004" value="A" id="c1000-208-mcq-1-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Le champ Recent Lead Time Weight in %</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-B"><input type="radio" name="c1000-208-mcq-1-2-004" value="B" id="c1000-208-mcq-1-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le champ Average Lead Time Threshold</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-C"><input type="radio" name="c1000-208-mcq-1-2-004" value="C" id="c1000-208-mcq-1-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le champ Lead Time Smoothing Factor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-004-D"><input type="radio" name="c1000-208-mcq-1-2-004" value="D" id="c1000-208-mcq-1-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le champ Forecast Decay Coefficient</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -9810,13 +9810,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An operations manager wants to track 12 mechanic technicians as if they were "inventory" so that work orders can issue labor hours against this capacity pool, with cost rates that flow into WO costs.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the appropriate Maximo construct for this requirement?</div>
+  <div class="mcq-context">Un manager opérationnel veut tracer 12 techniciens mécaniciens comme s'ils étaient un « inventory », afin que les work orders puissent issuer des heures-main-d'œuvre contre cette pool de capacité, avec des cost rates qui remontent dans les coûts WO.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel construct Maximo correspond à ce besoin ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-A"><input type="radio" name="c1000-208-mcq-1-2-005" value="A" id="c1000-208-mcq-1-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">A Storeroom with item type LABOR</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-005-B"><input type="radio" name="c1000-208-mcq-1-2-005" value="B" id="c1000-208-mcq-1-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A Labor Inventory Location (Location with type LABOR)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-C"><input type="radio" name="c1000-208-mcq-1-2-005" value="C" id="c1000-208-mcq-1-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A Service item with Prorate flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-D"><input type="radio" name="c1000-208-mcq-1-2-005" value="D" id="c1000-208-mcq-1-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A Crew item with Inspect on Receipt flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-A"><input type="radio" name="c1000-208-mcq-1-2-005" value="A" id="c1000-208-mcq-1-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Un Storeroom avec item type LABOR</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-005-B"><input type="radio" name="c1000-208-mcq-1-2-005" value="B" id="c1000-208-mcq-1-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une Labor Inventory Location (Location de type LABOR)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-C"><input type="radio" name="c1000-208-mcq-1-2-005" value="C" id="c1000-208-mcq-1-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Un Service item avec le flag Prorate</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-005-D"><input type="radio" name="c1000-208-mcq-1-2-005" value="D" id="c1000-208-mcq-1-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un Crew item avec le flag Inspect on Receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -9879,13 +9879,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner wants item BEARING-X stocked at Satellite NORTH to be reordered specifically from CENTRAL (not from external vendor) when its ROP triggers. Other items at NORTH should follow their own reorder rules.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Where does the planner configure this item-specific reorder source?</div>
+  <div class="mcq-context">Un planificateur veut que l'item BEARING-X stocké au Satellite NORTH soit reorderé spécifiquement depuis CENTRAL (et non depuis un vendor externe) quand son ROP est atteint. Les autres items à NORTH doivent suivre leurs propres règles de reorder.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Où le planificateur configure-t-il cette source de reorder propre à un item ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-A"><input type="radio" name="c1000-208-mcq-1-2-006" value="A" id="c1000-208-mcq-1-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">In the Storerooms application, by setting the Parent Storeroom on Satellite NORTH to CENTRAL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-B"><input type="radio" name="c1000-208-mcq-1-2-006" value="B" id="c1000-208-mcq-1-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">In the Item Master application, by setting Default Reorder Source to CENTRAL globally</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-006-C"><input type="radio" name="c1000-208-mcq-1-2-006" value="C" id="c1000-208-mcq-1-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">In the Inventory application, on the BEARING-X record at NORTH, by setting Reorder Storeroom = CENTRAL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-D"><input type="radio" name="c1000-208-mcq-1-2-006" value="D" id="c1000-208-mcq-1-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">In the Purchase Orders application, by creating a permanent template PO from CENTRAL to NORTH</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-A"><input type="radio" name="c1000-208-mcq-1-2-006" value="A" id="c1000-208-mcq-1-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Dans l'application Storerooms, en réglant le Parent Storeroom du Satellite NORTH à CENTRAL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-B"><input type="radio" name="c1000-208-mcq-1-2-006" value="B" id="c1000-208-mcq-1-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dans l'application Item Master, en réglant un Default Reorder Source = CENTRAL globalement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-006-C"><input type="radio" name="c1000-208-mcq-1-2-006" value="C" id="c1000-208-mcq-1-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Dans l'application Inventory, sur le record de BEARING-X au NORTH, en réglant Reorder Storeroom = CENTRAL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-006-D"><input type="radio" name="c1000-208-mcq-1-2-006" value="D" id="c1000-208-mcq-1-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Dans l'application Purchase Orders, en créant un PO modèle permanent de CENTRAL vers NORTH</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -9945,13 +9945,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A satellite storeroom triggers a reorder. Its Reorder Storeroom is set to CENTRAL (which has Use in PR/PO checked). Maximo creates an Internal PO from CENTRAL to the satellite.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which financial accounting effect is correct for an Internal PO between two storerooms?</div>
+  <div class="mcq-context">Un storeroom satellite déclenche un reorder. Son Reorder Storeroom est réglé à CENTRAL (qui a Use in PR/PO coché). Maximo crée un Internal PO de CENTRAL vers le satellite.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel effet comptable est correct pour un Internal PO entre deux storerooms ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-A"><input type="radio" name="c1000-208-mcq-1-2-007" value="A" id="c1000-208-mcq-1-2-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">An AP voucher is generated to a vendor at receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-B"><input type="radio" name="c1000-208-mcq-1-2-007" value="B" id="c1000-208-mcq-1-2-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">No GL postings occur on either storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-C"><input type="radio" name="c1000-208-mcq-1-2-007" value="C" id="c1000-208-mcq-1-2-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A revenue line is recorded for CENTRAL and a cost line for the satellite</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-007-D"><input type="radio" name="c1000-208-mcq-1-2-007" value="D" id="c1000-208-mcq-1-2-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Stock value transfers from CENTRAL's Inventory Control GL to the satellite's Inventory Control GL ; no AP voucher is created</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-A"><input type="radio" name="c1000-208-mcq-1-2-007" value="A" id="c1000-208-mcq-1-2-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Un AP voucher est généré vers un vendor à la réception</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-B"><input type="radio" name="c1000-208-mcq-1-2-007" value="B" id="c1000-208-mcq-1-2-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Aucun posting GL n'a lieu sur l'un ou l'autre storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-1-2-007-C"><input type="radio" name="c1000-208-mcq-1-2-007" value="C" id="c1000-208-mcq-1-2-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une ligne de revenue est enregistrée pour CENTRAL et une ligne de cost pour le satellite</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-1-2-007-D"><input type="radio" name="c1000-208-mcq-1-2-007" value="D" id="c1000-208-mcq-1-2-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La valeur de stock est transférée du compte GL Inventory Control de CENTRAL vers celui du satellite ; aucun AP voucher n'est créé</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -10011,8 +10011,8 @@ graph TB
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-1-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-1-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-2-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-1-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-2-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -10680,8 +10680,8 @@ graph TB
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-2-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-1-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-2-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-1-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-2-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -11304,8 +11304,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-2-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-2-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-3-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-2-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-3-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -12003,8 +12003,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-3-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-2-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-3-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-2-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-3-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -12544,8 +12544,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-3-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-3-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-3-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-3-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-3-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -13017,8 +13017,8 @@ flowchart LR
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-3-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-3-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-4-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-3-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-4-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -13883,8 +13883,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-4-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-3-3" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-4-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-3-3" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-4-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -14486,8 +14486,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-4-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-4-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-4-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-4-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-4-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -15133,8 +15133,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-4-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-4-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-4-4" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-4-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-4-4" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -15747,8 +15747,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-4-4">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-4-3" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-4-5" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-4-3" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-4-5" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -16257,8 +16257,8 @@ stateDiagram-v2
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-4-5">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-4-4" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-5-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-4-4" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-5-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -16680,8 +16680,8 @@ graph LR
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-5-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-4-5" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-5-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-4-5" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-5-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -17131,8 +17131,8 @@ graph TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-5-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-5-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-5-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-5-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-5-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -17511,8 +17511,8 @@ graph TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-5-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-5-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-6-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-5-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-6-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -18148,8 +18148,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-6-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-5-3" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-6-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-5-3" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-6-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -18630,8 +18630,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-6-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-6-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-7-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-6-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-7-1" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -19134,8 +19134,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-7-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-6-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-7-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-6-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-7-2" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -19730,8 +19730,8 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-7-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-7-1" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
-    <a href="#c1000-208-lesson-7-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Next lesson</span></a>
+    <a href="#c1000-208-lesson-7-1" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
+    <a href="#c1000-208-lesson-7-3" class="btn-nav next"><span class="dir">Suivant →</span><span>Leçon suivante</span></a>
   </div>
 </section>
 
@@ -20315,7 +20315,7 @@ flowchart TD
   </div>
   <button type="button" class="mark-done-btn" data-done="c1000-208-7-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#c1000-208-lesson-7-2" class="btn-nav"><span class="dir">← Précédent</span><span>Prev lesson</span></a>
+    <a href="#c1000-208-lesson-7-2" class="btn-nav"><span class="dir">← Précédent</span><span>Leçon précédente</span></a>
     <a href="#c1000-208-home" class="btn-nav next"><span class="dir">Suivant →</span><span>Home</span></a>
   </div>
 </section>
