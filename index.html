@@ -10020,15 +10020,15 @@ graph TB
 <section class="lesson" id="c1000-208-lesson-2-1">
   <div class="breadcrumb">Section 2 <span class="brand-dot">·</span> 2.1</div>
   <div class="lesson-header">
-    <h1>Reorder Parameters (ROP / EOQ / Lead Time / Safety Stock)</h1>
+    <h1>Paramètres de Reorder (ROP / EOQ / Lead Time / Safety Stock)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 15%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-2-1.svg" alt="C1000-208 lesson 2-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-2-1.svg" alt="Illustration de la leçon C1000-208 2-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-2-1" id="lt-c1000-208-2-1-c" class="lt-course" checked>
@@ -10043,31 +10043,31 @@ graph TB
 <!-- FRAGMENT A: replaces the placeholder <p style="...">Lesson content pending...</p> in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li><strong>Configuration of Key Reorder Parameters</strong> — ROP and Lead Time on the Reorder Details tab · EOQ rounding (must be ≥1, ensures order qty is multiple of EOQ) · Safety Stock impact on ROP.</li>
-  <li><strong>Reorder Calculation and Order Quantity Logic</strong> — describe the logic.</li>
-  <li><strong>Lead Time calculation using Recent Lead Time Weight in % field</strong>.</li>
+  <li><strong>Configuration des paramètres clés de Reorder</strong> — ROP et Lead Time sur l'onglet Reorder Details · arrondi EOQ (doit être ≥ 1, garantit que l'order qty est un multiple d'EOQ) · impact du Safety Stock sur le ROP.</li>
+  <li><strong>Calcul de Reorder et logique d'Order Quantity</strong> — décrire la logique.</li>
+  <li><strong>Calcul du Lead Time avec le champ Recent Lead Time Weight in %</strong>.</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Four reorder parameters drive the entire replenishment</strong> (Inventory app &gt; Reorder Details tab) :
+  <li><strong>Quatre paramètres de reorder pilotent l'ensemble du réapprovisionnement</strong> (application Inventory &gt; onglet Reorder Details) :
     <ul>
-      <li><strong>Reorder Point (ROP)</strong> — quantity threshold below which a reorder is triggered. When stock-on-hand + on-order ≤ ROP, Maximo creates a PR (or auto-PO if configured).</li>
-      <li><strong>Economic Order Quantity (EOQ)</strong> — in Maximo, a <em>rounding multiplier</em>. Order quantity must be a multiple of EOQ. <strong>NOT</strong> the Wilson formula optimisation. e.g. EOQ=10 means orders are placed in multiples of 10 (10, 20, 30...).</li>
-      <li><strong>Lead Time</strong> — days from order placement to receipt at storeroom. Drives the basic ROP calculation : <code>basic_ROP = average_daily_usage × lead_time</code>.</li>
-      <li><strong>Safety Stock</strong> — a flat buffer added to ROP to absorb consumption variance during the lead time. Effective ROP = (avg daily usage × lead time) + safety stock.</li>
+      <li><strong>Reorder Point (ROP)</strong> — seuil de quantité sous lequel un reorder est déclenché. Quand stock-on-hand + on-order ≤ ROP, Maximo crée une PR (ou un auto-PO si configuré).</li>
+      <li><strong>Economic Order Quantity (EOQ)</strong> — dans Maximo, un <em>multiplicateur d'arrondi</em>. L'order quantity doit être un multiple d'EOQ. <strong>PAS</strong> l'optimisation de la formule de Wilson. Ex. : EOQ=10 signifie que les commandes se font par multiples de 10 (10, 20, 30...).</li>
+      <li><strong>Lead Time</strong> — jours entre la commande et la réception au storeroom. Pilote le calcul de base du ROP : <code>basic_ROP = average_daily_usage × lead_time</code>.</li>
+      <li><strong>Safety Stock</strong> — buffer fixe ajouté au ROP pour absorber la variance de consommation pendant le lead time. ROP effectif = (consommation moyenne quotidienne × lead time) + safety stock.</li>
     </ul>
   </li>
-  <li><strong>The textbook ROP formula</strong> [EOTRAG query 1] : <code>ROP = (LT × D) + Sb</code> where LT = lead time (days), D = average daily demand, Sb = safety stock. e.g. for 3 bearings/day, LT 10 days, safety stock 5 → ROP = 30 + 5 = 35 units. As soon as stock falls to 35, place an order.</li>
-  <li><strong>Stochastic ROP (Slater's MRO formulation)</strong> — for parts with variable demand : <code>ROP = (D × LT) + csf × MAD × √LT</code> where csf = customer service factor (1.65 = 95% availability, 2.05 = 98%, 2.33 = 99%, 2.56 = 99.5%) and MAD = mean absolute deviation. The √LT term accounts for the fact that demand uncertainty grows with the square root of time during the lead time. Maximo's Reorder Details page captures the deterministic version ; advanced planners adjust safety stock manually based on σ.</li>
-  <li><strong>Wilson EOQ formula (academic theory)</strong> [EOTRAG query 2] : <code>EOQ_Wilson = √(2DS / H)</code> where D = annual demand, S = setup/ordering cost per order, H = annual holding cost per unit per year. Derived by setting <code>d(TC)/dQ = 0</code> where <code>TC = (D/Q)×S + (Q/2)×H</code>. The optimal Q balances ordering cost (decreases with bigger Q, fewer orders) and holding cost (increases with bigger Q, more stock). Six assumptions : constant deterministic demand, constant lead time, instant replenishment, no shortages, no quantity discounts, constant unit cost.</li>
-  <li><strong>Maximo's EOQ deviates from Wilson</strong> : Maximo's EOQ field is <strong>not</strong> the Wilson optimum but a <em>rounding multiplier</em>. Maximo doesn't optimise ; it ensures order quantity is a multiple of a vendor-friendly pack size (case of 12, pallet of 50, etc.). True Wilson math is left to external optimisers (Maximo Inventory Insights ML or planner spreadsheets). [EOTRAG query 2 — "Maximo's Inventory record has an Order Quantity Multiple field — these are not Wilson EOQ ; they are pragmatic order-rounding rules"]. <strong>The EOQ value must be ≥ 1.</strong></li>
-  <li><strong>Reorder calculation step-by-step</strong> : Maximo evaluates <code>required_qty = ROP + EOQ - on_hand - on_order + reservations</code> (simplified). It then rounds <em>up</em> to the nearest multiple of EOQ. e.g. need = 47 units, EOQ = 10 → order 50 (next multiple ≥ 47). If EOQ = 1, no rounding effect (any qty allowed).</li>
-  <li><strong>Safety Stock is added to the ROP</strong>, not to the order quantity. e.g. safety stock 10 units, average daily usage 3, lead time 10 → effective ROP = (3 × 10) + 10 = 40. The safety stock acts as a permanent buffer that survives normal lead-time consumption ; if everything goes well, it is never touched.</li>
-  <li><strong>Recent Lead Time Weight in % (Storeroom-level)</strong> [EOTRAG query 11] — controls how strongly recent receipt lead times update the calculated lead time. With 70% weight, <code>new_LT = 0.70 × measured_LT_for_this_receipt + 0.30 × previous_LT</code>. Lets the system adapt to changing supply chain conditions (new vendor, port congestion). With 0%, lead time stays manual ; with 100%, lead time = last receipt only.</li>
-  <li><strong>Order Quantity Multiple vs EOQ vs Order Unit</strong> — three close concepts. Order Unit = the unit you buy in (BOX, EA). Order Quantity Multiple = the smallest increment (e.g. case of 12, but here Maximo uses EOQ value as the multiple). EOQ in Maximo = the rounding multiple. So "Order Quantity Multiple" and "EOQ" are functionally similar in Maximo's model.</li>
-  <li><strong>Numerical example — full reorder calc</strong> : Item BEARING-001 at Storeroom CENTRAL. Average daily usage = 5 units, lead time = 14 days, safety stock = 20 units. ROP = (5 × 14) + 20 = 90. EOQ = 25 (vendor pallets of 25). On-hand = 80, on-order = 0 → reorder triggered (80 ≤ 90). Required qty = ROP - on_hand = 90 - 80 = 10 units minimum to bring back to ROP, plus EOQ buffer = 35. Round up to multiple of 25 → order 50 units. After receipt : on-hand = 130 (80 + 50).</li>
-  <li><strong>EOQ flat zone</strong> [EOTRAG query 2] : the total cost curve is U-shaped but VERY flat near the optimum. Orders within ±25% of Wilson's EOQ produce less than 5% extra total cost. This means <em>rounding to vendor-friendly pack sizes is acceptable</em> from a cost standpoint, justifying Maximo's pragmatic approach.</li>
+  <li><strong>Formule ROP du manuel</strong> [EOTRAG query 1] : <code>ROP = (LT × D) + Sb</code> où LT = lead time (jours), D = demande moyenne quotidienne, Sb = safety stock. Ex. : pour 3 bearings/jour, LT 10 jours, safety stock 5 → ROP = 30 + 5 = 35 unités. Dès que le stock descend à 35, on commande.</li>
+  <li><strong>ROP stochastique (formulation Slater MRO)</strong> — pour des pièces à demande variable : <code>ROP = (D × LT) + csf × MAD × √LT</code> où csf = customer service factor (1,65 = 95% disponibilité, 2,05 = 98%, 2,33 = 99%, 2,56 = 99,5%) et MAD = mean absolute deviation. Le terme √LT tient compte du fait que l'incertitude sur la demande croît avec la racine carrée du temps pendant le lead time. La page Reorder Details de Maximo capture la version déterministe ; les planificateurs avancés ajustent manuellement le safety stock selon σ.</li>
+  <li><strong>Formule EOQ de Wilson (théorie académique)</strong> [EOTRAG query 2] : <code>EOQ_Wilson = √(2DS / H)</code> où D = demande annuelle, S = setup/ordering cost par commande, H = annual holding cost par unité par an. Dérivée en posant <code>d(TC)/dQ = 0</code> où <code>TC = (D/Q)×S + (Q/2)×H</code>. Le Q optimal équilibre l'ordering cost (décroît avec un Q plus grand, moins de commandes) et le holding cost (croît avec un Q plus grand, plus de stock). Six hypothèses : demande constante déterministe, lead time constant, replenishment instantané, pas de pénurie, pas de remises quantité, coût unitaire constant.</li>
+  <li><strong>L'EOQ de Maximo s'écarte de Wilson</strong> : le champ EOQ de Maximo n'est <strong>pas</strong> l'optimum de Wilson mais un <em>multiplicateur d'arrondi</em>. Maximo n'optimise pas ; il garantit que l'order quantity est un multiple d'une pack size vendor-friendly (case de 12, pallet de 50, etc.). Le calcul Wilson véritable est laissé à des optimiseurs externes (Maximo Inventory Insights ML ou tableurs des planificateurs). [EOTRAG query 2 — « Le record Inventory de Maximo a un champ Order Quantity Multiple — ce ne sont pas des Wilson EOQ ; ce sont des règles pragmatiques d'arrondi de commande »]. <strong>La valeur EOQ doit être ≥ 1.</strong></li>
+  <li><strong>Calcul de reorder pas à pas</strong> : Maximo évalue <code>required_qty = ROP + EOQ - on_hand - on_order + reservations</code> (simplifié). Il arrondit ensuite <em>vers le haut</em> au prochain multiple d'EOQ. Ex. : besoin = 47 unités, EOQ = 10 → commander 50 (prochain multiple ≥ 47). Si EOQ = 1, pas d'effet d'arrondi (toute qty autorisée).</li>
+  <li><strong>Le Safety Stock s'ajoute au ROP</strong>, pas à l'order quantity. Ex. : safety stock 10 unités, consommation moyenne quotidienne 3, lead time 10 → ROP effectif = (3 × 10) + 10 = 40. Le safety stock agit comme un buffer permanent qui survit à la consommation normale du lead time ; si tout se passe bien, il n'est jamais entamé.</li>
+  <li><strong>Recent Lead Time Weight in % (au niveau Storeroom)</strong> [EOTRAG query 11] — contrôle l'influence des lead times de réceptions récentes sur le lead time calculé. Avec un poids de 70%, <code>new_LT = 0,70 × measured_LT_for_this_receipt + 0,30 × previous_LT</code>. Permet au système de s'adapter aux conditions changeantes de la chaîne logistique (nouveau vendor, congestion portuaire). Avec 0%, le lead time reste manuel ; avec 100%, le lead time = uniquement la dernière réception.</li>
+  <li><strong>Order Quantity Multiple vs EOQ vs Order Unit</strong> — trois concepts proches. Order Unit = unité d'achat (BOX, EA). Order Quantity Multiple = le plus petit incrément (ex. case de 12, mais ici Maximo utilise la valeur EOQ comme multiple). EOQ dans Maximo = le multiple d'arrondi. Donc « Order Quantity Multiple » et « EOQ » sont fonctionnellement similaires dans le modèle Maximo.</li>
+  <li><strong>Exemple chiffré — calcul reorder complet</strong> : Item BEARING-001 au Storeroom CENTRAL. Consommation moyenne quotidienne = 5 unités, lead time = 14 jours, safety stock = 20 unités. ROP = (5 × 14) + 20 = 90. EOQ = 25 (pallets vendor de 25). On-hand = 80, on-order = 0 → reorder déclenché (80 ≤ 90). Required qty = ROP - on_hand = 90 - 80 = 10 unités minimum pour revenir au ROP, plus le buffer EOQ = 35. Arrondi au multiple de 25 → commander 50 unités. Après réception : on-hand = 130 (80 + 50).</li>
+  <li><strong>Zone plate de l'EOQ</strong> [EOTRAG query 2] : la courbe de coût total est en U mais TRÈS plate près de l'optimum. Des commandes à ±25% de l'EOQ de Wilson produisent moins de 5% de coût total supplémentaire. Cela signifie que <em>arrondir aux pack sizes vendor-friendly est acceptable</em> du point de vue coût, justifiant l'approche pragmatique de Maximo.</li>
 </ul></div>
 
 
@@ -10084,19 +10084,19 @@ graph TB
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>EOQ in Maximo is NOT Wilson's formula</strong> — this is the most-tested misconception in Section 2.1.</p>
+  <p><strong>L'EOQ dans Maximo N'EST PAS la formule de Wilson</strong> — c'est l'idée fausse la plus testée de la Section 2.1.</p>
   <ul>
-    <li>Wilson EOQ optimises total cost (ordering + holding). Maximo's EOQ is a vendor-friendly rounding multiple. Two different concepts — same name.</li>
-    <li>Maximo doesn't compute EOQ for you ; you enter the value (typically vendor pack size, case quantity, or pallet size). True Wilson optimisation requires external math.</li>
-    <li>SAM Q3 explicitly tests : "What does the Economic Order Quantity (EOQ) parameter do in relation to the order quantity? — Round the order quantity up so that it is a multiple of the EOQ value".</li>
-    <li>Edge case : EOQ must be ≥ 1. Setting EOQ = 0 or negative breaks the reorder calculation.</li>
+    <li>Le Wilson EOQ optimise le coût total (ordering + holding). L'EOQ de Maximo est un multiple d'arrondi vendor-friendly. Deux concepts différents — même nom.</li>
+    <li>Maximo ne calcule pas l'EOQ pour vous ; vous saisissez la valeur (typiquement pack size vendor, case quantity ou pallet size). La vraie optimisation Wilson se fait à l'externe.</li>
+    <li>SAM Q3 teste explicitement : « What does the Economic Order Quantity (EOQ) parameter do in relation to the order quantity? — Round the order quantity up so that it is a multiple of the EOQ value ».</li>
+    <li>Cas limite : EOQ doit être ≥ 1. Mettre EOQ = 0 ou négatif casse le calcul de reorder.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A planner needs 47 units, the item's EOQ in Maximo is set to 10. What quantity does Maximo order?</p>
-  <details><summary>Afficher la réponse</summary><p><strong>50 units.</strong> Maximo's EOQ rounds the order quantity UP to the nearest multiple of EOQ. 47 → next multiple of 10 ≥ 47 = 50. The EOQ field is a rounding multiplier, not an optimisation formula. Wilson's optimisation, if needed, must be done externally and the result entered manually.</p></details>
+  <p>Q. Un planificateur a besoin de 47 unités, l'EOQ de l'item dans Maximo est réglé à 10. Quelle quantité Maximo commande-t-il ?</p>
+  <details><summary>Afficher la réponse</summary><p><strong>50 unités.</strong> L'EOQ de Maximo arrondit l'order quantity VERS LE HAUT au multiple d'EOQ le plus proche. 47 → prochain multiple de 10 ≥ 47 = 50. Le champ EOQ est un multiplicateur d'arrondi, pas une formule d'optimisation. L'optimisation de Wilson, si nécessaire, doit être faite à l'externe et le résultat saisi manuellement.</p></details>
 </div>
 
 <!-- FRAGMENT B: appends after the existing <p>Interactive IBM-style...</p> intro in lt-sit-panel -->
@@ -10115,13 +10115,13 @@ graph TB
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner has set the EOQ field on an Inventory record to 10. The reorder calculation determines a need of 47 units before the next reorder cycle. The planner expects Maximo to optimize ordering cost vs holding cost à la Wilson formula.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the Economic Order Quantity (EOQ) parameter do in relation to the order quantity?</div>
+  <div class="mcq-context">Un planificateur a réglé le champ EOQ sur un record Inventory à 10. Le calcul de reorder détermine un besoin de 47 unités avant le prochain cycle de reorder. Le planificateur s'attend à ce que Maximo optimise le coût de commande vs le coût de stockage à la manière de la formule de Wilson.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que fait le paramètre Economic Order Quantity (EOQ) en relation avec l'order quantity ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-A"><input type="radio" name="c1000-208-mcq-2-1-001" value="A" id="c1000-208-mcq-2-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">It sets the maximum possible stock level</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-B"><input type="radio" name="c1000-208-mcq-2-1-001" value="B" id="c1000-208-mcq-2-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">It indicates the minimum time required between reorder cycles</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-1-001-C"><input type="radio" name="c1000-208-mcq-2-1-001" value="C" id="c1000-208-mcq-2-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">It is used to round the order quantity up so that it is a multiple of the EOQ value</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-D"><input type="radio" name="c1000-208-mcq-2-1-001" value="D" id="c1000-208-mcq-2-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">It is used to determine the average receipt cost using the EOQ and Lead Time parameters</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-A"><input type="radio" name="c1000-208-mcq-2-1-001" value="A" id="c1000-208-mcq-2-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Il fixe le niveau de stock maximum possible</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-B"><input type="radio" name="c1000-208-mcq-2-1-001" value="B" id="c1000-208-mcq-2-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Il indique le temps minimum requis entre deux cycles de reorder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-1-001-C"><input type="radio" name="c1000-208-mcq-2-1-001" value="C" id="c1000-208-mcq-2-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Il sert à arrondir l'order quantity vers le haut pour qu'elle soit un multiple de la valeur EOQ</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-1-001-D"><input type="radio" name="c1000-208-mcq-2-1-001" value="D" id="c1000-208-mcq-2-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Il sert à déterminer le coût moyen de réception à partir des paramètres EOQ et Lead Time</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
