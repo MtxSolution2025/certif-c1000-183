@@ -14499,11 +14499,11 @@ flowchart TD
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 24%</span>
       <span class="meta-pill">~10 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-4-3.svg" alt="C1000-208 lesson 4-3 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-4-3.svg" alt="Illustration de la leçon C1000-208 4-3" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-3" id="lt-c1000-208-4-3-c" class="lt-course" checked>
@@ -14518,11 +14518,11 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li><strong>Non-rotating Item Transfer</strong> between storerooms (same / different sites)</li>
-  <li><strong>Rotating Item Transfer</strong> between storerooms</li>
+  <li><strong>Transfer d'Item non-rotating</strong> entre storerooms (même site / sites différents)</li>
+  <li><strong>Transfer de Rotating Item</strong> entre storerooms</li>
   <li><strong>Tool Transfer</strong></li>
-  <li><strong>Shipment Transfer</strong> for Item / Tool</li>
-  <li>Use Issues and Transfers RBA to perform Item / Tool Transfer</li>
+  <li><strong>Shipment Transfer</strong> pour Item / Tool</li>
+  <li>Utiliser la Issues and Transfers RBA pour réaliser un Item / Tool Transfer</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -14547,17 +14547,17 @@ flowchart TD
 <figure class="lesson-diagram" data-lesson="c1000-208-4-3-transfer">
   <pre class="mermaid">
 flowchart TD
-  START["Need to transfer<br/>item / tool from<br/>storeroom A → storeroom B"]:::start
-  Q1{"Same SITE ?"}:::decision
+  START["Besoin de transférer<br/>item / tool du<br/>storeroom A → storeroom B"]:::start
+  Q1{"Même SITE ?"}:::decision
 
-  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
-  SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
+  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Une seule ligne MATRECTRANS<br/>Balance déplacée immédiatement"]:::ok
+  SHIPMENT["<b>Shipment Transfer</b><br/>(obligatoire cross-site)<br/>1 — Créer un shipment record<br/>2 — Ship out (balance −A)<br/>3 — En transit (Holding)<br/>4 — Réception au destination<br/>5 — Inspection si requise<br/>6 — Balance +B"]:::warn
 
-  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::endNode
+  END["Transaction journalisée dans<br/>MATRECTRANS / INVTRANS"]:::endNode
 
   START --> Q1
-  Q1 -- Yes --> DIRECT
-  Q1 -- No --> SHIPMENT
+  Q1 -- Oui --> DIRECT
+  Q1 -- Non --> SHIPMENT
   DIRECT --> END
   SHIPMENT --> END
 
@@ -14602,13 +14602,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner needs to move 30 units of bearing BRG-001 from Storeroom CENTRAL to Storeroom WEST. Both storerooms are at the same site SITE1.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo procedure is correct for this same-site transfer?</div>
+  <div class="mcq-context">Un planificateur doit déplacer 30 unités du bearing BRG-001 du Storeroom CENTRAL vers le Storeroom WEST. Les deux storerooms sont sur le même site SITE1.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle procédure Maximo est correcte pour ce transfert same-site ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-001-A"><input type="radio" name="c1000-208-mcq-4-3-001" value="A" id="c1000-208-mcq-4-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory Usage Document Type = TRANSFER ; direct decrement source + increment destination, no shipment</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-B"><input type="radio" name="c1000-208-mcq-4-3-001" value="B" id="c1000-208-mcq-4-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Always create a Shipment, regardless of site</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-C"><input type="radio" name="c1000-208-mcq-4-3-001" value="C" id="c1000-208-mcq-4-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Issue from CENTRAL with reason TRANSFER + Receive at WEST manually</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-D"><input type="radio" name="c1000-208-mcq-4-3-001" value="D" id="c1000-208-mcq-4-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Current Balance −30 at CENTRAL and +30 at WEST</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-001-A"><input type="radio" name="c1000-208-mcq-4-3-001" value="A" id="c1000-208-mcq-4-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory Usage Document Type = TRANSFER ; décrément source + incrément destination directement, sans Shipment</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-B"><input type="radio" name="c1000-208-mcq-4-3-001" value="B" id="c1000-208-mcq-4-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Toujours créer un Shipment, peu importe le site</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-C"><input type="radio" name="c1000-208-mcq-4-3-001" value="C" id="c1000-208-mcq-4-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Issuer depuis CENTRAL avec reason TRANSFER + Receive manuel à WEST</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-001-D"><input type="radio" name="c1000-208-mcq-4-3-001" value="D" id="c1000-208-mcq-4-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Current Balance −30 à CENTRAL et +30 à WEST</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14650,17 +14650,17 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-4-3-transfer-c1000-208-mcq-4-3-001">
   <pre class="mermaid">
 flowchart TD
-  START["Need to transfer<br/>item / tool from<br/>storeroom A → storeroom B"]:::start
-  Q1{"Same SITE ?"}:::decision
+  START["Besoin de transférer<br/>item / tool du<br/>storeroom A → storeroom B"]:::start
+  Q1{"Même SITE ?"}:::decision
 
-  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Single MATRECTRANS row<br/>Balance moves immediately"]:::ok
-  SHIPMENT["<b>Shipment Transfer</b><br/>(mandatory cross-site)<br/>1 — Create shipment record<br/>2 — Ship out (balance −A)<br/>3 — In transit (Holding)<br/>4 — Receive at destination<br/>5 — Inspect if required<br/>6 — Balance +B"]:::warn
+  DIRECT["<b>Direct Transfer</b><br/>Inventory app →<br/>Transfer Out / Transfer In<br/>Une seule ligne MATRECTRANS<br/>Balance déplacée immédiatement"]:::ok
+  SHIPMENT["<b>Shipment Transfer</b><br/>(obligatoire cross-site)<br/>1 — Créer un shipment record<br/>2 — Ship out (balance −A)<br/>3 — En transit (Holding)<br/>4 — Réception au destination<br/>5 — Inspection si requise<br/>6 — Balance +B"]:::warn
 
-  END["Transaction logged in<br/>MATRECTRANS / INVTRANS"]:::endNode
+  END["Transaction journalisée dans<br/>MATRECTRANS / INVTRANS"]:::endNode
 
   START --> Q1
-  Q1 -- Yes --> DIRECT
-  Q1 -- No --> SHIPMENT
+  Q1 -- Oui --> DIRECT
+  Q1 -- Non --> SHIPMENT
   DIRECT --> END
   SHIPMENT --> END
 
@@ -14688,13 +14688,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A central warehouse needs to ship 100 valves to a distant site (different SITEID) for a major shutdown.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What Maximo Document Type and what additional record are required?</div>
+  <div class="mcq-context">Un warehouse central doit expédier 100 valves vers un site distant (SITEID différent) pour un shutdown majeur.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel Document Type Maximo et quel record additionnel sont requis ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-A"><input type="radio" name="c1000-208-mcq-4-3-002" value="A" id="c1000-208-mcq-4-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Document Type TRANSFER ; no additional record needed</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-B"><input type="radio" name="c1000-208-mcq-4-3-002" value="B" id="c1000-208-mcq-4-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Document Type ISSUE + Adjust Balance at destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-002-C"><input type="radio" name="c1000-208-mcq-4-3-002" value="C" id="c1000-208-mcq-4-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Document Type TRANSFEROUT ; a Shipment record is auto-created at completion</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-D"><input type="radio" name="c1000-208-mcq-4-3-002" value="D" id="c1000-208-mcq-4-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Document Type RETURN ; the destination « returns » to source</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-A"><input type="radio" name="c1000-208-mcq-4-3-002" value="A" id="c1000-208-mcq-4-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Document Type TRANSFER ; aucun record additionnel nécessaire</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-B"><input type="radio" name="c1000-208-mcq-4-3-002" value="B" id="c1000-208-mcq-4-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Document Type ISSUE + Adjust Balance au destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-002-C"><input type="radio" name="c1000-208-mcq-4-3-002" value="C" id="c1000-208-mcq-4-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Document Type TRANSFEROUT ; un Shipment record est auto-créé à la completion</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-002-D"><input type="radio" name="c1000-208-mcq-4-3-002" value="D" id="c1000-208-mcq-4-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Document Type RETURN ; le destination « retourne » à la source</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14752,13 +14752,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A rotating motor SN-MOT-A123 needs to be transferred from Storeroom CENTRAL (site SITE1) to Storeroom WEST (same SITE1). The motor has cumulated $2 000 of repair costs over time.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the asset's INVCOST during the transfer?</div>
+  <div class="mcq-context">Un rotating motor SN-MOT-A123 doit être transféré du Storeroom CENTRAL (site SITE1) vers le Storeroom WEST (même SITE1). Le motor a cumulé 2 000 $ de coûts de réparation au fil du temps.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il à l'INVCOST de l'asset durant le transfer ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-A"><input type="radio" name="c1000-208-mcq-4-3-003" value="A" id="c1000-208-mcq-4-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">INVCOST resets to original purchase cost ; repair history lost</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-003-B"><input type="radio" name="c1000-208-mcq-4-3-003" value="B" id="c1000-208-mcq-4-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">INVCOST is preserved (purchase + cumulated repairs) ; the asset moves with full carrying value</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-C"><input type="radio" name="c1000-208-mcq-4-3-003" value="C" id="c1000-208-mcq-4-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">INVCOST averaged with destination storeroom's other rotating items</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-D"><input type="radio" name="c1000-208-mcq-4-3-003" value="D" id="c1000-208-mcq-4-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">INVCOST is set to zero until next repair</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-A"><input type="radio" name="c1000-208-mcq-4-3-003" value="A" id="c1000-208-mcq-4-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">INVCOST revient au coût d'achat d'origine ; l'historique de réparation est perdu</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-003-B"><input type="radio" name="c1000-208-mcq-4-3-003" value="B" id="c1000-208-mcq-4-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">INVCOST est préservé (achat + réparations cumulées) ; l'asset se déplace à pleine valeur de portage</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-C"><input type="radio" name="c1000-208-mcq-4-3-003" value="C" id="c1000-208-mcq-4-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">INVCOST moyenné avec les autres rotating items du storeroom destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-003-D"><input type="radio" name="c1000-208-mcq-4-3-003" value="D" id="c1000-208-mcq-4-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">INVCOST mis à zéro jusqu'à la prochaine réparation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14818,13 +14818,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A site is reorganizing tool storage. 15 multimeters (Tool flag = Y, non-rotating) need to move from Storeroom MAIN to Storeroom EAST permanently — both same site.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Is Issue To Person required for this storeroom-to-storeroom tool transfer?</div>
+  <div class="mcq-context">Un site réorganise le stockage des tools. 15 multimètres (Tool flag = Y, non-rotating) doivent passer du Storeroom MAIN au Storeroom EAST de manière permanente — les deux sur le même site.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Issue To Person est-il requis pour ce transfert tool storeroom-to-storeroom ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-004-A"><input type="radio" name="c1000-208-mcq-4-3-004" value="A" id="c1000-208-mcq-4-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">No — Issue To Person is required only for tool issue to a WO/person, not for storeroom-to-storeroom transfer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-B"><input type="radio" name="c1000-208-mcq-4-3-004" value="B" id="c1000-208-mcq-4-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Yes — every tool movement requires Issue To Person</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-C"><input type="radio" name="c1000-208-mcq-4-3-004" value="C" id="c1000-208-mcq-4-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Yes — without it, the multimeters lose their Tool flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-D"><input type="radio" name="c1000-208-mcq-4-3-004" value="D" id="c1000-208-mcq-4-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Tools cannot be transferred between storerooms ; must be issued and returned</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-004-A"><input type="radio" name="c1000-208-mcq-4-3-004" value="A" id="c1000-208-mcq-4-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Non — Issue To Person est requis uniquement pour issuer un tool à une WO/personne, pas pour un transfert storeroom-to-storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-B"><input type="radio" name="c1000-208-mcq-4-3-004" value="B" id="c1000-208-mcq-4-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Oui — tout mouvement de tool exige Issue To Person</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-C"><input type="radio" name="c1000-208-mcq-4-3-004" value="C" id="c1000-208-mcq-4-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Oui — sans cela, les multimètres perdent leur Tool flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-004-D"><input type="radio" name="c1000-208-mcq-4-3-004" value="D" id="c1000-208-mcq-4-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les tools ne peuvent pas être transférés entre storerooms ; ils doivent être issués puis retournés</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14877,13 +14877,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">Org A uses LIFO cost type for an item; current LIFO unit cost is $13. Org B uses FIFO cost type for the same item; current FIFO unit cost is $10. 50 units transfer from Org A to Org B.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the cost at the receiving organization Org B?</div>
+  <div class="mcq-context">Org A utilise le cost type LIFO pour un item ; le LIFO unit cost courant est de 13 $. Org B utilise FIFO pour le même item ; le FIFO unit cost courant est de 10 $. 50 unités sont transférées de Org A vers Org B.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il au coût à l'organisation receveuse Org B ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-A"><input type="radio" name="c1000-208-mcq-4-3-005" value="A" id="c1000-208-mcq-4-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Cost stays at $13 (source LIFO) regardless of Org B's method</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-B"><input type="radio" name="c1000-208-mcq-4-3-005" value="B" id="c1000-208-mcq-4-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Cost averages between $13 and $10 = $11.50</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-005-C"><input type="radio" name="c1000-208-mcq-4-3-005" value="C" id="c1000-208-mcq-4-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Cost is re-evaluated at receiving organization's method ; variance posted to Cost Adjustment GL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-D"><input type="radio" name="c1000-208-mcq-4-3-005" value="D" id="c1000-208-mcq-4-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The transfer is rejected — cost types must match across organizations</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-A"><input type="radio" name="c1000-208-mcq-4-3-005" value="A" id="c1000-208-mcq-4-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Le coût reste à 13 $ (LIFO source) peu importe la méthode d'Org B</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-B"><input type="radio" name="c1000-208-mcq-4-3-005" value="B" id="c1000-208-mcq-4-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le coût est moyenné entre 13 $ et 10 $ = 11,50 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-005-C"><input type="radio" name="c1000-208-mcq-4-3-005" value="C" id="c1000-208-mcq-4-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le coût est ré-évalué à la méthode de l'organisation receveuse ; variance postée au Cost Adjustment GL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-005-D"><input type="radio" name="c1000-208-mcq-4-3-005" value="D" id="c1000-208-mcq-4-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le transfer est refusé — les cost types doivent correspondre entre organisations</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14941,8 +14941,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A Shipment record was created from a TRANSFEROUT. The items left the source storeroom but have not yet arrived at the destination.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the Shipment status during transit?</div>
+  <div class="mcq-context">Un Shipment record a été créé à partir d'un TRANSFEROUT. Les items ont quitté le storeroom source mais ne sont pas encore arrivés au destination.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le statut du Shipment durant le transit ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-006-A"><input type="radio" name="c1000-208-mcq-4-3-006" value="A" id="c1000-208-mcq-4-3-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">OPEN</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-006-B"><input type="radio" name="c1000-208-mcq-4-3-006" value="B" id="c1000-208-mcq-4-3-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">RECEIVED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -15007,13 +15007,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A lotted item with LOT-2026-04-A (expiration 2026-08-15, qty 100) is transferred from Storeroom A to Storeroom B (same site).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the lot information at the destination?</div>
+  <div class="mcq-context">Un lotted item avec LOT-2026-04-A (expiration 2026-08-15, qty 100) est transféré du Storeroom A vers le Storeroom B (même site).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il à l'information de lot au destination ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-A"><input type="radio" name="c1000-208-mcq-4-3-007" value="A" id="c1000-208-mcq-4-3-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">A new lot number is auto-generated at destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-007-B"><input type="radio" name="c1000-208-mcq-4-3-007" value="B" id="c1000-208-mcq-4-3-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The LOTNUM travels with the item ; expiration date preserved</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-C"><input type="radio" name="c1000-208-mcq-4-3-007" value="C" id="c1000-208-mcq-4-3-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Lot info is lost ; storekeeper must re-enter at destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-D"><input type="radio" name="c1000-208-mcq-4-3-007" value="D" id="c1000-208-mcq-4-3-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The expiration date is reset based on transfer date + standard shelf life</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-A"><input type="radio" name="c1000-208-mcq-4-3-007" value="A" id="c1000-208-mcq-4-3-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Un nouveau lot number est auto-généré au destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-007-B"><input type="radio" name="c1000-208-mcq-4-3-007" value="B" id="c1000-208-mcq-4-3-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le LOTNUM voyage avec l'item ; la date d'expiration est préservée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-C"><input type="radio" name="c1000-208-mcq-4-3-007" value="C" id="c1000-208-mcq-4-3-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">L'info de lot est perdue ; le magasinier doit la re-saisir au destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-007-D"><input type="radio" name="c1000-208-mcq-4-3-007" value="D" id="c1000-208-mcq-4-3-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La date d'expiration est réinitialisée selon la date de transfer + shelf life standard</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -15072,13 +15072,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper uses Issues and Transfers RBA on a tablet to perform a same-site transfer of 5 items between storerooms.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the typical workflow advantage of the RBA over the classic Inventory Usage app for this transfer?</div>
+  <div class="mcq-context">Un magasinier utilise la Issues and Transfers RBA sur une tablette pour réaliser un transfer same-site de 5 items entre storerooms.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est l'avantage workflow typique de la RBA par rapport à l'application Inventory Usage classique pour ce transfer ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-008-A"><input type="radio" name="c1000-208-mcq-4-3-008" value="A" id="c1000-208-mcq-4-3-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Streamlined mobile UI with barcode scanning of items and storerooms — same backend MATUSETRANS rows generated</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-B"><input type="radio" name="c1000-208-mcq-4-3-008" value="B" id="c1000-208-mcq-4-3-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">RBA bypasses the GL postings to speed up transfer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-C"><input type="radio" name="c1000-208-mcq-4-3-008" value="C" id="c1000-208-mcq-4-3-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">RBA generates extra MATUSETRANS fields not available in classic UI</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-D"><input type="radio" name="c1000-208-mcq-4-3-008" value="D" id="c1000-208-mcq-4-3-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">RBA allows offline data entry that syncs later</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-3-008-A"><input type="radio" name="c1000-208-mcq-4-3-008" value="A" id="c1000-208-mcq-4-3-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">UI mobile rationalisée avec scan barcode des items et storerooms — mêmes lignes MATUSETRANS générées en backend</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-B"><input type="radio" name="c1000-208-mcq-4-3-008" value="B" id="c1000-208-mcq-4-3-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">La RBA contourne les postings GL pour accélérer le transfer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-C"><input type="radio" name="c1000-208-mcq-4-3-008" value="C" id="c1000-208-mcq-4-3-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">La RBA génère des champs MATUSETRANS additionnels absents de l'UI classique</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-3-008-D"><input type="radio" name="c1000-208-mcq-4-3-008" value="D" id="c1000-208-mcq-4-3-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La RBA permet la saisie offline avec sync ultérieure</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
