@@ -12557,11 +12557,11 @@ flowchart TD
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 15%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-3-3.svg" alt="C1000-208 lesson 3-3 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-3-3.svg" alt="Illustration de la leçon C1000-208 3-3" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-3" id="lt-c1000-208-3-3-c" class="lt-course" checked>
@@ -12576,8 +12576,8 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Reconcile item balances by <strong>physical count in Inventory</strong></li>
-  <li>Reconcile item balances by <strong>physical count in Count Books</strong></li>
+  <li>Réconcilier les balances d'items par <strong>physical count dans Inventory</strong></li>
+  <li>Réconcilier les balances d'items par <strong>physical count dans Count Books</strong></li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -12602,22 +12602,22 @@ flowchart TD
 <figure class="lesson-diagram" data-lesson="c1000-208-3-3-reconcile">
   <pre class="mermaid">
 flowchart LR
-  COUNT["Physical count<br/>completed on the floor<br/>(counted vs system balance)"]:::start
+  COUNT["Physical count<br/>réalisé sur le terrain<br/>(qty comptée vs balance système)"]:::start
 
-  subgraph INV ["Path A — <b>Inventory app</b> reconcile"]
+  subgraph INV ["Chemin A — Reconcile via <b>Inventory app</b>"]
     direction TB
-    A1["Open <b>Inventory</b> app<br/>filter to a single item × storeroom"]:::action
-    A2["Enter counted qty<br/>(per-item granularity)"]:::action
-    A3["Click <b>Reconcile Balance</b><br/>variance applied immediately"]:::action
-    A4["INVTRANS row per item<br/>(audit trail = 1 line / SKU)"]:::ok
+    A1["Ouvrir l'application <b>Inventory</b><br/>filtrer un item × storeroom"]:::action
+    A2["Saisir la qty comptée<br/>(granularité item-par-item)"]:::action
+    A3["Cliquer <b>Reconcile Balance</b><br/>variance appliquée immédiatement"]:::action
+    A4["Ligne INVTRANS par item<br/>(audit trail = 1 ligne / SKU)"]:::ok
   end
 
-  subgraph CB ["Path B — <b>Count Books</b> reconcile"]
+  subgraph CB ["Chemin B — Reconcile via <b>Count Books</b>"]
     direction TB
-    B1["Generate Count Book<br/>filter via <b>Sample Type</b><br/>(ALL / BIN / CNTFREQ /<br/>ICG / ITEM / ROTATING / TOOLS)"]:::action
-    B2["Bulk-enter counted qty<br/>for the whole sample group"]:::action
-    B3["Click <b>Reconcile Balances</b><br/>at book level (one-shot batch)"]:::action
-    B4["INVTRANS rows per item<br/>+ Count Book status<br/>(POSTED / PARTIAL)"]:::ok
+    B1["Générer un Count Book<br/>filtrer via <b>Sample Type</b><br/>(ALL / BIN / CNTFREQ /<br/>ICG / ITEM / ROTATING / TOOLS)"]:::action
+    B2["Saisie en bulk de la qty comptée<br/>pour tout le sample group"]:::action
+    B3["Cliquer <b>Reconcile Balances</b><br/>au niveau du book (batch en une fois)"]:::action
+    B4["Lignes INVTRANS par item<br/>+ statut du Count Book<br/>(POSTED / PARTIAL)"]:::ok
   end
 
   COUNT --> A1
@@ -12625,7 +12625,7 @@ flowchart LR
   A1 --> A2 --> A3 --> A4
   B1 --> B2 --> B3 --> B4
 
-  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::endNode
+  END["Balance réconciliée<br/>+ audit trail journalisé<br/>(posting GL variance<br/>si hors tolérance)"]:::endNode
   A4 --> END
   B4 --> END
 
@@ -12669,13 +12669,13 @@ flowchart LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom clerk has entered Physical Count = 87 against an item showing Current Balance 92. The supervisor is now ready to post the variance.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action moves the Physical Count value to Current Balance and posts the GL variance?</div>
+  <div class="mcq-context">Un magasinier a saisi Physical Count = 87 sur un item dont la Current Balance affiche 92. Le supervisor est prêt à poster la variance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo transfère la valeur Physical Count vers Current Balance et poste la variance GL ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-A"><input type="radio" name="c1000-208-mcq-3-3-001" value="A" id="c1000-208-mcq-3-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Adjust Physical Count again with the same value</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-A"><input type="radio" name="c1000-208-mcq-3-3-001" value="A" id="c1000-208-mcq-3-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Adjust Physical Count à nouveau avec la même valeur</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-001-B"><input type="radio" name="c1000-208-mcq-3-3-001" value="B" id="c1000-208-mcq-3-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">More Actions &gt; Reconcile Balances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-C"><input type="radio" name="c1000-208-mcq-3-3-001" value="C" id="c1000-208-mcq-3-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Save the inventory record — Maximo auto-reconciles on save</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-D"><input type="radio" name="c1000-208-mcq-3-3-001" value="D" id="c1000-208-mcq-3-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Run the End of Day batch process</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-C"><input type="radio" name="c1000-208-mcq-3-3-001" value="C" id="c1000-208-mcq-3-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Sauvegarder l'inventory record — Maximo réconcilie automatiquement à la sauvegarde</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-001-D"><input type="radio" name="c1000-208-mcq-3-3-001" value="D" id="c1000-208-mcq-3-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Lancer le batch process End of Day</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12717,22 +12717,22 @@ flowchart LR
         <figure class="lesson-diagram" data-lesson="c1000-208-3-3-reconcile-c1000-208-mcq-3-3-001">
   <pre class="mermaid">
 flowchart LR
-  COUNT["Physical count<br/>completed on the floor<br/>(counted vs system balance)"]:::start
+  COUNT["Physical count<br/>réalisé sur le terrain<br/>(qty comptée vs balance système)"]:::start
 
-  subgraph INV ["Path A — <b>Inventory app</b> reconcile"]
+  subgraph INV ["Chemin A — Reconcile via <b>Inventory app</b>"]
     direction TB
-    A1["Open <b>Inventory</b> app<br/>filter to a single item × storeroom"]:::action
-    A2["Enter counted qty<br/>(per-item granularity)"]:::action
-    A3["Click <b>Reconcile Balance</b><br/>variance applied immediately"]:::action
-    A4["INVTRANS row per item<br/>(audit trail = 1 line / SKU)"]:::ok
+    A1["Ouvrir l'application <b>Inventory</b><br/>filtrer un item × storeroom"]:::action
+    A2["Saisir la qty comptée<br/>(granularité item-par-item)"]:::action
+    A3["Cliquer <b>Reconcile Balance</b><br/>variance appliquée immédiatement"]:::action
+    A4["Ligne INVTRANS par item<br/>(audit trail = 1 ligne / SKU)"]:::ok
   end
 
-  subgraph CB ["Path B — <b>Count Books</b> reconcile"]
+  subgraph CB ["Chemin B — Reconcile via <b>Count Books</b>"]
     direction TB
-    B1["Generate Count Book<br/>filter via <b>Sample Type</b><br/>(ALL / BIN / CNTFREQ /<br/>ICG / ITEM / ROTATING / TOOLS)"]:::action
-    B2["Bulk-enter counted qty<br/>for the whole sample group"]:::action
-    B3["Click <b>Reconcile Balances</b><br/>at book level (one-shot batch)"]:::action
-    B4["INVTRANS rows per item<br/>+ Count Book status<br/>(POSTED / PARTIAL)"]:::ok
+    B1["Générer un Count Book<br/>filtrer via <b>Sample Type</b><br/>(ALL / BIN / CNTFREQ /<br/>ICG / ITEM / ROTATING / TOOLS)"]:::action
+    B2["Saisie en bulk de la qty comptée<br/>pour tout le sample group"]:::action
+    B3["Cliquer <b>Reconcile Balances</b><br/>au niveau du book (batch en une fois)"]:::action
+    B4["Lignes INVTRANS par item<br/>+ statut du Count Book<br/>(POSTED / PARTIAL)"]:::ok
   end
 
   COUNT --> A1
@@ -12740,7 +12740,7 @@ flowchart LR
   A1 --> A2 --> A3 --> A4
   B1 --> B2 --> B3 --> B4
 
-  END["Balance reconciled<br/>+ audit trail logged<br/>(GL variance posting<br/>if outside tolerance)"]:::endNode
+  END["Balance réconciliée<br/>+ audit trail journalisé<br/>(posting GL variance<br/>si hors tolérance)"]:::endNode
   A4 --> END
   B4 --> END
 
@@ -12767,13 +12767,13 @@ flowchart LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A site needs to perform monthly cycle counts on all A-class items in storeroom CENTRAL. The audit team requires a strict trail showing which items were counted, by whom, and when.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo application is best suited to organize and audit this recurring batch of counts?</div>
+  <div class="mcq-context">Un site doit effectuer des cycle counts mensuels sur tous les items A-class du storeroom CENTRAL. L'équipe audit exige un trail strict montrant quels items ont été comptés, par qui et quand.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle application Maximo est la mieux adaptée pour organiser et auditer ce batch récurrent de comptages ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-A"><input type="radio" name="c1000-208-mcq-3-3-002" value="A" id="c1000-208-mcq-3-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory — call Adjust Physical Count item by item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-B"><input type="radio" name="c1000-208-mcq-3-3-002" value="B" id="c1000-208-mcq-3-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Item Master — bulk update the QTY field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-002-C"><input type="radio" name="c1000-208-mcq-3-3-002" value="C" id="c1000-208-mcq-3-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Count Books — generate a count book for the A-class items, assign to counter, reconcile in batch</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-D"><input type="radio" name="c1000-208-mcq-3-3-002" value="D" id="c1000-208-mcq-3-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Storerooms — toggle the Cycle Count flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-A"><input type="radio" name="c1000-208-mcq-3-3-002" value="A" id="c1000-208-mcq-3-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory — appeler Adjust Physical Count item par item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-B"><input type="radio" name="c1000-208-mcq-3-3-002" value="B" id="c1000-208-mcq-3-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Item Master — mettre à jour le champ QTY en bulk</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-002-C"><input type="radio" name="c1000-208-mcq-3-3-002" value="C" id="c1000-208-mcq-3-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Count Books — générer un count book pour les items A-class, l'assigner à un counter, réconcilier en batch</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-002-D"><input type="radio" name="c1000-208-mcq-3-3-002" value="D" id="c1000-208-mcq-3-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Storerooms — activer le flag Cycle Count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12827,13 +12827,13 @@ flowchart LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An A-class item has tolerance ±2%. The Current Balance is 500. The Physical Count comes in at 478 (a 4.4% negative variance).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the Count Books reconciliation workflow do with this line?</div>
+  <div class="mcq-context">Un item A-class a une tolérance de ±2%. La Current Balance est 500. Le Physical Count arrive à 478 (variance négative de 4,4%).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que fait le workflow de réconciliation Count Books avec cette ligne ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-003-A"><input type="radio" name="c1000-208-mcq-3-3-003" value="A" id="c1000-208-mcq-3-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Sends the item to the Recount workflow because variance exceeds the 2% tolerance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-B"><input type="radio" name="c1000-208-mcq-3-3-003" value="B" id="c1000-208-mcq-3-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Auto-reconciles to 478 silently — Maximo doesn't enforce tolerances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-C"><input type="radio" name="c1000-208-mcq-3-3-003" value="C" id="c1000-208-mcq-3-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Rejects the count and resets PHYSCNT to null</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-D"><input type="radio" name="c1000-208-mcq-3-3-003" value="D" id="c1000-208-mcq-3-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Reconciles only ±2% × 500 = 10 units; rest is ignored</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-003-A"><input type="radio" name="c1000-208-mcq-3-3-003" value="A" id="c1000-208-mcq-3-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Envoie l'item au workflow Recount car la variance dépasse la tolérance de 2%</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-B"><input type="radio" name="c1000-208-mcq-3-3-003" value="B" id="c1000-208-mcq-3-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Réconcilie automatiquement à 478 sans bruit — Maximo n'applique pas les tolérances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-C"><input type="radio" name="c1000-208-mcq-3-3-003" value="C" id="c1000-208-mcq-3-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Rejette le count et remet PHYSCNT à null</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-003-D"><input type="radio" name="c1000-208-mcq-3-3-003" value="D" id="c1000-208-mcq-3-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Réconcilie seulement ±2% × 500 = 10 unités ; le reste est ignoré</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12895,8 +12895,8 @@ flowchart LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reconciliation posts a positive variance: PHYSCNT 105 vs CURBAL 100, AVGCOST $20.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What GL voucher pair does Reconcile Balances post for this $100 positive variance?</div>
+  <div class="mcq-context">Une réconciliation poste une variance positive : PHYSCNT 105 vs CURBAL 100, AVGCOST 20 $.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle paire de vouchers GL Reconcile Balances poste-t-il pour cette variance positive de 100 $ ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-004-A"><input type="radio" name="c1000-208-mcq-3-3-004" value="A" id="c1000-208-mcq-3-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Dr Inventory Variance Loss / Cr Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-004-B"><input type="radio" name="c1000-208-mcq-3-3-004" value="B" id="c1000-208-mcq-3-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dr Cash / Cr Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -12957,13 +12957,13 @@ flowchart LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item has shown the same negative variance for 4 consecutive monthly cycle counts. The supervisor reconciles each time but the next month, variance returns.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the most appropriate response to chronic variance?</div>
+  <div class="mcq-context">Un item a montré la même variance négative sur 4 cycle counts mensuels consécutifs. Le supervisor réconcilie à chaque fois mais le mois suivant la variance revient.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la réponse la plus appropriée à une variance chronique ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-A"><input type="radio" name="c1000-208-mcq-3-3-005" value="A" id="c1000-208-mcq-3-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Increase the tolerance threshold so the variance falls within tolerance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-B"><input type="radio" name="c1000-208-mcq-3-3-005" value="B" id="c1000-208-mcq-3-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Stop counting the item — accept the variance as normal</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-005-C"><input type="radio" name="c1000-208-mcq-3-3-005" value="C" id="c1000-208-mcq-3-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Investigate root cause upstream (receiving error, kitting without backflush, BOM inaccurate, squirrel store)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-D"><input type="radio" name="c1000-208-mcq-3-3-005" value="D" id="c1000-208-mcq-3-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Switch the item to ABC class N (no count) to remove it from cycle count program</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-A"><input type="radio" name="c1000-208-mcq-3-3-005" value="A" id="c1000-208-mcq-3-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Augmenter le seuil de tolérance pour que la variance tombe dans la tolérance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-B"><input type="radio" name="c1000-208-mcq-3-3-005" value="B" id="c1000-208-mcq-3-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Arrêter de compter l'item — accepter la variance comme normale</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-3-005-C"><input type="radio" name="c1000-208-mcq-3-3-005" value="C" id="c1000-208-mcq-3-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Enquêter sur la root cause upstream (receiving error, kitting sans backflush, BOM inaccurate, squirrel store)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-3-005-D"><input type="radio" name="c1000-208-mcq-3-3-005" value="D" id="c1000-208-mcq-3-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Faire passer l'item en ABC class N (pas de count) pour le retirer du programme cycle count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
