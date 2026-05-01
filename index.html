@@ -17148,7 +17148,7 @@ graph TD
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-5-3.svg" alt="C1000-208 lesson 5-3 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-5-3.svg" alt="Illustration de la leçon C1000-208 5-3" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-3" id="lt-c1000-208-5-3-c" class="lt-course" checked>
@@ -17162,26 +17162,26 @@ graph TD
         <!-- ============ LESSON c1000-208-5-3 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Set up <strong>Condition Codes</strong> for items: create a code identifier and label</li>
-  <li>Explain how a <strong>condition rate</strong> impacts inventory costs (cost = NEW × rate)</li>
-  <li>Explain how the condition rate impacts the <strong>receiving process</strong> (downgrade at receipt, separate balance)</li>
-  <li>Mark items as <strong>condition-enabled</strong> in Item Master to enable per-condition tracking</li>
+  <li>Configurer les <strong>Condition Codes</strong> pour les items : créer un identifiant de code et un label</li>
+  <li>Expliquer comment un <strong>condition rate</strong> impacte les coûts d'inventory (cost = NEW × rate)</li>
+  <li>Expliquer comment le condition rate impacte le <strong>receiving process</strong> (downgrade à la réception, balance séparée)</li>
+  <li>Marquer les items comme <strong>condition-enabled</strong> dans Item Master pour activer le tracking par condition</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Condition Code</strong> — a classification (e.g. NEW, REFURBISHED, USED, REBUILT) that captures the physical state of an item, with a numerical <em>condition rate</em> (a multiplier ≤ 1.0 applied to the NEW cost).</li>
-  <li><strong>Condition rate semantics</strong> — NEW = 1.0 (full cost), REFURBISHED = 0.7 (70% of NEW), USED = 0.5, REBUILT = 0.6 (typical examples). Rates are organization-set and editable.</li>
-  <li><strong>Cost formula</strong> — <code>issue_cost = new_cost × condition_rate</code>. A $100 motor at NEW costs $100; at REFURBISHED (0.7) it costs $70; at USED (0.5) it costs $50.</li>
-  <li><strong>Where items become condition-enabled</strong> — the <em>Item Master</em> record (NOT the Inventory app — see SAM Q9). Setting "Condition Enabled = Yes" on Item Master tells Maximo to track separate balances per condition.</li>
-  <li><strong>Separate balances per condition</strong> — INVBALANCES has one row per (item, storeroom, bin, <strong>condition</strong>). 5 NEW + 3 REFURBISHED of the same item = 2 distinct rows.</li>
-  <li><strong>Receiving with condition</strong> — at PO receipt, the receiver enters the actual condition; if the received condition differs from the PO condition, Maximo adjusts the cost using the rate. A "$100 NEW motor" received as REFURBISHED is recorded at $70.</li>
-  <li><strong>Holding location during inspection</strong> — items requiring inspection sit in a <em>Holding Location</em> with status WINSP (waiting inspection). After QA verifies condition, items move to STORES at the determined cost.</li>
-  <li><strong>Issue logic</strong> — WO reservation can specify a desired condition (e.g. "must be NEW for safety-critical"). The pick list filters available stock by condition. If the reservation is condition-agnostic, Maximo issues per FIFO across conditions.</li>
-  <li><strong>Cost methods interaction</strong> — condition rates apply on top of cost methods (FIFO/AVG/LIFO/STD). The cost method determines which layer is consumed; the condition rate adjusts the layer's price.</li>
-  <li><strong>Retroactive change</strong> — changing an item's condition rate does NOT re-cost on-hand stock; only future issues use the new rate [EOTRAG Query 9].</li>
-  <li><strong>Lotted items vs condition-enabled</strong> — orthogonal concerns. Lots track manufacturing batches (paint batch 2024-04-A); conditions track physical state. Both can coexist.</li>
-  <li><strong>Industry use case</strong> — rotating items (motors, pumps) that go through repair/refurb cycles especially benefit from condition tracking; it lets you carry separate stock of "NEW spare" + "REBUILT-2nd-tier spare" with accurate costing.</li>
+  <li><strong>Condition Code</strong> — une classification (ex. NEW, REFURBISHED, USED, REBUILT) qui capture l'état physique d'un item, avec un <em>condition rate</em> numérique (un multiplicateur ≤ 1,0 appliqué au coût NEW).</li>
+  <li><strong>Sémantique du condition rate</strong> — NEW = 1,0 (coût plein), REFURBISHED = 0,7 (70% de NEW), USED = 0,5, REBUILT = 0,6 (exemples typiques). Les rates sont définis au niveau organisation et éditables.</li>
+  <li><strong>Formule de coût</strong> — <code>issue_cost = new_cost × condition_rate</code>. Un motor à 100 $ NEW coûte 100 $ ; à REFURBISHED (0,7) il coûte 70 $ ; à USED (0,5) il coûte 50 $.</li>
+  <li><strong>Où les items deviennent condition-enabled</strong> — sur le record <em>Item Master</em> (PAS dans l'application Inventory — voir SAM Q9). Mettre « Condition Enabled = Yes » sur Item Master indique à Maximo de tracer des balances séparées par condition.</li>
+  <li><strong>Balances séparées par condition</strong> — INVBALANCES a une ligne par (item, storeroom, bin, <strong>condition</strong>). 5 NEW + 3 REFURBISHED du même item = 2 lignes distinctes.</li>
+  <li><strong>Réception avec condition</strong> — à la réception PO, le receveur saisit la condition réelle ; si la condition reçue diffère de celle de la PO, Maximo ajuste le coût via le rate. Un « motor NEW à 100 $ » reçu comme REFURBISHED est enregistré à 70 $.</li>
+  <li><strong>Holding location pendant l'inspection</strong> — les items requérant inspection vivent dans une <em>Holding Location</em> avec statut WINSP (waiting inspection). Après vérification QA de la condition, les items passent à STORES au coût déterminé.</li>
+  <li><strong>Logique d'issue</strong> — la reservation WO peut spécifier une condition souhaitée (ex. « doit être NEW pour les pièces sécuritaires »). La pick list filtre le stock disponible par condition. Si la reservation est condition-agnostic, Maximo issue en FIFO à travers les conditions.</li>
+  <li><strong>Interaction cost methods</strong> — les condition rates s'appliquent par-dessus les cost methods (FIFO/AVG/LIFO/STD). Le cost method détermine quelle layer est consommée ; le condition rate ajuste le prix de la layer.</li>
+  <li><strong>Changement rétroactif</strong> — changer le condition rate d'un item ne re-cost PAS le stock on-hand ; seules les futures issues utilisent le nouveau rate [EOTRAG Query 9].</li>
+  <li><strong>Lotted items vs condition-enabled</strong> — préoccupations orthogonales. Les lots tracent les batches de fabrication (paint batch 2024-04-A) ; les conditions tracent l'état physique. Les deux peuvent coexister.</li>
+  <li><strong>Cas d'usage industriel</strong> — les rotating items (motors, pumps) qui passent par des cycles repair/refurb bénéficient particulièrement du tracking par condition ; cela permet de porter des stocks séparés « NEW spare » + « REBUILT-2nd-tier spare » avec un costing précis.</li>
 </ul></div>
 
 
@@ -17192,18 +17192,18 @@ graph TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>Where is "condition-enabled" set?</strong> — SAM Q9 verbatim. The flag lives on <em>Item Master</em>, not in Inventory or in Condition Codes. This trips up candidates who confuse the role of each application.</p>
+  <p><strong>Où active-t-on « condition-enabled » ?</strong> — SAM Q9 verbatim. Le flag vit sur <em>Item Master</em>, pas dans Inventory ni dans Condition Codes. Cela trompe les candidats qui confondent le rôle de chaque application.</p>
   <ul>
-    <li>Trap: thinking the Condition Codes application is where you enable an item. False — Condition Codes app only DEFINES the codes (NEW/REFURB/...) and their rates; activation per item is on Item Master.</li>
-    <li>Trap: assuming changing the rate retroactively re-costs on-hand stock. False — only future issues are affected.</li>
-    <li>Trap: thinking condition-enabled implies inspection-required. They are independent settings.</li>
+    <li>Piège : penser que l'application Condition Codes est l'endroit où on active un item. Faux — l'app Condition Codes ne fait que DÉFINIR les codes (NEW/REFURB/...) et leurs rates ; l'activation par item est sur Item Master.</li>
+    <li>Piège : supposer que changer le rate rétroactivement re-cost le stock on-hand. Faux — seules les futures issues sont affectées.</li>
+    <li>Piège : penser que condition-enabled implique inspection-required. Ce sont des réglages indépendants.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A REFURBISHED bearing has condition rate 0.7. The NEW cost is $200. What is the issue cost when this bearing is consumed against a WO?</p>
-  <details><summary>Afficher la réponse</summary><p>Issue cost = $200 × 0.7 = $140. Maximo posts $140 as the WO material cost and reduces the REFURBISHED stock balance accordingly. INVBALANCES tracks the REFURBISHED row separately from the NEW row.</p></details>
+  <p>Q. Un bearing REFURBISHED a un condition rate 0,7. Le coût NEW est de 200 $. Quel est le coût d'issue quand ce bearing est consommé sur une WO ?</p>
+  <details><summary>Afficher la réponse</summary><p>Coût d'issue = 200 $ × 0,7 = 140 $. Maximo poste 140 $ comme material cost de la WO et réduit la balance de stock REFURBISHED en conséquence. INVBALANCES trace la ligne REFURBISHED séparément de la ligne NEW.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -17220,13 +17220,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A refurbished motor has condition code REFURB with condition rate 0.6. The NEW unit cost is $500.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the issue cost charged to a work order when this REFURB motor is consumed?</div>
+  <div class="mcq-context">Un motor refurbished a le code condition REFURB avec un condition rate de 0,6. Le coût unitaire NEW est de 500 $.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le coût d'issue imputé à une work order quand ce motor REFURB est consommé ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-A"><input type="radio" name="c1000-208-mcq-5-3-001" value="A" id="c1000-208-mcq-5-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$500 — the rate only impacts reporting, not actual cost</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-B"><input type="radio" name="c1000-208-mcq-5-3-001" value="B" id="c1000-208-mcq-5-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$200 — rate is added on top of NEW cost (500 × (1 + 0.6) is wrong, but candidate may compute $300)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-001-C"><input type="radio" name="c1000-208-mcq-5-3-001" value="C" id="c1000-208-mcq-5-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">$300 — issue cost = NEW cost × condition rate ($500 × 0.6)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-D"><input type="radio" name="c1000-208-mcq-5-3-001" value="D" id="c1000-208-mcq-5-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">$833.33 — NEW cost / rate ($500 / 0.6)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-A"><input type="radio" name="c1000-208-mcq-5-3-001" value="A" id="c1000-208-mcq-5-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">500 $ — le rate impacte seulement le reporting, pas le coût réel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-B"><input type="radio" name="c1000-208-mcq-5-3-001" value="B" id="c1000-208-mcq-5-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">200 $ — le rate est ajouté au coût NEW (500 × (1 + 0,6) est faux, mais un candidat peut calculer 300 $)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-001-C"><input type="radio" name="c1000-208-mcq-5-3-001" value="C" id="c1000-208-mcq-5-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">300 $ — coût d'issue = coût NEW × condition rate (500 $ × 0,6)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-001-D"><input type="radio" name="c1000-208-mcq-5-3-001" value="D" id="c1000-208-mcq-5-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">833,33 $ — coût NEW / rate (500 $ / 0,6)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17285,8 +17285,8 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An administrator wants a particular item to track separate balances for NEW and REFURBISHED conditions.</div>
-  <div class="mcq-stem"><strong>Question :</strong> In which application is the item marked as condition-enabled?</div>
+  <div class="mcq-context">Un administrateur veut qu'un item particulier trace des balances séparées pour les conditions NEW et REFURBISHED.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Dans quelle application l'item est-il marqué comme condition-enabled ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-002-A"><input type="radio" name="c1000-208-mcq-5-3-002" value="A" id="c1000-208-mcq-5-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-002-B"><input type="radio" name="c1000-208-mcq-5-3-002" value="B" id="c1000-208-mcq-5-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Storerooms</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -17342,13 +17342,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A PO was placed for 5 NEW motors at $500 each. At receipt inspection, the items are determined to be REFURBISHED (rate 0.6) instead of NEW.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does Maximo record in MATRECTRANS for these items?</div>
+  <div class="mcq-context">Une PO a été passée pour 5 motors NEW à 500 $ chacun. À l'inspection à la réception, les items s'avèrent être REFURBISHED (rate 0,6) au lieu de NEW.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que Maximo enregistre-t-il dans MATRECTRANS pour ces items ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-A"><input type="radio" name="c1000-208-mcq-5-3-003" value="A" id="c1000-208-mcq-5-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">5 units at $500 each — the original PO cost is preserved</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-003-B"><input type="radio" name="c1000-208-mcq-5-3-003" value="B" id="c1000-208-mcq-5-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">5 units at $300 each ($500 × 0.6), classified as REFURBISHED in INVBALANCES</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-C"><input type="radio" name="c1000-208-mcq-5-3-003" value="C" id="c1000-208-mcq-5-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Receipt is rejected — only matching condition items can be received against a PO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-D"><input type="radio" name="c1000-208-mcq-5-3-003" value="D" id="c1000-208-mcq-5-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">5 units recorded at $0 cost until manual override</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-A"><input type="radio" name="c1000-208-mcq-5-3-003" value="A" id="c1000-208-mcq-5-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">5 unités à 500 $ chacune — le coût PO original est préservé</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-003-B"><input type="radio" name="c1000-208-mcq-5-3-003" value="B" id="c1000-208-mcq-5-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">5 unités à 300 $ chacune (500 $ × 0,6), classifiées REFURBISHED dans INVBALANCES</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-C"><input type="radio" name="c1000-208-mcq-5-3-003" value="C" id="c1000-208-mcq-5-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">La réception est rejetée — seuls les items de condition correspondante peuvent être réceptionnés contre une PO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-003-D"><input type="radio" name="c1000-208-mcq-5-3-003" value="D" id="c1000-208-mcq-5-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">5 unités enregistrées à 0 $ de coût jusqu'à override manuel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17399,13 +17399,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An admin updates the REFURB condition rate from 0.7 to 0.5 for an item, after market values have dropped. There are 4 REFURB units already on hand at $350 each (from prior receipts at the 0.7 rate × $500 NEW).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the on-hand REFURB stock value?</div>
+  <div class="mcq-context">Un admin met à jour le condition rate REFURB de 0,7 à 0,5 pour un item, après une chute des valeurs de marché. Il y a déjà 4 unités REFURB on-hand à 350 $ chacune (depuis des réceptions précédentes au rate 0,7 × 500 $ NEW).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il à la valeur du stock REFURB on-hand ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-004-A"><input type="radio" name="c1000-208-mcq-5-3-004" value="A" id="c1000-208-mcq-5-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Existing 4 units stay at $350 each; only future receipts/issues use the new 0.5 rate</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-B"><input type="radio" name="c1000-208-mcq-5-3-004" value="B" id="c1000-208-mcq-5-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">All 4 units automatically re-cost to $250 each, with a $400 GL adjustment posted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-C"><input type="radio" name="c1000-208-mcq-5-3-004" value="C" id="c1000-208-mcq-5-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Maximo blocks the rate change while stock is on hand</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-D"><input type="radio" name="c1000-208-mcq-5-3-004" value="D" id="c1000-208-mcq-5-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">All on-hand units are written off to a quarantine bin until manually re-counted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-004-A"><input type="radio" name="c1000-208-mcq-5-3-004" value="A" id="c1000-208-mcq-5-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les 4 unités existantes restent à 350 $ chacune ; seuls les futures réceptions/issues utilisent le nouveau rate 0,5</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-B"><input type="radio" name="c1000-208-mcq-5-3-004" value="B" id="c1000-208-mcq-5-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les 4 unités sont automatiquement re-costées à 250 $ chacune, avec un GL adjustment de 400 $ posté</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-C"><input type="radio" name="c1000-208-mcq-5-3-004" value="C" id="c1000-208-mcq-5-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Maximo bloque le changement de rate tant que du stock est on-hand</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-004-D"><input type="radio" name="c1000-208-mcq-5-3-004" value="D" id="c1000-208-mcq-5-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Toutes les unités on-hand sont écrites off vers un bin de quarantaine jusqu'à un re-count manuel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17456,13 +17456,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A safety-critical WO requires a NEW bearing only — no refurbished part is acceptable. The storeroom has 2 NEW + 5 REFURBISHED bearings.</div>
-  <div class="mcq-stem"><strong>Question :</strong> How does Maximo ensure only NEW stock is issued?</div>
+  <div class="mcq-context">Une WO sécuritaire requiert un bearing NEW uniquement — aucune pièce refurbished n'est acceptable. Le storeroom a 2 NEW + 5 REFURBISHED bearings.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Comment Maximo garantit-il que seul du stock NEW soit issué ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-A"><input type="radio" name="c1000-208-mcq-5-3-005" value="A" id="c1000-208-mcq-5-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Maximo issues FIFO regardless of condition; the technician must visually verify</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-B"><input type="radio" name="c1000-208-mcq-5-3-005" value="B" id="c1000-208-mcq-5-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A separate item record must be created for "NEW-only bearings"</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-C"><input type="radio" name="c1000-208-mcq-5-3-005" value="C" id="c1000-208-mcq-5-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Condition cannot be enforced on issue; only on receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-005-D"><input type="radio" name="c1000-208-mcq-5-3-005" value="D" id="c1000-208-mcq-5-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The WO reservation specifies condition = NEW; the pick list filters available stock to NEW only</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-A"><input type="radio" name="c1000-208-mcq-5-3-005" value="A" id="c1000-208-mcq-5-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Maximo issue en FIFO peu importe la condition ; le technicien doit vérifier visuellement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-B"><input type="radio" name="c1000-208-mcq-5-3-005" value="B" id="c1000-208-mcq-5-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Un record d'item séparé doit être créé pour les « bearings NEW-only »</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-3-005-C"><input type="radio" name="c1000-208-mcq-5-3-005" value="C" id="c1000-208-mcq-5-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">La condition ne peut pas être imposée à l'issue ; seulement à la réception</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-3-005-D"><input type="radio" name="c1000-208-mcq-5-3-005" value="D" id="c1000-208-mcq-5-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La reservation WO spécifie condition = NEW ; la pick list filtre le stock disponible à NEW uniquement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
