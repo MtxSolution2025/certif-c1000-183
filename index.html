@@ -19739,15 +19739,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-7-3">
   <div class="breadcrumb">Section 7 <span class="brand-dot">·</span> 7.3</div>
   <div class="lesson-header">
-    <h1>Reconcile Count Variances</h1>
+    <h1>Réconcilier les écarts de comptage</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 12%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-7-3.svg" alt="C1000-208 lesson 7-3 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-7-3.svg" alt="C1000-208 leçon 7-3 illustration" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-3" id="lt-c1000-208-7-3-c" class="lt-course" checked>
@@ -19761,27 +19761,27 @@ flowchart TD
         <!-- ============ LESSON c1000-208-7-3 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Understand the <strong>Counting Role-Based Application (RBA)</strong> for streamlined count entry and reconciliation</li>
-  <li>Use the <strong>Reconciliation Mismatched tab</strong> to identify variance items</li>
-  <li>Interpret <strong>green/red arrows</strong> on the Reconciliation Mismatched tab (SAM Q5)</li>
-  <li>Configure <strong>Counter Variance Threshold</strong> for auto-reconcile vs approval-required</li>
-  <li>Generate the <strong>adjustment INVTRANS</strong> with the variance qty</li>
+  <li>Comprendre la <strong>Counting Role-Based Application (RBA)</strong> pour saisie et réconciliation de comptage simplifiées</li>
+  <li>Utiliser le <strong>Reconciliation Mismatched tab</strong> pour identifier les items en écart</li>
+  <li>Interpréter les <strong>flèches vertes/rouges</strong> sur le Reconciliation Mismatched tab (SAM Q5)</li>
+  <li>Configurer le <strong>Counter Variance Threshold</strong> pour auto-réconcilier vs exiger approbation</li>
+  <li>Générer l'<strong>INVTRANS d'ajustement</strong> avec la quantité de variance</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Counting RBA</strong> — Maximo's Inventory Counting Role-Based Application is a streamlined, tactile-friendly UI for storeroom clerks. Includes barcode scanning, bin-by-bin walkthrough, mismatched tab for reconciliation.</li>
-  <li><strong>Reconciliation Mismatched tab</strong> — within the Counting RBA, lists ALL items where last physical count differs from current calculated balance. Shows variance qty, direction, and value impact.</li>
-  <li><strong>Green up arrow ↑</strong> (SAM Q5 verbatim answer) — indicates the <strong>last physical count is HIGHER than the current balance</strong>. Translation: the clerk found MORE items than the system expected (positive variance, surplus).</li>
-  <li><strong>Red down arrow ↓</strong> — indicates the last physical count is LOWER than the current balance. Translation: clerk found FEWER items (negative variance, deficit). Often caused by theft, damage, mis-pick, or unrecorded issue.</li>
-  <li><strong>Direction polarity convention</strong> — Up = surplus (good news for asset side, but raises questions about why) ; Down = deficit (bad news, often investigated for fraud/error).</li>
-  <li><strong>Counter Variance Threshold</strong> — configurable percentage that determines when a variance auto-reconciles vs requires manual approval. Items within threshold post automatically; outside trigger approval workflow.</li>
-  <li><strong>Variance accounting</strong> — positive variance (Up arrow) = credit Inventory, debit Inventory Adjustment Gain. Negative variance (Down arrow) = debit Inventory Variance Loss, credit Inventory.</li>
-  <li><strong>Adjustment INVTRANS</strong> — type CYCLECOUNT, qty = variance (positive or negative). Auto-generated at reconciliation post.</li>
-  <li><strong>Root cause investigation</strong> — chronic variance on the same SKU = process problem, not random. Best practices: investigate receiving errors, kitting without backflush, BOM inaccuracies, hidden "squirrel store" stock [EOTRAG Query 10].</li>
-  <li><strong>Calculated value</strong> — what the system thinks should be on hand based on receipts/issues. Not necessarily 0 even after issuing — may include open POs, in-transit transfers, etc.</li>
-  <li><strong>Hard reserved quantity</strong> — items reserved for active WOs (cannot be issued elsewhere). Distinct from current balance and from physical count.</li>
-  <li><strong>Inventory accuracy KPI</strong> — derived from reconciliation: lines_within_tolerance / lines_counted × 100%. Industry targets: 95% acceptable, 97% world-class, 99% mandatory for safety items [EOTRAG Query 5].</li>
+  <li><strong>Counting RBA</strong> — l'Inventory Counting Role-Based Application de Maximo est une UI épurée et tactile-friendly pour les clerks de storeroom. Inclut barcode scanning, bin-by-bin walkthrough, mismatched tab pour réconciliation.</li>
+  <li><strong>Reconciliation Mismatched tab</strong> — dans la Counting RBA, liste TOUS les items où le last physical count diffère du current calculated balance. Affiche variance qty, direction et impact valeur.</li>
+  <li><strong>Flèche verte montante ↑</strong> (réponse verbatim SAM Q5) — indique que <strong>le last physical count est PLUS ÉLEVÉ que le current balance</strong>. Traduction : le clerk a trouvé PLUS d'items que ce que le système attendait (variance positive, surplus).</li>
+  <li><strong>Flèche rouge descendante ↓</strong> — indique que le last physical count est INFÉRIEUR au current balance. Traduction : le clerk a trouvé MOINS d'items (variance négative, déficit). Souvent causé par vol, dommage, mis-pick ou issue non enregistrée.</li>
+  <li><strong>Convention de polarité directionnelle</strong> — Up = surplus (bonne nouvelle pour l'asset side, mais soulève des questions sur la cause) ; Down = déficit (mauvaise nouvelle, souvent investigué pour fraude/erreur).</li>
+  <li><strong>Counter Variance Threshold</strong> — pourcentage configurable qui détermine quand une variance s'auto-réconcilie vs exige approbation manuelle. Items dans le threshold postent automatiquement ; au-delà déclenchent un workflow d'approbation.</li>
+  <li><strong>Comptabilité de variance</strong> — variance positive (flèche Up) = credit Inventory, debit Inventory Adjustment Gain. Variance négative (flèche Down) = debit Inventory Variance Loss, credit Inventory.</li>
+  <li><strong>INVTRANS d'ajustement</strong> — type CYCLECOUNT, qty = variance (positive ou négative). Auto-générée au posting de la réconciliation.</li>
+  <li><strong>Investigation root-cause</strong> — variance chronique sur le même SKU = problème de processus, pas aléatoire. Best practices : investiguer les erreurs de receiving, kitting sans backflush, inexactitudes de BOM, stock caché « squirrel store » [EOTRAG Query 10].</li>
+  <li><strong>Calculated value</strong> — ce que le système pense devoir être on hand basé sur receipts/issues. Pas nécessairement 0 même après issue — peut inclure POs ouverts, transferts in-transit, etc.</li>
+  <li><strong>Hard reserved quantity</strong> — items réservés pour des WOs actifs (ne peuvent pas être issued ailleurs). Distinct du current balance et du physical count.</li>
+  <li><strong>KPI Inventory accuracy</strong> — dérivé de la réconciliation : lines_within_tolerance / lines_counted × 100%. Cibles industrie : 95% acceptable, 97% world-class, 99% obligatoire pour items de sécurité [EOTRAG Query 5].</li>
 </ul></div>
 
 
@@ -19862,19 +19862,19 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>SAM Q5: green up arrow polarity</strong> — Up = "the last physical count has more items than the current balance". The trap is to invert the comparison or to confuse current balance with hard reserved or calculated value.</p>
+  <p><strong>SAM Q5 : polarité de la flèche verte montante</strong> — Up = « le last physical count a plus d'items que le current balance ». Le piège est d'inverser la comparaison ou de confondre current balance avec hard reserved ou calculated value.</p>
   <ul>
-    <li>Trap: thinking Up = current balance higher than count (inverse polarity).</li>
-    <li>Trap: confusing "current balance" with "hard reserved quantity".</li>
-    <li>Trap: thinking Up = items ordered since last count (that's the calculated value angle).</li>
-    <li>Trap: assuming arrows on Reconciliation Mismatched are decorative; they are functional indicators.</li>
+    <li>Piège : penser que Up = current balance plus élevé que count (polarité inverse).</li>
+    <li>Piège : confondre « current balance » avec « hard reserved quantity ».</li>
+    <li>Piège : penser que Up = items commandés depuis le last count (ça c'est l'angle calculated value).</li>
+    <li>Piège : supposer que les flèches sur Reconciliation Mismatched sont décoratives ; ce sont des indicateurs fonctionnels.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. What does a green up arrow on an item line in the Reconciliation Mismatched tab mean?</p>
-  <details><summary>Afficher la réponse</summary><p>The last physical count has MORE items than the current balance — the clerk found extra units (positive variance, surplus). The reconciliation will increment INVBALANCES and credit Inventory Adjustment Gain. Causes: previously unrecorded receipt, mis-counted issues, items returned but not entered, items found in unmapped bins.</p></details>
+  <p>Q. Que signifie une flèche verte montante sur une ligne d'item dans le Reconciliation Mismatched tab ?</p>
+  <details><summary>Afficher la réponse</summary><p>Le last physical count a PLUS d'items que le current balance — le clerk a trouvé des unités supplémentaires (variance positive, surplus). La réconciliation va incrémenter INVBALANCES et créditer Inventory Adjustment Gain. Causes : receipt précédemment non enregistré, issues mal comptées, items retournés mais non saisis, items trouvés dans des bins non mappés.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -19891,13 +19891,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reconciliation manager is reviewing the Reconciliation Mismatched tab in the Counting RBA.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does a green up arrow on an item line indicate in the Inventory Counting Role Based Application > Reconciliation Mismatched tab?</div>
+  <div class="mcq-context">Un manager de réconciliation passe en revue le Reconciliation Mismatched tab dans la Counting RBA.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que signifie une flèche verte montante sur une ligne d'item dans l'Inventory Counting Role Based Application > Reconciliation Mismatched tab ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-A"><input type="radio" name="c1000-208-mcq-7-3-001" value="A" id="c1000-208-mcq-7-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The last physical count is higher than the hard reserved quantity</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-001-B"><input type="radio" name="c1000-208-mcq-7-3-001" value="B" id="c1000-208-mcq-7-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The last physical count has more items than the current balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-C"><input type="radio" name="c1000-208-mcq-7-3-001" value="C" id="c1000-208-mcq-7-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The current balance has more items than the last physical count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-D"><input type="radio" name="c1000-208-mcq-7-3-001" value="D" id="c1000-208-mcq-7-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The calculated value has items ordered since the last physical count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-A"><input type="radio" name="c1000-208-mcq-7-3-001" value="A" id="c1000-208-mcq-7-3-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Le last physical count est supérieur à la hard reserved quantity</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-001-B"><input type="radio" name="c1000-208-mcq-7-3-001" value="B" id="c1000-208-mcq-7-3-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le last physical count a plus d'items que le current balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-C"><input type="radio" name="c1000-208-mcq-7-3-001" value="C" id="c1000-208-mcq-7-3-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le current balance a plus d'items que le last physical count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-001-D"><input type="radio" name="c1000-208-mcq-7-3-001" value="D" id="c1000-208-mcq-7-3-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La calculated value a des items commandés depuis le last physical count</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -20026,13 +20026,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item shows a green up arrow on the Reconciliation Mismatched tab with variance +10 units at $50 each. The reconciliation is posted within tolerance.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the GL impact?</div>
+  <div class="mcq-context">Un item affiche une flèche verte montante sur le Reconciliation Mismatched tab avec variance +10 unités à 50 $ chacune. La réconciliation est postée dans la tolérance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est l'impact GL ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-A"><input type="radio" name="c1000-208-mcq-7-3-002" value="A" id="c1000-208-mcq-7-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Debit Inventory Variance Loss $500, credit Inventory $500</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-B"><input type="radio" name="c1000-208-mcq-7-3-002" value="B" id="c1000-208-mcq-7-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">No GL impact — only INVBALANCES quantity is updated</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-002-C"><input type="radio" name="c1000-208-mcq-7-3-002" value="C" id="c1000-208-mcq-7-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Debit Inventory $500, credit Inventory Adjustment Gain $500</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-D"><input type="radio" name="c1000-208-mcq-7-3-002" value="D" id="c1000-208-mcq-7-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Debit Cash $500, credit Inventory $500</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-A"><input type="radio" name="c1000-208-mcq-7-3-002" value="A" id="c1000-208-mcq-7-3-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Debit Inventory Variance Loss 500 $, credit Inventory 500 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-B"><input type="radio" name="c1000-208-mcq-7-3-002" value="B" id="c1000-208-mcq-7-3-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Aucun impact GL — seule la quantité INVBALANCES est mise à jour</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-002-C"><input type="radio" name="c1000-208-mcq-7-3-002" value="C" id="c1000-208-mcq-7-3-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Debit Inventory 500 $, credit Inventory Adjustment Gain 500 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-002-D"><input type="radio" name="c1000-208-mcq-7-3-002" value="D" id="c1000-208-mcq-7-3-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Debit Cash 500 $, credit Inventory 500 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -20089,13 +20089,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An admin sets the Counter Variance Threshold to 5%. An item with EXPECTED 100 has been counted at 110 (variance +10%).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does Maximo do at reconciliation time?</div>
+  <div class="mcq-context">Un admin règle le Counter Variance Threshold à 5%. Un item avec EXPECTED 100 a été compté à 110 (variance +10%).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que fait Maximo au moment de la réconciliation ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-003-A"><input type="radio" name="c1000-208-mcq-7-3-003" value="A" id="c1000-208-mcq-7-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Flags for supervisor approval (variance &gt; threshold)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-B"><input type="radio" name="c1000-208-mcq-7-3-003" value="B" id="c1000-208-mcq-7-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Auto-reconciles silently — threshold ignored on positive variances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-C"><input type="radio" name="c1000-208-mcq-7-3-003" value="C" id="c1000-208-mcq-7-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Rejects the count and asks for a recount immediately, no posting</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-D"><input type="radio" name="c1000-208-mcq-7-3-003" value="D" id="c1000-208-mcq-7-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Caps the variance at 5% and posts only +5 units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-003-A"><input type="radio" name="c1000-208-mcq-7-3-003" value="A" id="c1000-208-mcq-7-3-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Flagge pour approbation superviseur (variance &gt; threshold)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-B"><input type="radio" name="c1000-208-mcq-7-3-003" value="B" id="c1000-208-mcq-7-3-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Auto-réconcilie silencieusement — threshold ignoré sur variances positives</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-C"><input type="radio" name="c1000-208-mcq-7-3-003" value="C" id="c1000-208-mcq-7-3-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Rejette le count et demande un recomptage immédiatement, pas de posting</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-003-D"><input type="radio" name="c1000-208-mcq-7-3-003" value="D" id="c1000-208-mcq-7-3-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Plafonne la variance à 5% et poste seulement +5 unités</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -20146,13 +20146,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom shows a chronic red down arrow on the same SKU month after month: variance always negative, around -3% to -5%.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the most likely root cause according to industry best practice?</div>
+  <div class="mcq-context">Un storeroom affiche une flèche rouge descendante chronique sur le même SKU mois après mois : variance toujours négative, autour de -3% à -5%.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la cause racine la plus probable selon les best practices industrie ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-A"><input type="radio" name="c1000-208-mcq-7-3-004" value="A" id="c1000-208-mcq-7-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Random measurement error — keep auto-reconciling and ignore</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-B"><input type="radio" name="c1000-208-mcq-7-3-004" value="B" id="c1000-208-mcq-7-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The system clock is wrong</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-C"><input type="radio" name="c1000-208-mcq-7-3-004" value="C" id="c1000-208-mcq-7-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The Counter Variance Threshold is set too high</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-004-D"><input type="radio" name="c1000-208-mcq-7-3-004" value="D" id="c1000-208-mcq-7-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Process problem upstream (mis-pick, kit issue without backflush, BOM inaccuracy, "squirrel store" hidden cache) — investigate, don't just adjust</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-A"><input type="radio" name="c1000-208-mcq-7-3-004" value="A" id="c1000-208-mcq-7-3-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Erreur de mesure aléatoire — continuer à auto-réconcilier et ignorer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-B"><input type="radio" name="c1000-208-mcq-7-3-004" value="B" id="c1000-208-mcq-7-3-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">L'horloge système est fausse</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-004-C"><input type="radio" name="c1000-208-mcq-7-3-004" value="C" id="c1000-208-mcq-7-3-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le Counter Variance Threshold est réglé trop haut</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-004-D"><input type="radio" name="c1000-208-mcq-7-3-004" value="D" id="c1000-208-mcq-7-3-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Problème de processus en amont (mis-pick, kit issue sans backflush, inexactitude de BOM, cache caché « squirrel store ») — investiguer, ne pas juste ajuster</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -20203,13 +20203,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reconciliation has been posted with a variance of -7 units (red down arrow).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the resulting INVTRANS row contain?</div>
+  <div class="mcq-context">Une réconciliation a été postée avec une variance de -7 unités (flèche rouge descendante).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que contient la row INVTRANS résultante ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-A"><input type="radio" name="c1000-208-mcq-7-3-005" value="A" id="c1000-208-mcq-7-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Type = ISSUE, qty = 7, WONUM = a synthetic placeholder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-005-B"><input type="radio" name="c1000-208-mcq-7-3-005" value="B" id="c1000-208-mcq-7-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Type = CYCLECOUNT, qty = -7 (negative variance), REASON code captured</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-C"><input type="radio" name="c1000-208-mcq-7-3-005" value="C" id="c1000-208-mcq-7-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">No INVTRANS — only INVBALANCES is updated directly</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-D"><input type="radio" name="c1000-208-mcq-7-3-005" value="D" id="c1000-208-mcq-7-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A new MATRECTRANS row with qty = -7</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-A"><input type="radio" name="c1000-208-mcq-7-3-005" value="A" id="c1000-208-mcq-7-3-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Type = ISSUE, qty = 7, WONUM = un placeholder synthétique</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-005-B"><input type="radio" name="c1000-208-mcq-7-3-005" value="B" id="c1000-208-mcq-7-3-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Type = CYCLECOUNT, qty = -7 (variance négative), REASON code capturé</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-C"><input type="radio" name="c1000-208-mcq-7-3-005" value="C" id="c1000-208-mcq-7-3-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Pas d'INVTRANS — seul INVBALANCES est mis à jour directement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-005-D"><input type="radio" name="c1000-208-mcq-7-3-005" value="D" id="c1000-208-mcq-7-3-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Une nouvelle row MATRECTRANS avec qty = -7</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -20260,13 +20260,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom of 1000 items completed an annual physical count. 970 items were within tolerance; 30 had variances exceeding tolerance.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the inventory accuracy KPI?</div>
+  <div class="mcq-context">Un storeroom de 1000 items a complété un comptage physique annuel. 970 items étaient dans la tolérance ; 30 avaient des variances dépassant la tolérance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le KPI inventory accuracy ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-A"><input type="radio" name="c1000-208-mcq-7-3-006" value="A" id="c1000-208-mcq-7-3-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">3% — the rate of failure</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-B"><input type="radio" name="c1000-208-mcq-7-3-006" value="B" id="c1000-208-mcq-7-3-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">100% — all items were counted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-006-C"><input type="radio" name="c1000-208-mcq-7-3-006" value="C" id="c1000-208-mcq-7-3-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">97% (970/1000) — world-class threshold</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-D"><input type="radio" name="c1000-208-mcq-7-3-006" value="D" id="c1000-208-mcq-7-3-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">3 (out-of-tolerance count divided by 10)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-A"><input type="radio" name="c1000-208-mcq-7-3-006" value="A" id="c1000-208-mcq-7-3-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">3% — le taux d'échec</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-B"><input type="radio" name="c1000-208-mcq-7-3-006" value="B" id="c1000-208-mcq-7-3-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">100% — tous les items ont été comptés</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-3-006-C"><input type="radio" name="c1000-208-mcq-7-3-006" value="C" id="c1000-208-mcq-7-3-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">97% (970/1000) — seuil world-class</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-3-006-D"><input type="radio" name="c1000-208-mcq-7-3-006" value="D" id="c1000-208-mcq-7-3-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">3 (out-of-tolerance count divisé par 10)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
