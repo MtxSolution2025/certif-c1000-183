@@ -16266,7 +16266,7 @@ stateDiagram-v2
 <section class="lesson" id="c1000-208-lesson-5-1">
   <div class="breadcrumb">Section 5 <span class="brand-dot">·</span> 5.1</div>
   <div class="lesson-header">
-    <h1>UoM & Conversions</h1>
+    <h1>UoM et conversions</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 7%</span>
       <span class="meta-pill">~5 questions</span>
@@ -16274,7 +16274,7 @@ stateDiagram-v2
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-5-1.svg" alt="C1000-208 lesson 5-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-5-1.svg" alt="Illustration de la leçon C1000-208 5-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-1" id="lt-c1000-208-5-1-c" class="lt-course" checked>
@@ -16289,43 +16289,43 @@ stateDiagram-v2
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Add and Modify <strong>Units of Measure</strong> (UoM) for both Issue Unit and Order Unit</li>
-  <li>Define UoMs and Conversions through the <em>Add/Modify Units of Measure</em> and <em>Add/Modify Conversions</em> actions</li>
-  <li>Create <strong>Item-Specific Conversions</strong> on the Item Master record when a global conversion does not apply</li>
-  <li>Configure UoMs in Item Master: <strong>Order Unit</strong> (purchasing UoM) + <strong>Issue Unit</strong> (consumption UoM)</li>
-  <li>Understand how the <strong>Conversion Factor</strong> drives quantity translation between Order Unit and Issue Unit at receipt</li>
+  <li>Ajouter et modifier les <strong>Units of Measure</strong> (UoM) pour Issue Unit et Order Unit</li>
+  <li>Définir les UoMs et les Conversions via les actions <em>Add/Modify Units of Measure</em> et <em>Add/Modify Conversions</em></li>
+  <li>Créer des <strong>Item-Specific Conversions</strong> sur le record Item Master quand une conversion globale ne s'applique pas</li>
+  <li>Configurer les UoMs dans Item Master : <strong>Order Unit</strong> (UoM d'achat) + <strong>Issue Unit</strong> (UoM de consommation)</li>
+  <li>Comprendre comment le <strong>Conversion Factor</strong> pilote la traduction de quantité entre Order Unit et Issue Unit à la réception</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>UoM (Unit of Measure)</strong> — a code that defines how a quantity of an item is counted (e.g. EACH, BOX, CARTON, LITER, METER, KG). UoMs are shared at the Set level and reused across all items in that Item Set.</li>
-  <li><strong>Issue Unit</strong> — the UoM in which the item is consumed against work orders. Example: a bearing is issued one piece at a time → Issue Unit = EACH.</li>
-  <li><strong>Order Unit</strong> — the UoM used when placing a purchase order to a vendor. Example: bearings are purchased in cartons of 12 → Order Unit = CARTON.</li>
-  <li><strong>Conversion Factor</strong> — the multiplier between two UoMs. Example: 1 CARTON = 12 EACH → conversion factor = 12.</li>
-  <li><strong>Global vs Item-Specific Conversions</strong> — a Conversion is global by default (shared by all items using those two UoMs). When one supplier ships an item in 10s and another ships the same item in 12s, an Item-Specific Conversion overrides the global value for that item.</li>
-  <li>Action paths: <em>Item Master → More Actions → Add/Modify Units of Measure</em> and <em>Add/Modify Conversions</em>. Item-specific conversions are added via <em>Item Master → More Actions → Conversions</em> on the item itself.</li>
-  <li>At receipt, Maximo translates the received Order Unit quantity into Issue Units using the active conversion. If you order 5 CARTONs of 12 bearings, MATRECTRANS records receipt qty as 60 EACH in INVBALANCES.</li>
-  <li>UoM precision: the conversion factor is a decimal — 1 LITER → 0.264 GALLON, or 1 METER → 3.281 FEET. Round-off errors in fractional UoMs are a classic exam trap.</li>
-  <li>Service-type items still need a UoM — typically HOUR for labor or EACH for a flat-fee service. A "labor service" item with Issue Unit = HOUR drives time charges to the WO.</li>
-  <li>UoM cannot be changed retroactively without re-valuing on-hand stock — like cost-type changes, UoM changes are admin-restricted.</li>
-  <li>The Item Master defines the <em>default</em> Order Unit and Issue Unit; per-storeroom overrides exist on the Inventory record but are rare.</li>
-  <li>Conversions are bi-directional: defining 1 CARTON = 12 EACH automatically lets Maximo compute 1 EACH = 1/12 CARTON for a partial issue.</li>
+  <li><strong>UoM (Unit of Measure)</strong> — un code qui définit comment la quantité d'un item se compte (ex. EACH, BOX, CARTON, LITER, METER, KG). Les UoMs sont partagées au niveau Set et réutilisées par tous les items de ce Item Set.</li>
+  <li><strong>Issue Unit</strong> — l'UoM dans laquelle l'item est consommé contre les work orders. Ex. : un bearing est issué pièce par pièce → Issue Unit = EACH.</li>
+  <li><strong>Order Unit</strong> — l'UoM utilisée pour passer une PO à un vendor. Ex. : les bearings sont achetés en cartons de 12 → Order Unit = CARTON.</li>
+  <li><strong>Conversion Factor</strong> — le multiplicateur entre deux UoMs. Ex. : 1 CARTON = 12 EACH → conversion factor = 12.</li>
+  <li><strong>Conversions globales vs Item-Specific</strong> — par défaut une Conversion est globale (partagée par tous les items utilisant ces deux UoMs). Quand un fournisseur expédie un item en 10 et un autre le même item en 12, une Item-Specific Conversion override la valeur globale pour cet item.</li>
+  <li>Paths d'action : <em>Item Master → More Actions → Add/Modify Units of Measure</em> et <em>Add/Modify Conversions</em>. Les item-specific conversions s'ajoutent via <em>Item Master → More Actions → Conversions</em> sur l'item lui-même.</li>
+  <li>À la réception, Maximo traduit la quantité reçue en Order Unit vers Issue Units via la conversion active. Si on commande 5 CARTON de 12 bearings, MATRECTRANS enregistre receipt qty = 60 EACH dans INVBALANCES.</li>
+  <li>Précision UoM : le conversion factor est un décimal — 1 LITER → 0,264 GALLON, ou 1 METER → 3,281 FEET. Les erreurs d'arrondi sur les UoMs fractionnaires sont un piège classique d'examen.</li>
+  <li>Les Service items ont aussi besoin d'une UoM — typiquement HOUR pour la main-d'œuvre ou EACH pour un service forfaitaire. Un « labor service » item avec Issue Unit = HOUR pilote les charges temps sur la WO.</li>
+  <li>L'UoM ne peut pas être changée rétroactivement sans réévaluer le stock on-hand — comme les changements de cost-type, les changements d'UoM sont admin-restricted.</li>
+  <li>L'Item Master définit l'Order Unit et l'Issue Unit <em>par défaut</em> ; des overrides par storeroom existent sur l'Inventory record mais sont rares.</li>
+  <li>Les conversions sont bidirectionnelles : définir 1 CARTON = 12 EACH permet automatiquement à Maximo de calculer 1 EACH = 1/12 CARTON pour une issue partielle.</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-5-1-uom">
   <pre class="mermaid">
 graph LR
-  PR["<b>PR</b> for 5 CARTON<br/>(Order Unit)<br/>vendor sees 5 units"]:::start
-  PO["<b>PO</b> approved<br/>5 CARTON ordered"]:::action
-  CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(item-specific override)"]:::warn
-  RECV["<b>Receipt</b><br/>5 × 12 = <b>60 EACH</b><br/>recorded in storeroom"]:::ok
-  STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stored as Issue Unit)"]:::action
-  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::endNode
+  PR["<b>PR</b> de 5 CARTON<br/>(Order Unit)<br/>le vendor voit 5 unités"]:::start
+  PO["<b>PO</b> approuvée<br/>5 CARTON commandés"]:::action
+  CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(override item-specific)"]:::warn
+  RECV["<b>Réception</b><br/>5 × 12 = <b>60 EACH</b><br/>enregistré au storeroom"]:::ok
+  STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stocké en Issue Unit)"]:::action
+  ISSUE["<b>Issue</b> de 1 EACH<br/>par WO<br/>(Issue Unit)"]:::endNode
 
   PR ==> PO ==> CONV ==> RECV ==> STORE ==> ISSUE
 
-  NOTE[/"<b>Two units per Item Master</b><br/>Order Unit = vendor-facing<br/>Issue Unit = WO-facing<br/>Item-specific conversion<br/>overrides global UoM table"/]:::note
+  NOTE[/"<b>Deux unités par Item Master</b><br/>Order Unit = côté vendor<br/>Issue Unit = côté WO<br/>L'item-specific conversion<br/>override la table UoM globale"/]:::note
   CONV -.-> NOTE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
@@ -16339,18 +16339,18 @@ graph LR
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>Order Unit vs Issue Unit confusion</strong> — Candidates flip the two roles, or assume they must be identical. They are deliberately distinct so you can buy in supplier-friendly packs and consume in shop-floor friendly units.</p>
+  <p><strong>Confusion Order Unit vs Issue Unit</strong> — Les candidats inversent les deux rôles, ou supposent qu'ils doivent être identiques. Ils sont délibérément distincts pour permettre d'acheter en packs vendor-friendly et de consommer en unités shop-floor friendly.</p>
   <ul>
-    <li>Trap: thinking Order Unit = how Maximo stores stock on hand. False — INVBALANCES is always in Issue Units.</li>
-    <li>Trap: thinking the Conversion Factor lives on the UoM. False — it lives on the <em>Conversion</em> record (UoM-pair) or on the Item-Specific Conversion (item + UoM-pair).</li>
-    <li>Trap: assuming one item can only have one Order Unit. In practice, multi-vendor scenarios use item-specific conversions to handle each vendor's pack.</li>
+    <li>Piège : penser que Order Unit = comment Maximo stocke le on-hand. Faux — INVBALANCES est toujours en Issue Units.</li>
+    <li>Piège : penser que le Conversion Factor est sur l'UoM. Faux — il vit sur le record <em>Conversion</em> (paire d'UoM) ou sur l'Item-Specific Conversion (item + paire d'UoM).</li>
+    <li>Piège : supposer qu'un item ne peut avoir qu'une seule Order Unit. En pratique, les scénarios multi-vendor utilisent des item-specific conversions pour gérer le pack de chaque vendor.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. An item has Order Unit = CARTON and Issue Unit = EACH. The conversion factor is 12. You receive 5 CARTONs. How is the storeroom on-hand balance updated?</p>
-  <details><summary>Afficher la réponse</summary><p>Storeroom on-hand increases by 60 EACH (5 CARTON × 12 EACH/CARTON). INVBALANCES always stores quantities in the Issue Unit; Maximo applies the conversion automatically at receipt time.</p></details>
+  <p>Q. Un item a Order Unit = CARTON et Issue Unit = EACH. Le conversion factor est 12. Vous recevez 5 CARTON. Comment la balance on-hand du storeroom est-elle mise à jour ?</p>
+  <details><summary>Afficher la réponse</summary><p>Le on-hand du storeroom augmente de 60 EACH (5 CARTON × 12 EACH/CARTON). INVBALANCES stocke toujours les quantités en Issue Unit ; Maximo applique la conversion automatiquement à la réception.</p></details>
 </div>
 
 <!-- FRAGMENT B: appends after the existing <p>Interactive IBM-style...</p> intro in lt-sit-panel -->
@@ -16369,13 +16369,13 @@ graph LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner is creating a new item for a bearing supplied by Vendor A in cartons of 12 pieces. Each work order issues bearings one piece at a time.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which combination of UoM fields should be set on the Item Master record?</div>
+  <div class="mcq-context">Un planificateur crée un nouvel item pour un bearing fourni par Vendor A en cartons de 12 pièces. Chaque work order issue les bearings pièce par pièce.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle combinaison de champs UoM doit être réglée sur le record Item Master ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-A"><input type="radio" name="c1000-208-mcq-5-1-001" value="A" id="c1000-208-mcq-5-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Order Unit = EACH and Issue Unit = CARTON</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-B"><input type="radio" name="c1000-208-mcq-5-1-001" value="B" id="c1000-208-mcq-5-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Order Unit = EACH and Issue Unit = EACH, with conversion factor = 12</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-001-C"><input type="radio" name="c1000-208-mcq-5-1-001" value="C" id="c1000-208-mcq-5-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Order Unit = CARTON and Issue Unit = EACH, with a CARTON→EACH conversion factor of 12</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-D"><input type="radio" name="c1000-208-mcq-5-1-001" value="D" id="c1000-208-mcq-5-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Order Unit and Issue Unit must always be identical; pack size is captured only on the PO line</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-A"><input type="radio" name="c1000-208-mcq-5-1-001" value="A" id="c1000-208-mcq-5-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Order Unit = EACH et Issue Unit = CARTON</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-B"><input type="radio" name="c1000-208-mcq-5-1-001" value="B" id="c1000-208-mcq-5-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Order Unit = EACH et Issue Unit = EACH, avec conversion factor = 12</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-001-C"><input type="radio" name="c1000-208-mcq-5-1-001" value="C" id="c1000-208-mcq-5-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Order Unit = CARTON et Issue Unit = EACH, avec un conversion factor CARTON→EACH de 12</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-001-D"><input type="radio" name="c1000-208-mcq-5-1-001" value="D" id="c1000-208-mcq-5-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Order Unit et Issue Unit doivent toujours être identiques ; la pack size n'est capturée que sur la ligne PO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16417,16 +16417,16 @@ graph LR
         <figure class="lesson-diagram" data-lesson="c1000-208-5-1-uom-c1000-208-mcq-5-1-001">
   <pre class="mermaid">
 graph LR
-  PR["<b>PR</b> for 5 CARTON<br/>(Order Unit)<br/>vendor sees 5 units"]:::start
-  PO["<b>PO</b> approved<br/>5 CARTON ordered"]:::action
-  CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(item-specific override)"]:::warn
-  RECV["<b>Receipt</b><br/>5 × 12 = <b>60 EACH</b><br/>recorded in storeroom"]:::ok
-  STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stored as Issue Unit)"]:::action
-  ISSUE["<b>Issue</b> 1 EACH<br/>at a time to WOs<br/>(Issue Unit)"]:::endNode
+  PR["<b>PR</b> de 5 CARTON<br/>(Order Unit)<br/>le vendor voit 5 unités"]:::start
+  PO["<b>PO</b> approuvée<br/>5 CARTON commandés"]:::action
+  CONV["<b>Conversion factor</b><br/>1 CARTON = 12 EACH<br/>(override item-specific)"]:::warn
+  RECV["<b>Réception</b><br/>5 × 12 = <b>60 EACH</b><br/>enregistré au storeroom"]:::ok
+  STORE["Inventory Balance<br/>balance += 60 EACH<br/>(stocké en Issue Unit)"]:::action
+  ISSUE["<b>Issue</b> de 1 EACH<br/>par WO<br/>(Issue Unit)"]:::endNode
 
   PR ==> PO ==> CONV ==> RECV ==> STORE ==> ISSUE
 
-  NOTE[/"<b>Two units per Item Master</b><br/>Order Unit = vendor-facing<br/>Issue Unit = WO-facing<br/>Item-specific conversion<br/>overrides global UoM table"/]:::note
+  NOTE[/"<b>Deux unités par Item Master</b><br/>Order Unit = côté vendor<br/>Issue Unit = côté WO<br/>L'item-specific conversion<br/>override la table UoM globale"/]:::note
   CONV -.-> NOTE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
@@ -16454,13 +16454,13 @@ graph LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item is normally supplied in cartons of 12, but a secondary vendor ships the same item in cartons of 10. The global CARTON→EACH conversion of 12 is already defined.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the correct way to handle the secondary vendor's pack size in Maximo?</div>
+  <div class="mcq-context">Un item est normalement fourni en cartons de 12, mais un vendor secondaire expédie le même item en cartons de 10. La conversion globale CARTON→EACH de 12 est déjà définie.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la bonne façon de gérer la pack size du vendor secondaire dans Maximo ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-A"><input type="radio" name="c1000-208-mcq-5-1-002" value="A" id="c1000-208-mcq-5-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Modify the global CARTON→EACH conversion to 10</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-002-B"><input type="radio" name="c1000-208-mcq-5-1-002" value="B" id="c1000-208-mcq-5-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Add an Item-Specific Conversion on the item with factor 10 for that vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-C"><input type="radio" name="c1000-208-mcq-5-1-002" value="C" id="c1000-208-mcq-5-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Create a duplicate Item Master record with Order Unit = "CARTON-10"</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-D"><input type="radio" name="c1000-208-mcq-5-1-002" value="D" id="c1000-208-mcq-5-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Convert all incoming receipts manually on the PO line</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-A"><input type="radio" name="c1000-208-mcq-5-1-002" value="A" id="c1000-208-mcq-5-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Modifier la conversion globale CARTON→EACH à 10</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-002-B"><input type="radio" name="c1000-208-mcq-5-1-002" value="B" id="c1000-208-mcq-5-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Ajouter une Item-Specific Conversion sur l'item avec factor 10 pour ce vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-C"><input type="radio" name="c1000-208-mcq-5-1-002" value="C" id="c1000-208-mcq-5-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Créer un record Item Master dupliqué avec Order Unit = « CARTON-10 »</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-002-D"><input type="radio" name="c1000-208-mcq-5-1-002" value="D" id="c1000-208-mcq-5-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Convertir manuellement chaque réception entrante sur la ligne PO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16511,12 +16511,12 @@ graph LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item has Order Unit = DRUM and Issue Unit = LITER, with a global conversion of 1 DRUM = 200 LITER. A receipt of 3 DRUMs is recorded.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What quantity is added to the Inventory balance (INVBALANCES) at the storeroom?</div>
+  <div class="mcq-context">Un item a Order Unit = DRUM et Issue Unit = LITER, avec une conversion globale 1 DRUM = 200 LITER. Une réception de 3 DRUMs est enregistrée.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle quantité est ajoutée à l'Inventory balance (INVBALANCES) au storeroom ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-003-A"><input type="radio" name="c1000-208-mcq-5-1-003" value="A" id="c1000-208-mcq-5-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">3 DRUM</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-003-B"><input type="radio" name="c1000-208-mcq-5-1-003" value="B" id="c1000-208-mcq-5-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">200 LITER (only the conversion factor is recorded)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-003-C"><input type="radio" name="c1000-208-mcq-5-1-003" value="C" id="c1000-208-mcq-5-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">3 LITER (one per drum)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-003-B"><input type="radio" name="c1000-208-mcq-5-1-003" value="B" id="c1000-208-mcq-5-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">200 LITER (seul le conversion factor est enregistré)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-003-C"><input type="radio" name="c1000-208-mcq-5-1-003" value="C" id="c1000-208-mcq-5-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">3 LITER (un par drum)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-003-D"><input type="radio" name="c1000-208-mcq-5-1-003" value="D" id="c1000-208-mcq-5-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">600 LITER (3 × 200)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
@@ -16568,10 +16568,10 @@ graph LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A Maximo administrator wants to add a new UoM "PALLET" available for all items in the Item Set.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which action is used to add this new UoM?</div>
+  <div class="mcq-context">Un administrateur Maximo veut ajouter une nouvelle UoM « PALLET » disponible pour tous les items de l'Item Set.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action sert à ajouter cette nouvelle UoM ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-004-A"><input type="radio" name="c1000-208-mcq-5-1-004" value="A" id="c1000-208-mcq-5-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Add/Modify Units of Measure (More Actions in Item Master)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-004-A"><input type="radio" name="c1000-208-mcq-5-1-004" value="A" id="c1000-208-mcq-5-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Add/Modify Units of Measure (More Actions dans Item Master)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-004-B"><input type="radio" name="c1000-208-mcq-5-1-004" value="B" id="c1000-208-mcq-5-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Add/Modify Conversions</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-004-C"><input type="radio" name="c1000-208-mcq-5-1-004" value="C" id="c1000-208-mcq-5-1-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Add Inventory Balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-004-D"><input type="radio" name="c1000-208-mcq-5-1-004" value="D" id="c1000-208-mcq-5-1-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Manage Stock Categories</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -16625,13 +16625,13 @@ graph LR
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner is configuring a service-type item for "Equipment Calibration" — a fixed flat-rate service performed by an external lab.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the recommended UoM strategy for a service-type item?</div>
+  <div class="mcq-context">Un planificateur configure un service-type item pour « Equipment Calibration » — un service au tarif forfaitaire effectué par un labo externe.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la stratégie UoM recommandée pour un service-type item ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-A"><input type="radio" name="c1000-208-mcq-5-1-005" value="A" id="c1000-208-mcq-5-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Service-type items do not require a UoM</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-B"><input type="radio" name="c1000-208-mcq-5-1-005" value="B" id="c1000-208-mcq-5-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Service-type items must use UoM = SERVICE which is reserved</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-005-C"><input type="radio" name="c1000-208-mcq-5-1-005" value="C" id="c1000-208-mcq-5-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Use a meaningful UoM (e.g. EACH for flat-fee service, HOUR for time-based) — both Order Unit and Issue Unit are required</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-D"><input type="radio" name="c1000-208-mcq-5-1-005" value="D" id="c1000-208-mcq-5-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Service items live in Companies, not Item Master, so UoM is irrelevant</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-A"><input type="radio" name="c1000-208-mcq-5-1-005" value="A" id="c1000-208-mcq-5-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les service-type items ne requièrent pas d'UoM</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-B"><input type="radio" name="c1000-208-mcq-5-1-005" value="B" id="c1000-208-mcq-5-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les service-type items doivent utiliser UoM = SERVICE qui est réservée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-1-005-C"><input type="radio" name="c1000-208-mcq-5-1-005" value="C" id="c1000-208-mcq-5-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Utiliser une UoM significative (ex. EACH pour un service forfaitaire, HOUR pour temps-based) — Order Unit et Issue Unit sont tous deux requis</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-1-005-D"><input type="radio" name="c1000-208-mcq-5-1-005" value="D" id="c1000-208-mcq-5-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les service items vivent dans Companies, pas dans Item Master, donc l'UoM est sans pertinence</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
