@@ -13026,15 +13026,15 @@ flowchart LR
 <section class="lesson" id="c1000-208-lesson-4-1">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.1</div>
   <div class="lesson-header">
-    <h1>Item Issues (Inventory Usage + Issues & Transfers RBA)</h1>
+    <h1>Item Issues (Inventory Usage + Issues and Transfers RBA)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 24%</span>
       <span class="meta-pill">~10 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-4-1.svg" alt="C1000-208 lesson 4-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-4-1.svg" alt="Illustration de la leçon C1000-208 4-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-1" id="lt-c1000-208-4-1-c" class="lt-course" checked>
@@ -13049,15 +13049,15 @@ flowchart LR
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Issue an Item to a Work Order, Location or Asset (Issue To Person mandatory for tools, Issue Rotating Asset selection)</li>
+  <li>Issuer un Item vers un Work Order, une Location ou un Asset (Issue To Person obligatoire pour les tools, sélection Issue Rotating Asset)</li>
   <li><strong>Blue Action Button</strong> : Select Reserved Items · Select Spare Parts</li>
-  <li>Issue/Order Material Requests from <strong>Desktop Requisitions</strong></li>
-  <li>Process <strong>Staging</strong> by changing Document Status to STAGED (balance adjusted to staging bin)</li>
-  <li><strong>Split the Quantity</strong> to be Issued across multiple bins/lots when a single location lacks the qty</li>
-  <li>Manage <strong>Physical Count</strong> in Inventory Usage application</li>
-  <li>Perform Issues in the <strong>Issues and Transfers Role Based Application (RBA)</strong></li>
-  <li>Issue a <strong>condition-enabled item</strong></li>
-  <li>Issue a <strong>lotted item</strong></li>
+  <li>Issue/Order de Material Requests depuis <strong>Desktop Requisitions</strong></li>
+  <li>Traiter le <strong>Staging</strong> en passant le Document Status à STAGED (balance déplacée vers le staging bin)</li>
+  <li><strong>Split the Quantity</strong> à issuer sur plusieurs bins/lots quand une seule location n'a pas la qty</li>
+  <li>Gérer le <strong>Physical Count</strong> dans l'application Inventory Usage</li>
+  <li>Réaliser les Issues dans la <strong>Issues and Transfers Role Based Application (RBA)</strong></li>
+  <li>Issuer un <strong>condition-enabled item</strong></li>
+  <li>Issuer un <strong>lotted item</strong></li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -13083,37 +13083,37 @@ flowchart LR
 <figure class="lesson-diagram" data-lesson="c1000-208-4-1-issues">
   <pre class="mermaid">
 flowchart TD
-  WO["Approved Work Order<br/>or Issue request"]:::start
-  TYPE{"<b>Item type ?</b><br/>(STU §4.1)"}:::decision
+  WO["Work Order approuvée<br/>ou Issue request"]:::start
+  TYPE{"<b>Type d'item ?</b><br/>(STU §4.1)"}:::decision
 
-  TOOL["Branch <b>TOOL</b><br/>Non-rotating tool item"]:::action
-  TOOL_REQ["<b>Issue To Person mandatory</b><br/>(SAM Q6 — answer C)<br/>tool tracked to a named worker<br/>not a Location nor a WO alone"]:::warn
+  TOOL["Branche <b>TOOL</b><br/>Tool item non-rotating"]:::action
+  TOOL_REQ["<b>Issue To Person obligatoire</b><br/>(SAM Q6 — réponse C)<br/>tool tracé vers un travailleur nommé<br/>pas une Location ni une WO seule"]:::warn
 
-  SVC["Branch <b>SERVICE</b><br/>Service-type item<br/>(no physical inventory)"]:::action
-  SVC_TX["Direct charge to WO actuals<br/>(no balance impact)"]:::ok
+  SVC["Branche <b>SERVICE</b><br/>Item de type Service<br/>(pas d'inventaire physique)"]:::action
+  SVC_TX["Charge directe sur les actuals WO<br/>(aucun impact balance)"]:::ok
 
-  ITEM["Branch <b>ITEM</b><br/>Standard inventory item"]:::action
-  GL{"GL Debit Account<br/>resolved ?<br/>(WO / location / item default)"}:::decision
-  GL_FAIL["Stop — issue blocked<br/>missing GL debit account"]:::stop
-  BIN{"Default bin has<br/><b>enough qty</b> ?"}:::decision
+  ITEM["Branche <b>ITEM</b><br/>Item d'inventaire standard"]:::action
+  GL{"GL Debit Account<br/>résolu ?<br/>(WO / location / item default)"}:::decision
+  GL_FAIL["Arrêt — issue bloquée<br/>GL debit account manquant"]:::stop
+  BIN{"La default bin a-t-elle<br/><b>assez de qty</b> ?"}:::decision
 
-  SPLIT["<b>Bin splitting required</b><br/>(SAM Q8 — answer B)<br/>Split Usage Quantity dialog<br/>draws from multiple bins / lots<br/>InvUseSplit row created"]:::warn
-  PICK["Pick from default bin<br/>(single InvUseLine)"]:::action
+  SPLIT["<b>Bin splitting requis</b><br/>(SAM Q8 — réponse B)<br/>Dialog Split Usage Quantity<br/>tire depuis plusieurs bins / lots<br/>Ligne InvUseSplit créée"]:::warn
+  PICK["Pick depuis la default bin<br/>(InvUseLine unique)"]:::action
 
-  STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
-  STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
+  STAGE{"Stager avant issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
+  STAGED["Déplacer la qty vers <b>Staging Bin</b><br/>balance storeroom −<br/>balance staging +<br/>(STU §4.1 chemin staging)"]:::action
+  ISSUE["<b>Réaliser l'Issue</b><br/>balance −= qty<br/>actuals WO += qty<br/>INVTRANS type=ISSUE<br/>+ ligne MATUSETRANS"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
   TYPE -- Service --> SVC --> SVC_TX
   TYPE -- Item --> ITEM --> GL
-  GL -- No --> GL_FAIL
-  GL -- Yes --> BIN
-  BIN -- No --> SPLIT --> STAGE
-  BIN -- Yes --> PICK --> STAGE
-  STAGE -- Yes --> STAGED --> ISSUE
-  STAGE -- No --> ISSUE
+  GL -- Non --> GL_FAIL
+  GL -- Oui --> BIN
+  BIN -- Non --> SPLIT --> STAGE
+  BIN -- Oui --> PICK --> STAGE
+  STAGE -- Oui --> STAGED --> ISSUE
+  STAGE -- Non --> ISSUE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -13158,8 +13158,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom has a non-rotating tool (e.g. an impact wrench shared among technicians) recorded as an Item with Tool flag = Y.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is required to move a non-rotating tool item from a storeroom?</div>
+  <div class="mcq-context">Un storeroom a un tool non-rotating (ex. une boulonneuse à choc partagée entre techniciens) enregistré comme Item avec Tool flag = Y.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que faut-il pour déplacer un tool item non-rotating depuis un storeroom ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-001-A"><input type="radio" name="c1000-208-mcq-4-1-001" value="A" id="c1000-208-mcq-4-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Location</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-001-B"><input type="radio" name="c1000-208-mcq-4-1-001" value="B" id="c1000-208-mcq-4-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Work Order</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -13207,37 +13207,37 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-4-1-issues-c1000-208-mcq-4-1-001">
   <pre class="mermaid">
 flowchart TD
-  WO["Approved Work Order<br/>or Issue request"]:::start
-  TYPE{"<b>Item type ?</b><br/>(STU §4.1)"}:::decision
+  WO["Work Order approuvée<br/>ou Issue request"]:::start
+  TYPE{"<b>Type d'item ?</b><br/>(STU §4.1)"}:::decision
 
-  TOOL["Branch <b>TOOL</b><br/>Non-rotating tool item"]:::action
-  TOOL_REQ["<b>Issue To Person mandatory</b><br/>(SAM Q6 — answer C)<br/>tool tracked to a named worker<br/>not a Location nor a WO alone"]:::warn
+  TOOL["Branche <b>TOOL</b><br/>Tool item non-rotating"]:::action
+  TOOL_REQ["<b>Issue To Person obligatoire</b><br/>(SAM Q6 — réponse C)<br/>tool tracé vers un travailleur nommé<br/>pas une Location ni une WO seule"]:::warn
 
-  SVC["Branch <b>SERVICE</b><br/>Service-type item<br/>(no physical inventory)"]:::action
-  SVC_TX["Direct charge to WO actuals<br/>(no balance impact)"]:::ok
+  SVC["Branche <b>SERVICE</b><br/>Item de type Service<br/>(pas d'inventaire physique)"]:::action
+  SVC_TX["Charge directe sur les actuals WO<br/>(aucun impact balance)"]:::ok
 
-  ITEM["Branch <b>ITEM</b><br/>Standard inventory item"]:::action
-  GL{"GL Debit Account<br/>resolved ?<br/>(WO / location / item default)"}:::decision
-  GL_FAIL["Stop — issue blocked<br/>missing GL debit account"]:::stop
-  BIN{"Default bin has<br/><b>enough qty</b> ?"}:::decision
+  ITEM["Branche <b>ITEM</b><br/>Item d'inventaire standard"]:::action
+  GL{"GL Debit Account<br/>résolu ?<br/>(WO / location / item default)"}:::decision
+  GL_FAIL["Arrêt — issue bloquée<br/>GL debit account manquant"]:::stop
+  BIN{"La default bin a-t-elle<br/><b>assez de qty</b> ?"}:::decision
 
-  SPLIT["<b>Bin splitting required</b><br/>(SAM Q8 — answer B)<br/>Split Usage Quantity dialog<br/>draws from multiple bins / lots<br/>InvUseSplit row created"]:::warn
-  PICK["Pick from default bin<br/>(single InvUseLine)"]:::action
+  SPLIT["<b>Bin splitting requis</b><br/>(SAM Q8 — réponse B)<br/>Dialog Split Usage Quantity<br/>tire depuis plusieurs bins / lots<br/>Ligne InvUseSplit créée"]:::warn
+  PICK["Pick depuis la default bin<br/>(InvUseLine unique)"]:::action
 
-  STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
-  STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
+  STAGE{"Stager avant issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
+  STAGED["Déplacer la qty vers <b>Staging Bin</b><br/>balance storeroom −<br/>balance staging +<br/>(STU §4.1 chemin staging)"]:::action
+  ISSUE["<b>Réaliser l'Issue</b><br/>balance −= qty<br/>actuals WO += qty<br/>INVTRANS type=ISSUE<br/>+ ligne MATUSETRANS"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
   TYPE -- Service --> SVC --> SVC_TX
   TYPE -- Item --> ITEM --> GL
-  GL -- No --> GL_FAIL
-  GL -- Yes --> BIN
-  BIN -- No --> SPLIT --> STAGE
-  BIN -- Yes --> PICK --> STAGE
-  STAGE -- Yes --> STAGED --> ISSUE
-  STAGE -- No --> ISSUE
+  GL -- Non --> GL_FAIL
+  GL -- Oui --> BIN
+  BIN -- Non --> SPLIT --> STAGE
+  BIN -- Oui --> PICK --> STAGE
+  STAGE -- Oui --> STAGED --> ISSUE
+  STAGE -- Non --> ISSUE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -13265,13 +13265,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reservation requires 100 units of an item. The default bin (BIN-A) holds only 60 units; BIN-B holds 30 and BIN-C holds 40 of the same item.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is required to issue the total reserved quantity of an item when the default bin does not have sufficient quantity?</div>
+  <div class="mcq-context">Une réservation requiert 100 unités d'un item. La default bin (BIN-A) ne contient que 60 unités ; BIN-B contient 30 et BIN-C contient 40 du même item.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que faut-il pour issuer la totalité de la quantité réservée d'un item quand la default bin n'a pas assez de quantité ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-002-A"><input type="radio" name="c1000-208-mcq-4-1-002" value="A" id="c1000-208-mcq-4-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Add/Modify Reservations</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-002-B"><input type="radio" name="c1000-208-mcq-4-1-002" value="B" id="c1000-208-mcq-4-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Use bin splitting to issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-002-B"><input type="radio" name="c1000-208-mcq-4-1-002" value="B" id="c1000-208-mcq-4-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Utiliser le bin splitting pour issuer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-002-C"><input type="radio" name="c1000-208-mcq-4-1-002" value="C" id="c1000-208-mcq-4-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Create Remaining Usage Lines</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-002-D"><input type="radio" name="c1000-208-mcq-4-1-002" value="D" id="c1000-208-mcq-4-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Create two separate inventory usage records</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-002-D"><input type="radio" name="c1000-208-mcq-4-1-002" value="D" id="c1000-208-mcq-4-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Créer deux inventory usage records séparés</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13321,37 +13321,37 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-4-1-issues-c1000-208-mcq-4-1-002">
   <pre class="mermaid">
 flowchart TD
-  WO["Approved Work Order<br/>or Issue request"]:::start
-  TYPE{"<b>Item type ?</b><br/>(STU §4.1)"}:::decision
+  WO["Work Order approuvée<br/>ou Issue request"]:::start
+  TYPE{"<b>Type d'item ?</b><br/>(STU §4.1)"}:::decision
 
-  TOOL["Branch <b>TOOL</b><br/>Non-rotating tool item"]:::action
-  TOOL_REQ["<b>Issue To Person mandatory</b><br/>(SAM Q6 — answer C)<br/>tool tracked to a named worker<br/>not a Location nor a WO alone"]:::warn
+  TOOL["Branche <b>TOOL</b><br/>Tool item non-rotating"]:::action
+  TOOL_REQ["<b>Issue To Person obligatoire</b><br/>(SAM Q6 — réponse C)<br/>tool tracé vers un travailleur nommé<br/>pas une Location ni une WO seule"]:::warn
 
-  SVC["Branch <b>SERVICE</b><br/>Service-type item<br/>(no physical inventory)"]:::action
-  SVC_TX["Direct charge to WO actuals<br/>(no balance impact)"]:::ok
+  SVC["Branche <b>SERVICE</b><br/>Item de type Service<br/>(pas d'inventaire physique)"]:::action
+  SVC_TX["Charge directe sur les actuals WO<br/>(aucun impact balance)"]:::ok
 
-  ITEM["Branch <b>ITEM</b><br/>Standard inventory item"]:::action
-  GL{"GL Debit Account<br/>resolved ?<br/>(WO / location / item default)"}:::decision
-  GL_FAIL["Stop — issue blocked<br/>missing GL debit account"]:::stop
-  BIN{"Default bin has<br/><b>enough qty</b> ?"}:::decision
+  ITEM["Branche <b>ITEM</b><br/>Item d'inventaire standard"]:::action
+  GL{"GL Debit Account<br/>résolu ?<br/>(WO / location / item default)"}:::decision
+  GL_FAIL["Arrêt — issue bloquée<br/>GL debit account manquant"]:::stop
+  BIN{"La default bin a-t-elle<br/><b>assez de qty</b> ?"}:::decision
 
-  SPLIT["<b>Bin splitting required</b><br/>(SAM Q8 — answer B)<br/>Split Usage Quantity dialog<br/>draws from multiple bins / lots<br/>InvUseSplit row created"]:::warn
-  PICK["Pick from default bin<br/>(single InvUseLine)"]:::action
+  SPLIT["<b>Bin splitting requis</b><br/>(SAM Q8 — réponse B)<br/>Dialog Split Usage Quantity<br/>tire depuis plusieurs bins / lots<br/>Ligne InvUseSplit créée"]:::warn
+  PICK["Pick depuis la default bin<br/>(InvUseLine unique)"]:::action
 
-  STAGE{"Stage before issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
-  STAGED["Move qty to <b>Staging Bin</b><br/>storeroom balance −<br/>staging balance +<br/>(STU §4.1 staging path)"]:::action
-  ISSUE["<b>Perform Issue</b><br/>balance −= qty<br/>WO actuals += qty<br/>INVTRANS type=ISSUE<br/>+ MATUSETRANS row"]:::endNode
+  STAGE{"Stager avant issue ?<br/>(Document Status<br/>= STAGED)"}:::decision
+  STAGED["Déplacer la qty vers <b>Staging Bin</b><br/>balance storeroom −<br/>balance staging +<br/>(STU §4.1 chemin staging)"]:::action
+  ISSUE["<b>Réaliser l'Issue</b><br/>balance −= qty<br/>actuals WO += qty<br/>INVTRANS type=ISSUE<br/>+ ligne MATUSETRANS"]:::endNode
 
   WO --> TYPE
   TYPE -- Tool --> TOOL --> TOOL_REQ --> ISSUE
   TYPE -- Service --> SVC --> SVC_TX
   TYPE -- Item --> ITEM --> GL
-  GL -- No --> GL_FAIL
-  GL -- Yes --> BIN
-  BIN -- No --> SPLIT --> STAGE
-  BIN -- Yes --> PICK --> STAGE
-  STAGE -- Yes --> STAGED --> ISSUE
-  STAGE -- No --> ISSUE
+  GL -- Non --> GL_FAIL
+  GL -- Oui --> BIN
+  BIN -- Non --> SPLIT --> STAGE
+  BIN -- Oui --> PICK --> STAGE
+  STAGE -- Oui --> STAGED --> ISSUE
+  STAGE -- Non --> ISSUE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -13379,8 +13379,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper opens a new Inventory Usage record and wants to populate it from the existing reservations on a Work Order without manually entering each item.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Blue Action Button option populates the Inventory Usage record from existing reservations?</div>
+  <div class="mcq-context">Un magasinier ouvre un nouveau record Inventory Usage et veut le remplir à partir des réservations existantes sur une Work Order, sans saisir chaque item manuellement.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle option du Blue Action Button remplit l'Inventory Usage record à partir des réservations existantes ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-003-A"><input type="radio" name="c1000-208-mcq-4-1-003" value="A" id="c1000-208-mcq-4-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Select Reserved Items</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-003-B"><input type="radio" name="c1000-208-mcq-4-1-003" value="B" id="c1000-208-mcq-4-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Add/Modify Reservations</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -13446,13 +13446,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A WO requires a 5HP motor. The storeroom holds 4 rotating motors of model MOT-5HP with serial numbers SN-A, SN-B, SN-C, SN-D, each with a different cost.</div>
-  <div class="mcq-stem"><strong>Question :</strong> When issuing the rotating motor on Inventory Usage, what does the storekeeper do?</div>
+  <div class="mcq-context">Une WO demande un motor 5HP. Le storeroom détient 4 rotating motors du modèle MOT-5HP avec les serials SN-A, SN-B, SN-C, SN-D, chacun avec un coût différent.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Pour issuer le rotating motor sur Inventory Usage, que fait le magasinier ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-A"><input type="radio" name="c1000-208-mcq-4-1-004" value="A" id="c1000-208-mcq-4-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Type quantity = 1 ; Maximo auto-selects the FIFO oldest serial</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-004-B"><input type="radio" name="c1000-208-mcq-4-1-004" value="B" id="c1000-208-mcq-4-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Click « Issue Rotating Asset » to select the specific serial number to issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-C"><input type="radio" name="c1000-208-mcq-4-1-004" value="C" id="c1000-208-mcq-4-1-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Cannot issue rotating items via Inventory Usage ; must use Asset Move</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-D"><input type="radio" name="c1000-208-mcq-4-1-004" value="D" id="c1000-208-mcq-4-1-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Type the average cost manually based on the four motors</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-A"><input type="radio" name="c1000-208-mcq-4-1-004" value="A" id="c1000-208-mcq-4-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Saisir quantity = 1 ; Maximo auto-sélectionne le serial le plus ancien (FIFO)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-004-B"><input type="radio" name="c1000-208-mcq-4-1-004" value="B" id="c1000-208-mcq-4-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Cliquer « Issue Rotating Asset » pour sélectionner le numéro de série spécifique à issuer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-C"><input type="radio" name="c1000-208-mcq-4-1-004" value="C" id="c1000-208-mcq-4-1-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Impossible d'issuer des rotating items via Inventory Usage ; il faut utiliser Asset Move</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-004-D"><input type="radio" name="c1000-208-mcq-4-1-004" value="D" id="c1000-208-mcq-4-1-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Saisir manuellement le coût moyen basé sur les quatre motors</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13508,13 +13508,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper has prepared an Inventory Usage with reserved items for a WO scheduled tomorrow. The user wants the items physically moved to the staging area now while keeping them allocated.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What action processes the staging?</div>
+  <div class="mcq-context">Un magasinier a préparé une Inventory Usage avec des items réservés pour une WO planifiée demain. Il veut que les items soient physiquement déplacés vers le staging area maintenant tout en restant alloués.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action traite le staging ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-A"><input type="radio" name="c1000-208-mcq-4-1-005" value="A" id="c1000-208-mcq-4-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Click « Issue » — items move directly to the WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-B"><input type="radio" name="c1000-208-mcq-4-1-005" value="B" id="c1000-208-mcq-4-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Change the WO status to STAGED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-005-C"><input type="radio" name="c1000-208-mcq-4-1-005" value="C" id="c1000-208-mcq-4-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Change the Inventory Usage Document Status to STAGED — balance moves to staging bin</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-D"><input type="radio" name="c1000-208-mcq-4-1-005" value="D" id="c1000-208-mcq-4-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Run a Stock Transfer Order to staging</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-A"><input type="radio" name="c1000-208-mcq-4-1-005" value="A" id="c1000-208-mcq-4-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Cliquer « Issue » — les items partent directement vers la WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-B"><input type="radio" name="c1000-208-mcq-4-1-005" value="B" id="c1000-208-mcq-4-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Changer le statut de la WO à STAGED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-005-C"><input type="radio" name="c1000-208-mcq-4-1-005" value="C" id="c1000-208-mcq-4-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Changer le Document Status de l'Inventory Usage à STAGED — la balance bouge vers le staging bin</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-005-D"><input type="radio" name="c1000-208-mcq-4-1-005" value="D" id="c1000-208-mcq-4-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Lancer un Stock Transfer Order vers staging</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13569,13 +13569,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom holds 3 lots of solvent SOL-200 with different expiration dates: LOT-A expires 2026-06-30 (qty 50), LOT-B expires 2026-08-15 (qty 30), LOT-C expires 2026-12-01 (qty 80).</div>
-  <div class="mcq-stem"><strong>Question :</strong> When issuing 40 units of SOL-200 to a WO, what does the storekeeper do for a lotted item?</div>
+  <div class="mcq-context">Un storeroom détient 3 lots de solvant SOL-200 avec des dates d'expiration différentes : LOT-A expire 2026-06-30 (qty 50), LOT-B expire 2026-08-15 (qty 30), LOT-C expire 2026-12-01 (qty 80).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Pour issuer 40 unités de SOL-200 à une WO, que fait le magasinier sur un lotted item ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-006-A"><input type="radio" name="c1000-208-mcq-4-1-006" value="A" id="c1000-208-mcq-4-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Select the lot from the dialog ; FIFO by expiration recommended (LOT-A first since it expires earliest)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-B"><input type="radio" name="c1000-208-mcq-4-1-006" value="B" id="c1000-208-mcq-4-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Maximo auto-selects the lot with the latest expiration to maximize shelf life</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-C"><input type="radio" name="c1000-208-mcq-4-1-006" value="C" id="c1000-208-mcq-4-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Type quantity 40 ; Maximo splits across all 3 lots equally (13.3 each)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-D"><input type="radio" name="c1000-208-mcq-4-1-006" value="D" id="c1000-208-mcq-4-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Lotted items cannot be issued via Inventory Usage ; use Lots application directly</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-006-A"><input type="radio" name="c1000-208-mcq-4-1-006" value="A" id="c1000-208-mcq-4-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Sélectionner le lot dans le dialog ; FIFO par expiration recommandé (LOT-A en premier car expire le plus tôt)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-B"><input type="radio" name="c1000-208-mcq-4-1-006" value="B" id="c1000-208-mcq-4-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Maximo auto-sélectionne le lot avec l'expiration la plus tardive pour maximiser la shelf life</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-C"><input type="radio" name="c1000-208-mcq-4-1-006" value="C" id="c1000-208-mcq-4-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Saisir quantity 40 ; Maximo répartit sur les 3 lots équitablement (13,3 chacun)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-006-D"><input type="radio" name="c1000-208-mcq-4-1-006" value="D" id="c1000-208-mcq-4-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les lotted items ne peuvent pas être issués via Inventory Usage ; utiliser l'application Lots directement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13629,13 +13629,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A bearing item BRG-X is condition-enabled with codes NEW (100% rate), REFURB (70% rate), USED (40% rate). Storeroom shows balances: NEW 25, REFURB 12, USED 8. NEW cost is $200.</div>
-  <div class="mcq-stem"><strong>Question :</strong> When issuing the bearing as REFURB to a WO, what cost is charged to the WO?</div>
+  <div class="mcq-context">Un bearing item BRG-X est condition-enabled avec les codes NEW (rate 100%), REFURB (rate 70%), USED (rate 40%). Le storeroom a les balances : NEW 25, REFURB 12, USED 8. NEW cost = 200 $.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Pour issuer le bearing comme REFURB à une WO, quel coût est imputé à la WO ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-A"><input type="radio" name="c1000-208-mcq-4-1-007" value="A" id="c1000-208-mcq-4-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$200 (NEW cost regardless of condition)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-007-B"><input type="radio" name="c1000-208-mcq-4-1-007" value="B" id="c1000-208-mcq-4-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$140 (NEW cost × REFURB rate 70% = $200 × 0.70)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-C"><input type="radio" name="c1000-208-mcq-4-1-007" value="C" id="c1000-208-mcq-4-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">$80 (USED cost — Maximo defaults to lowest condition)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-D"><input type="radio" name="c1000-208-mcq-4-1-007" value="D" id="c1000-208-mcq-4-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Average of all 3 conditions weighted by qty</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-A"><input type="radio" name="c1000-208-mcq-4-1-007" value="A" id="c1000-208-mcq-4-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">200 $ (NEW cost peu importe la condition)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-007-B"><input type="radio" name="c1000-208-mcq-4-1-007" value="B" id="c1000-208-mcq-4-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">140 $ (NEW cost × rate REFURB 70% = 200 $ × 0,70)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-C"><input type="radio" name="c1000-208-mcq-4-1-007" value="C" id="c1000-208-mcq-4-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">80 $ (USED cost — Maximo prend la condition la plus basse par défaut)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-007-D"><input type="radio" name="c1000-208-mcq-4-1-007" value="D" id="c1000-208-mcq-4-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Moyenne des 3 conditions pondérée par qty</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13691,8 +13691,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A maintenance technician needs 3 bearings for a job. He doesn't have a WO yet but needs to formally request the items for tomorrow.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo application allows the technician to create a self-service material request that the planner will approve and convert into an issue?</div>
+  <div class="mcq-context">Un technicien de maintenance a besoin de 3 bearings pour un job. Il n'a pas encore de WO mais doit demander formellement les items pour demain.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle application Maximo permet au technicien de créer un material request en self-service que le planificateur approuvera et convertira en issue ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-008-A"><input type="radio" name="c1000-208-mcq-4-1-008" value="A" id="c1000-208-mcq-4-1-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory app</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-008-B"><input type="radio" name="c1000-208-mcq-4-1-008" value="B" id="c1000-208-mcq-4-1-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Item Master</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -13757,13 +13757,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper uses a tablet on the warehouse floor to perform issues. The site has both Inventory Usage app and Issues and Transfers RBA available.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the primary advantage of the Issues and Transfers Role-Based Application (RBA) for the floor user?</div>
+  <div class="mcq-context">Un magasinier utilise une tablette sur le warehouse floor pour réaliser des issues. Le site a à la fois l'application Inventory Usage et la Issues and Transfers RBA disponibles.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est l'avantage principal de la Issues and Transfers Role-Based Application (RBA) pour l'utilisateur terrain ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-A"><input type="radio" name="c1000-208-mcq-4-1-009" value="A" id="c1000-208-mcq-4-1-009-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">It bypasses GL postings to speed up transactions</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-B"><input type="radio" name="c1000-208-mcq-4-1-009" value="B" id="c1000-208-mcq-4-1-009-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">It allows offline data entry that syncs later</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-009-C"><input type="radio" name="c1000-208-mcq-4-1-009" value="C" id="c1000-208-mcq-4-1-009-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A simplified mobile-friendly UI with barcode scan optimized for storekeepers</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-D"><input type="radio" name="c1000-208-mcq-4-1-009" value="D" id="c1000-208-mcq-4-1-009-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">It generates different MATUSETRANS rows with extra fields not in Inventory Usage</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-A"><input type="radio" name="c1000-208-mcq-4-1-009" value="A" id="c1000-208-mcq-4-1-009-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Elle contourne les postings GL pour accélérer les transactions</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-B"><input type="radio" name="c1000-208-mcq-4-1-009" value="B" id="c1000-208-mcq-4-1-009-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Elle permet la saisie offline avec sync ultérieure</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-009-C"><input type="radio" name="c1000-208-mcq-4-1-009" value="C" id="c1000-208-mcq-4-1-009-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une UI mobile-friendly simplifiée avec scan barcode, optimisée pour les magasiniers</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-009-D"><input type="radio" name="c1000-208-mcq-4-1-009" value="D" id="c1000-208-mcq-4-1-009-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Elle génère des lignes MATUSETRANS différentes avec des champs en plus absents d'Inventory Usage</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -13821,13 +13821,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper issues 5 units of a consumable to a permanent fixed station (no specific WO, no asset)—just costed to a maintenance department.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What Issue To target should the storekeeper select on the Inventory Usage line?</div>
+  <div class="mcq-context">Un magasinier issue 5 unités d'un consommable vers un poste fixe permanent (pas de WO spécifique, pas d'asset) — simplement imputé à un département maintenance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle cible Issue To le magasinier doit-il sélectionner sur la ligne Inventory Usage ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-010-A"><input type="radio" name="c1000-208-mcq-4-1-010" value="A" id="c1000-208-mcq-4-1-010-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">GL Account direct issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-B"><input type="radio" name="c1000-208-mcq-4-1-010" value="B" id="c1000-208-mcq-4-1-010-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Create a placeholder WO with status COMP and issue to it</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-C"><input type="radio" name="c1000-208-mcq-4-1-010" value="C" id="c1000-208-mcq-4-1-010-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Issue cannot be done without a WO or asset target</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-D"><input type="radio" name="c1000-208-mcq-4-1-010" value="D" id="c1000-208-mcq-4-1-010-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Use Adjust Current Balance to remove the items from inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-1-010-A"><input type="radio" name="c1000-208-mcq-4-1-010" value="A" id="c1000-208-mcq-4-1-010-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Issue direct sur un GL Account</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-B"><input type="radio" name="c1000-208-mcq-4-1-010" value="B" id="c1000-208-mcq-4-1-010-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Créer une WO placeholder au statut COMP et issuer dessus</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-C"><input type="radio" name="c1000-208-mcq-4-1-010" value="C" id="c1000-208-mcq-4-1-010-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">L'issue est impossible sans cible WO ou asset</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-1-010-D"><input type="radio" name="c1000-208-mcq-4-1-010" value="D" id="c1000-208-mcq-4-1-010-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Utiliser Adjust Current Balance pour retirer les items de l'inventaire</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
