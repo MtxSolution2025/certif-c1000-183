@@ -13896,11 +13896,11 @@ flowchart TD
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 24%</span>
       <span class="meta-pill">~10 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-4-2.svg" alt="C1000-208 lesson 4-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-4-2.svg" alt="Illustration de la leçon C1000-208 4-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-2" id="lt-c1000-208-4-2-c" class="lt-course" checked>
@@ -13915,9 +13915,9 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>How to <strong>return items</strong></li>
-  <li>How to <strong>return a rotating item</strong></li>
-  <li>How to <strong>add a found item back to Inventory</strong> through Inventory Usage</li>
+  <li>Comment <strong>retourner des items</strong></li>
+  <li>Comment <strong>retourner un rotating item</strong></li>
+  <li>Comment <strong>réintégrer un found item dans Inventory</strong> via Inventory Usage</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -13942,27 +13942,27 @@ flowchart TD
 <figure class="lesson-diagram" data-lesson="c1000-208-4-2-returns">
   <pre class="mermaid">
 flowchart TD
-  TRIGGER["Operator opens<br/><b>Inventory Usage</b> app<br/>(or Issues and Transfers RBA)"]:::start
-  WHICH{"<b>Which return scenario ?</b><br/>(STU §4.2)"}:::decision
+  TRIGGER["L'opérateur ouvre l'application<br/><b>Inventory Usage</b><br/>(ou la Issues and Transfers RBA)"]:::start
+  WHICH{"<b>Quel scénario de return ?</b><br/>(STU §4.2)"}:::decision
 
-  N1["Branch 1 — <b>Return Item</b><br/>Non-rotating item<br/>previously issued"]:::action
-  N2["Add a <b>Return type</b> row<br/>reference original issue<br/>enter qty to return"]:::action
-  N3["balance += qty<br/>WO actuals -= qty<br/>INVTRANS type=RETURN"]:::ok
+  N1["Branche 1 — <b>Return Item</b><br/>Item non-rotating<br/>précédemment issué"]:::action
+  N2["Ajouter une ligne <b>Return type</b><br/>référencer l'issue originale<br/>saisir la qty à retourner"]:::action
+  N3["balance += qty<br/>actuals WO -= qty<br/>INVTRANS type=RETURN"]:::ok
 
-  R1["Branch 2 — <b>Return Rotating Item</b><br/>(SAM Q7 — answer D)"]:::action
-  R2["Add a <b>Return type</b> row<br/>specify the <b>ASSETNUM</b><br/>at full value (NEW cost layer)"]:::action
-  R3["ASSETMOVE row<br/>+ balance += 1<br/>+ INVTRANS type=RETURN<br/>asset back in storeroom"]:::ok
+  R1["Branche 2 — <b>Return Rotating Item</b><br/>(SAM Q7 — réponse D)"]:::action
+  R2["Ajouter une ligne <b>Return type</b><br/>préciser l'<b>ASSETNUM</b><br/>à la pleine valeur (couche NEW cost)"]:::action
+  R3["Ligne ASSETMOVE<br/>+ balance += 1<br/>+ INVTRANS type=RETURN<br/>asset de retour au storeroom"]:::ok
 
-  F1["Branch 3 — <b>Add Found Item back</b><br/>previously written off / lost"]:::action
-  F2["Add a Return type row<br/>NO original issue reference<br/>audit note = found"]:::action
+  F1["Branche 3 — <b>Réintégrer un Found Item</b><br/>précédemment perdu / écrit off"]:::action
+  F2["Ajouter une ligne Return type<br/>SANS référence d'issue<br/>note audit = found"]:::action
   F3["balance += qty<br/>INVTRANS type=RETURN<br/>(reason code = FOUND)"]:::ok
 
-  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::endNode
+  END["Statut Inventory Usage<br/>= COMPLETE<br/>(chaîne audit MATUSETRANS)"]:::endNode
 
   TRIGGER --> WHICH
-  WHICH -- "Standard item return" --> N1 --> N2 --> N3 --> END
-  WHICH -- "Rotating item return" --> R1 --> R2 --> R3 --> END
-  WHICH -- "Add found item back" --> F1 --> F2 --> F3 --> END
+  WHICH -- "Return d'item standard" --> N1 --> N2 --> N3 --> END
+  WHICH -- "Return de rotating item" --> R1 --> R2 --> R3 --> END
+  WHICH -- "Réintégration d'un found item" --> F1 --> F2 --> F3 --> END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -14005,13 +14005,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A 5HP rotating motor was issued from the storeroom to a Work Order. The technician determines it is not needed and the motor must come back to inventory at its full carrying value, including any repair history.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which is the correct way to return a rotating item back to inventory at its full value?</div>
+  <div class="mcq-context">Un rotating motor 5HP a été issué du storeroom vers une Work Order. Le technicien détermine qu'il n'est pas nécessaire et le motor doit revenir à l'inventory à sa pleine valeur de portage, incluant l'historique de réparations.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la bonne façon de retourner un rotating item à l'inventory à sa pleine valeur ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-A"><input type="radio" name="c1000-208-mcq-4-2-001" value="A" id="c1000-208-mcq-4-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Create a new rotating asset record and assign it to the storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-B"><input type="radio" name="c1000-208-mcq-4-2-001" value="B" id="c1000-208-mcq-4-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Update the current balance in the Inventory Balances table in Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-C"><input type="radio" name="c1000-208-mcq-4-2-001" value="C" id="c1000-208-mcq-4-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Perform an asset move to transfer the rotating asset to a storeroom location</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-001-D"><input type="radio" name="c1000-208-mcq-4-2-001" value="D" id="c1000-208-mcq-4-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Create an Inventory Usage and enter a Return type row with the item and asset number</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-A"><input type="radio" name="c1000-208-mcq-4-2-001" value="A" id="c1000-208-mcq-4-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Créer un nouveau rotating asset record et l'assigner au storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-B"><input type="radio" name="c1000-208-mcq-4-2-001" value="B" id="c1000-208-mcq-4-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Mettre à jour la current balance dans la table Inventory Balances dans Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-001-C"><input type="radio" name="c1000-208-mcq-4-2-001" value="C" id="c1000-208-mcq-4-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Effectuer un asset move pour transférer le rotating asset vers une storeroom location</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-001-D"><input type="radio" name="c1000-208-mcq-4-2-001" value="D" id="c1000-208-mcq-4-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Créer une Inventory Usage et saisir une ligne Return type avec l'item et l'asset number</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14055,27 +14055,27 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-4-2-returns-c1000-208-mcq-4-2-001">
   <pre class="mermaid">
 flowchart TD
-  TRIGGER["Operator opens<br/><b>Inventory Usage</b> app<br/>(or Issues and Transfers RBA)"]:::start
-  WHICH{"<b>Which return scenario ?</b><br/>(STU §4.2)"}:::decision
+  TRIGGER["L'opérateur ouvre l'application<br/><b>Inventory Usage</b><br/>(ou la Issues and Transfers RBA)"]:::start
+  WHICH{"<b>Quel scénario de return ?</b><br/>(STU §4.2)"}:::decision
 
-  N1["Branch 1 — <b>Return Item</b><br/>Non-rotating item<br/>previously issued"]:::action
-  N2["Add a <b>Return type</b> row<br/>reference original issue<br/>enter qty to return"]:::action
-  N3["balance += qty<br/>WO actuals -= qty<br/>INVTRANS type=RETURN"]:::ok
+  N1["Branche 1 — <b>Return Item</b><br/>Item non-rotating<br/>précédemment issué"]:::action
+  N2["Ajouter une ligne <b>Return type</b><br/>référencer l'issue originale<br/>saisir la qty à retourner"]:::action
+  N3["balance += qty<br/>actuals WO -= qty<br/>INVTRANS type=RETURN"]:::ok
 
-  R1["Branch 2 — <b>Return Rotating Item</b><br/>(SAM Q7 — answer D)"]:::action
-  R2["Add a <b>Return type</b> row<br/>specify the <b>ASSETNUM</b><br/>at full value (NEW cost layer)"]:::action
-  R3["ASSETMOVE row<br/>+ balance += 1<br/>+ INVTRANS type=RETURN<br/>asset back in storeroom"]:::ok
+  R1["Branche 2 — <b>Return Rotating Item</b><br/>(SAM Q7 — réponse D)"]:::action
+  R2["Ajouter une ligne <b>Return type</b><br/>préciser l'<b>ASSETNUM</b><br/>à la pleine valeur (couche NEW cost)"]:::action
+  R3["Ligne ASSETMOVE<br/>+ balance += 1<br/>+ INVTRANS type=RETURN<br/>asset de retour au storeroom"]:::ok
 
-  F1["Branch 3 — <b>Add Found Item back</b><br/>previously written off / lost"]:::action
-  F2["Add a Return type row<br/>NO original issue reference<br/>audit note = found"]:::action
+  F1["Branche 3 — <b>Réintégrer un Found Item</b><br/>précédemment perdu / écrit off"]:::action
+  F2["Ajouter une ligne Return type<br/>SANS référence d'issue<br/>note audit = found"]:::action
   F3["balance += qty<br/>INVTRANS type=RETURN<br/>(reason code = FOUND)"]:::ok
 
-  END["Inventory Usage status<br/>= COMPLETE<br/>(MATUSETRANS audit chain)"]:::endNode
+  END["Statut Inventory Usage<br/>= COMPLETE<br/>(chaîne audit MATUSETRANS)"]:::endNode
 
   TRIGGER --> WHICH
-  WHICH -- "Standard item return" --> N1 --> N2 --> N3 --> END
-  WHICH -- "Rotating item return" --> R1 --> R2 --> R3 --> END
-  WHICH -- "Add found item back" --> F1 --> F2 --> F3 --> END
+  WHICH -- "Return d'item standard" --> N1 --> N2 --> N3 --> END
+  WHICH -- "Return de rotating item" --> R1 --> R2 --> R3 --> END
+  WHICH -- "Réintégration d'un found item" --> F1 --> F2 --> F3 --> END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -14101,13 +14101,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item was issued at $10/unit (AVGCOST at issue date). Three months later, AVGCOST has changed to $14/unit due to recent receipts. A technician returns 5 unused units.</div>
-  <div class="mcq-stem"><strong>Question :</strong> At what unit cost does the return reverse the WO cost?</div>
+  <div class="mcq-context">Un item a été issué à 10 $/unité (AVGCOST à la date d'issue). Trois mois plus tard, l'AVGCOST est passé à 14 $/unité à cause de réceptions récentes. Un technicien retourne 5 unités non utilisées.</div>
+  <div class="mcq-stem"><strong>Question :</strong> À quel coût unitaire le return inverse-t-il le coût WO ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-A"><input type="radio" name="c1000-208-mcq-4-2-002" value="A" id="c1000-208-mcq-4-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$14 (current AVGCOST)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-B"><input type="radio" name="c1000-208-mcq-4-2-002" value="B" id="c1000-208-mcq-4-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$12 (average of issue cost and current AVGCOST)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-002-C"><input type="radio" name="c1000-208-mcq-4-2-002" value="C" id="c1000-208-mcq-4-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">$10 (original issue cost)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-D"><input type="radio" name="c1000-208-mcq-4-2-002" value="D" id="c1000-208-mcq-4-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">User-entered cost on the return line</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-A"><input type="radio" name="c1000-208-mcq-4-2-002" value="A" id="c1000-208-mcq-4-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">14 $ (AVGCOST courant)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-B"><input type="radio" name="c1000-208-mcq-4-2-002" value="B" id="c1000-208-mcq-4-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">12 $ (moyenne du coût d'issue et de l'AVGCOST courant)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-002-C"><input type="radio" name="c1000-208-mcq-4-2-002" value="C" id="c1000-208-mcq-4-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">10 $ (coût d'issue d'origine)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-002-D"><input type="radio" name="c1000-208-mcq-4-2-002" value="D" id="c1000-208-mcq-4-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un coût saisi par l'utilisateur sur la ligne return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14166,13 +14166,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A WO was issued 10 units of a consumable. After completion, only 6 were used; the technician brings back 4 unused units to the storeroom.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the correct return procedure?</div>
+  <div class="mcq-context">Une WO a été issuée 10 unités d'un consommable. Après completion, seules 6 ont été utilisées ; le technicien rapporte 4 unités non utilisées au storeroom.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la procédure de return correcte ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-003-A"><input type="radio" name="c1000-208-mcq-4-2-003" value="A" id="c1000-208-mcq-4-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory Usage Return type row with qty 4 ; remaining 6 stay charged to the WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-B"><input type="radio" name="c1000-208-mcq-4-2-003" value="B" id="c1000-208-mcq-4-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Cancel the entire issue (10 units returned) and re-issue 6 units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-C"><input type="radio" name="c1000-208-mcq-4-2-003" value="C" id="c1000-208-mcq-4-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Adjust the WO Material Actuals to 6 units manually</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-D"><input type="radio" name="c1000-208-mcq-4-2-003" value="D" id="c1000-208-mcq-4-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Returns are not allowed on completed WOs</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-003-A"><input type="radio" name="c1000-208-mcq-4-2-003" value="A" id="c1000-208-mcq-4-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Une ligne Inventory Usage Return type avec qty 4 ; les 6 restantes restent imputées à la WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-B"><input type="radio" name="c1000-208-mcq-4-2-003" value="B" id="c1000-208-mcq-4-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Annuler l'issue entière (10 unités retournées) puis ré-issuer 6 unités</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-C"><input type="radio" name="c1000-208-mcq-4-2-003" value="C" id="c1000-208-mcq-4-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Ajuster manuellement les Material Actuals de la WO à 6 unités</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-003-D"><input type="radio" name="c1000-208-mcq-4-2-003" value="D" id="c1000-208-mcq-4-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les returns ne sont pas autorisés sur les WOs complétées</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14232,13 +14232,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper finds 8 units of an item lying on a workbench in the maintenance shop. Investigation shows these were issued 6 weeks ago to WO-512 (now closed) but never used.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the best Maximo procedure to bring these 8 units back into inventory?</div>
+  <div class="mcq-context">Un magasinier trouve 8 unités d'un item posées sur un établi dans l'atelier de maintenance. L'enquête montre qu'elles ont été issuées il y a 6 semaines à WO-512 (maintenant close) mais jamais utilisées.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la meilleure procédure Maximo pour réintégrer ces 8 unités dans l'inventaire ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-A"><input type="radio" name="c1000-208-mcq-4-2-004" value="A" id="c1000-208-mcq-4-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Adjust Current Balance + reason FOUND ; the WO-512 cost stays as-is</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-004-B"><input type="radio" name="c1000-208-mcq-4-2-004" value="B" id="c1000-208-mcq-4-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Inventory Usage Return type row referencing WO-512 ; if WO is closed, request reopening then return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-C"><input type="radio" name="c1000-208-mcq-4-2-004" value="C" id="c1000-208-mcq-4-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Discard them — too late for accounting symmetry</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-D"><input type="radio" name="c1000-208-mcq-4-2-004" value="D" id="c1000-208-mcq-4-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Receive them via a fictitious PO with cost 0</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-A"><input type="radio" name="c1000-208-mcq-4-2-004" value="A" id="c1000-208-mcq-4-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Adjust Current Balance + reason FOUND ; le coût de WO-512 reste tel quel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-004-B"><input type="radio" name="c1000-208-mcq-4-2-004" value="B" id="c1000-208-mcq-4-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une ligne Inventory Usage Return type référençant WO-512 ; si la WO est close, demander la réouverture puis retourner</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-C"><input type="radio" name="c1000-208-mcq-4-2-004" value="C" id="c1000-208-mcq-4-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les jeter — trop tard pour la symétrie comptable</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-004-D"><input type="radio" name="c1000-208-mcq-4-2-004" value="D" id="c1000-208-mcq-4-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les recevoir via un PO fictif avec coût 0</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14297,13 +14297,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A bearing was issued as condition NEW (rate 100%) at $200/unit. After partial use on a WO, the bearing is now in REFURB condition (rate 70%). The technician returns it.</div>
-  <div class="mcq-stem"><strong>Question :</strong> At what condition and value should the return be processed?</div>
+  <div class="mcq-context">Un bearing a été issué en condition NEW (rate 100%) à 200 $/unité. Après usage partiel sur une WO, le bearing est maintenant en condition REFURB (rate 70%). Le technicien le retourne.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Sous quelle condition et quelle valeur le return doit-il être traité ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-A"><input type="radio" name="c1000-208-mcq-4-2-005" value="A" id="c1000-208-mcq-4-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">As NEW at $200 — same condition as issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-B"><input type="radio" name="c1000-208-mcq-4-2-005" value="B" id="c1000-208-mcq-4-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Cannot be returned ; must be scrapped</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-005-C"><input type="radio" name="c1000-208-mcq-4-2-005" value="C" id="c1000-208-mcq-4-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">As REFURB at $140 (200 × 70%) — current condition with adjusted cost</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-D"><input type="radio" name="c1000-208-mcq-4-2-005" value="D" id="c1000-208-mcq-4-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Average of NEW and REFURB cost ($170)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-A"><input type="radio" name="c1000-208-mcq-4-2-005" value="A" id="c1000-208-mcq-4-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">En NEW à 200 $ — même condition qu'à l'issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-B"><input type="radio" name="c1000-208-mcq-4-2-005" value="B" id="c1000-208-mcq-4-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Ne peut pas être retourné ; doit être mis au rebut</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-005-C"><input type="radio" name="c1000-208-mcq-4-2-005" value="C" id="c1000-208-mcq-4-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">En REFURB à 140 $ (200 × 70%) — condition courante avec coût ajusté</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-005-D"><input type="radio" name="c1000-208-mcq-4-2-005" value="D" id="c1000-208-mcq-4-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Moyenne du coût NEW et REFURB (170 $)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14364,13 +14364,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A return reverses an issue of 5 units × $20 = $100 originally charged to WO-405.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What GL voucher pair does the return generate?</div>
+  <div class="mcq-context">Un return inverse une issue de 5 unités × 20 $ = 100 $ initialement imputée à WO-405.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle paire de vouchers GL le return génère-t-il ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-006-A"><input type="radio" name="c1000-208-mcq-4-2-006" value="A" id="c1000-208-mcq-4-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Dr Inventory $100 / Cr WO Cost $100</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-B"><input type="radio" name="c1000-208-mcq-4-2-006" value="B" id="c1000-208-mcq-4-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dr WO Cost $100 / Cr Inventory $100</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-C"><input type="radio" name="c1000-208-mcq-4-2-006" value="C" id="c1000-208-mcq-4-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Dr Inventory $100 / Cr Inventory Adjustment Gain $100</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-D"><input type="radio" name="c1000-208-mcq-4-2-006" value="D" id="c1000-208-mcq-4-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Dr Cash $100 / Cr WO Cost $100</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-006-A"><input type="radio" name="c1000-208-mcq-4-2-006" value="A" id="c1000-208-mcq-4-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Dr Inventory 100 $ / Cr WO Cost 100 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-B"><input type="radio" name="c1000-208-mcq-4-2-006" value="B" id="c1000-208-mcq-4-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dr WO Cost 100 $ / Cr Inventory 100 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-C"><input type="radio" name="c1000-208-mcq-4-2-006" value="C" id="c1000-208-mcq-4-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Dr Inventory 100 $ / Cr Inventory Adjustment Gain 100 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-006-D"><input type="radio" name="c1000-208-mcq-4-2-006" value="D" id="c1000-208-mcq-4-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Dr Cash 100 $ / Cr WO Cost 100 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -14428,13 +14428,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper wants to return items but cannot locate the original issue source in the system. The items came from « somewhere » in the past.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Can the storekeeper still process this as an Inventory Usage Return?</div>
+  <div class="mcq-context">Un magasinier veut retourner des items mais ne peut pas retrouver la source de l'issue d'origine dans le système. Les items viennent de « quelque part » dans le passé.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Le magasinier peut-il quand même traiter ceci comme une Inventory Usage Return ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-A"><input type="radio" name="c1000-208-mcq-4-2-007" value="A" id="c1000-208-mcq-4-2-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Yes, Maximo creates a synthetic issue retroactively to balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-007-B"><input type="radio" name="c1000-208-mcq-4-2-007" value="B" id="c1000-208-mcq-4-2-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">No — without an issue source, use Adjust Current Balance + reason FOUND instead</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-C"><input type="radio" name="c1000-208-mcq-4-2-007" value="C" id="c1000-208-mcq-4-2-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Yes, by leaving the WO field blank — Maximo treats it as orphan return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-D"><input type="radio" name="c1000-208-mcq-4-2-007" value="D" id="c1000-208-mcq-4-2-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Yes, by creating a fake WO with status COMP for the return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-A"><input type="radio" name="c1000-208-mcq-4-2-007" value="A" id="c1000-208-mcq-4-2-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Oui, Maximo crée une issue synthétique rétroactive pour équilibrer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-2-007-B"><input type="radio" name="c1000-208-mcq-4-2-007" value="B" id="c1000-208-mcq-4-2-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Non — sans source d'issue, utiliser Adjust Current Balance + reason FOUND à la place</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-C"><input type="radio" name="c1000-208-mcq-4-2-007" value="C" id="c1000-208-mcq-4-2-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Oui, en laissant le champ WO vide — Maximo traite comme un return orphelin</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-2-007-D"><input type="radio" name="c1000-208-mcq-4-2-007" value="D" id="c1000-208-mcq-4-2-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Oui, en créant une WO factice au statut COMP pour le return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
