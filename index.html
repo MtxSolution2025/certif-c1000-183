@@ -12016,11 +12016,11 @@ flowchart TD
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 15%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-3-2.svg" alt="C1000-208 lesson 3-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-3-2.svg" alt="Illustration de la leçon C1000-208 3-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-2" id="lt-c1000-208-3-2-c" class="lt-course" checked>
@@ -12035,11 +12035,11 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Adjust balance by <strong>physical count</strong></li>
-  <li>Adjust balance by <strong>current balance adjustment</strong></li>
+  <li>Ajuster la balance par <strong>physical count</strong></li>
+  <li>Ajuster la balance par <strong>current balance adjustment</strong></li>
   <li><strong>Zero Year-to-Date Quantities</strong></li>
-  <li>Adjust balance of a <strong>rotating item</strong></li>
-  <li>Explain the difference between <strong>available balance</strong> and other balances</li>
+  <li>Ajuster la balance d'un <strong>rotating item</strong></li>
+  <li>Expliquer la différence entre <strong>available balance</strong> et les autres balances</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -12065,28 +12065,28 @@ flowchart TD
 <figure class="lesson-diagram" data-lesson="c1000-208-3-2-adjust">
   <pre class="mermaid">
 flowchart TD
-  TRIGGER["Operator opens<br/>Inventory app<br/>(item × storeroom)"]:::start
-  CHOICE{"Which adjustment<br/><b>method</b> ?"}:::decision
+  TRIGGER["L'opérateur ouvre<br/>l'application Inventory<br/>(item × storeroom)"]:::start
+  CHOICE{"Quelle <b>méthode</b><br/>d'ajustement ?"}:::decision
 
-  PHYS["<b>Adjust by Physical Count</b><br/>Enter counted quantity<br/>balance := count_value<br/>(replaces current balance)"]:::action
-  PHYS_TX["INVADJ row<br/>type=PHYSCNT<br/>delta = count − balance_before"]:::ok
+  PHYS["<b>Adjust by Physical Count</b><br/>Saisir la quantité comptée<br/>balance := count_value<br/>(remplace la current balance)"]:::action
+  PHYS_TX["Ligne INVADJ<br/>type=PHYSCNT<br/>delta = count − balance_avant"]:::ok
 
-  CURR["<b>Adjust by Current Balance</b><br/>Enter the new balance directly<br/>(no count reference)<br/>balance := user_value"]:::action
-  CURR_TX["INVADJ row<br/>type=CURBAL<br/>delta = user_value − balance_before"]:::ok
+  CURR["<b>Adjust by Current Balance</b><br/>Saisir la nouvelle balance directement<br/>(sans comptage)<br/>balance := valeur_utilisateur"]:::action
+  CURR_TX["Ligne INVADJ<br/>type=CURBAL<br/>delta = valeur_utilisateur − balance_avant"]:::ok
 
-  YTD["<b>Zero Year-to-Date Quantities</b><br/>Reset YTD usage / receipt counters<br/>current balance UNCHANGED<br/>(period-end housekeeping)"]:::action
-  YTD_TX["INVTRANS row<br/>type=ZEROYTD<br/>no balance delta"]:::warn
+  YTD["<b>Zero Year-to-Date Quantities</b><br/>Remet à zéro les compteurs YTD usage / receipt<br/>current balance INCHANGÉE<br/>(housekeeping de fin de période)"]:::action
+  YTD_TX["Ligne INVTRANS<br/>type=ZEROYTD<br/>aucun delta de balance"]:::warn
 
-  ROT["<b>Adjust Rotating Item</b><br/>Move ASSETNUM to / from storeroom<br/>balance derived from asset count<br/>(rotating = serialized 1-per-asset)"]:::action
-  ROT_TX["ASSETMOVE row<br/>+ INVTRANS audit<br/>delta = ±1 per asset"]:::ok
+  ROT["<b>Adjust Rotating Item</b><br/>Déplacer un ASSETNUM vers/depuis le storeroom<br/>balance déduite du nombre d'assets<br/>(rotating = sérialisé 1-par-asset)"]:::action
+  ROT_TX["Ligne ASSETMOVE<br/>+ audit INVTRANS<br/>delta = ±1 par asset"]:::ok
 
-  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::endNode
+  END["Audit trail journalisé<br/>(MATRECTRANS / INVTRANS<br/>chaînés par Item × Storeroom)"]:::endNode
 
   TRIGGER --> CHOICE
-  CHOICE -- "Physical count cycle" --> PHYS
-  CHOICE -- "Direct correction" --> CURR
-  CHOICE -- "Period-end YTD reset" --> YTD
-  CHOICE -- "Rotating asset move" --> ROT
+  CHOICE -- "Cycle de physical count" --> PHYS
+  CHOICE -- "Correction directe" --> CURR
+  CHOICE -- "Reset YTD fin de période" --> YTD
+  CHOICE -- "Mouvement d'asset rotating" --> ROT
   PHYS --> PHYS_TX --> END
   CURR --> CURR_TX --> END
   YTD --> YTD_TX --> END
@@ -12135,8 +12135,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item shows: Current Balance 100, Hard Reserved 30, Soft Reserved 15, Staged 10, On Order 20.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the Available Balance of this item?</div>
+  <div class="mcq-context">Un item affiche : Current Balance 100, Hard Reserved 30, Soft Reserved 15, Staged 10, On Order 20.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'Available Balance de cet item ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-001-A"><input type="radio" name="c1000-208-mcq-3-2-001" value="A" id="c1000-208-mcq-3-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">100</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-001-B"><input type="radio" name="c1000-208-mcq-3-2-001" value="B" id="c1000-208-mcq-3-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">45</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -12186,28 +12186,28 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-3-2-adjust-c1000-208-mcq-3-2-001">
   <pre class="mermaid">
 flowchart TD
-  TRIGGER["Operator opens<br/>Inventory app<br/>(item × storeroom)"]:::start
-  CHOICE{"Which adjustment<br/><b>method</b> ?"}:::decision
+  TRIGGER["L'opérateur ouvre<br/>l'application Inventory<br/>(item × storeroom)"]:::start
+  CHOICE{"Quelle <b>méthode</b><br/>d'ajustement ?"}:::decision
 
-  PHYS["<b>Adjust by Physical Count</b><br/>Enter counted quantity<br/>balance := count_value<br/>(replaces current balance)"]:::action
-  PHYS_TX["INVADJ row<br/>type=PHYSCNT<br/>delta = count − balance_before"]:::ok
+  PHYS["<b>Adjust by Physical Count</b><br/>Saisir la quantité comptée<br/>balance := count_value<br/>(remplace la current balance)"]:::action
+  PHYS_TX["Ligne INVADJ<br/>type=PHYSCNT<br/>delta = count − balance_avant"]:::ok
 
-  CURR["<b>Adjust by Current Balance</b><br/>Enter the new balance directly<br/>(no count reference)<br/>balance := user_value"]:::action
-  CURR_TX["INVADJ row<br/>type=CURBAL<br/>delta = user_value − balance_before"]:::ok
+  CURR["<b>Adjust by Current Balance</b><br/>Saisir la nouvelle balance directement<br/>(sans comptage)<br/>balance := valeur_utilisateur"]:::action
+  CURR_TX["Ligne INVADJ<br/>type=CURBAL<br/>delta = valeur_utilisateur − balance_avant"]:::ok
 
-  YTD["<b>Zero Year-to-Date Quantities</b><br/>Reset YTD usage / receipt counters<br/>current balance UNCHANGED<br/>(period-end housekeeping)"]:::action
-  YTD_TX["INVTRANS row<br/>type=ZEROYTD<br/>no balance delta"]:::warn
+  YTD["<b>Zero Year-to-Date Quantities</b><br/>Remet à zéro les compteurs YTD usage / receipt<br/>current balance INCHANGÉE<br/>(housekeeping de fin de période)"]:::action
+  YTD_TX["Ligne INVTRANS<br/>type=ZEROYTD<br/>aucun delta de balance"]:::warn
 
-  ROT["<b>Adjust Rotating Item</b><br/>Move ASSETNUM to / from storeroom<br/>balance derived from asset count<br/>(rotating = serialized 1-per-asset)"]:::action
-  ROT_TX["ASSETMOVE row<br/>+ INVTRANS audit<br/>delta = ±1 per asset"]:::ok
+  ROT["<b>Adjust Rotating Item</b><br/>Déplacer un ASSETNUM vers/depuis le storeroom<br/>balance déduite du nombre d'assets<br/>(rotating = sérialisé 1-par-asset)"]:::action
+  ROT_TX["Ligne ASSETMOVE<br/>+ audit INVTRANS<br/>delta = ±1 par asset"]:::ok
 
-  END["Audit trail logged<br/>(MATRECTRANS / INVTRANS<br/>chained per Item × Storeroom)"]:::endNode
+  END["Audit trail journalisé<br/>(MATRECTRANS / INVTRANS<br/>chaînés par Item × Storeroom)"]:::endNode
 
   TRIGGER --> CHOICE
-  CHOICE -- "Physical count cycle" --> PHYS
-  CHOICE -- "Direct correction" --> CURR
-  CHOICE -- "Period-end YTD reset" --> YTD
-  CHOICE -- "Rotating asset move" --> ROT
+  CHOICE -- "Cycle de physical count" --> PHYS
+  CHOICE -- "Correction directe" --> CURR
+  CHOICE -- "Reset YTD fin de période" --> YTD
+  CHOICE -- "Mouvement d'asset rotating" --> ROT
   PHYS --> PHYS_TX --> END
   CURR --> CURR_TX --> END
   YTD --> YTD_TX --> END
@@ -12239,13 +12239,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom clerk just finished cycle counting bin A12 and recorded 87 units; the system shows 92.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action records the physical count result without immediately altering the financial Current Balance?</div>
+  <div class="mcq-context">Un magasinier vient de terminer le cycle count du bin A12 et a enregistré 87 unités ; le système affiche 92.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo enregistre le résultat du physical count sans altérer immédiatement la Current Balance financière ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-002-A"><input type="radio" name="c1000-208-mcq-3-2-002" value="A" id="c1000-208-mcq-3-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Adjust Physical Count — populates the Physical Count field; reconciliation is a separate step</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-B"><input type="radio" name="c1000-208-mcq-3-2-002" value="B" id="c1000-208-mcq-3-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">More Actions &gt; Adjust Current Balance — directly overrides system balance to 87</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-C"><input type="radio" name="c1000-208-mcq-3-2-002" value="C" id="c1000-208-mcq-3-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Inventory Usage &gt; Issue 5 units to a dummy WO to align balances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-D"><input type="radio" name="c1000-208-mcq-3-2-002" value="D" id="c1000-208-mcq-3-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Edit the Current Balance field directly on the Inventory record</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-002-A"><input type="radio" name="c1000-208-mcq-3-2-002" value="A" id="c1000-208-mcq-3-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Adjust Physical Count — alimente le champ Physical Count ; la réconciliation est une étape séparée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-B"><input type="radio" name="c1000-208-mcq-3-2-002" value="B" id="c1000-208-mcq-3-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">More Actions &gt; Adjust Current Balance — écrase directement la balance système à 87</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-C"><input type="radio" name="c1000-208-mcq-3-2-002" value="C" id="c1000-208-mcq-3-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Inventory Usage &gt; Issue 5 unités à une WO factice pour aligner les balances</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-002-D"><input type="radio" name="c1000-208-mcq-3-2-002" value="D" id="c1000-208-mcq-3-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Modifier directement le champ Current Balance sur le record Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12300,12 +12300,12 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An inventory analyst prepares for the new fiscal year and needs to reset year-to-date issued and received counters across all storeroom items so the upcoming ABC analysis starts from zero.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action accomplishes this in one operation?</div>
+  <div class="mcq-context">Un analyste inventaire prépare le nouvel exercice fiscal et doit remettre à zéro les compteurs year-to-date issued et received sur tous les items du storeroom, pour que la prochaine ABC analysis démarre à zéro.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo fait cela en une seule opération ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-A"><input type="radio" name="c1000-208-mcq-3-2-003" value="A" id="c1000-208-mcq-3-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Run an SQL UPDATE on INVENTORY.YTDISSUE = 0</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-B"><input type="radio" name="c1000-208-mcq-3-2-003" value="B" id="c1000-208-mcq-3-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance to zero on every item, then re-receive stock</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-C"><input type="radio" name="c1000-208-mcq-3-2-003" value="C" id="c1000-208-mcq-3-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Run the ABC Analysis Report with the « Reset » flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-A"><input type="radio" name="c1000-208-mcq-3-2-003" value="A" id="c1000-208-mcq-3-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Exécuter un UPDATE SQL sur INVENTORY.YTDISSUE = 0</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-B"><input type="radio" name="c1000-208-mcq-3-2-003" value="B" id="c1000-208-mcq-3-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance à zéro sur chaque item, puis ré-réceptionner le stock</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-003-C"><input type="radio" name="c1000-208-mcq-3-2-003" value="C" id="c1000-208-mcq-3-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Exécuter le rapport ABC Analysis avec le flag « Reset »</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-003-D"><input type="radio" name="c1000-208-mcq-3-2-003" value="D" id="c1000-208-mcq-3-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">More Actions &gt; Zero Year-to-Date Quantities</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
@@ -12361,13 +12361,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom holds 4 rotating motors of model MOT-50HP (serial numbers SN-A, SN-B, SN-C, SN-D). A physical inventory finds only 3 motors physically present.</div>
-  <div class="mcq-stem"><strong>Question :</strong> How does the storekeeper adjust the rotating item balance to reflect the missing motor?</div>
+  <div class="mcq-context">Un storeroom détient 4 rotating motors du modèle MOT-50HP (numéros de série SN-A, SN-B, SN-C, SN-D). Un inventaire physique ne trouve que 3 motors physiquement présents.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Comment le magasinier ajuste-t-il la balance du rotating item pour refléter le motor manquant ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-A"><input type="radio" name="c1000-208-mcq-3-2-004" value="A" id="c1000-208-mcq-3-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Adjust Physical Count to 3 by typing « 3 » in the quantity field</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-004-B"><input type="radio" name="c1000-208-mcq-3-2-004" value="B" id="c1000-208-mcq-3-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Physical Count and select which specific serial(s) are missing or present; the qty derives from the serial selection</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-C"><input type="radio" name="c1000-208-mcq-3-2-004" value="C" id="c1000-208-mcq-3-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Delete one asset record from the Assets application</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-D"><input type="radio" name="c1000-208-mcq-3-2-004" value="D" id="c1000-208-mcq-3-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issue 1 motor to a dummy WO to reduce balance from 4 to 3</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-A"><input type="radio" name="c1000-208-mcq-3-2-004" value="A" id="c1000-208-mcq-3-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Adjust Physical Count à 3 en tapant « 3 » dans le champ quantité</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-004-B"><input type="radio" name="c1000-208-mcq-3-2-004" value="B" id="c1000-208-mcq-3-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Physical Count en sélectionnant quel(s) serial(s) sont manquants ou présents ; la qty découle de la sélection des serials</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-C"><input type="radio" name="c1000-208-mcq-3-2-004" value="C" id="c1000-208-mcq-3-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Supprimer un asset record dans l'application Assets</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-004-D"><input type="radio" name="c1000-208-mcq-3-2-004" value="D" id="c1000-208-mcq-3-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issuer 1 motor à une WO factice pour faire passer la balance de 4 à 3</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12422,13 +12422,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner asks why she can only reserve 60 units of a part for a WO when the inventory record shows 100 in Current Balance.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which is the correct explanation of the difference between Current Balance and Available Balance?</div>
+  <div class="mcq-context">Une planificatrice demande pourquoi elle ne peut réserver que 60 unités d'une pièce pour une WO alors que l'inventory record affiche 100 en Current Balance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'explication correcte de la différence entre Current Balance et Available Balance ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-A"><input type="radio" name="c1000-208-mcq-3-2-005" value="A" id="c1000-208-mcq-3-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Current Balance is what is on order; Available Balance is what is in stock</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-B"><input type="radio" name="c1000-208-mcq-3-2-005" value="B" id="c1000-208-mcq-3-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Current Balance includes the staging bin; Available Balance excludes it</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-005-C"><input type="radio" name="c1000-208-mcq-3-2-005" value="C" id="c1000-208-mcq-3-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Current Balance is the physical/system stock total; Available Balance is Current minus Hard Reservations and Staged quantities</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-D"><input type="radio" name="c1000-208-mcq-3-2-005" value="D" id="c1000-208-mcq-3-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Current Balance is monthly aggregated; Available Balance is real-time</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-A"><input type="radio" name="c1000-208-mcq-3-2-005" value="A" id="c1000-208-mcq-3-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Current Balance = ce qui est en commande ; Available Balance = ce qui est en stock</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-B"><input type="radio" name="c1000-208-mcq-3-2-005" value="B" id="c1000-208-mcq-3-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Current Balance inclut le staging bin ; Available Balance l'exclut</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-005-C"><input type="radio" name="c1000-208-mcq-3-2-005" value="C" id="c1000-208-mcq-3-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Current Balance = total stock physique/système ; Available Balance = Current moins les Hard Reservations et les quantités Staged</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-005-D"><input type="radio" name="c1000-208-mcq-3-2-005" value="D" id="c1000-208-mcq-3-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Current Balance est agrégé mensuellement ; Available Balance est en temps réel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -12483,13 +12483,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A maintenance technician finds 5 unrecorded units of an item in a back-corner shelf during a cleanup. They were left over from a project six months ago.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which combination of action + reason code is the correct way to bring these 5 units back into the system inventory?</div>
+  <div class="mcq-context">Un technicien de maintenance trouve 5 unités non enregistrées d'un item sur une étagère du fond pendant un nettoyage. Elles étaient restées d'un projet d'il y a six mois.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle combinaison action + reason code est la bonne pour réintégrer ces 5 unités dans l'inventory système ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-A"><input type="radio" name="c1000-208-mcq-3-2-006" value="A" id="c1000-208-mcq-3-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Receive the units via a fictitious PO with reason code RECEIPT</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-006-B"><input type="radio" name="c1000-208-mcq-3-2-006" value="B" id="c1000-208-mcq-3-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance + reason code FOUND — direct one-step adjustment with GL Inventory Adjustment Gain</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-C"><input type="radio" name="c1000-208-mcq-3-2-006" value="C" id="c1000-208-mcq-3-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Issue −5 units with reason code CORRECTION</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-D"><input type="radio" name="c1000-208-mcq-3-2-006" value="D" id="c1000-208-mcq-3-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Physical Count with no reason code — the system tags variance automatically</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-A"><input type="radio" name="c1000-208-mcq-3-2-006" value="A" id="c1000-208-mcq-3-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Réceptionner les unités via un PO fictif avec reason code RECEIPT</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-2-006-B"><input type="radio" name="c1000-208-mcq-3-2-006" value="B" id="c1000-208-mcq-3-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance + reason code FOUND — ajustement direct en une étape avec GL Inventory Adjustment Gain</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-C"><input type="radio" name="c1000-208-mcq-3-2-006" value="C" id="c1000-208-mcq-3-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Issuer −5 unités avec reason code CORRECTION</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-2-006-D"><input type="radio" name="c1000-208-mcq-3-2-006" value="D" id="c1000-208-mcq-3-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Physical Count sans reason code — le système marque la variance automatiquement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
