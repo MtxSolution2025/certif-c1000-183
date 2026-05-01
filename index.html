@@ -16689,7 +16689,7 @@ graph LR
 <section class="lesson" id="c1000-208-lesson-5-2">
   <div class="breadcrumb">Section 5 <span class="brand-dot">·</span> 5.2</div>
   <div class="lesson-header">
-    <h1>Commodity Groups & Codes</h1>
+    <h1>Commodity Groups et codes</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 7%</span>
       <span class="meta-pill">~5 questions</span>
@@ -16697,7 +16697,7 @@ graph LR
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-5-2.svg" alt="C1000-208 lesson 5-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-5-2.svg" alt="Illustration de la leçon C1000-208 5-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-5-2" id="lt-c1000-208-5-2-c" class="lt-course" checked>
@@ -16711,45 +16711,45 @@ graph LR
         <!-- ============ LESSON c1000-208-5-2 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Reference items to a <strong>Commodity Group</strong> and a <strong>Commodity Code</strong> (2-level hierarchy)</li>
-  <li>Maintain commodity hierarchy via the <strong>Add/Modify Commodity Codes</strong> action</li>
-  <li>Understand how <strong>GL accounts</strong> can be related to commodity codes for spend categorization</li>
-  <li>Apply commodity codes against <strong>service-type items</strong> (calibration, contracts, inspections)</li>
+  <li>Référencer les items à un <strong>Commodity Group</strong> et à un <strong>Commodity Code</strong> (hiérarchie 2 niveaux)</li>
+  <li>Maintenir la hiérarchie commodity via l'action <strong>Add/Modify Commodity Codes</strong></li>
+  <li>Comprendre comment les <strong>comptes GL</strong> peuvent être reliés aux commodity codes pour la catégorisation des dépenses</li>
+  <li>Appliquer des commodity codes aux <strong>service-type items</strong> (calibration, contrats, inspections)</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Commodity hierarchy</strong> — Maximo's classification model uses 2 levels: <em>Commodity Group</em> (the parent, e.g. ELEC) and <em>Commodity Code</em> (the child, e.g. ELEC-MOTOR). Both are referenced from the Item Master record.</li>
-  <li><strong>Action path</strong> — <em>Item Master → More Actions → Add/Modify Commodity Codes</em> (or via Inventory app for cross-item assignment).</li>
-  <li><strong>Spend analysis</strong> — by aggregating PO and invoice lines by commodity code, procurement teams identify duplicate suppliers, negotiate volume discounts, and consolidate buying.</li>
-  <li><strong>GL account mapping</strong> — Commodity Group and/or Commodity can be associated with default GL accounts (Inventory, Expense, COGS). This automates the GL coding on PR/PO lines: when a buyer adds an item with commodity ELEC-MOTOR, the default expense account is filled automatically.</li>
-  <li><strong>UNSPSC alignment</strong> — Maximo's 2-level model is a simplified projection of the United Nations Standard Products and Services Code (4 levels: Segment, Family, Class, Commodity). Most organizations map UNSPSC Class to Maximo Commodity Group and UNSPSC Commodity to Maximo Commodity Code [EOTRAG Query 7].</li>
-  <li><strong>Service-type items use commodity codes too</strong> — a "Calibration Service" item is classified under e.g. SERV / SERV-CAL, enabling vendor-side restriction (only labs can quote on SERV-CAL POs).</li>
-  <li><strong>Vendor (Companies) commodity restriction</strong> — Companies can be linked to the commodities they supply, driving auto-suggestions on PRs and locking out non-qualified vendors.</li>
-  <li><strong>Duplicate-item detection</strong> — items in the same commodity code with similar descriptions are flagged as candidates for harmonization (master-data quality).</li>
-  <li><strong>Why two levels not four</strong> — IBM chose simplicity over UNSPSC's 4 levels because empirical data shows 80% of spend analysis is meaningful at the Class+Commodity level. Organizations needing finer granularity use external MDM tools (Verdantis Harmonize, SwainSmith) [EOTRAG Query 7].</li>
-  <li><strong>Reporting and analytics</strong> — most "spend by category" KPIs use commodity codes as the dimension. Without them, only ITEMNUM-level aggregation is possible — useless for category management.</li>
-  <li><strong>Tax codes</strong> — some jurisdictions tie tax rates to commodity codes (e.g. PST exemptions for "lubricants for industrial use"). Maximo supports tax code assignment per commodity.</li>
+  <li><strong>Hiérarchie commodity</strong> — Le modèle de classification Maximo utilise 2 niveaux : <em>Commodity Group</em> (le parent, ex. ELEC) et <em>Commodity Code</em> (l'enfant, ex. ELEC-MOTOR). Les deux sont référencés depuis le record Item Master.</li>
+  <li><strong>Path d'action</strong> — <em>Item Master → More Actions → Add/Modify Commodity Codes</em> (ou via l'application Inventory pour assignation cross-item).</li>
+  <li><strong>Spend analysis</strong> — en agrégeant les lignes PO et invoice par commodity code, les équipes procurement identifient les fournisseurs dupliqués, négocient des volume discounts et consolident les achats.</li>
+  <li><strong>Mapping GL account</strong> — le Commodity Group et/ou le Commodity peuvent être associés à des comptes GL par défaut (Inventory, Expense, COGS). Cela automatise le GL coding sur les lignes PR/PO : quand un acheteur ajoute un item avec commodity ELEC-MOTOR, le compte expense par défaut est rempli automatiquement.</li>
+  <li><strong>Alignement UNSPSC</strong> — le modèle 2 niveaux Maximo est une projection simplifiée du UNSPSC (United Nations Standard Products and Services Code, 4 niveaux : Segment, Family, Class, Commodity). La plupart des organisations mappent UNSPSC Class au Maximo Commodity Group et UNSPSC Commodity au Maximo Commodity Code [EOTRAG Query 7].</li>
+  <li><strong>Les service-type items utilisent aussi les commodity codes</strong> — un item « Calibration Service » est classé sous, par ex., SERV / SERV-CAL, permettant la restriction côté vendor (seuls les labos peuvent quoter des POs SERV-CAL).</li>
+  <li><strong>Restriction commodity côté Vendor (Companies)</strong> — les Companies peuvent être liées aux commodities qu'elles fournissent, pilotant les auto-suggestions sur les PRs et bloquant les vendors non qualifiés.</li>
+  <li><strong>Détection des items dupliqués</strong> — les items dans le même commodity code avec des descriptions similaires sont flaggés comme candidats à l'harmonisation (qualité master-data).</li>
+  <li><strong>Pourquoi deux niveaux et pas quatre</strong> — IBM a choisi la simplicité plutôt que les 4 niveaux UNSPSC car les données empiriques montrent que 80% de la spend analysis est utile au niveau Class+Commodity. Les organisations nécessitant une granularité plus fine utilisent des outils MDM externes (Verdantis Harmonize, SwainSmith) [EOTRAG Query 7].</li>
+  <li><strong>Reporting et analytics</strong> — la plupart des KPI « spend by category » utilisent les commodity codes comme dimension. Sans eux, seule l'agrégation au niveau ITEMNUM est possible — inutile pour le category management.</li>
+  <li><strong>Codes de taxe</strong> — certaines juridictions lient les taux de taxe aux commodity codes (ex. exemptions PST pour les « lubrifiants à usage industriel »). Maximo supporte l'assignation de tax code par commodity.</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-5-2-commodity">
   <pre class="mermaid">
 graph TD
-  ROOT["<b>Commodity hierarchy</b><br/>2 levels FIXED<br/>(STU §5.2)"]:::root
+  ROOT["<b>Hiérarchie Commodity</b><br/>2 niveaux FIXÉS<br/>(STU §5.2)"]:::root
 
-  ELEC["<b>Commodity Group</b><br/>ELEC — Electrical"]:::group
-  MECH["<b>Commodity Group</b><br/>MECH — Mechanical"]:::group
+  ELEC["<b>Commodity Group</b><br/>ELEC — Électrique"]:::group
+  MECH["<b>Commodity Group</b><br/>MECH — Mécanique"]:::group
   INSTR["<b>Commodity Group</b><br/>INSTR — Instrumentation"]:::group
 
-  EM["Code: ELEC-MOTOR<br/>GL 6210"]:::code
-  EB["Code: ELEC-BEARING<br/>GL 6220"]:::code
-  MP["Code: MECH-PUMP<br/>GL 6310"]:::code
-  MV["Code: MECH-VALVE<br/>GL 6320"]:::code
-  IT["Code: INSTR-TRANS<br/>GL 6410"]:::code
+  EM["Code : ELEC-MOTOR<br/>GL 6210"]:::code
+  EB["Code : ELEC-BEARING<br/>GL 6220"]:::code
+  MP["Code : MECH-PUMP<br/>GL 6310"]:::code
+  MV["Code : MECH-VALVE<br/>GL 6320"]:::code
+  IT["Code : INSTR-TRANS<br/>GL 6410"]:::code
 
-  ITEM["Item Master record<br/>references<br/>Commodity Group + Code"]:::item
-  POPR["PR / PO / Issue<br/>auto-pulls<br/>GL account"]:::flow
+  ITEM["Record Item Master<br/>référence<br/>Commodity Group + Code"]:::item
+  POPR["PR / PO / Issue<br/>récupère auto<br/>le GL account"]:::flow
 
   ROOT --> ELEC
   ROOT --> MECH
@@ -16776,18 +16776,18 @@ graph TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>Commodity Group vs Commodity Code confusion</strong> — Candidates often think these are interchangeable or that one is optional. They are distinct, hierarchical, and both are typically populated.</p>
+  <p><strong>Confusion Commodity Group vs Commodity Code</strong> — Les candidats pensent souvent qu'ils sont interchangeables ou que l'un est optionnel. Ils sont distincts, hiérarchiques, et les deux sont typiquement renseignés.</p>
   <ul>
-    <li>Trap: assuming you cannot assign commodity codes to service items. False — services use commodities just like physical items.</li>
-    <li>Trap: thinking commodity codes drive ABC analysis. They don't — ABC is consumption-value-based, separately computed.</li>
-    <li>Trap: confusing Commodity Group with Item Set or Storeroom. They are different abstractions: Item Set groups item records; Storeroom groups locations; Commodity Group classifies items by category.</li>
+    <li>Piège : supposer qu'on ne peut pas assigner de commodity codes aux service items. Faux — les services utilisent les commodities comme les items physiques.</li>
+    <li>Piège : penser que les commodity codes pilotent l'ABC analysis. Ils ne le font pas — l'ABC est basée sur la valeur de consommation, calculée séparément.</li>
+    <li>Piège : confondre Commodity Group avec Item Set ou Storeroom. Ce sont des abstractions différentes : l'Item Set groupe des records d'item ; le Storeroom groupe des locations ; le Commodity Group classe les items par catégorie.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. What is the relationship between Commodity Group and Commodity Code in Maximo?</p>
-  <details><summary>Afficher la réponse</summary><p>2-level hierarchy: Commodity Group is the parent (broad category like ELEC = Electrical), Commodity Code is the child (specific like ELEC-MOTOR = Electric motor). An item references both fields. Maintained via <em>Add/Modify Commodity Codes</em> action.</p></details>
+  <p>Q. Quelle est la relation entre Commodity Group et Commodity Code dans Maximo ?</p>
+  <details><summary>Afficher la réponse</summary><p>Hiérarchie à 2 niveaux : Commodity Group est le parent (catégorie large comme ELEC = Électrique), Commodity Code est l'enfant (spécifique comme ELEC-MOTOR = moteur électrique). Un item référence les deux champs. Maintenue via l'action <em>Add/Modify Commodity Codes</em>.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -16804,13 +16804,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A buyer is reviewing the Item Master for a new electric motor.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the Commodity hierarchy in Maximo consist of?</div>
+  <div class="mcq-context">Un acheteur passe en revue l'Item Master pour un nouveau moteur électrique.</div>
+  <div class="mcq-stem"><strong>Question :</strong> En quoi consiste la hiérarchie Commodity dans Maximo ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-A"><input type="radio" name="c1000-208-mcq-5-2-001" value="A" id="c1000-208-mcq-5-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">A 4-level hierarchy mirroring UNSPSC Segment / Family / Class / Commodity</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-B"><input type="radio" name="c1000-208-mcq-5-2-001" value="B" id="c1000-208-mcq-5-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A flat list of codes with no hierarchy</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-001-C"><input type="radio" name="c1000-208-mcq-5-2-001" value="C" id="c1000-208-mcq-5-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A 2-level hierarchy: Commodity Group (parent) and Commodity Code (child)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-D"><input type="radio" name="c1000-208-mcq-5-2-001" value="D" id="c1000-208-mcq-5-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A 3-level hierarchy: Group, Subgroup, Item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-A"><input type="radio" name="c1000-208-mcq-5-2-001" value="A" id="c1000-208-mcq-5-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Une hiérarchie 4 niveaux miroir de UNSPSC Segment / Family / Class / Commodity</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-B"><input type="radio" name="c1000-208-mcq-5-2-001" value="B" id="c1000-208-mcq-5-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une liste plate de codes sans hiérarchie</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-001-C"><input type="radio" name="c1000-208-mcq-5-2-001" value="C" id="c1000-208-mcq-5-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une hiérarchie à 2 niveaux : Commodity Group (parent) et Commodity Code (enfant)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-001-D"><input type="radio" name="c1000-208-mcq-5-2-001" value="D" id="c1000-208-mcq-5-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Une hiérarchie à 3 niveaux : Group, Subgroup, Item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16851,20 +16851,20 @@ graph TD
         <figure class="lesson-diagram" data-lesson="c1000-208-5-2-commodity-c1000-208-mcq-5-2-001">
   <pre class="mermaid">
 graph TD
-  ROOT["<b>Commodity hierarchy</b><br/>2 levels FIXED<br/>(STU §5.2)"]:::root
+  ROOT["<b>Hiérarchie Commodity</b><br/>2 niveaux FIXÉS<br/>(STU §5.2)"]:::root
 
-  ELEC["<b>Commodity Group</b><br/>ELEC — Electrical"]:::group
-  MECH["<b>Commodity Group</b><br/>MECH — Mechanical"]:::group
+  ELEC["<b>Commodity Group</b><br/>ELEC — Électrique"]:::group
+  MECH["<b>Commodity Group</b><br/>MECH — Mécanique"]:::group
   INSTR["<b>Commodity Group</b><br/>INSTR — Instrumentation"]:::group
 
-  EM["Code: ELEC-MOTOR<br/>GL 6210"]:::code
-  EB["Code: ELEC-BEARING<br/>GL 6220"]:::code
-  MP["Code: MECH-PUMP<br/>GL 6310"]:::code
-  MV["Code: MECH-VALVE<br/>GL 6320"]:::code
-  IT["Code: INSTR-TRANS<br/>GL 6410"]:::code
+  EM["Code : ELEC-MOTOR<br/>GL 6210"]:::code
+  EB["Code : ELEC-BEARING<br/>GL 6220"]:::code
+  MP["Code : MECH-PUMP<br/>GL 6310"]:::code
+  MV["Code : MECH-VALVE<br/>GL 6320"]:::code
+  IT["Code : INSTR-TRANS<br/>GL 6410"]:::code
 
-  ITEM["Item Master record<br/>references<br/>Commodity Group + Code"]:::item
-  POPR["PR / PO / Issue<br/>auto-pulls<br/>GL account"]:::flow
+  ITEM["Record Item Master<br/>référence<br/>Commodity Group + Code"]:::item
+  POPR["PR / PO / Issue<br/>récupère auto<br/>le GL account"]:::flow
 
   ROOT --> ELEC
   ROOT --> MECH
@@ -16905,13 +16905,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom administrator wants to add a new commodity group "INSTR" (Instrumentation) along with three child codes.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action is used to maintain the commodity hierarchy?</div>
+  <div class="mcq-context">Un administrateur de storeroom veut ajouter un nouveau commodity group « INSTR » (Instrumentation) ainsi que trois codes enfants.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo sert à maintenir la hiérarchie commodity ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-002-A"><input type="radio" name="c1000-208-mcq-5-2-002" value="A" id="c1000-208-mcq-5-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Manage Commodity Hierarchy</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-002-B"><input type="radio" name="c1000-208-mcq-5-2-002" value="B" id="c1000-208-mcq-5-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Add/Modify Commodity Codes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-002-C"><input type="radio" name="c1000-208-mcq-5-2-002" value="C" id="c1000-208-mcq-5-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Configure Item Categories</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-002-D"><input type="radio" name="c1000-208-mcq-5-2-002" value="D" id="c1000-208-mcq-5-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Set Item Classification (in Organizations app)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-002-D"><input type="radio" name="c1000-208-mcq-5-2-002" value="D" id="c1000-208-mcq-5-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Set Item Classification (dans Organizations app)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16962,13 +16962,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A finance manager wants to ensure that all PRs for "lubricants" automatically default to GL account 6201-LUBES.</div>
-  <div class="mcq-stem"><strong>Question :</strong> How can Maximo automate this GL coding?</div>
+  <div class="mcq-context">Un finance manager veut s'assurer que toutes les PRs pour des « lubrifiants » prennent par défaut le compte GL 6201-LUBES.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Comment Maximo peut-il automatiser ce GL coding ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-003-A"><input type="radio" name="c1000-208-mcq-5-2-003" value="A" id="c1000-208-mcq-5-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Associate the GL account 6201-LUBES with the corresponding Commodity Group / Code</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-B"><input type="radio" name="c1000-208-mcq-5-2-003" value="B" id="c1000-208-mcq-5-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Hardcode the GL account on every item in the lubricant category individually</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-C"><input type="radio" name="c1000-208-mcq-5-2-003" value="C" id="c1000-208-mcq-5-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">GL accounts cannot be linked to commodity codes; they only sit on the storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-D"><input type="radio" name="c1000-208-mcq-5-2-003" value="D" id="c1000-208-mcq-5-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Use a custom workflow to set the GL account on PR submission</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-003-A"><input type="radio" name="c1000-208-mcq-5-2-003" value="A" id="c1000-208-mcq-5-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Associer le compte GL 6201-LUBES au Commodity Group / Code correspondant</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-B"><input type="radio" name="c1000-208-mcq-5-2-003" value="B" id="c1000-208-mcq-5-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Hardcoder le compte GL sur chaque item de la catégorie lubrifiant individuellement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-C"><input type="radio" name="c1000-208-mcq-5-2-003" value="C" id="c1000-208-mcq-5-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les comptes GL ne peuvent pas être liés aux commodity codes ; ils sont seulement sur le storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-003-D"><input type="radio" name="c1000-208-mcq-5-2-003" value="D" id="c1000-208-mcq-5-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Utiliser un workflow custom pour régler le compte GL à la soumission de la PR</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17019,13 +17019,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner is creating a service-type item "Annual Pressure Vessel Inspection" that will be ordered against external inspection labs.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Can Commodity Codes be applied to service-type items?</div>
+  <div class="mcq-context">Un planificateur crée un service-type item « Annual Pressure Vessel Inspection » qui sera commandé chez des labos d'inspection externes.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Peut-on appliquer des Commodity Codes aux service-type items ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-A"><input type="radio" name="c1000-208-mcq-5-2-004" value="A" id="c1000-208-mcq-5-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">No — commodity codes are reserved for physical inventory items only</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-B"><input type="radio" name="c1000-208-mcq-5-2-004" value="B" id="c1000-208-mcq-5-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Only if the service item has Type = TOOL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-C"><input type="radio" name="c1000-208-mcq-5-2-004" value="C" id="c1000-208-mcq-5-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Only via the Service Items application, which is separate</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-004-D"><input type="radio" name="c1000-208-mcq-5-2-004" value="D" id="c1000-208-mcq-5-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Yes — service-type items use commodity codes to enable spend analysis and vendor restriction</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-A"><input type="radio" name="c1000-208-mcq-5-2-004" value="A" id="c1000-208-mcq-5-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Non — les commodity codes sont réservés aux items d'inventaire physique uniquement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-B"><input type="radio" name="c1000-208-mcq-5-2-004" value="B" id="c1000-208-mcq-5-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Seulement si le service item a Type = TOOL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-004-C"><input type="radio" name="c1000-208-mcq-5-2-004" value="C" id="c1000-208-mcq-5-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Seulement via l'application Service Items, qui est séparée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-004-D"><input type="radio" name="c1000-208-mcq-5-2-004" value="D" id="c1000-208-mcq-5-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Oui — les service-type items utilisent les commodity codes pour permettre la spend analysis et la restriction vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17076,13 +17076,13 @@ graph TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A procurement manager wants to ensure that only vendors qualified for "Bearings" (commodity MECH-BRG) can be auto-suggested on related PRs.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Where in Maximo is the link between a vendor and the commodity it supplies maintained?</div>
+  <div class="mcq-context">Un procurement manager veut s'assurer que seuls les vendors qualifiés pour les « Bearings » (commodity MECH-BRG) puissent être auto-suggérés sur les PRs associés.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Où dans Maximo le lien entre un vendor et la commodity qu'il fournit est-il maintenu ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-A"><input type="radio" name="c1000-208-mcq-5-2-005" value="A" id="c1000-208-mcq-5-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Item Master record under Vendors tab</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-005-B"><input type="radio" name="c1000-208-mcq-5-2-005" value="B" id="c1000-208-mcq-5-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Companies application — vendor record's Commodities list</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-C"><input type="radio" name="c1000-208-mcq-5-2-005" value="C" id="c1000-208-mcq-5-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">PR application during line entry</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-D"><input type="radio" name="c1000-208-mcq-5-2-005" value="D" id="c1000-208-mcq-5-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Storeroom application under Vendor tab</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-A"><input type="radio" name="c1000-208-mcq-5-2-005" value="A" id="c1000-208-mcq-5-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Sur le record Item Master sous l'onglet Vendors</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-5-2-005-B"><input type="radio" name="c1000-208-mcq-5-2-005" value="B" id="c1000-208-mcq-5-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Application Companies — la liste Commodities du record vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-C"><input type="radio" name="c1000-208-mcq-5-2-005" value="C" id="c1000-208-mcq-5-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Application PR pendant la saisie de la ligne</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-5-2-005-D"><input type="radio" name="c1000-208-mcq-5-2-005" value="D" id="c1000-208-mcq-5-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Application Storeroom sous l'onglet Vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
