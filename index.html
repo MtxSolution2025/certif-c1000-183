@@ -10689,15 +10689,15 @@ graph TB
 <section class="lesson" id="c1000-208-lesson-2-2">
   <div class="breadcrumb">Section 2 <span class="brand-dot">·</span> 2.2</div>
   <div class="lesson-header">
-    <h1>Reorder Execution (Use in PR/PO / Cron / Internal PO / Special Order)</h1>
+    <h1>Exécution du Reorder (Use in PR/PO / Cron / Internal PO / Special Order)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 15%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-2-2.svg" alt="C1000-208 lesson 2-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-2-2.svg" alt="Illustration de la leçon C1000-208 2-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-2-2" id="lt-c1000-208-2-2-c" class="lt-course" checked>
@@ -10712,58 +10712,58 @@ graph TB
 <!-- FRAGMENT A: replaces the placeholder <p style="...">Lesson content pending...</p> in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li><strong>Designating the Reorder Storeroom</strong>.</li>
-  <li><strong>Initiation and Timing of Reorder Process</strong> — manual vs automatic Cron Task · manual reordering from Inventory app · use of the Reorder flag (vs deprecated STK & NS categories).</li>
-  <li><strong>Ordering Special Order Items</strong> — auto-creates Item Master in PENDING status (so item not visible for future orders) · auto-creates inventory record (ItemOrgDetails) in Active status if ordered to a Storeroom.</li>
-  <li><strong>Ordering items from another storeroom</strong> — Use in PR/PO flag on Storeroom record · Internal PO.</li>
+  <li><strong>Désignation du Reorder Storeroom</strong>.</li>
+  <li><strong>Initiation et timing du processus de Reorder</strong> — Cron Task manuel vs automatique · reorder manuel depuis l'application Inventory · usage du flag Reorder (vs catégories STK et NS dépréciées).</li>
+  <li><strong>Commande de Special Order Items</strong> — auto-création d'un Item Master au statut PENDING (l'item n'est pas visible pour les futures commandes) · auto-création d'un inventory record (ItemOrgDetails) au statut Active si commandé vers un Storeroom.</li>
+  <li><strong>Commande d'items depuis un autre storeroom</strong> — flag Use in PR/PO sur le record Storeroom · Internal PO.</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Reorder execution = the act of triggering and processing the reorder cycle</strong> defined by the parameters (ROP, Lead Time, EOQ, Safety Stock — see lesson 2.1). Two execution modes : (1) <em>manual</em> via the Inventory app's "Reorder Items" action, (2) <em>automatic</em> via the Cron Task (scheduled background job, typically nightly).</li>
-  <li><strong>Manual reorder</strong> — Path : <code>Inventory app &gt; Select Action &gt; Reorder Items</code>. Lets the planner trigger reorder for one storeroom or a subset of items immediately. Useful for ad-hoc replenishment after a large WO consumption, after a shutdown, or for quick verification before going to bed (instead of waiting for the cron). Output : a list of reorder candidates ; the planner can review, adjust quantities, and approve / convert to PR / PO.</li>
-  <li><strong>Automatic reorder via Cron Task</strong> — Path : <code>Cron Task Setup application &gt; cron task REORDER (or similar)</code>. Configurable schedule (typically every night at 02:00). The cron evaluates all eligible Inventory records in scope, computes deficit, and creates PRs (or auto-POs if the autoPO flag is enabled and the vendor is pre-approved). The cron task is the workhorse of large-volume planning — runs unattended, processes thousands of items per night.</li>
-  <li><strong>The Reorder flag (Inventory record)</strong> — a checkbox on the Inventory record that <em>enables</em> the item to participate in reorder process (manual or cron). If unchecked, the item is excluded from reorder calculations even if its ROP triggers. Useful for items you want to manage manually or items in PENDING status that shouldn't be auto-reordered.</li>
-  <li><strong>Deprecated STK & NS categories (v9.1 novelty)</strong> — In older Maximo versions (v7.6 and earlier), the inventory record had a Category field with values STK (stocked, eligible for reorder) and NS (non-stock, not eligible). With v9.1, IBM deprecated this category-based discrimination in favor of the simpler <em>Reorder flag</em>. Items previously NS are now items with Reorder flag = N. The v9.1 deprecation is a likely exam novelty — the certification covers Maximo Manage v9.1 specifically.</li>
-  <li><strong>Items in PLANNING status are reorderable</strong> [SAM Q4 verbatim] — counterintuitive trap. PLANNING is a transitional status that allows the supply chain to ramp up before the item is ACTIVE. Only PENDING and OBSOLETE statuses block reorder.</li>
-  <li><strong>Soft Reservations are considered in reorder</strong> — Soft reservations (a planned reservation on a future-scheduled WO) reduce the calculated available quantity. Maximo includes them in the deficit calculation. Some systems ignore soft reservations ; Maximo does NOT (this is a specific Maximo behaviour and a SAM Q4 distractor).</li>
-  <li><strong>Reorder Storeroom designation (lesson 1.2 recap)</strong> — Reorder Storeroom is set at the Inventory record level (per item per storeroom). When the reorder runs, if Reorder Storeroom is filled, an <em>Internal PR</em> is created (transfer from that source storeroom). If empty, falls back to Parent Storeroom or external Vendor.</li>
-  <li><strong>Use in PR/PO checkbox (lesson 1.2 recap, SAM Q2)</strong> — Storeroom-level checkbox that allows this storeroom to be a source on PR/PO lines. Required for the storeroom-to-storeroom internal supply pattern.</li>
-  <li><strong>Special Order Items workflow</strong> — for one-off purchases of items not normally stocked (a custom valve, a rare instrument). At PR/PO creation, the buyer enters a <em>description</em> and a price ; Maximo auto-creates an Item Master record in <strong>PENDING status</strong> (so the item is recorded for traceability but isn't visible for future PRs). If the special order is to a Storeroom (not Direct Issue), an Inventory record (ItemOrgDetails) is auto-created in <strong>Active status</strong>. The combination ensures the special-order item is one-time-traceable but doesn't pollute the reusable item catalog.</li>
-  <li><strong>Direct Issue vs Storeroom destination</strong> — A PR/PO can deliver to a Storeroom (stocked) or directly to a WO / Asset / Location (Direct Issue, bypasses inventory). For Direct Issue, no Inventory record is created ; the item flows straight to the WO actuals. For Storeroom, full inventory accounting (MATRECTRANS, balance update, GL postings) applies.</li>
-  <li><strong>Numerical example — full reorder cycle</strong> : Cron task runs at 02:00. Item BEARING-001 at NORTH : ROP = 90, on-hand = 80, on-order = 0, EOQ = 25. Reorder flag = Y. Reorder Storeroom = CENTRAL (which has Use in PR/PO = Y). Cron computes deficit = 10, rounds UP to multiple of 25 = 25. Creates Internal PR : source CENTRAL, dest NORTH, qty 25 BEARING-001. PR auto-approved overnight (if workflow allows) → Stock Transfer Order. Truck delivers next morning, NORTH receives → on-hand = 105.</li>
+  <li><strong>L'exécution du reorder = l'acte de déclencher et traiter le cycle de reorder</strong> défini par les paramètres (ROP, Lead Time, EOQ, Safety Stock — voir leçon 2.1). Deux modes d'exécution : (1) <em>manuel</em> via l'action « Reorder Items » de l'application Inventory, (2) <em>automatique</em> via la Cron Task (job batch planifié, typiquement nocturne).</li>
+  <li><strong>Reorder manuel</strong> — Path : <code>Inventory app &gt; Select Action &gt; Reorder Items</code>. Permet au planificateur de déclencher un reorder pour un storeroom ou un sous-ensemble d'items immédiatement. Utile pour le réapprovisionnement ad hoc après une grosse consommation WO, après un shutdown, ou pour vérification rapide avant de partir (au lieu d'attendre le cron). Sortie : une liste de candidats au reorder ; le planificateur peut revoir, ajuster les quantités et approuver / convertir en PR / PO.</li>
+  <li><strong>Reorder automatique via Cron Task</strong> — Path : <code>Cron Task Setup application &gt; cron task REORDER (ou similaire)</code>. Planning configurable (typiquement chaque nuit à 02:00). Le cron évalue tous les Inventory records éligibles dans son périmètre, calcule le déficit et crée des PRs (ou des auto-POs si le flag autoPO est activé et le vendor pré-approuvé). La cron task est le cheval de trait du planning à grand volume — tourne sans surveillance, traite des milliers d'items par nuit.</li>
+  <li><strong>Le flag Reorder (Inventory record)</strong> — une checkbox sur l'Inventory record qui <em>autorise</em> l'item à participer au reorder process (manuel ou cron). Si décoché, l'item est exclu des calculs de reorder même si son ROP est atteint. Utile pour les items qu'on veut gérer manuellement ou pour les items en statut PENDING qu'il ne faut pas auto-reorder.</li>
+  <li><strong>Catégories STK et NS dépréciées (nouveauté v9.1)</strong> — Dans les versions Maximo plus anciennes (v7.6 et antérieures), le record d'inventaire avait un champ Category avec les valeurs STK (stocked, éligible au reorder) et NS (non-stock, non éligible). Avec v9.1, IBM a déprécié cette discrimination par catégorie au profit du flag <em>Reorder</em> plus simple. Les items précédemment NS sont désormais des items avec flag Reorder = N. Cette dépréciation v9.1 est probablement testée à l'examen — la certification couvre spécifiquement Maximo Manage v9.1.</li>
+  <li><strong>Les items au statut PLANNING sont reorderables</strong> [SAM Q4 verbatim] — piège contre-intuitif. PLANNING est un statut transitoire qui permet à la chaîne logistique de monter en charge avant que l'item soit ACTIVE. Seuls les statuts PENDING et OBSOLETE bloquent le reorder.</li>
+  <li><strong>Les Soft Reservations sont prises en compte dans le reorder</strong> — les soft reservations (réservation prévue sur une WO planifiée future) réduisent la quantité disponible calculée. Maximo les inclut dans le calcul du déficit. Certains systèmes ignorent les soft reservations ; Maximo NE le fait PAS (c'est un comportement spécifique Maximo et un distracteur SAM Q4).</li>
+  <li><strong>Désignation du Reorder Storeroom (rappel leçon 1.2)</strong> — Le Reorder Storeroom se règle au niveau Inventory record (par item par storeroom). Quand le reorder s'exécute, si le Reorder Storeroom est rempli, une <em>Internal PR</em> est créée (transfert depuis ce storeroom source). Si vide, fallback sur le Parent Storeroom ou un Vendor externe.</li>
+  <li><strong>Checkbox Use in PR/PO (rappel leçon 1.2, SAM Q2)</strong> — checkbox au niveau Storeroom qui permet à ce storeroom d'être une source sur des lignes PR/PO. Requise pour le pattern de fourniture interne storeroom-to-storeroom.</li>
+  <li><strong>Workflow Special Order Items</strong> — pour des achats one-off d'items non stockés habituellement (une valve custom, un instrument rare). À la création de la PR/PO, l'acheteur saisit une <em>description</em> et un prix ; Maximo auto-crée un Item Master record au statut <strong>PENDING</strong> (l'item est enregistré pour la traçabilité mais n'est pas visible pour les futures PRs). Si la special order va vers un Storeroom (pas Direct Issue), un Inventory record (ItemOrgDetails) est auto-créé au statut <strong>Active</strong>. Cette combinaison garantit que le special-order item est traçable une fois mais ne pollue pas le catalogue d'items réutilisables.</li>
+  <li><strong>Direct Issue vs destination Storeroom</strong> — Une PR/PO peut livrer vers un Storeroom (stocké) ou directement vers une WO / Asset / Location (Direct Issue, contourne l'inventaire). Pour Direct Issue, aucun Inventory record n'est créé ; l'item file droit dans les actuals de la WO. Pour Storeroom, la comptabilisation d'inventaire complète (MATRECTRANS, mise à jour de balance, postings GL) s'applique.</li>
+  <li><strong>Exemple chiffré — cycle reorder complet</strong> : la cron task tourne à 02:00. Item BEARING-001 à NORTH : ROP = 90, on-hand = 80, on-order = 0, EOQ = 25. Flag Reorder = Y. Reorder Storeroom = CENTRAL (qui a Use in PR/PO = Y). Le cron calcule déficit = 10, arrondit VERS LE HAUT au multiple de 25 = 25. Crée une Internal PR : source CENTRAL, dest NORTH, qty 25 BEARING-001. PR auto-approuvée durant la nuit (si workflow le permet) → Stock Transfer Order. Le camion livre le lendemain matin, NORTH reçoit → on-hand = 105.</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder">
   <pre class="mermaid">
 flowchart TD
-  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
-  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
-  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CRON["Cron Task déclenchée<br/>(REORDER) selon planning"]:::start
+  STATUS{"Statut item<br/><b>ACTIVE ou PLANNING ?</b><br/>(SAM Q4 — réponse b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>exclus du reorder)"]:::stop
   CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
-  STOP["No action<br/>(stock sufficient)"]:::stop
-  SPECIAL{"Special-order<br/>item ?"}:::decision
-  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
-  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
-  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
-  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
-  PR_EXT["External PR<br/>to vendor"]:::action
-  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
-  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
+  STOP["Aucune action<br/>(stock suffisant)"]:::stop
+  SPECIAL{"Item<br/>special-order ?"}:::decision
+  CREATE_ITEM["Auto-création Item Master<br/>au statut <b>PENDING</b><br/>(non visible aux futures<br/>commandes)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calcul du besoin ; arrondi<br/><b>au multiple supérieur d'EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Le Storeroom a<br/><b>Use in PR/PO ✔</b><br/>(fournisseur interne) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>depuis le parent storeroom"]:::action
+  PR_EXT["External PR<br/>vers vendor"]:::action
+  VENDOR["Vendor reçoit la PR<br/>→ expédie les biens"]:::action
+  RECEIVE["Goods reçus<br/>(ligne MATRECTRANS)"]:::action
+  BALANCE["Balance Storeroom<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
-  STATUS -- "Yes (eligible)" --> CHECK
-  STATUS -- "No" --> SKIPSTATUS
-  CHECK -- No --> STOP
-  CHECK -- Yes --> SPECIAL
-  SPECIAL -- Yes --> CREATE_ITEM
+  STATUS -- "Oui (éligible)" --> CHECK
+  STATUS -- "Non" --> SKIPSTATUS
+  CHECK -- Non --> STOP
+  CHECK -- Oui --> SPECIAL
+  SPECIAL -- Oui --> CREATE_ITEM
   CREATE_ITEM --> ROUND
-  SPECIAL -- No --> ROUND
+  SPECIAL -- Non --> ROUND
   ROUND --> USEPRPO
-  USEPRPO -- Yes --> PR_INT
-  USEPRPO -- No --> PR_EXT
+  USEPRPO -- Oui --> PR_INT
+  USEPRPO -- Non --> PR_EXT
   PR_INT --> RECEIVE
   PR_EXT --> VENDOR
   VENDOR --> RECEIVE
@@ -10779,20 +10779,20 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>"PLANNING items are not reorderable"</strong> — wrong. SAM Q4 explicitly tests this trap.</p>
+  <p><strong>« Les items PLANNING ne sont pas reorderables »</strong> — faux. SAM Q4 teste explicitement ce piège.</p>
   <ul>
-    <li>PLANNING is a status that allows the supply chain to be PRIMED while the item is being finalized for full Active use. Reorder, Job Plan, Spare Parts list — all allowed.</li>
-    <li>Only PENDING (draft) and OBSOLETE (end of life) statuses block reorder.</li>
-    <li>Soft reservations ARE considered in reorder calculations in Maximo (a SAM distractor mentioned this incorrectly).</li>
-    <li>The "Additional Lead Time (Days)" field adds days to the calculated lead time ; it does NOT schedule the reorder for a future date. If you want the reorder to wait, that's a workflow / approval delay, not a Lead Time function.</li>
-    <li>The "Reorder Items" action processes ONE storeroom at a time, not multiple. To reorder multiple storerooms, run the action once per storeroom or rely on the cron task.</li>
+    <li>PLANNING est un statut qui permet à la chaîne logistique d'être AMORCÉE pendant que l'item est finalisé pour un usage Active complet. Reorder, Job Plan, Spare Parts list — tout est autorisé.</li>
+    <li>Seuls les statuts PENDING (brouillon) et OBSOLETE (fin de vie) bloquent le reorder.</li>
+    <li>Les soft reservations SONT prises en compte dans les calculs de reorder dans Maximo (un distracteur SAM mentionnait l'inverse).</li>
+    <li>Le champ « Additional Lead Time (Days) » ajoute des jours au lead time calculé ; il ne programme PAS le reorder pour une date future. Si on veut que le reorder attende, c'est un délai de workflow / approbation, pas une fonction de Lead Time.</li>
+    <li>L'action « Reorder Items » traite UN storeroom à la fois, pas plusieurs. Pour reorder plusieurs storerooms, lancer l'action une fois par storeroom ou s'appuyer sur la cron task.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. Which item statuses block participation in the reorder process?</p>
-  <details><summary>Afficher la réponse</summary><p>Only <strong>PENDING</strong> (draft, not ready) and <strong>OBSOLETE</strong> (end of life) block reorder. <strong>PLANNING</strong>, <strong>ACTIVE</strong>, and <strong>PENDING OBSOLETE</strong> all allow reorder. PLANNING is the surprising one — it allows reorder so that the supply chain can ramp up before full operational activation. SAM Q4 confirms this verbatim.</p></details>
+  <p>Q. Quels statuts d'item bloquent la participation au processus de reorder ?</p>
+  <details><summary>Afficher la réponse</summary><p>Seuls <strong>PENDING</strong> (brouillon, pas prêt) et <strong>OBSOLETE</strong> (fin de vie) bloquent le reorder. <strong>PLANNING</strong>, <strong>ACTIVE</strong> et <strong>PENDING OBSOLETE</strong> autorisent tous le reorder. PLANNING est le statut surprenant — il autorise le reorder pour que la chaîne logistique puisse monter en charge avant l'activation opérationnelle complète. SAM Q4 le confirme verbatim.</p></details>
 </div>
 
 <!-- FRAGMENT B: appends after the existing <p>Interactive IBM-style...</p> intro in lt-sit-panel -->
@@ -10811,13 +10811,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner is preparing a reorder run and reviews the various items in different statuses on the Inventory list. They want to know which items will participate in the reorder process and which won't.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which statement is true regarding performing an inventory reorder?</div>
+  <div class="mcq-context">Un planificateur prépare un run de reorder et passe en revue les divers items dans différents statuts sur la liste Inventory. Il veut savoir quels items participeront au reorder process et lesquels n'y participeront pas.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel énoncé est vrai concernant l'exécution d'un inventory reorder ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-A"><input type="radio" name="c1000-208-mcq-2-2-001" value="A" id="c1000-208-mcq-2-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Soft reservations are never considered when performing a reorder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-001-B"><input type="radio" name="c1000-208-mcq-2-2-001" value="B" id="c1000-208-mcq-2-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Items in the PLANNING status can be included within a reorder process</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-C"><input type="radio" name="c1000-208-mcq-2-2-001" value="C" id="c1000-208-mcq-2-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">When using the Reorder Items action, items can be reordered from multiple storerooms</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-D"><input type="radio" name="c1000-208-mcq-2-2-001" value="D" id="c1000-208-mcq-2-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Using the Additional Lead Time (Days) field will schedule the reorder to execute at a future date</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-A"><input type="radio" name="c1000-208-mcq-2-2-001" value="A" id="c1000-208-mcq-2-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les soft reservations ne sont jamais prises en compte lors d'un reorder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-001-B"><input type="radio" name="c1000-208-mcq-2-2-001" value="B" id="c1000-208-mcq-2-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les items au statut PLANNING peuvent être inclus dans un reorder process</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-C"><input type="radio" name="c1000-208-mcq-2-2-001" value="C" id="c1000-208-mcq-2-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">En utilisant l'action Reorder Items, les items peuvent être reorderés depuis plusieurs storerooms</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-001-D"><input type="radio" name="c1000-208-mcq-2-2-001" value="D" id="c1000-208-mcq-2-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Utiliser le champ Additional Lead Time (Days) programme le reorder pour s'exécuter à une date future</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -10871,32 +10871,32 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder-c1000-208-mcq-2-2-001">
   <pre class="mermaid">
 flowchart TD
-  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
-  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
-  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CRON["Cron Task déclenchée<br/>(REORDER) selon planning"]:::start
+  STATUS{"Statut item<br/><b>ACTIVE ou PLANNING ?</b><br/>(SAM Q4 — réponse b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>exclus du reorder)"]:::stop
   CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
-  STOP["No action<br/>(stock sufficient)"]:::stop
-  SPECIAL{"Special-order<br/>item ?"}:::decision
-  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
-  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
-  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
-  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
-  PR_EXT["External PR<br/>to vendor"]:::action
-  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
-  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
+  STOP["Aucune action<br/>(stock suffisant)"]:::stop
+  SPECIAL{"Item<br/>special-order ?"}:::decision
+  CREATE_ITEM["Auto-création Item Master<br/>au statut <b>PENDING</b><br/>(non visible aux futures<br/>commandes)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calcul du besoin ; arrondi<br/><b>au multiple supérieur d'EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Le Storeroom a<br/><b>Use in PR/PO ✔</b><br/>(fournisseur interne) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>depuis le parent storeroom"]:::action
+  PR_EXT["External PR<br/>vers vendor"]:::action
+  VENDOR["Vendor reçoit la PR<br/>→ expédie les biens"]:::action
+  RECEIVE["Goods reçus<br/>(ligne MATRECTRANS)"]:::action
+  BALANCE["Balance Storeroom<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
-  STATUS -- "Yes (eligible)" --> CHECK
-  STATUS -- "No" --> SKIPSTATUS
-  CHECK -- No --> STOP
-  CHECK -- Yes --> SPECIAL
-  SPECIAL -- Yes --> CREATE_ITEM
+  STATUS -- "Oui (éligible)" --> CHECK
+  STATUS -- "Non" --> SKIPSTATUS
+  CHECK -- Non --> STOP
+  CHECK -- Oui --> SPECIAL
+  SPECIAL -- Oui --> CREATE_ITEM
   CREATE_ITEM --> ROUND
-  SPECIAL -- No --> ROUND
+  SPECIAL -- Non --> ROUND
   ROUND --> USEPRPO
-  USEPRPO -- Yes --> PR_INT
-  USEPRPO -- No --> PR_EXT
+  USEPRPO -- Oui --> PR_INT
+  USEPRPO -- Non --> PR_EXT
   PR_INT --> RECEIVE
   PR_EXT --> VENDOR
   VENDOR --> RECEIVE
@@ -10926,13 +10926,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom administrator is migrating from Maximo v7.6 to v9.1. In v7.6 they used the Category field with values STK (stocked) and NS (non-stock) to control whether an item participates in reorder. They wonder how this works in v9.1.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the v9.1 mechanism for controlling whether an item is eligible for reorder?</div>
+  <div class="mcq-context">Un administrateur de storeroom migre depuis Maximo v7.6 vers v9.1. En v7.6 il utilisait le champ Category avec les valeurs STK (stocked) et NS (non-stock) pour contrôler la participation d'un item au reorder. Il se demande comment cela fonctionne en v9.1.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le mécanisme v9.1 pour contrôler l'éligibilité d'un item au reorder ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-A"><input type="radio" name="c1000-208-mcq-2-2-002" value="A" id="c1000-208-mcq-2-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The STK and NS Category values remain the canonical control in v9.1</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-B"><input type="radio" name="c1000-208-mcq-2-2-002" value="B" id="c1000-208-mcq-2-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A new SUPPLY/NON-SUPPLY enumeration replaces STK/NS</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-002-C"><input type="radio" name="c1000-208-mcq-2-2-002" value="C" id="c1000-208-mcq-2-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The Reorder flag (checkbox on the Inventory record) became the canonical control ; STK and NS Category values are deprecated</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-D"><input type="radio" name="c1000-208-mcq-2-2-002" value="D" id="c1000-208-mcq-2-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The Reorder Storeroom field replaces the STK/NS distinction</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-A"><input type="radio" name="c1000-208-mcq-2-2-002" value="A" id="c1000-208-mcq-2-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les valeurs Category STK et NS restent le contrôle canonique en v9.1</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-B"><input type="radio" name="c1000-208-mcq-2-2-002" value="B" id="c1000-208-mcq-2-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une nouvelle énumération SUPPLY/NON-SUPPLY remplace STK/NS</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-002-C"><input type="radio" name="c1000-208-mcq-2-2-002" value="C" id="c1000-208-mcq-2-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le flag Reorder (checkbox sur l'Inventory record) devient le contrôle canonique ; les valeurs Category STK et NS sont dépréciées</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-002-D"><input type="radio" name="c1000-208-mcq-2-2-002" value="D" id="c1000-208-mcq-2-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le champ Reorder Storeroom remplace la distinction STK/NS</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -10993,13 +10993,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An inventory administrator wants the reorder process to run automatically every night without user intervention. They are also considering allowing planners to trigger ad-hoc reorders during the day after large WO consumptions.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which combination of mechanisms supports both requirements?</div>
+  <div class="mcq-context">Un administrateur d'inventaire veut que le processus de reorder tourne automatiquement chaque nuit sans intervention utilisateur. Il envisage aussi de permettre aux planificateurs de déclencher des reorders ad hoc dans la journée après de grosses consommations WO.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle combinaison de mécanismes couvre les deux besoins ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-A"><input type="radio" name="c1000-208-mcq-2-2-003" value="A" id="c1000-208-mcq-2-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The Cron Task only ; manual reorder is not supported in v9.1</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-003-B"><input type="radio" name="c1000-208-mcq-2-2-003" value="B" id="c1000-208-mcq-2-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A scheduled Cron Task for the nightly run + the Reorder Items action in the Inventory app for ad-hoc manual triggering</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-C"><input type="radio" name="c1000-208-mcq-2-2-003" value="C" id="c1000-208-mcq-2-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A Workflow Designer rule firing on every WO completion to trigger reorder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-D"><input type="radio" name="c1000-208-mcq-2-2-003" value="D" id="c1000-208-mcq-2-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A Reorder Period field set to 24 hours, no other config needed</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-A"><input type="radio" name="c1000-208-mcq-2-2-003" value="A" id="c1000-208-mcq-2-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La Cron Task seule ; le reorder manuel n'est pas supporté en v9.1</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-003-B"><input type="radio" name="c1000-208-mcq-2-2-003" value="B" id="c1000-208-mcq-2-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une Cron Task planifiée pour le run nocturne + l'action Reorder Items dans l'application Inventory pour le déclenchement manuel ad hoc</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-C"><input type="radio" name="c1000-208-mcq-2-2-003" value="C" id="c1000-208-mcq-2-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une règle Workflow Designer qui se déclenche à chaque WO completion pour lancer le reorder</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-003-D"><input type="radio" name="c1000-208-mcq-2-2-003" value="D" id="c1000-208-mcq-2-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un champ Reorder Period réglé à 24 heures, aucune autre configuration nécessaire</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11050,32 +11050,32 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-2-2-reorder-c1000-208-mcq-2-2-003">
   <pre class="mermaid">
 flowchart TD
-  CRON["Cron Task fires<br/>(REORDER) on schedule"]:::start
-  STATUS{"Item status<br/><b>ACTIVE or PLANNING ?</b><br/>(SAM Q4 — answer b)"}:::decision
-  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>excluded from reorder)"]:::stop
+  CRON["Cron Task déclenchée<br/>(REORDER) selon planning"]:::start
+  STATUS{"Statut item<br/><b>ACTIVE ou PLANNING ?</b><br/>(SAM Q4 — réponse b)"}:::decision
+  SKIPSTATUS["Skip<br/>(PENDING / OBSOLETE<br/>exclus du reorder)"]:::stop
   CHECK{"Available position<br/>= current_balance<br/>+ open_orders<br/>− reservations<br/><b>inférieur au ROP ?</b>"}:::decision
-  STOP["No action<br/>(stock sufficient)"]:::stop
-  SPECIAL{"Special-order<br/>item ?"}:::decision
-  CREATE_ITEM["Auto-create Item Master<br/>in <b>PENDING</b> status<br/>(not visible to future orders)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
-  ROUND["Calc need; round qty<br/><b>UP to multiple of EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
-  USEPRPO{"Storeroom has<br/><b>Use in PR/PO ✔</b><br/>(internal supplier) ?"}:::decision
-  PR_INT["Internal PR /<br/>Stock Transfer<br/>from parent storeroom"]:::action
-  PR_EXT["External PR<br/>to vendor"]:::action
-  VENDOR["Vendor receives PR<br/>→ ships goods"]:::action
-  RECEIVE["Goods received<br/>(MATRECTRANS row)"]:::action
-  BALANCE["Storeroom balance<br/><b>+= receipt_qty</b>"]:::endNode
+  STOP["Aucune action<br/>(stock suffisant)"]:::stop
+  SPECIAL{"Item<br/>special-order ?"}:::decision
+  CREATE_ITEM["Auto-création Item Master<br/>au statut <b>PENDING</b><br/>(non visible aux futures<br/>commandes)<br/>+ ItemOrgDetails (ACTIVE)"]:::action
+  ROUND["Calcul du besoin ; arrondi<br/><b>au multiple supérieur d'EOQ</b><br/>(EOQ ≥ 1, SAM Q3)"]:::action
+  USEPRPO{"Le Storeroom a<br/><b>Use in PR/PO ✔</b><br/>(fournisseur interne) ?"}:::decision
+  PR_INT["Internal PR /<br/>Stock Transfer<br/>depuis le parent storeroom"]:::action
+  PR_EXT["External PR<br/>vers vendor"]:::action
+  VENDOR["Vendor reçoit la PR<br/>→ expédie les biens"]:::action
+  RECEIVE["Goods reçus<br/>(ligne MATRECTRANS)"]:::action
+  BALANCE["Balance Storeroom<br/><b>+= receipt_qty</b>"]:::endNode
 
   CRON --> STATUS
-  STATUS -- "Yes (eligible)" --> CHECK
-  STATUS -- "No" --> SKIPSTATUS
-  CHECK -- No --> STOP
-  CHECK -- Yes --> SPECIAL
-  SPECIAL -- Yes --> CREATE_ITEM
+  STATUS -- "Oui (éligible)" --> CHECK
+  STATUS -- "Non" --> SKIPSTATUS
+  CHECK -- Non --> STOP
+  CHECK -- Oui --> SPECIAL
+  SPECIAL -- Oui --> CREATE_ITEM
   CREATE_ITEM --> ROUND
-  SPECIAL -- No --> ROUND
+  SPECIAL -- Non --> ROUND
   ROUND --> USEPRPO
-  USEPRPO -- Yes --> PR_INT
-  USEPRPO -- No --> PR_EXT
+  USEPRPO -- Oui --> PR_INT
+  USEPRPO -- Non --> PR_EXT
   PR_INT --> RECEIVE
   PR_EXT --> VENDOR
   VENDOR --> RECEIVE
@@ -11104,13 +11104,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A buyer creates a special order for a one-off custom valve not in the Item Master catalog. They enter the description and price on the PR/PO line, ordered to a Storeroom for receiving.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does Maximo automatically create when this special order is processed?</div>
+  <div class="mcq-context">Un acheteur crée une special order pour une valve custom one-off absente du catalogue Item Master. Il saisit la description et le prix sur la ligne PR/PO, commandée vers un Storeroom pour la réception.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que Maximo crée-t-il automatiquement lors du traitement de cette special order ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-A"><input type="radio" name="c1000-208-mcq-2-2-004" value="A" id="c1000-208-mcq-2-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Item Master in ACTIVE status + Inventory record in ACTIVE status</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-B"><input type="radio" name="c1000-208-mcq-2-2-004" value="B" id="c1000-208-mcq-2-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Item Master in PENDING status + no Inventory record (Direct Issue only)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-004-C"><input type="radio" name="c1000-208-mcq-2-2-004" value="C" id="c1000-208-mcq-2-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Item Master in PENDING status + Inventory record (ItemOrgDetails) in ACTIVE status (because ordered to a Storeroom)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-D"><input type="radio" name="c1000-208-mcq-2-2-004" value="D" id="c1000-208-mcq-2-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Item Master in OBSOLETE status to prevent future use</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-A"><input type="radio" name="c1000-208-mcq-2-2-004" value="A" id="c1000-208-mcq-2-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Un Item Master au statut ACTIVE + un Inventory record au statut ACTIVE</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-B"><input type="radio" name="c1000-208-mcq-2-2-004" value="B" id="c1000-208-mcq-2-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Un Item Master au statut PENDING + pas d'Inventory record (Direct Issue uniquement)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-004-C"><input type="radio" name="c1000-208-mcq-2-2-004" value="C" id="c1000-208-mcq-2-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Un Item Master au statut PENDING + un Inventory record (ItemOrgDetails) au statut ACTIVE (car commandé vers un Storeroom)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-004-D"><input type="radio" name="c1000-208-mcq-2-2-004" value="D" id="c1000-208-mcq-2-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un Item Master au statut OBSOLETE pour empêcher tout usage futur</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11171,13 +11171,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A satellite storeroom triggers reorder for an item with Reorder Storeroom = CENTRAL (Use in PR/PO checked). Maximo must decide between an Internal PO and an External PO.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What determines that the system creates an Internal PO instead of an External PO?</div>
+  <div class="mcq-context">Un storeroom satellite déclenche un reorder pour un item avec Reorder Storeroom = CENTRAL (Use in PR/PO coché). Maximo doit choisir entre un Internal PO et un External PO.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'est-ce qui détermine que le système crée un Internal PO plutôt qu'un External PO ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-005-A"><input type="radio" name="c1000-208-mcq-2-2-005" value="A" id="c1000-208-mcq-2-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The source of the reorder is another Storeroom (with Use in PR/PO checked) rather than a Company (vendor)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-B"><input type="radio" name="c1000-208-mcq-2-2-005" value="B" id="c1000-208-mcq-2-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">An Internal flag is manually checked on the PR by the planner</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-C"><input type="radio" name="c1000-208-mcq-2-2-005" value="C" id="c1000-208-mcq-2-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The order quantity must be below a configurable threshold</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-D"><input type="radio" name="c1000-208-mcq-2-2-005" value="D" id="c1000-208-mcq-2-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">All POs are External by default ; Internal POs require manual creation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-005-A"><input type="radio" name="c1000-208-mcq-2-2-005" value="A" id="c1000-208-mcq-2-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La source du reorder est un autre Storeroom (avec Use in PR/PO coché) plutôt qu'une Company (vendor)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-B"><input type="radio" name="c1000-208-mcq-2-2-005" value="B" id="c1000-208-mcq-2-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Un flag Internal est coché manuellement sur la PR par le planificateur</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-C"><input type="radio" name="c1000-208-mcq-2-2-005" value="C" id="c1000-208-mcq-2-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">L'order quantity doit être en dessous d'un seuil configurable</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-005-D"><input type="radio" name="c1000-208-mcq-2-2-005" value="D" id="c1000-208-mcq-2-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Tous les POs sont External par défaut ; les Internal POs nécessitent une création manuelle</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11239,13 +11239,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An inventory administrator wants to temporarily exclude a specific item at a specific Storeroom from the automatic Cron Task reorder cycle without changing the item's overall status (which remains ACTIVE).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the simplest mechanism to achieve this in Maximo v9.1?</div>
+  <div class="mcq-context">Un administrateur d'inventaire veut exclure temporairement un item particulier dans un Storeroom particulier du cycle de reorder de la Cron Task automatique, sans changer le statut global de l'item (qui reste ACTIVE).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le mécanisme le plus simple pour y parvenir dans Maximo v9.1 ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-A"><input type="radio" name="c1000-208-mcq-2-2-006" value="A" id="c1000-208-mcq-2-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Change the Item Master status to OBSOLETE temporarily, then revert</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-B"><input type="radio" name="c1000-208-mcq-2-2-006" value="B" id="c1000-208-mcq-2-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Set ROP to a very high value so reorder never triggers</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-C"><input type="radio" name="c1000-208-mcq-2-2-006" value="C" id="c1000-208-mcq-2-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Disable the Cron Task entirely for the night</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-006-D"><input type="radio" name="c1000-208-mcq-2-2-006" value="D" id="c1000-208-mcq-2-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Uncheck the Reorder flag on the Inventory record for this item × storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-A"><input type="radio" name="c1000-208-mcq-2-2-006" value="A" id="c1000-208-mcq-2-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Passer temporairement le statut Item Master à OBSOLETE puis le restaurer</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-B"><input type="radio" name="c1000-208-mcq-2-2-006" value="B" id="c1000-208-mcq-2-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Mettre le ROP à une valeur très élevée pour que le reorder ne se déclenche jamais</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-2-2-006-C"><input type="radio" name="c1000-208-mcq-2-2-006" value="C" id="c1000-208-mcq-2-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Désactiver entièrement la Cron Task pour la nuit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-2-2-006-D"><input type="radio" name="c1000-208-mcq-2-2-006" value="D" id="c1000-208-mcq-2-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Décocher le flag Reorder sur l'Inventory record de cet item × storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
