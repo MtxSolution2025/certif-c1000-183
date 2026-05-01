@@ -11313,15 +11313,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-3-1">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.1</div>
   <div class="lesson-header">
-    <h1>Cost Adjustments (AVG / STD / LIFO / FIFO / ASSET)</h1>
+    <h1>Ajustements de coût (AVG / STD / LIFO / FIFO / ASSET)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 15%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-3-1.svg" alt="C1000-208 lesson 3-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-3-1.svg" alt="Illustration de la leçon C1000-208 3-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-3-1" id="lt-c1000-208-3-1-c" class="lt-course" checked>
@@ -11336,13 +11336,13 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Describe how to perform an <strong>average cost adjustment</strong> in Inventory</li>
-  <li>Describe how to perform a <strong>standard cost adjustment</strong> in Inventory</li>
-  <li>Describe how the cost is set for a <strong>rotating item</strong> in Inventory</li>
-  <li>Describe how <strong>LIFO costing</strong> works in Inventory</li>
-  <li>Describe how <strong>FIFO costing</strong> works in Inventory</li>
-  <li>Describe how <strong>ASSET costing</strong> works in Inventory</li>
-  <li>Describe how to <strong>change the cost type</strong> for an item in Inventory</li>
+  <li>Décrire comment effectuer un <strong>average cost adjustment</strong> dans Inventory</li>
+  <li>Décrire comment effectuer un <strong>standard cost adjustment</strong> dans Inventory</li>
+  <li>Décrire comment le coût est défini pour un <strong>rotating item</strong> dans Inventory</li>
+  <li>Décrire comment fonctionne le <strong>costing LIFO</strong> dans Inventory</li>
+  <li>Décrire comment fonctionne le <strong>costing FIFO</strong> dans Inventory</li>
+  <li>Décrire comment fonctionne le <strong>costing ASSET</strong> dans Inventory</li>
+  <li>Décrire comment <strong>changer le cost type</strong> d'un item dans Inventory</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -11377,47 +11377,47 @@ flowchart TD
     <thead>
       <tr>
         <th>Cost type</th>
-        <th>Calculation logic</th>
-        <th>IFRS allowed?</th>
-        <th>Maximo path</th>
-        <th>Best for</th>
+        <th>Logique de calcul</th>
+        <th>Autorisé IFRS ?</th>
+        <th>Path Maximo</th>
+        <th>Recommandé pour</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>AVG</strong> (Weighted Average)</td>
-        <td>Recalculates the cost on every receipt: <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Each issue is valued at the current weighted average.</td>
-        <td>Yes</td>
+        <td>Recalcule le coût à chaque réception : <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Chaque issue est valorisée à la moyenne pondérée courante.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = AVG</td>
-        <td>Default for most consumable items. Smooths price volatility.</td>
+        <td>Défaut pour la plupart des items consommables. Lisse la volatilité des prix.</td>
       </tr>
       <tr>
         <td><strong>STD</strong> (Standard)</td>
-        <td>Uses a fixed standard cost per item set manually. Variance between actual receipt cost and standard cost is posted to a Variance GL account.</td>
-        <td>Yes</td>
+        <td>Utilise un standard cost fixe par item, défini manuellement. La variance entre coût de réception réel et standard cost est postée sur un compte GL Variance.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = STANDARD</td>
-        <td>Manufacturing environments where budgeted cost matters more than actual.</td>
+        <td>Environnements de fabrication où le coût budgétisé compte plus que l'actuel.</td>
       </tr>
       <tr>
         <td><strong>LIFO</strong> (Last In, First Out)</td>
-        <td>Each issue is valued at the cost of the most recent receipt. Old layers stay in inventory at their original cost.</td>
-        <td><strong>No</strong> (banned by IFRS; allowed by US GAAP)</td>
+        <td>Chaque issue est valorisée au coût de la réception la plus récente. Les anciennes layers restent dans l'inventaire à leur coût d'origine.</td>
+        <td><strong>Non</strong> (banni par IFRS ; autorisé par US GAAP)</td>
         <td>Inventory &gt; Item &gt; Cost Type = LIFO</td>
-        <td>US-only environments seeking tax deferral in inflation.</td>
+        <td>Environnements US uniquement cherchant un report d'impôt en inflation.</td>
       </tr>
       <tr>
         <td><strong>FIFO</strong> (First In, First Out)</td>
-        <td>Each issue is valued at the cost of the oldest receipt. Newest layers stay in inventory.</td>
-        <td>Yes</td>
+        <td>Chaque issue est valorisée au coût de la réception la plus ancienne. Les layers récentes restent dans l'inventaire.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = FIFO</td>
-        <td>Perishables, regulated industries, IFRS-compliant orgs.</td>
+        <td>Périssables, industries réglementées, orgs IFRS-compliant.</td>
       </tr>
       <tr>
         <td><strong>ASSET</strong></td>
-        <td>Cost is tracked per individual rotating <code>ASSETNUM</code>, not per storeroom average. Each asset has its own purchase price and depreciation history.</td>
-        <td>Yes</td>
+        <td>Le coût est tracé par <code>ASSETNUM</code> rotating individuel, pas par moyenne de storeroom. Chaque asset porte son propre prix d'achat et son historique d'amortissement.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item (Rotating? = true) &gt; Cost Type = ASSET</td>
-        <td>Mandatory for rotating items (motors, pumps) with serialized tracking.</td>
+        <td>Obligatoire pour les rotating items (moteurs, pompes) avec tracking sérialisé.</td>
       </tr>
     </tbody>
   </table>
@@ -11456,8 +11456,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A finance controller is documenting how each Maximo cost method affects issue valuation. The team must agree on which method recalculates after every receipt.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which cost type recalculates the unit cost of inventory after every receipt by combining the existing on-hand value with the new receipt value?</div>
+  <div class="mcq-context">Un contrôleur financier documente comment chaque méthode de coût Maximo affecte la valorisation à l'issue. L'équipe doit s'accorder sur quelle méthode recalcule après chaque réception.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel cost type recalcule le coût unitaire de l'inventaire après chaque réception, en combinant la valeur on-hand existante avec la valeur de la nouvelle réception ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-001-A"><input type="radio" name="c1000-208-mcq-3-1-001" value="A" id="c1000-208-mcq-3-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">STANDARD</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-001-B"><input type="radio" name="c1000-208-mcq-3-1-001" value="B" id="c1000-208-mcq-3-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">FIFO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -11524,8 +11524,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A multinational manufacturer adopting IFRS reporting reviews which Maximo cost methods are still acceptable for their consolidated financial statements.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which inventory cost method is prohibited under IFRS (IAS 2) and therefore cannot be used by an IFRS-reporting organization?</div>
+  <div class="mcq-context">Un industriel multinational qui passe au reporting IFRS revoit quelles méthodes de coût Maximo sont encore acceptables pour ses états financiers consolidés.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle méthode de coût d'inventaire est interdite par IFRS (IAS 2) et ne peut donc pas être utilisée par une organisation qui reporte en IFRS ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-002-A"><input type="radio" name="c1000-208-mcq-3-1-002" value="A" id="c1000-208-mcq-3-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">FIFO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-002-B"><input type="radio" name="c1000-208-mcq-3-1-002" value="B" id="c1000-208-mcq-3-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">AVERAGE / WAC</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -11584,13 +11584,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom holds three identical rotating motors with serial numbers SN-A, SN-B, SN-C. Each was purchased at a different price ($4 800, $5 200, $5 500). A WO requests one motor.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Under the ASSET cost method, what cost is charged to the WO when the technician issues SN-B?</div>
+  <div class="mcq-context">Un storeroom détient trois rotating motors identiques de numéros de série SN-A, SN-B, SN-C. Chacun a été acheté à un prix différent (4 800 $, 5 200 $, 5 500 $). Une WO demande un motor.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Sous la méthode de coût ASSET, quel coût est imputé à la WO quand le technicien issue SN-B ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-A"><input type="radio" name="c1000-208-mcq-3-1-003" value="A" id="c1000-208-mcq-3-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The weighted average of all three serials: $5 167</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-003-B"><input type="radio" name="c1000-208-mcq-3-1-003" value="B" id="c1000-208-mcq-3-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The exact cost recorded against SN-B: $5 200</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-C"><input type="radio" name="c1000-208-mcq-3-1-003" value="C" id="c1000-208-mcq-3-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">The cost of the oldest serial in storeroom (FIFO): $4 800</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-D"><input type="radio" name="c1000-208-mcq-3-1-003" value="D" id="c1000-208-mcq-3-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The standard cost set on the item record</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-A"><input type="radio" name="c1000-208-mcq-3-1-003" value="A" id="c1000-208-mcq-3-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La moyenne pondérée des trois serials : 5 167 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-003-B"><input type="radio" name="c1000-208-mcq-3-1-003" value="B" id="c1000-208-mcq-3-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le coût exact enregistré contre SN-B : 5 200 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-C"><input type="radio" name="c1000-208-mcq-3-1-003" value="C" id="c1000-208-mcq-3-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le coût du serial le plus ancien du storeroom (FIFO) : 4 800 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-003-D"><input type="radio" name="c1000-208-mcq-3-1-003" value="D" id="c1000-208-mcq-3-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le standard cost défini sur le record de l'item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11636,47 +11636,47 @@ flowchart TD
     <thead>
       <tr>
         <th>Cost type</th>
-        <th>Calculation logic</th>
-        <th>IFRS allowed?</th>
-        <th>Maximo path</th>
-        <th>Best for</th>
+        <th>Logique de calcul</th>
+        <th>Autorisé IFRS ?</th>
+        <th>Path Maximo</th>
+        <th>Recommandé pour</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>AVG</strong> (Weighted Average)</td>
-        <td>Recalculates the cost on every receipt: <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Each issue is valued at the current weighted average.</td>
-        <td>Yes</td>
+        <td>Recalcule le coût à chaque réception : <code>(qty_old × cost_old + qty_new × cost_new) / total_qty</code>. Chaque issue est valorisée à la moyenne pondérée courante.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = AVG</td>
-        <td>Default for most consumable items. Smooths price volatility.</td>
+        <td>Défaut pour la plupart des items consommables. Lisse la volatilité des prix.</td>
       </tr>
       <tr>
         <td><strong>STD</strong> (Standard)</td>
-        <td>Uses a fixed standard cost per item set manually. Variance between actual receipt cost and standard cost is posted to a Variance GL account.</td>
-        <td>Yes</td>
+        <td>Utilise un standard cost fixe par item, défini manuellement. La variance entre coût de réception réel et standard cost est postée sur un compte GL Variance.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = STANDARD</td>
-        <td>Manufacturing environments where budgeted cost matters more than actual.</td>
+        <td>Environnements de fabrication où le coût budgétisé compte plus que l'actuel.</td>
       </tr>
       <tr>
         <td><strong>LIFO</strong> (Last In, First Out)</td>
-        <td>Each issue is valued at the cost of the most recent receipt. Old layers stay in inventory at their original cost.</td>
-        <td><strong>No</strong> (banned by IFRS; allowed by US GAAP)</td>
+        <td>Chaque issue est valorisée au coût de la réception la plus récente. Les anciennes layers restent dans l'inventaire à leur coût d'origine.</td>
+        <td><strong>Non</strong> (banni par IFRS ; autorisé par US GAAP)</td>
         <td>Inventory &gt; Item &gt; Cost Type = LIFO</td>
-        <td>US-only environments seeking tax deferral in inflation.</td>
+        <td>Environnements US uniquement cherchant un report d'impôt en inflation.</td>
       </tr>
       <tr>
         <td><strong>FIFO</strong> (First In, First Out)</td>
-        <td>Each issue is valued at the cost of the oldest receipt. Newest layers stay in inventory.</td>
-        <td>Yes</td>
+        <td>Chaque issue est valorisée au coût de la réception la plus ancienne. Les layers récentes restent dans l'inventaire.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item &gt; Cost Type = FIFO</td>
-        <td>Perishables, regulated industries, IFRS-compliant orgs.</td>
+        <td>Périssables, industries réglementées, orgs IFRS-compliant.</td>
       </tr>
       <tr>
         <td><strong>ASSET</strong></td>
-        <td>Cost is tracked per individual rotating <code>ASSETNUM</code>, not per storeroom average. Each asset has its own purchase price and depreciation history.</td>
-        <td>Yes</td>
+        <td>Le coût est tracé par <code>ASSETNUM</code> rotating individuel, pas par moyenne de storeroom. Chaque asset porte son propre prix d'achat et son historique d'amortissement.</td>
+        <td>Oui</td>
         <td>Inventory &gt; Item (Rotating? = true) &gt; Cost Type = ASSET</td>
-        <td>Mandatory for rotating items (motors, pumps) with serialized tracking.</td>
+        <td>Obligatoire pour les rotating items (moteurs, pompes) avec tracking sérialisé.</td>
       </tr>
     </tbody>
   </table>
@@ -11698,8 +11698,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">Storeroom CENTRAL has 200 units of bearing BRG-001 at an average cost of $8.00. A receipt arrives: 100 units at $11.00.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Under the AVERAGE cost type, what is the new average cost per unit after the receipt?</div>
+  <div class="mcq-context">Le Storeroom CENTRAL a 200 unités du bearing BRG-001 à un coût moyen de 8,00 $. Une réception arrive : 100 unités à 11,00 $.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Sous le cost type AVERAGE, quel est le nouveau coût moyen par unité après la réception ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-004-A"><input type="radio" name="c1000-208-mcq-3-1-004" value="A" id="c1000-208-mcq-3-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$9.00</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-004-B"><input type="radio" name="c1000-208-mcq-3-1-004" value="B" id="c1000-208-mcq-3-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$9.50</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -11757,13 +11757,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item is configured with cost type STANDARD and a standard cost of $50. A PO receipt arrives at $58 actual cost. The accounting team must explain the GL impact.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Under STANDARD costing, what happens to the $8 difference between the receipt actual cost and the standard cost?</div>
+  <div class="mcq-context">Un item est configuré avec le cost type STANDARD et un standard cost de 50 $. Une réception PO arrive à 58 $ de coût réel. L'équipe comptable doit expliquer l'impact GL.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Sous le costing STANDARD, que devient l'écart de 8 $ entre le coût réel de la réception et le standard cost ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-A"><input type="radio" name="c1000-208-mcq-3-1-005" value="A" id="c1000-208-mcq-3-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">It is added to the inventory value: stock is now $58/unit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-B"><input type="radio" name="c1000-208-mcq-3-1-005" value="B" id="c1000-208-mcq-3-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A new average is calculated combining $50 stock and $58 receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-005-C"><input type="radio" name="c1000-208-mcq-3-1-005" value="C" id="c1000-208-mcq-3-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">It is posted to the Purchase Price Variance (PPV) GL account; stock stays at standard $50</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-D"><input type="radio" name="c1000-208-mcq-3-1-005" value="D" id="c1000-208-mcq-3-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The receipt is rejected because the cost differs from standard</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-A"><input type="radio" name="c1000-208-mcq-3-1-005" value="A" id="c1000-208-mcq-3-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Il est ajouté à la valeur d'inventaire : le stock est maintenant à 58 $/unité</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-B"><input type="radio" name="c1000-208-mcq-3-1-005" value="B" id="c1000-208-mcq-3-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Une nouvelle moyenne est calculée en combinant le stock à 50 $ et la réception à 58 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-005-C"><input type="radio" name="c1000-208-mcq-3-1-005" value="C" id="c1000-208-mcq-3-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Il est posté sur le compte GL Purchase Price Variance (PPV) ; le stock reste au standard 50 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-005-D"><input type="radio" name="c1000-208-mcq-3-1-005" value="D" id="c1000-208-mcq-3-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">La réception est refusée car le coût diffère du standard</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11820,13 +11820,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item is in cost type LIFO. The storeroom has three layers in chronological order of receipt: 50 units at $4, 30 units at $5, 20 units at $7 (most recent). A WO requests 35 units.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Under LIFO, what is the issue cost charged to the WO for the 35 units?</div>
+  <div class="mcq-context">Un item est en cost type LIFO. Le storeroom a trois layers dans l'ordre chronologique de réception : 50 unités à 4 $, 30 unités à 5 $, 20 unités à 7 $ (la plus récente). Une WO demande 35 unités.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Sous LIFO, quel est le coût d'issue imputé à la WO pour les 35 unités ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-A"><input type="radio" name="c1000-208-mcq-3-1-006" value="A" id="c1000-208-mcq-3-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">35 × $4 = $140 (oldest layer)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-006-B"><input type="radio" name="c1000-208-mcq-3-1-006" value="B" id="c1000-208-mcq-3-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">20 × $7 + 15 × $5 = $215 (top two layers, weighted)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-C"><input type="radio" name="c1000-208-mcq-3-1-006" value="C" id="c1000-208-mcq-3-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">35 × $7 = $245 (most recent layer at full quantity)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-D"><input type="radio" name="c1000-208-mcq-3-1-006" value="D" id="c1000-208-mcq-3-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">35 × ((4+5+7)/3) = $187 (arithmetic average of layer prices)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-A"><input type="radio" name="c1000-208-mcq-3-1-006" value="A" id="c1000-208-mcq-3-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">35 × 4 $ = 140 $ (layer la plus ancienne)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-006-B"><input type="radio" name="c1000-208-mcq-3-1-006" value="B" id="c1000-208-mcq-3-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">20 × 7 $ + 15 × 5 $ = 215 $ (les deux layers du haut, pondérées)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-C"><input type="radio" name="c1000-208-mcq-3-1-006" value="C" id="c1000-208-mcq-3-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">35 × 7 $ = 245 $ (layer la plus récente à pleine quantité)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-006-D"><input type="radio" name="c1000-208-mcq-3-1-006" value="D" id="c1000-208-mcq-3-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">35 × ((4+5+7)/3) = 187 $ (moyenne arithmétique des prix layer)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11882,13 +11882,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A controller wants to switch a high-velocity bearing from FIFO to AVERAGE to simplify reporting. The item has 500 units on hand spread across three FIFO layers totaling $4 250.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action is used to change the cost type of an item, and what GL impact does it produce?</div>
+  <div class="mcq-context">Un contrôleur veut basculer un bearing à forte rotation de FIFO à AVERAGE pour simplifier le reporting. L'item a 500 unités on-hand réparties sur trois layers FIFO totalisant 4 250 $.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo sert à changer le cost type d'un item, et quel impact GL produit-elle ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-007-A"><input type="radio" name="c1000-208-mcq-3-1-007" value="A" id="c1000-208-mcq-3-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Change Cost Type — re-values stock to the new method and posts a Cost Adjustment GL entry for the delta</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-B"><input type="radio" name="c1000-208-mcq-3-1-007" value="B" id="c1000-208-mcq-3-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Edit the Cost Type field directly on the Item Master record — no GL impact</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-C"><input type="radio" name="c1000-208-mcq-3-1-007" value="C" id="c1000-208-mcq-3-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Delete the inventory record and re-create it with the new cost type</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-D"><input type="radio" name="c1000-208-mcq-3-1-007" value="D" id="c1000-208-mcq-3-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Run an SQL update on INVCOST.COSTTYPE — Maximo auto-detects and re-values</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-007-A"><input type="radio" name="c1000-208-mcq-3-1-007" value="A" id="c1000-208-mcq-3-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Change Cost Type — réévalue le stock à la nouvelle méthode et poste une écriture GL Cost Adjustment pour le delta</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-B"><input type="radio" name="c1000-208-mcq-3-1-007" value="B" id="c1000-208-mcq-3-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Modifier directement le champ Cost Type sur le record Item Master — aucun impact GL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-C"><input type="radio" name="c1000-208-mcq-3-1-007" value="C" id="c1000-208-mcq-3-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Supprimer le record inventory et le recréer avec le nouveau cost type</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-007-D"><input type="radio" name="c1000-208-mcq-3-1-007" value="D" id="c1000-208-mcq-3-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Exécuter un UPDATE SQL sur INVCOST.COSTTYPE — Maximo auto-détecte et réévalue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -11944,13 +11944,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A rotating motor SN-X (cost type ASSET) is issued to WO-101 at $5 000, used in repair, and returned to the storeroom with $1 200 of repair labour and parts charged.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the new ASSET cost of SN-X after it is received back into the storeroom?</div>
+  <div class="mcq-context">Un rotating motor SN-X (cost type ASSET) est issué à WO-101 à 5 000 $, utilisé en réparation, puis retourné au storeroom avec 1 200 $ de main-d'œuvre et de pièces de réparation imputées.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le nouveau coût ASSET de SN-X après son retour au storeroom ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-A"><input type="radio" name="c1000-208-mcq-3-1-008" value="A" id="c1000-208-mcq-3-1-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$5 000 (original cost preserved; repair cost expensed only)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-B"><input type="radio" name="c1000-208-mcq-3-1-008" value="B" id="c1000-208-mcq-3-1-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$1 200 (only the repair cost; original cost is removed)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-008-C"><input type="radio" name="c1000-208-mcq-3-1-008" value="C" id="c1000-208-mcq-3-1-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">$6 200 (original cost + repair cost cumulated on the asset)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-D"><input type="radio" name="c1000-208-mcq-3-1-008" value="D" id="c1000-208-mcq-3-1-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The standard cost stored on the item record</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-A"><input type="radio" name="c1000-208-mcq-3-1-008" value="A" id="c1000-208-mcq-3-1-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">5 000 $ (coût d'origine préservé ; coût de réparation passé en charge uniquement)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-B"><input type="radio" name="c1000-208-mcq-3-1-008" value="B" id="c1000-208-mcq-3-1-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">1 200 $ (uniquement le coût de réparation ; le coût d'origine est retiré)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-3-1-008-C"><input type="radio" name="c1000-208-mcq-3-1-008" value="C" id="c1000-208-mcq-3-1-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">6 200 $ (coût d'origine + coût de réparation cumulés sur l'asset)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-3-1-008-D"><input type="radio" name="c1000-208-mcq-3-1-008" value="D" id="c1000-208-mcq-3-1-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le standard cost stocké sur le record de l'item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
