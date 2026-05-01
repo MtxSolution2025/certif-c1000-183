@@ -18157,15 +18157,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-6-2">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.2</div>
   <div class="lesson-header">
-    <h1>Return & Void Receipts</h1>
+    <h1>Retour et annulation de Receipts</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 10%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-6-2.svg" alt="C1000-208 lesson 6-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-6-2.svg" alt="Illustration de la leçon C1000-208 6-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-6-2" id="lt-c1000-208-6-2-c" class="lt-course" checked>
@@ -18179,46 +18179,46 @@ flowchart TD
         <!-- ============ LESSON c1000-208-6-2 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Perform an <strong>Item Return</strong> from a previously received PO line back to the vendor</li>
-  <li>Perform the <strong>Return of a Rotating Item</strong> with serialization preservation</li>
-  <li>Complete the <strong>Return</strong> workflow including credit memo handshake with the vendor</li>
-  <li>Define the rules for <strong>Voiding Receipts</strong> — when allowed and when blocked</li>
+  <li>Effectuer un <strong>Item Return</strong> depuis une ligne PO précédemment réceptionnée vers le vendor</li>
+  <li>Effectuer le <strong>Return d'un Rotating Item</strong> avec préservation de la sérialisation</li>
+  <li>Compléter le workflow <strong>Return</strong> incluant le handshake credit memo avec le vendor</li>
+  <li>Définir les règles de <strong>Voiding Receipts</strong> — quand c'est autorisé et quand c'est bloqué</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Return</strong> — sending received items back to the vendor. Used when items are defective, wrong model, expired, or in excess. Creates a reversing MATRECTRANS row + AP credit voucher trigger.</li>
-  <li><strong>Void</strong> — cancelling a receipt entirely as if it never happened. Used when a receipt was entered in error (typo on qty, wrong PO) before any downstream transaction.</li>
-  <li><strong>Return vs Void distinction</strong> — Return assumes the items physically arrived but should leave (defective, wrong); Void assumes the receipt itself was logically incorrect (data entry error).</li>
-  <li><strong>Void rules</strong> — a receipt can be voided ONLY if no downstream transaction exists. Blocking conditions: items already issued to a WO, items already transferred to another storeroom, items already kit-assembled, AP voucher already paid.</li>
-  <li><strong>Return workflow</strong> — Receiving app → Select Item for Return → choose original MATRECTRANS row → enter return qty + reason code → Maximo creates a reversing row, decrements INVBALANCES, triggers vendor return shipment process.</li>
-  <li><strong>Rotating item return</strong> — must reference the specific ASSETNUM being returned (since each unit is unique). The asset record's history is preserved (the asset is not deleted, just moved to a "returned to vendor" status). Cost reverses on the WO if previously charged.</li>
-  <li><strong>Return reasons</strong> — DEFECTIVE, WRONG-MODEL, OVERSHIPPED, EXPIRED, WRONG-CONDITION. Captured in the MATRECTRANS reason code field for vendor scorecards.</li>
-  <li><strong>Once issued, must Return path</strong> — if items have been issued to a WO (MATUSETRANS), Maximo will NOT permit Void. The user must first Return-to-Store (reverse the issue) and only then can attempt vendor return. This protects audit chain integrity [EOTRAG Query 14].</li>
-  <li><strong>Credit memo</strong> — the vendor return triggers an expected credit. Maximo can auto-generate an AP credit invoice referencing the return receipt, or wait for the vendor to issue their own credit which is then 3-way-matched against the return.</li>
-  <li><strong>Partial returns</strong> — only a portion of a receipt can be returned (e.g. 5 of 10 units defective). Original MATRECTRANS keeps qty=10 ; return MATRECTRANS row qty=5 (negative or "return" type).</li>
-  <li><strong>Voided receipts and audit</strong> — a void creates a reversing row with VOID flag = Y, never deletes the original. Audit trail preserved.</li>
-  <li><strong>GL impact</strong> — return reverses the original GL postings (debit/credit symmetric); void does the same but with a "VOID" reason code.</li>
+  <li><strong>Return</strong> — renvoyer au vendor des items réceptionnés. Utilisé quand les items sont défectueux, mauvais modèle, périmés, ou en excès. Crée une ligne MATRECTRANS reverse + déclenche un AP credit voucher.</li>
+  <li><strong>Void</strong> — annuler entièrement un receipt comme s'il n'avait jamais eu lieu. Utilisé quand un receipt a été saisi par erreur (typo sur qty, mauvaise PO) avant toute transaction downstream.</li>
+  <li><strong>Distinction Return vs Void</strong> — Return suppose que les items sont physiquement arrivés mais doivent repartir (défectueux, faux) ; Void suppose que le receipt lui-même était logiquement incorrect (erreur de saisie).</li>
+  <li><strong>Règles Void</strong> — un receipt ne peut être voided QUE si aucune transaction downstream n'existe. Conditions bloquantes : items déjà issués à une WO, déjà transférés vers un autre storeroom, déjà kit-assemblés, AP voucher déjà payé.</li>
+  <li><strong>Workflow Return</strong> — Receiving app → Select Item for Return → choisir la ligne MATRECTRANS originale → saisir return qty + reason code → Maximo crée une ligne reverse, décrémente INVBALANCES, déclenche le processus vendor return shipment.</li>
+  <li><strong>Return d'un rotating item</strong> — doit référencer l'ASSETNUM spécifique retourné (chaque unité étant unique). L'historique du record asset est préservé (l'asset n'est pas supprimé, juste passé à un statut « returned to vendor »). Le coût se réverse sur la WO si précédemment imputé.</li>
+  <li><strong>Reasons de Return</strong> — DEFECTIVE, WRONG-MODEL, OVERSHIPPED, EXPIRED, WRONG-CONDITION. Capturé dans le champ reason code de MATRECTRANS pour les scorecards vendor.</li>
+  <li><strong>Once issued, must Return path</strong> — si les items ont été issués à une WO (MATUSETRANS), Maximo n'autorise PAS le Void. L'utilisateur doit d'abord Return-to-Store (réverser l'issue) et seulement ensuite peut tenter le vendor return. Cela protège l'intégrité de la chaîne audit [EOTRAG Query 14].</li>
+  <li><strong>Credit memo</strong> — le vendor return déclenche un crédit attendu. Maximo peut auto-générer une AP credit invoice référençant le return receipt, ou attendre que le vendor émette son propre crédit qui est ensuite 3-way-matched contre le return.</li>
+  <li><strong>Partial returns</strong> — seule une portion d'un receipt peut être retournée (ex. 5 sur 10 défectueuses). La MATRECTRANS originale garde qty=10 ; la ligne MATRECTRANS de return qty=5 (négatif ou type « return »).</li>
+  <li><strong>Voided receipts et audit</strong> — un void crée une ligne reverse avec flag VOID = Y, ne supprime jamais l'original. Audit trail préservé.</li>
+  <li><strong>Impact GL</strong> — un return inverse les postings GL d'origine (debit/credit symétrique) ; un void fait pareil mais avec un reason code « VOID ».</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-6-2-voidreturn">
   <pre class="mermaid">
 flowchart TD
-  RECEIPT["MATRECTRANS row exists<br/>(receipt completed)"]:::start
-  CHECK{"Does this receipt have<br/>any <b>downstream transaction</b> ?<br/>(issue / transfer / inspection<br/>completed / WO charge)"}:::decision
+  RECEIPT["Ligne MATRECTRANS existe<br/>(receipt complet)"]:::start
+  CHECK{"Ce receipt a-t-il<br/>une <b>transaction downstream</b> ?<br/>(issue / transfert / inspection<br/>terminée / charge WO)"}:::decision
 
-  VOID_OK["<b>Void Receipt</b> path<br/>(STU §6.2)"]:::ok
-  VOID_TX["MATRECTRANS reversed<br/>balance -= receipt_qty<br/>Receipt status = VOIDED<br/>GL receipt entry reversed"]:::action
-  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::endNode
+  VOID_OK["Chemin <b>Void Receipt</b><br/>(STU §6.2)"]:::ok
+  VOID_TX["MATRECTRANS reverse<br/>balance -= receipt_qty<br/>Statut Receipt = VOIDED<br/>Entry GL receipt reverse"]:::action
+  VOID_END["Receipt effacé des<br/>records actifs<br/>(ligne audit préservée)"]:::endNode
 
-  RETURN_REQ["<b>Return path mandatory</b><br/>cannot Void — would orphan<br/>downstream transactions"]:::warn
-  RETURN_TX["Inventory Usage<br/><b>Return type</b> row<br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(or Return-to-Vendor PO line)"]:::action
-  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::endNode
+  RETURN_REQ["<b>Chemin Return obligatoire</b><br/>void impossible — orphelinerait<br/>les transactions downstream"]:::warn
+  RETURN_TX["Inventory Usage<br/>ligne <b>Return type</b><br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(ou Return-to-Vendor sur ligne PO)"]:::action
+  RETURN_END["Receipt reste valide<br/>return journalisé séparément<br/>(GL reste cohérente)"]:::endNode
 
   RECEIPT --> CHECK
-  CHECK -- No --> VOID_OK --> VOID_TX --> VOID_END
-  CHECK -- Yes --> RETURN_REQ --> RETURN_TX --> RETURN_END
+  CHECK -- Non --> VOID_OK --> VOID_TX --> VOID_END
+  CHECK -- Oui --> RETURN_REQ --> RETURN_TX --> RETURN_END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -18231,19 +18231,19 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>"Can I void this receipt?" — depends on downstream activity</strong>. The most common exam pitfall is confusing return and void use cases.</p>
+  <p><strong>« Puis-je voider ce receipt ? » — dépend de l'activité downstream</strong>. Le piège d'examen le plus courant est de confondre les cas d'usage return et void.</p>
   <ul>
-    <li>Trap: assuming you can void any receipt at will. False — once a downstream transaction exists, void is blocked.</li>
-    <li>Trap: thinking return deletes the original MATRECTRANS row. False — Maximo creates a reversing row; nothing is deleted.</li>
-    <li>Trap: forgetting that rotating returns must reference the specific ASSETNUM. The asset record is preserved with status change.</li>
-    <li>Trap: thinking AP credit is auto-issued for any return. Not always — depends on vendor agreement and Maximo config.</li>
+    <li>Piège : supposer qu'on peut voider n'importe quel receipt à volonté. Faux — dès qu'une transaction downstream existe, le void est bloqué.</li>
+    <li>Piège : penser que le return supprime la ligne MATRECTRANS originale. Faux — Maximo crée une ligne reverse ; rien n'est supprimé.</li>
+    <li>Piège : oublier que les returns rotating doivent référencer l'ASSETNUM spécifique. Le record asset est préservé avec changement de statut.</li>
+    <li>Piège : penser que l'AP credit est auto-émis pour n'importe quel return. Pas toujours — dépend de l'accord vendor et de la config Maximo.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A receipt of 50 units was made yesterday. 20 of those units have already been issued to a work order today. Can the original receipt now be voided?</p>
-  <details><summary>Afficher la réponse</summary><p>No. Voiding requires that NO downstream transaction (issue, transfer, kit assembly) has occurred. Since 20 units were issued, void is blocked. The user must instead: (1) Return the 20 issued units back to store via Return-to-Store transaction, then (2) initiate a vendor return for the full 50 units, OR (3) just initiate a vendor return for the remaining 30 in-store + plan to recover the 20 from the WO if defective.</p></details>
+  <p>Q. Un receipt de 50 unités a été fait hier. 20 de ces unités ont déjà été issuées à une work order aujourd'hui. Le receipt original peut-il maintenant être voided ?</p>
+  <details><summary>Afficher la réponse</summary><p>Non. Le void exige qu'AUCUNE transaction downstream (issue, transfer, kit assembly) n'ait eu lieu. Puisque 20 unités ont été issuées, le void est bloqué. L'utilisateur doit plutôt : (1) Return les 20 unités issuées vers le store via une transaction Return-to-Store, puis (2) initier un vendor return pour les 50 unités complètes, OU (3) simplement initier un vendor return pour les 30 restantes en store + prévoir de récupérer les 20 sur la WO si défectueuses.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -18260,13 +18260,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A receiving clerk realizes that yesterday they entered a PO receipt for 50 units instead of the correct 5 units. No items have been issued or transferred since.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Should the clerk perform a Return or a Void?</div>
+  <div class="mcq-context">Un clerk receiving se rend compte qu'hier il a saisi un receipt PO pour 50 unités au lieu des 5 unités correctes. Aucun item n'a été issué ou transféré depuis.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Le clerk doit-il faire un Return ou un Void ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-A"><input type="radio" name="c1000-208-mcq-6-2-001" value="A" id="c1000-208-mcq-6-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Return — the qty was wrong, return the difference to the vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-001-B"><input type="radio" name="c1000-208-mcq-6-2-001" value="B" id="c1000-208-mcq-6-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Void — the receipt was a data entry error; reverse it and re-enter correctly</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-C"><input type="radio" name="c1000-208-mcq-6-2-001" value="C" id="c1000-208-mcq-6-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Adjust Inventory Balance manually for the 45 ghost units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-D"><input type="radio" name="c1000-208-mcq-6-2-001" value="D" id="c1000-208-mcq-6-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Delete the original receipt row from the database</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-A"><input type="radio" name="c1000-208-mcq-6-2-001" value="A" id="c1000-208-mcq-6-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Return — la qty était fausse, retourner la différence au vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-001-B"><input type="radio" name="c1000-208-mcq-6-2-001" value="B" id="c1000-208-mcq-6-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Void — le receipt était une erreur de saisie ; le réverser et re-saisir correctement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-C"><input type="radio" name="c1000-208-mcq-6-2-001" value="C" id="c1000-208-mcq-6-2-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Adjust Inventory Balance manuellement pour les 45 unités fantômes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-001-D"><input type="radio" name="c1000-208-mcq-6-2-001" value="D" id="c1000-208-mcq-6-2-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Supprimer la ligne de receipt originale dans la base de données</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18307,20 +18307,20 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-6-2-voidreturn-c1000-208-mcq-6-2-001">
   <pre class="mermaid">
 flowchart TD
-  RECEIPT["MATRECTRANS row exists<br/>(receipt completed)"]:::start
-  CHECK{"Does this receipt have<br/>any <b>downstream transaction</b> ?<br/>(issue / transfer / inspection<br/>completed / WO charge)"}:::decision
+  RECEIPT["Ligne MATRECTRANS existe<br/>(receipt complet)"]:::start
+  CHECK{"Ce receipt a-t-il<br/>une <b>transaction downstream</b> ?<br/>(issue / transfert / inspection<br/>terminée / charge WO)"}:::decision
 
-  VOID_OK["<b>Void Receipt</b> path<br/>(STU §6.2)"]:::ok
-  VOID_TX["MATRECTRANS reversed<br/>balance -= receipt_qty<br/>Receipt status = VOIDED<br/>GL receipt entry reversed"]:::action
-  VOID_END["Receipt erased from<br/>active records<br/>(audit row preserved)"]:::endNode
+  VOID_OK["Chemin <b>Void Receipt</b><br/>(STU §6.2)"]:::ok
+  VOID_TX["MATRECTRANS reverse<br/>balance -= receipt_qty<br/>Statut Receipt = VOIDED<br/>Entry GL receipt reverse"]:::action
+  VOID_END["Receipt effacé des<br/>records actifs<br/>(ligne audit préservée)"]:::endNode
 
-  RETURN_REQ["<b>Return path mandatory</b><br/>cannot Void — would orphan<br/>downstream transactions"]:::warn
-  RETURN_TX["Inventory Usage<br/><b>Return type</b> row<br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(or Return-to-Vendor PO line)"]:::action
-  RETURN_END["Receipt remains valid<br/>return logged separately<br/>(GL stays consistent)"]:::endNode
+  RETURN_REQ["<b>Chemin Return obligatoire</b><br/>void impossible — orphelinerait<br/>les transactions downstream"]:::warn
+  RETURN_TX["Inventory Usage<br/>ligne <b>Return type</b><br/>balance -= return_qty<br/>INVTRANS type=RETURN<br/>(ou Return-to-Vendor sur ligne PO)"]:::action
+  RETURN_END["Receipt reste valide<br/>return journalisé séparément<br/>(GL reste cohérente)"]:::endNode
 
   RECEIPT --> CHECK
-  CHECK -- No --> VOID_OK --> VOID_TX --> VOID_END
-  CHECK -- Yes --> RETURN_REQ --> RETURN_TX --> RETURN_END
+  CHECK -- Non --> VOID_OK --> VOID_TX --> VOID_END
+  CHECK -- Oui --> RETURN_REQ --> RETURN_TX --> RETURN_END
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
   classDef decision fill:#F59E0B,stroke:#B45309,color:#FFFFFF;
@@ -18347,13 +18347,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A clerk attempts to Void a receipt of 100 units, but 30 of those units have already been issued to a work order.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does Maximo do?</div>
+  <div class="mcq-context">Un clerk tente de Void un receipt de 100 unités, mais 30 de ces unités ont déjà été issuées à une work order.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que fait Maximo ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-A"><input type="radio" name="c1000-208-mcq-6-2-002" value="A" id="c1000-208-mcq-6-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Voids the receipt and automatically reverses the WO issue</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-B"><input type="radio" name="c1000-208-mcq-6-2-002" value="B" id="c1000-208-mcq-6-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Voids only the unissued 70 units; the 30 issued remain on the WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-002-C"><input type="radio" name="c1000-208-mcq-6-2-002" value="C" id="c1000-208-mcq-6-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Blocks the void with an error; the user must first reverse the WO issue (Return-to-Store) before voiding becomes permitted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-D"><input type="radio" name="c1000-208-mcq-6-2-002" value="D" id="c1000-208-mcq-6-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Voids the receipt and creates a negative inventory balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-A"><input type="radio" name="c1000-208-mcq-6-2-002" value="A" id="c1000-208-mcq-6-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Voide le receipt et réverse automatiquement l'issue WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-B"><input type="radio" name="c1000-208-mcq-6-2-002" value="B" id="c1000-208-mcq-6-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Voide seulement les 70 unités non issuées ; les 30 issuées restent sur la WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-002-C"><input type="radio" name="c1000-208-mcq-6-2-002" value="C" id="c1000-208-mcq-6-2-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Bloque le void avec une erreur ; l'utilisateur doit d'abord réverser l'issue WO (Return-to-Store) avant que le void soit autorisé</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-002-D"><input type="radio" name="c1000-208-mcq-6-2-002" value="D" id="c1000-208-mcq-6-2-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Voide le receipt et crée une balance d'inventaire négative</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18404,13 +18404,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A clerk needs to return 1 of 3 motors received last week to the vendor because it arrived damaged.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the critical step when returning a rotating item?</div>
+  <div class="mcq-context">Un clerk doit retourner 1 des 3 motors reçus la semaine dernière au vendor car il est arrivé endommagé.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'étape critique lors du return d'un rotating item ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-A"><input type="radio" name="c1000-208-mcq-6-2-003" value="A" id="c1000-208-mcq-6-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Delete the asset record before initiating the return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-B"><input type="radio" name="c1000-208-mcq-6-2-003" value="B" id="c1000-208-mcq-6-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Return without specifying which unit — Maximo selects FIFO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-C"><input type="radio" name="c1000-208-mcq-6-2-003" value="C" id="c1000-208-mcq-6-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Return is not allowed for rotating items; only repair workflow applies</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-003-D"><input type="radio" name="c1000-208-mcq-6-2-003" value="D" id="c1000-208-mcq-6-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Specify the exact ASSETNUM of the damaged motor; the asset record is preserved with status change to "returned to vendor"</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-A"><input type="radio" name="c1000-208-mcq-6-2-003" value="A" id="c1000-208-mcq-6-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Supprimer le record asset avant d'initier le return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-B"><input type="radio" name="c1000-208-mcq-6-2-003" value="B" id="c1000-208-mcq-6-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Return sans spécifier quelle unité — Maximo choisit en FIFO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-003-C"><input type="radio" name="c1000-208-mcq-6-2-003" value="C" id="c1000-208-mcq-6-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Le return n'est pas autorisé pour les rotating items ; seul le workflow repair s'applique</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-003-D"><input type="radio" name="c1000-208-mcq-6-2-003" value="D" id="c1000-208-mcq-6-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Spécifier l'ASSETNUM exact du motor endommagé ; le record asset est préservé avec changement de statut vers « returned to vendor »</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18461,13 +18461,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An auditor reviews how Maximo records the lifecycle of a voided receipt.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the MATRECTRANS table contain after a receipt is successfully voided?</div>
+  <div class="mcq-context">Un auditeur revoit comment Maximo enregistre le cycle de vie d'un voided receipt.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que contient la table MATRECTRANS après qu'un receipt a été voided avec succès ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-004-A"><input type="radio" name="c1000-208-mcq-6-2-004" value="A" id="c1000-208-mcq-6-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Two rows: the original receipt + a reversing row with VOID flag = Y</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-B"><input type="radio" name="c1000-208-mcq-6-2-004" value="B" id="c1000-208-mcq-6-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">No rows — the original is deleted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-C"><input type="radio" name="c1000-208-mcq-6-2-004" value="C" id="c1000-208-mcq-6-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">One row with VOID flag = Y replacing the original</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-D"><input type="radio" name="c1000-208-mcq-6-2-004" value="D" id="c1000-208-mcq-6-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A row archived to a separate VOIDS table only auditors can access</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-004-A"><input type="radio" name="c1000-208-mcq-6-2-004" value="A" id="c1000-208-mcq-6-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Deux lignes : le receipt original + une ligne reverse avec flag VOID = Y</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-B"><input type="radio" name="c1000-208-mcq-6-2-004" value="B" id="c1000-208-mcq-6-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Aucune ligne — l'original est supprimé</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-C"><input type="radio" name="c1000-208-mcq-6-2-004" value="C" id="c1000-208-mcq-6-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une ligne avec flag VOID = Y remplaçant l'original</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-004-D"><input type="radio" name="c1000-208-mcq-6-2-004" value="D" id="c1000-208-mcq-6-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Une ligne archivée dans une table VOIDS séparée à laquelle seuls les auditeurs ont accès</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18518,13 +18518,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A receipt of 20 valves was made last week. Today, QA inspection revealed that 5 of the valves have manufacturing defects.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the correct action?</div>
+  <div class="mcq-context">Un receipt de 20 valves a été fait la semaine dernière. Aujourd'hui, l'inspection QA révèle que 5 des valves ont des défauts de fabrication.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'action correcte ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-A"><input type="radio" name="c1000-208-mcq-6-2-005" value="A" id="c1000-208-mcq-6-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Void the entire receipt and re-enter the 15 good ones as a new receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-005-B"><input type="radio" name="c1000-208-mcq-6-2-005" value="B" id="c1000-208-mcq-6-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Perform a partial Return of 5 valves with reason DEFECTIVE; original receipt of 20 stays; INVBALANCES decreases by 5</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-C"><input type="radio" name="c1000-208-mcq-6-2-005" value="C" id="c1000-208-mcq-6-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Adjust the inventory balance manually for 15 units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-D"><input type="radio" name="c1000-208-mcq-6-2-005" value="D" id="c1000-208-mcq-6-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issue the 5 defective valves to a "scrap" work order to write them off</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-A"><input type="radio" name="c1000-208-mcq-6-2-005" value="A" id="c1000-208-mcq-6-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Voider le receipt entier et re-saisir les 15 bonnes comme nouveau receipt</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-005-B"><input type="radio" name="c1000-208-mcq-6-2-005" value="B" id="c1000-208-mcq-6-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Effectuer un Return partiel de 5 valves avec reason DEFECTIVE ; le receipt original de 20 reste ; INVBALANCES diminue de 5</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-C"><input type="radio" name="c1000-208-mcq-6-2-005" value="C" id="c1000-208-mcq-6-2-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Ajuster manuellement la balance d'inventory à 15 unités</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-005-D"><input type="radio" name="c1000-208-mcq-6-2-005" value="D" id="c1000-208-mcq-6-2-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issuer les 5 valves défectueuses à une work order « scrap » pour les passer en perte</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18575,13 +18575,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A vendor return has been initiated for 5 defective valves. The vendor has agreed to issue a credit. The clerk asks: "How is this credit captured in Maximo?"</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the correct mechanism?</div>
+  <div class="mcq-context">Un vendor return a été initié pour 5 valves défectueuses. Le vendor a accepté d'émettre un crédit. Le clerk demande : « Comment ce crédit est-il capturé dans Maximo ? »</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le mécanisme correct ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-A"><input type="radio" name="c1000-208-mcq-6-2-006" value="A" id="c1000-208-mcq-6-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Maximo cannot capture vendor credits; it must be done in the AP system manually</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-B"><input type="radio" name="c1000-208-mcq-6-2-006" value="B" id="c1000-208-mcq-6-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Issue a new PO with negative quantities for the credit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-006-C"><input type="radio" name="c1000-208-mcq-6-2-006" value="C" id="c1000-208-mcq-6-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">An AP credit invoice is generated (or matched against the vendor's credit memo) referencing the return MATRECTRANS row</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-D"><input type="radio" name="c1000-208-mcq-6-2-006" value="D" id="c1000-208-mcq-6-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">The credit is silently absorbed by the inventory variance account</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-A"><input type="radio" name="c1000-208-mcq-6-2-006" value="A" id="c1000-208-mcq-6-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Maximo ne peut pas capturer les crédits vendor ; ça doit être fait manuellement dans le système AP</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-B"><input type="radio" name="c1000-208-mcq-6-2-006" value="B" id="c1000-208-mcq-6-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Émettre une nouvelle PO avec des quantités négatives pour le crédit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-2-006-C"><input type="radio" name="c1000-208-mcq-6-2-006" value="C" id="c1000-208-mcq-6-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une AP credit invoice est générée (ou matchée contre le credit memo du vendor) référençant la ligne MATRECTRANS de return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-2-006-D"><input type="radio" name="c1000-208-mcq-6-2-006" value="D" id="c1000-208-mcq-6-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le crédit est silencieusement absorbé par le compte variance d'inventaire</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
