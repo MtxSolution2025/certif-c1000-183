@@ -18639,15 +18639,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-7-1">
   <div class="breadcrumb">Section 7 <span class="brand-dot">·</span> 7.1</div>
   <div class="lesson-header">
-    <h1>Physical Count Frequency (ABC, Count Groups)</h1>
+    <h1>Fréquence d'inventaire physique (ABC, Count Groups)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 12%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-7-1.svg" alt="C1000-208 lesson 7-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-7-1.svg" alt="Illustration de la leçon C1000-208 7-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-1" id="lt-c1000-208-7-1-c" class="lt-course" checked>
@@ -18661,27 +18661,27 @@ flowchart TD
         <!-- ============ LESSON c1000-208-7-1 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Identify and explain <strong>ABC Analysis</strong> for inventory classification by usage value</li>
-  <li>Identify and explain <strong>Inventory Count Groups</strong> as an alternative grouping mechanism</li>
-  <li>Configure <strong>ABC Breakpoints</strong> in the Organizations application</li>
-  <li>Understand how ABC class drives <strong>Cycle Count Days</strong> automatically</li>
-  <li>Manually override ABC categories per item in the <strong>Inventory application</strong> when needed (SAM Q10)</li>
+  <li>Identifier et expliquer l'<strong>ABC Analysis</strong> pour la classification d'inventaire par valeur d'usage</li>
+  <li>Identifier et expliquer les <strong>Inventory Count Groups</strong> comme mécanisme de regroupement alternatif</li>
+  <li>Configurer les <strong>ABC Breakpoints</strong> dans l'application Organizations</li>
+  <li>Comprendre comment la classe ABC pilote automatiquement les <strong>Cycle Count Days</strong></li>
+  <li>Surcharger manuellement les ABC categories par item dans l'application <strong>Inventory</strong> au besoin (SAM Q10)</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>ABC Analysis</strong> — Pareto-based classification: 20% of items typically account for 80% of inventory value. Maximo's report stratifies items into 3 classes (A, B, C) by year-to-date issued × last cost.</li>
-  <li><strong>ABC formula</strong> (verbatim from RAG): <code>dollar_value = year_to_date_issued × last_cost</code>. Items sorted descending; cumulative percentage drives A/B/C assignment based on Breakpoints.</li>
-  <li><strong>ABC Breakpoints</strong> — configured in <em>Organizations app → Inventory Options → ABC Breakpoints</em>. Three percentages summing to 100. Typical: A=30%, B=30%, C=40% (per IBM defaults). Customizable per Org.</li>
-  <li><strong>Class N (No category)</strong> — items excluded from ABC cycle counting. Used for service items, special-order one-offs, items not under cycle-count discipline.</li>
-  <li><strong>Cycle Count Days auto-stamped</strong> — running the ABC report automatically updates the Cycle Count Days field on each item: A=30 days, B=60 days, C=90 days (typical). The <em>cycle count discipline cascades from class assignment</em>.</li>
-  <li><strong>Pareto principle</strong> — 80/20 rule: 80% of inventory value comes from 20% of items. ABC is the operational implementation of this principle.</li>
-  <li><strong>Limits of value-only ABC</strong> — pure dollar-value misses mission-critical low-value spares (an O-ring that stops a $10M plant). Best practice: pair ABC (value) with VED (Vital/Essential/Desirable) classification → 9-cell matrix. ABC alone is the C1000-208 scope.</li>
-  <li><strong>Inventory Count Groups</strong> — an ALTERNATIVE classification scheme to ABC. Items can be grouped by storeroom, by criticality, by location zone, by department. Used as a Count Book filter (lesson 7.2). NOT mutually exclusive with ABC — both can coexist on the same item.</li>
-  <li><strong>Where ABC is set</strong>: viewable on every item record in Inventory application. The "ABC Type" field shows A/B/C/N.</li>
-  <li><strong>Where ABC is manually overridden</strong>: <strong>Inventory application</strong> (SAM Q10). Some items don't fit the auto-classification because of strategic reasons (insurance spares low value but critical → manually move from C to A); the Inventory app provides per-item override.</li>
-  <li><strong>Cycle counting frequency rules of thumb</strong>: A monthly (12×/yr), B quarterly (4×/yr), C annually (1×/yr) — most common rhythm, configurable per Org.</li>
-  <li><strong>Tolerances per class</strong>: A items often ±2%, B ±5%, C ±10% (variance allowed at count). Safety/regulated items 0%.</li>
+  <li><strong>ABC Analysis</strong> — classification basée sur Pareto : 20% des items représentent typiquement 80% de la valeur d'inventaire. Le report Maximo stratifie les items en 3 classes (A, B, C) par year-to-date issued × last cost.</li>
+  <li><strong>Formule ABC</strong> (verbatim RAG) : <code>dollar_value = year_to_date_issued × last_cost</code>. Items triés par ordre décroissant ; le pourcentage cumulé pilote l'assignation A/B/C selon les Breakpoints.</li>
+  <li><strong>ABC Breakpoints</strong> — configurés dans <em>Organizations app → Inventory Options → ABC Breakpoints</em>. Trois pourcentages dont la somme fait 100. Typique : A=30%, B=30%, C=40% (defaults IBM). Personnalisable par Org.</li>
+  <li><strong>Class N (No category)</strong> — items exclus du cycle counting ABC. Utilisé pour les service items, les special-order one-offs, les items hors discipline cycle-count.</li>
+  <li><strong>Cycle Count Days auto-stamped</strong> — l'exécution du report ABC met automatiquement à jour le champ Cycle Count Days sur chaque item : A=30 jours, B=60 jours, C=90 jours (typique). La <em>discipline cycle-count cascade depuis l'assignation de classe</em>.</li>
+  <li><strong>Principe de Pareto</strong> — règle 80/20 : 80% de la valeur d'inventaire vient de 20% des items. L'ABC est l'implémentation opérationnelle de ce principe.</li>
+  <li><strong>Limites de l'ABC value-only</strong> — la valeur dollar pure rate les spares mission-critical à faible valeur (un O-ring qui arrête une usine de 10 M$). Best practice : combiner ABC (valeur) avec VED (Vital/Essential/Desirable) → matrice 9 cellules. L'ABC seul est le scope C1000-208.</li>
+  <li><strong>Inventory Count Groups</strong> — un schéma de classification ALTERNATIF à l'ABC. Les items peuvent être regroupés par storeroom, criticité, zone de location, département. Utilisé comme filtre de Count Book (leçon 7.2). PAS mutuellement exclusif avec l'ABC — les deux peuvent coexister sur le même item.</li>
+  <li><strong>Où l'ABC est défini</strong> : visible sur chaque record d'item dans l'application Inventory. Le champ « ABC Type » affiche A/B/C/N.</li>
+  <li><strong>Où l'ABC est surchargé manuellement</strong> : application <strong>Inventory</strong> (SAM Q10). Certains items ne rentrent pas dans la classification auto pour des raisons stratégiques (insurance spares à faible valeur mais critiques → déplacer manuellement de C à A) ; l'app Inventory fournit l'override par item.</li>
+  <li><strong>Règles empiriques de fréquence cycle counting</strong> : A mensuel (12×/an), B trimestriel (4×/an), C annuel (1×/an) — rythme le plus courant, configurable par Org.</li>
+  <li><strong>Tolérances par classe</strong> : items A souvent ±2%, B ±5%, C ±10% (variance autorisée au count). Items safety/régulés 0%.</li>
 </ul></div>
 
 
@@ -18692,19 +18692,19 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>SAM Q10: where is ABC manually updated?</strong> — The answer is the <strong>Inventory</strong> application, NOT Reporting, Count Books, or Inventory Usage. This trips up candidates who confuse class generation (where the report runs) with class override (where the manual change is applied).</p>
+  <p><strong>SAM Q10 : où l'ABC est-il mis à jour manuellement ?</strong> — La réponse est l'application <strong>Inventory</strong>, PAS Reporting, Count Books ou Inventory Usage. Cela trompe les candidats qui confondent la génération de classe (où le report tourne) avec l'override de classe (où le changement manuel est appliqué).</p>
   <ul>
-    <li>Trap: thinking ABC categories are managed in the Reporting app. False — Reporting only displays the report.</li>
-    <li>Trap: thinking ABC is set in Count Books. False — Count Books CONSUME the ABC class to filter ; they don't manage it.</li>
-    <li>Trap: confusing ABC with Inventory Count Groups. They are independent classification dimensions.</li>
-    <li>Trap: assuming class N excludes from physical counts. It excludes from automatic ABC-driven cycle counting; manual or count-book-driven counts still work.</li>
+    <li>Piège : penser que les ABC categories se gèrent dans l'app Reporting. Faux — Reporting ne fait qu'afficher le report.</li>
+    <li>Piège : penser que l'ABC se règle dans Count Books. Faux — les Count Books CONSOMMENT la classe ABC pour filtrer ; ils ne la gèrent pas.</li>
+    <li>Piège : confondre l'ABC avec les Inventory Count Groups. Ce sont des dimensions de classification indépendantes.</li>
+    <li>Piège : supposer que la classe N exclut des physical counts. Elle exclut du cycle counting automatique piloté par l'ABC ; les counts manuels ou pilotés par count-book fonctionnent toujours.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. An item with low cost but mission-critical (it stops the plant if missing) is auto-classified as C by Maximo's ABC analysis. The reliability engineer wants this item counted monthly like A items. What should they do, and where?</p>
-  <details><summary>Afficher la réponse</summary><p>Manually override the ABC class from C to A in the <strong>Inventory application</strong> (per SAM Q10). The Cycle Count Days field will update accordingly. Best practice is to combine this manual override with VED (Vital/Essential/Desirable) classification documented separately, since pure dollar-value ABC misses mission-critical low-value spares.</p></details>
+  <p>Q. Un item à faible coût mais mission-critical (il arrête l'usine s'il manque) est auto-classé C par l'ABC analysis de Maximo. L'ingénieur fiabilité veut que cet item soit compté mensuellement comme un item A. Que doit-il faire, et où ?</p>
+  <details><summary>Afficher la réponse</summary><p>Surcharger manuellement la classe ABC de C à A dans l'application <strong>Inventory</strong> (selon SAM Q10). Le champ Cycle Count Days se met à jour en conséquence. Best practice : combiner cet override manuel avec une classification VED (Vital/Essential/Desirable) documentée séparément, puisque l'ABC dollar-value pur rate les spares mission-critical à faible valeur.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -18721,13 +18721,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom manager wants to optimize cycle-counting effort by focusing on high-value items.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does ABC analysis in Maximo classify items by?</div>
+  <div class="mcq-context">Un manager de storeroom veut optimiser l'effort de cycle-counting en se concentrant sur les items à forte valeur.</div>
+  <div class="mcq-stem"><strong>Question :</strong> L'ABC analysis dans Maximo classe les items selon quoi ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-A"><input type="radio" name="c1000-208-mcq-7-1-001" value="A" id="c1000-208-mcq-7-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Alphabetical order of item descriptions</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-B"><input type="radio" name="c1000-208-mcq-7-1-001" value="B" id="c1000-208-mcq-7-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Storage location (bin position)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-001-C"><input type="radio" name="c1000-208-mcq-7-1-001" value="C" id="c1000-208-mcq-7-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Year-to-date consumption value (issued qty × last cost) — the Pareto 80/20 principle</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-D"><input type="radio" name="c1000-208-mcq-7-1-001" value="D" id="c1000-208-mcq-7-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Vendor lead time in days</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-A"><input type="radio" name="c1000-208-mcq-7-1-001" value="A" id="c1000-208-mcq-7-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Ordre alphabétique des descriptions d'item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-B"><input type="radio" name="c1000-208-mcq-7-1-001" value="B" id="c1000-208-mcq-7-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Storage location (position du bin)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-001-C"><input type="radio" name="c1000-208-mcq-7-1-001" value="C" id="c1000-208-mcq-7-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Valeur de consommation year-to-date (issued qty × last cost) — principe de Pareto 80/20</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-001-D"><input type="radio" name="c1000-208-mcq-7-1-001" value="D" id="c1000-208-mcq-7-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Lead time vendor en jours</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18786,13 +18786,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An admin is setting up the ABC analysis breakpoints to override the IBM defaults of 30% / 30% / 40%.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Where in Maximo is this configuration done?</div>
+  <div class="mcq-context">Un admin règle les breakpoints d'ABC analysis pour surcharger les defaults IBM de 30% / 30% / 40%.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Où dans Maximo cette configuration se fait-elle ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-002-A"><input type="radio" name="c1000-208-mcq-7-1-002" value="A" id="c1000-208-mcq-7-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Organizations application → Inventory Options → ABC Breakpoints</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-B"><input type="radio" name="c1000-208-mcq-7-1-002" value="B" id="c1000-208-mcq-7-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Inventory application → Item record → ABC tab</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-C"><input type="radio" name="c1000-208-mcq-7-1-002" value="C" id="c1000-208-mcq-7-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Reporting application → ABC Report parameters</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-D"><input type="radio" name="c1000-208-mcq-7-1-002" value="D" id="c1000-208-mcq-7-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Count Books application → Settings tab</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-002-A"><input type="radio" name="c1000-208-mcq-7-1-002" value="A" id="c1000-208-mcq-7-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Application Organizations → Inventory Options → ABC Breakpoints</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-B"><input type="radio" name="c1000-208-mcq-7-1-002" value="B" id="c1000-208-mcq-7-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Application Inventory → record d'item → onglet ABC</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-C"><input type="radio" name="c1000-208-mcq-7-1-002" value="C" id="c1000-208-mcq-7-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Application Reporting → paramètres ABC Report</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-002-D"><input type="radio" name="c1000-208-mcq-7-1-002" value="D" id="c1000-208-mcq-7-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Application Count Books → onglet Settings</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18843,13 +18843,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">After ABC analysis is run, the items have been classified A, B, or C.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the typical cycle count frequency assigned by Maximo for each class?</div>
+  <div class="mcq-context">Après l'exécution de l'ABC analysis, les items ont été classés A, B ou C.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la fréquence de cycle count typique assignée par Maximo pour chaque classe ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-A"><input type="radio" name="c1000-208-mcq-7-1-003" value="A" id="c1000-208-mcq-7-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">All classes are counted annually with the same frequency</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-B"><input type="radio" name="c1000-208-mcq-7-1-003" value="B" id="c1000-208-mcq-7-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A annually, B quarterly, C monthly (highest-value counted least often)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-003-C"><input type="radio" name="c1000-208-mcq-7-1-003" value="C" id="c1000-208-mcq-7-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A monthly (~30 days), B quarterly (~60-90 days), C annually (~90+ days)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-D"><input type="radio" name="c1000-208-mcq-7-1-003" value="D" id="c1000-208-mcq-7-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo does not auto-set cycle counts; storeroom managers configure manually</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-A"><input type="radio" name="c1000-208-mcq-7-1-003" value="A" id="c1000-208-mcq-7-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Toutes les classes sont comptées annuellement à la même fréquence</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-B"><input type="radio" name="c1000-208-mcq-7-1-003" value="B" id="c1000-208-mcq-7-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">A annuellement, B trimestriellement, C mensuellement (plus haute valeur = moins compté)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-003-C"><input type="radio" name="c1000-208-mcq-7-1-003" value="C" id="c1000-208-mcq-7-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A mensuellement (~30 jours), B trimestriellement (~60-90 jours), C annuellement (~90+ jours)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-003-D"><input type="radio" name="c1000-208-mcq-7-1-003" value="D" id="c1000-208-mcq-7-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo ne règle pas auto les cycle counts ; les storeroom managers configurent manuellement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18900,8 +18900,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reliability engineer needs to manually update the ABC item category for an insurance spare item that auto-classified as C but is mission-critical.</div>
-  <div class="mcq-stem"><strong>Question :</strong> In which application are ABC item categories manually updated?</div>
+  <div class="mcq-context">Un ingénieur fiabilité doit mettre à jour manuellement la category ABC d'un insurance spare auto-classé C mais mission-critical.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Dans quelle application les ABC item categories sont-elles mises à jour manuellement ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-004-A"><input type="radio" name="c1000-208-mcq-7-1-004" value="A" id="c1000-208-mcq-7-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-004-B"><input type="radio" name="c1000-208-mcq-7-1-004" value="B" id="c1000-208-mcq-7-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Reporting</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -18965,13 +18965,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom manager wants to group items by physical zone (zone-A, zone-B) for daily walking-route count efficiency, regardless of their ABC class.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo concept supports this grouping?</div>
+  <div class="mcq-context">Un manager de storeroom veut grouper les items par zone physique (zone-A, zone-B) pour l'efficacité walking-route quotidienne du count, peu importe leur classe ABC.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel concept Maximo supporte ce regroupement ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-005-A"><input type="radio" name="c1000-208-mcq-7-1-005" value="A" id="c1000-208-mcq-7-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ABC analysis with custom breakpoints</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-005-B"><input type="radio" name="c1000-208-mcq-7-1-005" value="B" id="c1000-208-mcq-7-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Inventory Count Groups — alternative classification independent of ABC</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-005-A"><input type="radio" name="c1000-208-mcq-7-1-005" value="A" id="c1000-208-mcq-7-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ABC analysis avec breakpoints custom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-005-B"><input type="radio" name="c1000-208-mcq-7-1-005" value="B" id="c1000-208-mcq-7-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Inventory Count Groups — classification alternative indépendante de l'ABC</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-005-C"><input type="radio" name="c1000-208-mcq-7-1-005" value="C" id="c1000-208-mcq-7-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Commodity Codes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-005-D"><input type="radio" name="c1000-208-mcq-7-1-005" value="D" id="c1000-208-mcq-7-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Item Sets at Organization level</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-005-D"><input type="radio" name="c1000-208-mcq-7-1-005" value="D" id="c1000-208-mcq-7-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Item Sets au niveau Organization</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -19022,13 +19022,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner wants to exclude special-order, one-time-purchase items from the cycle counting routine.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the appropriate ABC class to assign?</div>
+  <div class="mcq-context">Un planificateur veut exclure les special-order one-time-purchase items du cycle counting de routine.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle classe ABC appropriée assigner ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-A"><input type="radio" name="c1000-208-mcq-7-1-006" value="A" id="c1000-208-mcq-7-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">C — lowest priority</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-B"><input type="radio" name="c1000-208-mcq-7-1-006" value="B" id="c1000-208-mcq-7-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Z — system reserved for excluded items</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-006-C"><input type="radio" name="c1000-208-mcq-7-1-006" value="C" id="c1000-208-mcq-7-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">N — No category, excludes from ABC cycle counting</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-D"><input type="radio" name="c1000-208-mcq-7-1-006" value="D" id="c1000-208-mcq-7-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">There is no way to exclude an item from cycle counting in Maximo</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-A"><input type="radio" name="c1000-208-mcq-7-1-006" value="A" id="c1000-208-mcq-7-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">C — priorité la plus basse</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-B"><input type="radio" name="c1000-208-mcq-7-1-006" value="B" id="c1000-208-mcq-7-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Z — réservée par le système pour les items exclus</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-006-C"><input type="radio" name="c1000-208-mcq-7-1-006" value="C" id="c1000-208-mcq-7-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">N — No category, exclut du cycle counting ABC</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-006-D"><input type="radio" name="c1000-208-mcq-7-1-006" value="D" id="c1000-208-mcq-7-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Il n'y a pas moyen d'exclure un item du cycle counting dans Maximo</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -19079,13 +19079,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A reliability engineer notes that pure dollar-value ABC misses some critical items. They ask: "What's the standard industry complement to ABC for spare parts?"</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which classification dimension is typically combined with ABC to address criticality?</div>
+  <div class="mcq-context">Un ingénieur fiabilité note que l'ABC dollar-value pur rate certains items critiques. Il demande : « Quel est le complément standard de l'industrie à l'ABC pour les spare parts ? »</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle dimension de classification est typiquement combinée avec l'ABC pour adresser la criticité ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-007-A"><input type="radio" name="c1000-208-mcq-7-1-007" value="A" id="c1000-208-mcq-7-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">UNSPSC commodity codes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-007-B"><input type="radio" name="c1000-208-mcq-7-1-007" value="B" id="c1000-208-mcq-7-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">VED (Vital / Essential / Desirable) classification — best practice from spare parts management</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-1-007-B"><input type="radio" name="c1000-208-mcq-7-1-007" value="B" id="c1000-208-mcq-7-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Classification VED (Vital / Essential / Desirable) — best practice du spare parts management</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-007-C"><input type="radio" name="c1000-208-mcq-7-1-007" value="C" id="c1000-208-mcq-7-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Cost type STANDARD</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-007-D"><input type="radio" name="c1000-208-mcq-7-1-007" value="D" id="c1000-208-mcq-7-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issue Unit standardization</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-1-007-D"><input type="radio" name="c1000-208-mcq-7-1-007" value="D" id="c1000-208-mcq-7-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Standardisation de l'Issue Unit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
