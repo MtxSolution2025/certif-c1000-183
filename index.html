@@ -15142,15 +15142,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-4-4">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.4</div>
   <div class="lesson-header">
-    <h1>Processing & Reservations</h1>
+    <h1>Traitement et Reservations</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 24%</span>
       <span class="meta-pill">~10 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-4-4.svg" alt="C1000-208 lesson 4-4 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-4-4.svg" alt="Illustration de la leçon C1000-208 4-4" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-4" id="lt-c1000-208-4-4-c" class="lt-course" checked>
@@ -15165,11 +15165,11 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li><strong>Manage Item Reservations</strong> — Delete or Modify</li>
-  <li>Change <strong>Inventory Usages Status</strong></li>
-  <li>Perform <strong>Shipment Receiving</strong> for Item / Tool</li>
-  <li>Perform <strong>Shipment Inspection</strong></li>
-  <li>Perform <strong>Void Shipment Receipt</strong></li>
+  <li><strong>Gérer les Item Reservations</strong> — Delete ou Modify</li>
+  <li>Changer le <strong>statut Inventory Usages</strong></li>
+  <li>Effectuer le <strong>Shipment Receiving</strong> pour Item / Tool</li>
+  <li>Effectuer la <strong>Shipment Inspection</strong></li>
+  <li>Effectuer un <strong>Void Shipment Receipt</strong></li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -15194,37 +15194,37 @@ flowchart TD
 
 <figure class="lesson-table" data-lesson="c1000-208-4-4">
   <table class="compare-table">
-    <caption>The 3 reservation types in Maximo Inventory — comparison and lifecycle.</caption>
+    <caption>Les 3 types de reservations dans Maximo Inventory — comparaison et cycle de vie.</caption>
     <thead>
       <tr>
         <th>Type</th>
-        <th>Blocks others?</th>
-        <th>Available balance impact</th>
-        <th>Typical source</th>
-        <th>Cancel rules</th>
+        <th>Bloque les autres ?</th>
+        <th>Impact sur l'available balance</th>
+        <th>Source typique</th>
+        <th>Règles d'annulation</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>HARD</strong></td>
-        <td><strong>Yes</strong> — quantity is committed and unavailable to other WOs / pick lists.</td>
-        <td><code>available_balance −= reserved_qty</code> (subtracted from on-hand for ROP and other reservation requests).</td>
-        <td>Approved <strong>WO</strong> with materials list (typically created on WO approve via job plan).</td>
-        <td>Manual via <strong>Add/Modify Reservations</strong> action in Inventory app or on the WO. Auto-cleared when the issue completes or the WO is cancelled.</td>
+        <td><strong>Oui</strong> — la quantité est engagée et indisponible pour les autres WOs / pick lists.</td>
+        <td><code>available_balance −= reserved_qty</code> (soustrait du on-hand pour le ROP et les autres demandes de reservation).</td>
+        <td><strong>WO</strong> approuvée avec materials list (typiquement créée à l'approbation de la WO via job plan).</td>
+        <td>Manuelle via l'action <strong>Add/Modify Reservations</strong> dans l'application Inventory ou sur la WO. Auto-clearée quand l'issue se complète ou que la WO est annulée.</td>
       </tr>
       <tr>
         <td><strong>SOFT</strong></td>
-        <td>No — informational only, intent to consume but no commitment.</td>
-        <td><strong>No impact</strong> on available balance. Visible on reservation reports for planning.</td>
-        <td>Pending / planning-phase WO (not yet approved). Forecast / job-plan templates.</td>
-        <td>Auto-cleared when the WO is approved (becomes HARD) or cancelled. Per SAM Q4 — answer B: PLANNING-status items can be reordered, and SOFT reservations can be considered when the storeroom <em>"Reorder includes soft reservations"</em> flag is set.</td>
+        <td>Non — informationnel uniquement, intention de consommer mais pas d'engagement.</td>
+        <td><strong>Aucun impact</strong> sur l'available balance. Visible sur les rapports de reservation pour planning.</td>
+        <td>WO en phase pending / planning (pas encore approuvée). Forecast / templates de job plan.</td>
+        <td>Auto-clearée quand la WO est approuvée (devient HARD) ou annulée. Selon SAM Q4 — réponse B : les items en statut PLANNING peuvent être reorderés, et les SOFT reservations peuvent être prises en compte quand le flag <em>« Reorder includes soft reservations »</em> du storeroom est activé.</td>
       </tr>
       <tr>
         <td><strong>AUTOMATIC</strong></td>
-        <td>Depends on item Reorder rules and the storeroom's reservation policy (effectively HARD-equivalent once triggered).</td>
-        <td>Varies — generally subtracts from available balance once auto-promoted to HARD.</td>
-        <td>System-generated based on the item's <strong>auto-reservation</strong> flag and ROP triggers. Common for fast-moving consumables.</td>
-        <td>Lifecycle-managed by Maximo (auto-created at WO approval, auto-cleared at issue or cancel). Not manually created — to override, switch the item flag.</td>
+        <td>Dépend des règles Reorder de l'item et de la politique de reservation du storeroom (équivalent HARD une fois déclenché).</td>
+        <td>Variable — soustrait généralement de l'available balance une fois auto-promue en HARD.</td>
+        <td>Générée par le système selon le flag <strong>auto-reservation</strong> de l'item et les triggers ROP. Courant pour les consommables à forte rotation.</td>
+        <td>Lifecycle géré par Maximo (auto-créée à l'approbation WO, auto-clearée à l'issue ou à l'annulation). Pas créée manuellement — pour override, basculer le flag de l'item.</td>
       </tr>
     </tbody>
   </table>
@@ -15263,13 +15263,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A WO had a hard reservation of 20 units; 8 are already issued. The planner wants to reduce the remaining reservation from 12 to 5 (will use less than initially planned).</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action accomplishes this?</div>
+  <div class="mcq-context">Une WO avait une hard reservation de 20 unités ; 8 sont déjà issuées. Le planificateur veut réduire la reservation restante de 12 à 5 (utilisera moins que prévu initialement).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo accomplit cela ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-001-A"><input type="radio" name="c1000-208-mcq-4-4-001" value="A" id="c1000-208-mcq-4-4-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Reservations &gt; Modify ; change qty from 20 to 13 (8 issued + 5 remaining)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-B"><input type="radio" name="c1000-208-mcq-4-4-001" value="B" id="c1000-208-mcq-4-4-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">More Actions &gt; Reservations &gt; Delete ; recreate with qty 5</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-C"><input type="radio" name="c1000-208-mcq-4-4-001" value="C" id="c1000-208-mcq-4-4-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Cancel the WO and recreate with new qty</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-D"><input type="radio" name="c1000-208-mcq-4-4-001" value="D" id="c1000-208-mcq-4-4-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Current Balance to compensate</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-001-A"><input type="radio" name="c1000-208-mcq-4-4-001" value="A" id="c1000-208-mcq-4-4-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">More Actions &gt; Reservations &gt; Modify ; passer la qty de 20 à 13 (8 issuées + 5 restantes)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-B"><input type="radio" name="c1000-208-mcq-4-4-001" value="B" id="c1000-208-mcq-4-4-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">More Actions &gt; Reservations &gt; Delete ; recréer avec qty 5</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-C"><input type="radio" name="c1000-208-mcq-4-4-001" value="C" id="c1000-208-mcq-4-4-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Annuler la WO et la recréer avec la nouvelle qty</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-001-D"><input type="radio" name="c1000-208-mcq-4-4-001" value="D" id="c1000-208-mcq-4-4-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Adjust Current Balance pour compenser</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -15312,37 +15312,37 @@ flowchart TD
       <aside class="mcq-mini-figure" data-source-figure="c1000-208-4-4" data-mcq-uid="c1000-208-mcq-4-4-001">
         <figure class="lesson-table" data-lesson="c1000-208-4-4-c1000-208-mcq-4-4-001">
   <table class="compare-table">
-    <caption>The 3 reservation types in Maximo Inventory — comparison and lifecycle.</caption>
+    <caption>Les 3 types de reservations dans Maximo Inventory — comparaison et cycle de vie.</caption>
     <thead>
       <tr>
         <th>Type</th>
-        <th>Blocks others?</th>
-        <th>Available balance impact</th>
-        <th>Typical source</th>
-        <th>Cancel rules</th>
+        <th>Bloque les autres ?</th>
+        <th>Impact sur l'available balance</th>
+        <th>Source typique</th>
+        <th>Règles d'annulation</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>HARD</strong></td>
-        <td><strong>Yes</strong> — quantity is committed and unavailable to other WOs / pick lists.</td>
-        <td><code>available_balance −= reserved_qty</code> (subtracted from on-hand for ROP and other reservation requests).</td>
-        <td>Approved <strong>WO</strong> with materials list (typically created on WO approve via job plan).</td>
-        <td>Manual via <strong>Add/Modify Reservations</strong> action in Inventory app or on the WO. Auto-cleared when the issue completes or the WO is cancelled.</td>
+        <td><strong>Oui</strong> — la quantité est engagée et indisponible pour les autres WOs / pick lists.</td>
+        <td><code>available_balance −= reserved_qty</code> (soustrait du on-hand pour le ROP et les autres demandes de reservation).</td>
+        <td><strong>WO</strong> approuvée avec materials list (typiquement créée à l'approbation de la WO via job plan).</td>
+        <td>Manuelle via l'action <strong>Add/Modify Reservations</strong> dans l'application Inventory ou sur la WO. Auto-clearée quand l'issue se complète ou que la WO est annulée.</td>
       </tr>
       <tr>
         <td><strong>SOFT</strong></td>
-        <td>No — informational only, intent to consume but no commitment.</td>
-        <td><strong>No impact</strong> on available balance. Visible on reservation reports for planning.</td>
-        <td>Pending / planning-phase WO (not yet approved). Forecast / job-plan templates.</td>
-        <td>Auto-cleared when the WO is approved (becomes HARD) or cancelled. Per SAM Q4 — answer B: PLANNING-status items can be reordered, and SOFT reservations can be considered when the storeroom <em>"Reorder includes soft reservations"</em> flag is set.</td>
+        <td>Non — informationnel uniquement, intention de consommer mais pas d'engagement.</td>
+        <td><strong>Aucun impact</strong> sur l'available balance. Visible sur les rapports de reservation pour planning.</td>
+        <td>WO en phase pending / planning (pas encore approuvée). Forecast / templates de job plan.</td>
+        <td>Auto-clearée quand la WO est approuvée (devient HARD) ou annulée. Selon SAM Q4 — réponse B : les items en statut PLANNING peuvent être reorderés, et les SOFT reservations peuvent être prises en compte quand le flag <em>« Reorder includes soft reservations »</em> du storeroom est activé.</td>
       </tr>
       <tr>
         <td><strong>AUTOMATIC</strong></td>
-        <td>Depends on item Reorder rules and the storeroom's reservation policy (effectively HARD-equivalent once triggered).</td>
-        <td>Varies — generally subtracts from available balance once auto-promoted to HARD.</td>
-        <td>System-generated based on the item's <strong>auto-reservation</strong> flag and ROP triggers. Common for fast-moving consumables.</td>
-        <td>Lifecycle-managed by Maximo (auto-created at WO approval, auto-cleared at issue or cancel). Not manually created — to override, switch the item flag.</td>
+        <td>Dépend des règles Reorder de l'item et de la politique de reservation du storeroom (équivalent HARD une fois déclenché).</td>
+        <td>Variable — soustrait généralement de l'available balance une fois auto-promue en HARD.</td>
+        <td>Générée par le système selon le flag <strong>auto-reservation</strong> de l'item et les triggers ROP. Courant pour les consommables à forte rotation.</td>
+        <td>Lifecycle géré par Maximo (auto-créée à l'approbation WO, auto-clearée à l'issue ou à l'annulation). Pas créée manuellement — pour override, basculer le flag de l'item.</td>
       </tr>
     </tbody>
   </table>
@@ -15364,8 +15364,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A planner needs to know which type of reservation prevents other Work Orders from using a particular item.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which reservation type blocks the item for other demands?</div>
+  <div class="mcq-context">Un planificateur doit savoir quel type de reservation empêche d'autres Work Orders d'utiliser un item particulier.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel type de reservation bloque l'item pour les autres demandes ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-002-A"><input type="radio" name="c1000-208-mcq-4-4-002" value="A" id="c1000-208-mcq-4-4-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">SOFT</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-002-B"><input type="radio" name="c1000-208-mcq-4-4-002" value="B" id="c1000-208-mcq-4-4-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">PLANNED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -15426,8 +15426,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storekeeper has an Inventory Usage record in status ENTERED. The items have been picked and moved to the staging area but not yet issued.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which status best reflects this situation?</div>
+  <div class="mcq-context">Un magasinier a un Inventory Usage record en statut ENTERED. Les items ont été picked et déplacés vers le staging area mais pas encore issués.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel statut reflète le mieux cette situation ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-003-A"><input type="radio" name="c1000-208-mcq-4-4-003" value="A" id="c1000-208-mcq-4-4-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">COMPLETE</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-003-B"><input type="radio" name="c1000-208-mcq-4-4-003" value="B" id="c1000-208-mcq-4-4-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">STAGED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -15492,8 +15492,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A Shipment SH-101 from another organization arrives at the destination site. The site clerk needs to formally receive the items into inventory.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo application processes this receipt?</div>
+  <div class="mcq-context">Un Shipment SH-101 d'une autre organisation arrive au site destination. Le clerk du site doit formellement réceptionner les items dans l'inventory.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle application Maximo traite cette réception ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-004-A"><input type="radio" name="c1000-208-mcq-4-4-004" value="A" id="c1000-208-mcq-4-4-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Shipment Receiving</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-004-B"><input type="radio" name="c1000-208-mcq-4-4-004" value="B" id="c1000-208-mcq-4-4-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Inventory app — More Actions &gt; Receive Shipment</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -15550,13 +15550,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A site requires inspection on incoming critical valves. A Shipment SH-200 with 50 valves arrives. The receiving clerk processes the receipt.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the valves immediately after receipt?</div>
+  <div class="mcq-context">Un site exige l'inspection sur les valves critiques entrantes. Un Shipment SH-200 avec 50 valves arrive. Le clerk de réception traite le receipt.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il aux valves immédiatement après le receipt ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-A"><input type="radio" name="c1000-208-mcq-4-4-005" value="A" id="c1000-208-mcq-4-4-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Items move directly to STORES status ; balance increases immediately</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-B"><input type="radio" name="c1000-208-mcq-4-4-005" value="B" id="c1000-208-mcq-4-4-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Items are returned to vendor for QA verification</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-005-C"><input type="radio" name="c1000-208-mcq-4-4-005" value="C" id="c1000-208-mcq-4-4-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Items go to a holding location with status WINSP ; balance not yet incremented in STORES</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-D"><input type="radio" name="c1000-208-mcq-4-4-005" value="D" id="c1000-208-mcq-4-4-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Items are split between half STORES and half quarantine pending inspection</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-A"><input type="radio" name="c1000-208-mcq-4-4-005" value="A" id="c1000-208-mcq-4-4-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les items passent directement au statut STORES ; balance incrémentée immédiatement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-B"><input type="radio" name="c1000-208-mcq-4-4-005" value="B" id="c1000-208-mcq-4-4-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les items sont retournés au vendor pour vérification QA</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-005-C"><input type="radio" name="c1000-208-mcq-4-4-005" value="C" id="c1000-208-mcq-4-4-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les items vont en holding location avec statut WINSP ; balance pas encore incrémentée en STORES</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-005-D"><input type="radio" name="c1000-208-mcq-4-4-005" value="D" id="c1000-208-mcq-4-4-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les items sont splittés entre moitié STORES et moitié quarantaine en attente d'inspection</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -15613,13 +15613,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A clerk realized that a Shipment receipt was processed in error : the items were never actually delivered. The MATRECTRANS row exists with qty 25.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo action corrects this without leaving phantom inventory?</div>
+  <div class="mcq-context">Un clerk se rend compte qu'un Shipment receipt a été traité par erreur : les items n'ont jamais été livrés en réalité. La ligne MATRECTRANS existe avec qty 25.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action Maximo corrige cela sans laisser d'inventaire fantôme ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-006-A"><input type="radio" name="c1000-208-mcq-4-4-006" value="A" id="c1000-208-mcq-4-4-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Adjust Current Balance −25</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-006-B"><input type="radio" name="c1000-208-mcq-4-4-006" value="B" id="c1000-208-mcq-4-4-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Issue 25 to a fictitious WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-006-C"><input type="radio" name="c1000-208-mcq-4-4-006" value="C" id="c1000-208-mcq-4-4-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Delete the MATRECTRANS row directly via SQL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-006-D"><input type="radio" name="c1000-208-mcq-4-4-006" value="D" id="c1000-208-mcq-4-4-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Void Shipment Receipt — generates reverse MATRECTRANS row + reverse GL voucher</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-006-B"><input type="radio" name="c1000-208-mcq-4-4-006" value="B" id="c1000-208-mcq-4-4-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Issuer 25 à une WO factice</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-006-C"><input type="radio" name="c1000-208-mcq-4-4-006" value="C" id="c1000-208-mcq-4-4-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Supprimer directement la ligne MATRECTRANS via SQL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-006-D"><input type="radio" name="c1000-208-mcq-4-4-006" value="D" id="c1000-208-mcq-4-4-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Void Shipment Receipt — génère une ligne MATRECTRANS reverse + voucher GL reverse</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -15680,13 +15680,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A WO is created with a job plan that lists 5 items as required materials. The WO is then approved.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to inventory reservations at WO approval?</div>
+  <div class="mcq-context">Une WO est créée avec un job plan qui liste 5 items comme materials requis. La WO est ensuite approuvée.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que se passe-t-il pour les inventory reservations à l'approbation de la WO ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-A"><input type="radio" name="c1000-208-mcq-4-4-007" value="A" id="c1000-208-mcq-4-4-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Nothing — reservations must be created manually by the planner</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-007-B"><input type="radio" name="c1000-208-mcq-4-4-007" value="B" id="c1000-208-mcq-4-4-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Maximo auto-creates HARD reservations for the 5 items per the job plan</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-C"><input type="radio" name="c1000-208-mcq-4-4-007" value="C" id="c1000-208-mcq-4-4-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Maximo issues the items to the WO immediately</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-D"><input type="radio" name="c1000-208-mcq-4-4-007" value="D" id="c1000-208-mcq-4-4-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo creates SOFT reservations only ; HARD requires manual conversion</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-A"><input type="radio" name="c1000-208-mcq-4-4-007" value="A" id="c1000-208-mcq-4-4-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Rien — les reservations doivent être créées manuellement par le planificateur</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-4-007-B"><input type="radio" name="c1000-208-mcq-4-4-007" value="B" id="c1000-208-mcq-4-4-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Maximo crée automatiquement des HARD reservations pour les 5 items selon le job plan</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-C"><input type="radio" name="c1000-208-mcq-4-4-007" value="C" id="c1000-208-mcq-4-4-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Maximo issue les items à la WO immédiatement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-4-007-D"><input type="radio" name="c1000-208-mcq-4-4-007" value="D" id="c1000-208-mcq-4-4-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo crée seulement des SOFT reservations ; les HARD requièrent une conversion manuelle</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
