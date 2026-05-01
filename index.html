@@ -15756,15 +15756,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-4-5">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.5</div>
   <div class="lesson-header">
-    <h1>Inventory Usage Statuses & Lifecycle</h1>
+    <h1>Inventory Usage : statuts et cycle de vie</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 24%</span>
       <span class="meta-pill">~10 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-4-5.svg" alt="C1000-208 lesson 4-5 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-4-5.svg" alt="Illustration de la leçon C1000-208 4-5" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-4-5" id="lt-c1000-208-4-5-c" class="lt-course" checked>
@@ -15779,12 +15779,12 @@ flowchart TD
 <!-- FRAGMENT A: replaces the placeholder in lt-course-panel -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Master the <strong>4-state machine</strong> OPEN → PICKED → STAGED → ISSUED</li>
-  <li>Understand <strong>balance impact</strong> at each state transition</li>
-  <li>Distinguish <strong>physical balance</strong> vs <strong>available balance</strong> at each state</li>
-  <li>Master the <strong>cancel / void rules</strong> at each state</li>
-  <li>Trace <strong>InvUseLine</strong> documents tied to each state transition</li>
-  <li>Use the <strong>Restock</strong> action to revert items at each pre-ISSUED state</li>
+  <li>Maîtriser la <strong>machine à 4 états</strong> OPEN → PICKED → STAGED → ISSUED</li>
+  <li>Comprendre l'<strong>impact balance</strong> à chaque transition d'état</li>
+  <li>Distinguer la <strong>physical balance</strong> de l'<strong>available balance</strong> à chaque état</li>
+  <li>Maîtriser les <strong>règles cancel / void</strong> à chaque état</li>
+  <li>Tracer les documents <strong>InvUseLine</strong> liés à chaque transition d'état</li>
+  <li>Utiliser l'action <strong>Restock</strong> pour réverser les items aux états antérieurs à ISSUED</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
@@ -15862,8 +15862,8 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A new pick list is created from a reservation. Items will go through their full lifecycle to be charged on the WO.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the canonical Inventory Usage / Pick List 4-state sequence?</div>
+  <div class="mcq-context">Une nouvelle pick list est créée à partir d'une reservation. Les items vont parcourir leur cycle de vie complet pour être imputés à la WO.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la séquence canonique des 4 états Inventory Usage / Pick List ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-001-A"><input type="radio" name="c1000-208-mcq-4-5-001" value="A" id="c1000-208-mcq-4-5-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">OPEN → STAGED → PICKED → ISSUED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-001-B"><input type="radio" name="c1000-208-mcq-4-5-001" value="B" id="c1000-208-mcq-4-5-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">PICKED → OPEN → STAGED → ISSUED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -15947,13 +15947,13 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An Inventory Usage line of 30 units transitions to STAGED status. The items are physically moved to the staging bin within the same storeroom complex.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens to the storeroom's Current Balance and Available Balance?</div>
+  <div class="mcq-context">Une ligne Inventory Usage de 30 unités passe au statut STAGED. Les items sont physiquement déplacés vers le staging bin dans le même storeroom complex.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Qu'arrive-t-il à la Current Balance et à l'Available Balance du storeroom ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-A"><input type="radio" name="c1000-208-mcq-4-5-002" value="A" id="c1000-208-mcq-4-5-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Both Current and Available decrease by 30</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-002-B"><input type="radio" name="c1000-208-mcq-4-5-002" value="B" id="c1000-208-mcq-4-5-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Current Balance unchanged (items still in storeroom complex) ; Available Balance decreased by 30</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-C"><input type="radio" name="c1000-208-mcq-4-5-002" value="C" id="c1000-208-mcq-4-5-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Both unchanged (no real movement)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-D"><input type="radio" name="c1000-208-mcq-4-5-002" value="D" id="c1000-208-mcq-4-5-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Current Balance decreased by 30 ; Available Balance unchanged</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-A"><input type="radio" name="c1000-208-mcq-4-5-002" value="A" id="c1000-208-mcq-4-5-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les deux (Current et Available) baissent de 30</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-002-B"><input type="radio" name="c1000-208-mcq-4-5-002" value="B" id="c1000-208-mcq-4-5-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Current Balance inchangée (items toujours dans le storeroom complex) ; Available Balance diminue de 30</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-C"><input type="radio" name="c1000-208-mcq-4-5-002" value="C" id="c1000-208-mcq-4-5-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les deux inchangées (pas de mouvement réel)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-002-D"><input type="radio" name="c1000-208-mcq-4-5-002" value="D" id="c1000-208-mcq-4-5-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Current Balance baisse de 30 ; Available Balance inchangée</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16006,11 +16006,11 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A finance auditor asks at which Inventory Usage state the GL voucher (Dr WO Cost / Cr Inventory) is posted.</div>
-  <div class="mcq-stem"><strong>Question :</strong> At which state is the GL voucher posted?</div>
+  <div class="mcq-context">Un auditeur financier demande à quel état Inventory Usage le voucher GL (Dr WO Cost / Cr Inventory) est posté.</div>
+  <div class="mcq-stem"><strong>Question :</strong> À quel état le voucher GL est-il posté ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-003-A"><input type="radio" name="c1000-208-mcq-4-5-003" value="A" id="c1000-208-mcq-4-5-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ISSUED (= COMPLETE) only</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-003-B"><input type="radio" name="c1000-208-mcq-4-5-003" value="B" id="c1000-208-mcq-4-5-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">OPEN (when reservation is created)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-003-A"><input type="radio" name="c1000-208-mcq-4-5-003" value="A" id="c1000-208-mcq-4-5-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ISSUED (= COMPLETE) uniquement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-003-B"><input type="radio" name="c1000-208-mcq-4-5-003" value="B" id="c1000-208-mcq-4-5-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">OPEN (lors de la création de la reservation)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-003-C"><input type="radio" name="c1000-208-mcq-4-5-003" value="C" id="c1000-208-mcq-4-5-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">PICKED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-003-D"><input type="radio" name="c1000-208-mcq-4-5-003" value="D" id="c1000-208-mcq-4-5-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">STAGED</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
@@ -16068,13 +16068,13 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A WO is cancelled mid-day. The Inventory Usage record was already in STAGED state with 30 units in the staging bin.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What action returns the staged items back to the main bin without creating Issue/Return transactions?</div>
+  <div class="mcq-context">Une WO est annulée en milieu de journée. Le record Inventory Usage était déjà à l'état STAGED avec 30 unités dans le staging bin.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action retourne les items staged vers la main bin sans créer de transactions Issue/Return ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-A"><input type="radio" name="c1000-208-mcq-4-5-004" value="A" id="c1000-208-mcq-4-5-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Issue then immediately Return</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-B"><input type="radio" name="c1000-208-mcq-4-5-004" value="B" id="c1000-208-mcq-4-5-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance to compensate</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-004-C"><input type="radio" name="c1000-208-mcq-4-5-004" value="C" id="c1000-208-mcq-4-5-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Restock action — moves items from staging bin back to main bin without GL postings</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-D"><input type="radio" name="c1000-208-mcq-4-5-004" value="D" id="c1000-208-mcq-4-5-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Delete the Inventory Usage record</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-A"><input type="radio" name="c1000-208-mcq-4-5-004" value="A" id="c1000-208-mcq-4-5-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Issuer puis Return immédiatement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-B"><input type="radio" name="c1000-208-mcq-4-5-004" value="B" id="c1000-208-mcq-4-5-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Adjust Current Balance pour compenser</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-004-C"><input type="radio" name="c1000-208-mcq-4-5-004" value="C" id="c1000-208-mcq-4-5-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Action Restock — déplace les items du staging bin vers la main bin sans postings GL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-004-D"><input type="radio" name="c1000-208-mcq-4-5-004" value="D" id="c1000-208-mcq-4-5-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Supprimer le record Inventory Usage</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -16128,8 +16128,8 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An auditor wants to trace exactly when an item passed each state of its pick lifecycle, including timestamps and user IDs.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo backend artifact ties pick list lines to reservation and inventory transactions across all states?</div>
+  <div class="mcq-context">Un auditeur veut tracer exactement quand un item a traversé chaque état de son pick lifecycle, avec timestamps et user IDs.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel artifact backend Maximo lie les lignes de pick list aux reservations et aux inventory transactions à travers tous les états ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-005-A"><input type="radio" name="c1000-208-mcq-4-5-005" value="A" id="c1000-208-mcq-4-5-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">MATUSETRANS</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-005-B"><input type="radio" name="c1000-208-mcq-4-5-005" value="B" id="c1000-208-mcq-4-5-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">INVRESERVE</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -16191,13 +16191,13 @@ stateDiagram-v2
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item has Current Balance 100, ROP 50, Hard Reserved 20, Staged 30. The reorder cron runs.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Does the cron trigger a reorder, and why?</div>
+  <div class="mcq-context">Un item a Current Balance 100, ROP 50, Hard Reserved 20, Staged 30. La cron de reorder tourne.</div>
+  <div class="mcq-stem"><strong>Question :</strong> La cron déclenche-t-elle un reorder, et pourquoi ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-A"><input type="radio" name="c1000-208-mcq-4-5-006" value="A" id="c1000-208-mcq-4-5-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">No — Current Balance 100 is well above ROP 50</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-B"><input type="radio" name="c1000-208-mcq-4-5-006" value="B" id="c1000-208-mcq-4-5-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">No — ROP only checks Current, not Available</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-C"><input type="radio" name="c1000-208-mcq-4-5-006" value="C" id="c1000-208-mcq-4-5-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Yes — STAGED items are physically removed from inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-006-D"><input type="radio" name="c1000-208-mcq-4-5-006" value="D" id="c1000-208-mcq-4-5-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Yes — Available Balance (100 − 20 − 30 = 50) equals ROP, triggering reorder ; ROP comparison uses Available + On Order vs ROP threshold</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-A"><input type="radio" name="c1000-208-mcq-4-5-006" value="A" id="c1000-208-mcq-4-5-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Non — Current Balance 100 est bien au-dessus du ROP 50</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-B"><input type="radio" name="c1000-208-mcq-4-5-006" value="B" id="c1000-208-mcq-4-5-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Non — le ROP vérifie seulement Current, pas Available</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-4-5-006-C"><input type="radio" name="c1000-208-mcq-4-5-006" value="C" id="c1000-208-mcq-4-5-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Oui — les items STAGED sont physiquement retirés de l'inventory</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-4-5-006-D"><input type="radio" name="c1000-208-mcq-4-5-006" value="D" id="c1000-208-mcq-4-5-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Oui — Available Balance (100 − 20 − 30 = 50) égale le ROP, ce qui déclenche le reorder ; la comparaison ROP utilise Available + On Order vs seuil ROP</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
