@@ -19143,15 +19143,15 @@ flowchart TD
 <section class="lesson" id="c1000-208-lesson-7-2">
   <div class="breadcrumb">Section 7 <span class="brand-dot">·</span> 7.2</div>
   <div class="lesson-header">
-    <h1>Execute Physical Counts (Count Books, Sample Types)</h1>
+    <h1>Exécuter les inventaires physiques (Count Books, Sample Types)</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 12%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Procedural</span>
+      <span class="meta-pill">Procédural</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-7-2.svg" alt="C1000-208 lesson 7-2 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-7-2.svg" alt="Illustration de la leçon C1000-208 7-2" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-7-2" id="lt-c1000-208-7-2-c" class="lt-course" checked>
@@ -19165,36 +19165,36 @@ flowchart TD
         <!-- ============ LESSON c1000-208-7-2 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Update Physical Count in the <strong>Inventory application</strong> for ad-hoc single-item count corrections</li>
-  <li>Reconcile Balances after a count session</li>
-  <li>Create a <strong>Count Book</strong> to bundle SKUs for a count session (rotating + non-rotating)</li>
-  <li>Describe the 7 <strong>Sample Types</strong>: ALL · BIN · CNTFREQ · ICG · ITEM · ROTATING · TOOLS</li>
-  <li>Execute Physical Counting and Reconcile / Unreconcile workflow</li>
+  <li>Mettre à jour le Physical Count dans l'application <strong>Inventory</strong> pour des corrections ad-hoc d'un item unique</li>
+  <li>Reconcile Balances après une session de count</li>
+  <li>Créer un <strong>Count Book</strong> pour rassembler les SKUs d'une session de count (rotating + non-rotating)</li>
+  <li>Décrire les 7 <strong>Sample Types</strong> : ALL · BIN · CNTFREQ · ICG · ITEM · ROTATING · TOOLS</li>
+  <li>Exécuter le Physical Counting et le workflow Reconcile / Unreconcile</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Count Book</strong> — a Maximo document that bundles a list of items to be counted in a single session. Workflow: <em>generate → print/assign → physical count → enter counts → reconcile → close</em>.</li>
-  <li><strong>Sample Types (7)</strong> — the criterion used by Maximo to populate the Count Book with items:
+  <li><strong>Count Book</strong> — un document Maximo qui rassemble une liste d'items à compter dans une seule session. Workflow : <em>générer → imprimer/assigner → comptage physique → saisir les counts → reconcile → close</em>.</li>
+  <li><strong>Sample Types (7)</strong> — le critère utilisé par Maximo pour peupler le Count Book avec des items :
     <ul style="margin:8px 0;padding-left:24px;">
-      <li><strong>ALL</strong> — all items in the storeroom (or filter by storeroom + bin range). Used for full physical inventories.</li>
-      <li><strong>BIN</strong> — items located in a specific bin or bin range. Used for zone-by-zone counting.</li>
-      <li><strong>CNTFREQ</strong> (Count Frequency) — items due for counting based on cycle count days from ABC class. Used for routine cycle counting.</li>
-      <li><strong>ICG</strong> (Inventory Count Group) — items belonging to a specific Count Group (lesson 7.1). Used for grouping by zone, criticality, or department.</li>
-      <li><strong>ITEM</strong> — a manually-entered list of items by ITEMNUM. Used for ad-hoc audits.</li>
-      <li><strong>ROTATING</strong> — only rotating items (asset-tracked). Used for asset existence audits.</li>
-      <li><strong>TOOLS</strong> — items defined as tools (TOOL type). Used for tool inventory audits.</li>
+      <li><strong>ALL</strong> — tous les items du storeroom (ou filtrer par storeroom + plage de bins). Utilisé pour les inventaires physiques complets.</li>
+      <li><strong>BIN</strong> — items localisés dans un bin spécifique (ou liste de bins). Utilisé pour le comptage zone par zone.</li>
+      <li><strong>CNTFREQ</strong> (Count Frequency) — items dus pour count selon les cycle count days de la classe ABC. Utilisé pour le cycle counting de routine.</li>
+      <li><strong>ICG</strong> (Inventory Count Group) — items appartenant à un Count Group spécifique (leçon 7.1). Utilisé pour grouper par zone, criticité ou département.</li>
+      <li><strong>ITEM</strong> — une liste d'items saisie manuellement par ITEMNUM. Utilisé pour les audits ad-hoc.</li>
+      <li><strong>ROTATING</strong> — uniquement les rotating items (asset-tracked). Utilisé pour les audits d'existence d'assets.</li>
+      <li><strong>TOOLS</strong> — items définis comme tools (TOOL type). Utilisé pour les audits d'inventaire d'outils.</li>
     </ul>
   </li>
-  <li><strong>Update Physical Count (ad-hoc)</strong> — for a single-item correction, the user can directly update the physical count in the Inventory app (item-level field), bypassing the Count Book mechanism. Useful for spot corrections after discovery.</li>
-  <li><strong>Count entry</strong> — counts are entered against each line of the Count Book. Each line captures the COUNTED qty vs the EXPECTED qty (system balance at count time).</li>
-  <li><strong>Reconciliation</strong> — comparing COUNTED vs EXPECTED for each line. Within tolerance: auto-posted (INVTRANS adjustment generated). Out of tolerance: flagged for recount or supervisor approval.</li>
-  <li><strong>Reconcile Balances</strong> — the action that triggers the reconciliation calculation. Generates INVTRANS rows with type CYCLECOUNT and posts GL adjustments.</li>
-  <li><strong>Unreconcile</strong> — reverses a posted reconciliation if errors are detected post-fact. Audit-logged.</li>
-  <li><strong>Tolerance</strong> — configurable per ABC class or per item. A items typically ±2%, B ±5%, C ±10% [EOTRAG Query 5].</li>
-  <li><strong>Separation of duties (SOX)</strong> — the floor counter cannot post their own count; supervisor or stock manager validates and posts. Enforced by RBAC/security groups.</li>
-  <li><strong>Recount workflow</strong> — out-of-tolerance counts trigger a "recount required" status; second count entered; if matches, posted; if still divergent, escalation to manager.</li>
-  <li><strong>Mobile counting</strong> — Maximo Mobile + Inventory Counting RBA allow handheld scanning of bins; counts entered on the spot, validated against tolerance immediately.</li>
+  <li><strong>Update Physical Count (ad-hoc)</strong> — pour une correction d'un item unique, l'utilisateur peut directement mettre à jour le physical count dans l'app Inventory (champ item-level), en contournant le mécanisme Count Book. Utile pour les corrections ponctuelles après découverte.</li>
+  <li><strong>Count entry</strong> — les counts sont saisis contre chaque ligne du Count Book. Chaque ligne capture la qty COUNTED vs la qty EXPECTED (balance système au moment du count).</li>
+  <li><strong>Reconciliation</strong> — comparer COUNTED vs EXPECTED pour chaque ligne. Dans la tolérance : auto-posté (ajustement INVTRANS généré). Hors tolérance : flagué pour recount ou approbation supervisor.</li>
+  <li><strong>Reconcile Balances</strong> — l'action qui déclenche le calcul de reconciliation. Génère des lignes INVTRANS de type CYCLECOUNT et poste les ajustements GL.</li>
+  <li><strong>Unreconcile</strong> — réverse une reconciliation postée si des erreurs sont détectées a posteriori. Journalisée pour audit.</li>
+  <li><strong>Tolerance</strong> — configurable par classe ABC ou par item. Items A typiquement ±2%, B ±5%, C ±10% [EOTRAG Query 5].</li>
+  <li><strong>Séparation des tâches (SOX)</strong> — le floor counter ne peut pas poster son propre count ; supervisor ou stock manager valide et poste. Imposé par RBAC/security groups.</li>
+  <li><strong>Workflow Recount</strong> — les counts hors tolérance déclenchent un statut « recount required » ; second count saisi ; s'il correspond, posté ; s'il diverge encore, escalade au manager.</li>
+  <li><strong>Mobile counting</strong> — Maximo Mobile + Inventory Counting RBA permettent le scan handheld des bins ; counts saisis sur place, validés immédiatement contre la tolérance.</li>
 </ul></div>
 
 
@@ -19204,45 +19204,45 @@ flowchart TD
     <thead>
       <tr>
         <th>Sample type</th>
-        <th>Filter criterion</th>
-        <th>Use case</th>
+        <th>Critère de filtre</th>
+        <th>Cas d'usage</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>ALL</code></td>
-        <td>Every active item in the storeroom regardless of category.</td>
-        <td>Annual full physical count.</td>
+        <td>Tout item actif du storeroom peu importe la catégorie.</td>
+        <td>Inventaire physique annuel complet.</td>
       </tr>
       <tr>
         <td><code>BIN</code></td>
-        <td>Items in a specific bin number (or list of bins).</td>
-        <td>Targeted recount when a specific bin shows variance.</td>
+        <td>Items dans un numéro de bin spécifique (ou liste de bins).</td>
+        <td>Recount ciblé quand un bin spécifique montre une variance.</td>
       </tr>
       <tr>
         <td><code>CNTFREQ</code></td>
-        <td>Items whose Cycle Count Frequency is due based on the date stamp.</td>
-        <td>Routine cycle counting; combined with ABC, drives the calendar.</td>
+        <td>Items dont la Cycle Count Frequency est due selon le date stamp.</td>
+        <td>Cycle counting de routine ; combiné avec l'ABC, pilote le calendrier.</td>
       </tr>
       <tr>
         <td><code>ICG</code></td>
-        <td>Items belonging to a specific Inventory Count Group.</td>
-        <td>Group-driven counts (by criticality, project, location).</td>
+        <td>Items appartenant à un Inventory Count Group spécifique.</td>
+        <td>Counts pilotés par groupe (par criticité, projet, location).</td>
       </tr>
       <tr>
         <td><code>ITEM</code></td>
-        <td>One specific item number (or a defined list).</td>
-        <td>Spot-count after suspicious transaction history.</td>
+        <td>Un item number spécifique (ou liste définie).</td>
+        <td>Spot-count après historique de transactions suspect.</td>
       </tr>
       <tr>
         <td><code>ROTATING</code></td>
-        <td>Only items with the Rotating? flag = true.</td>
-        <td>Asset audit — verify each rotating asset is physically present.</td>
+        <td>Uniquement les items avec flag Rotating? = true.</td>
+        <td>Audit asset — vérifier que chaque rotating asset est physiquement présent.</td>
       </tr>
       <tr>
         <td><code>TOOLS</code></td>
-        <td>Only Tool-type items.</td>
-        <td>Tool crib audit; tools are high-loss-risk and require frequent counts.</td>
+        <td>Uniquement les items de type Tool.</td>
+        <td>Audit du tool crib ; les tools sont à haut risque de perte et exigent des counts fréquents.</td>
       </tr>
     </tbody>
   </table>
@@ -19250,19 +19250,19 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>The 7 Sample Types are exam-targeted</strong>. IBM tests if you can name them and pick the right one for a given scenario.</p>
+  <p><strong>Les 7 Sample Types sont ciblés à l'examen</strong>. IBM teste votre capacité à les nommer et à choisir le bon pour un scénario donné.</p>
   <ul>
-    <li>Trap: confusing CNTFREQ (cycle count days driven by ABC) with ICG (Count Groups, an alternative classification).</li>
-    <li>Trap: confusing BIN (specific bin location) with ALL (entire storeroom).</li>
-    <li>Trap: thinking ROTATING and TOOLS are the same — they're separate types because tools aren't always rotating, and rotating items aren't always tools.</li>
-    <li>Trap: assuming Update Physical Count in Inventory app does the same as a Count Book entry. Inventory app update is a single-line correction; Count Book is a structured session with reconciliation workflow.</li>
+    <li>Piège : confondre CNTFREQ (cycle count days pilotés par l'ABC) avec ICG (Count Groups, classification alternative).</li>
+    <li>Piège : confondre BIN (location de bin spécifique) avec ALL (storeroom entier).</li>
+    <li>Piège : penser que ROTATING et TOOLS sont identiques — ce sont des types séparés car les tools ne sont pas toujours rotating, et les rotating items ne sont pas toujours des tools.</li>
+    <li>Piège : supposer qu'Update Physical Count dans l'app Inventory fait la même chose qu'une saisie de Count Book. L'update dans Inventory est une correction de ligne unique ; le Count Book est une session structurée avec workflow de reconciliation.</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A storeroom manager wants a Count Book that lists only items due for counting today, based on their ABC class. Which Sample Type should be used?</p>
-  <details><summary>Afficher la réponse</summary><p>CNTFREQ (Count Frequency). It selects items where today's date ≥ LASTCOUNTDATE + CYCLECNTDAYS. ICG would group by Count Group (zone/dept), BIN by physical bin, ALL by entire storeroom, ITEM by manual list. Only CNTFREQ filters by ABC-driven count cycle.</p></details>
+  <p>Q. Un storeroom manager veut un Count Book listant uniquement les items dus pour count aujourd'hui, selon leur classe ABC. Quel Sample Type doit être utilisé ?</p>
+  <details><summary>Afficher la réponse</summary><p>CNTFREQ (Count Frequency). Il sélectionne les items où la date d'aujourd'hui ≥ LASTCOUNTDATE + CYCLECNTDAYS. ICG groupe par Count Group (zone/dept), BIN par bin physique, ALL par storeroom entier, ITEM par liste manuelle. Seul CNTFREQ filtre par cycle de count piloté par l'ABC.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -19279,8 +19279,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom clerk wants a daily Count Book that automatically generates the items due for cycle counting today based on their ABC class.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Sample Type accomplishes this?</div>
+  <div class="mcq-context">Un clerk de storeroom veut un Count Book quotidien qui génère automatiquement les items dus pour cycle counting aujourd'hui selon leur classe ABC.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel Sample Type accomplit cela ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-001-A"><input type="radio" name="c1000-208-mcq-7-2-001" value="A" id="c1000-208-mcq-7-2-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ALL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-001-B"><input type="radio" name="c1000-208-mcq-7-2-001" value="B" id="c1000-208-mcq-7-2-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">ICG</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -19329,45 +19329,45 @@ flowchart TD
     <thead>
       <tr>
         <th>Sample type</th>
-        <th>Filter criterion</th>
-        <th>Use case</th>
+        <th>Critère de filtre</th>
+        <th>Cas d'usage</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>ALL</code></td>
-        <td>Every active item in the storeroom regardless of category.</td>
-        <td>Annual full physical count.</td>
+        <td>Tout item actif du storeroom peu importe la catégorie.</td>
+        <td>Inventaire physique annuel complet.</td>
       </tr>
       <tr>
         <td><code>BIN</code></td>
-        <td>Items in a specific bin number (or list of bins).</td>
-        <td>Targeted recount when a specific bin shows variance.</td>
+        <td>Items dans un numéro de bin spécifique (ou liste de bins).</td>
+        <td>Recount ciblé quand un bin spécifique montre une variance.</td>
       </tr>
       <tr>
         <td><code>CNTFREQ</code></td>
-        <td>Items whose Cycle Count Frequency is due based on the date stamp.</td>
-        <td>Routine cycle counting; combined with ABC, drives the calendar.</td>
+        <td>Items dont la Cycle Count Frequency est due selon le date stamp.</td>
+        <td>Cycle counting de routine ; combiné avec l'ABC, pilote le calendrier.</td>
       </tr>
       <tr>
         <td><code>ICG</code></td>
-        <td>Items belonging to a specific Inventory Count Group.</td>
-        <td>Group-driven counts (by criticality, project, location).</td>
+        <td>Items appartenant à un Inventory Count Group spécifique.</td>
+        <td>Counts pilotés par groupe (par criticité, projet, location).</td>
       </tr>
       <tr>
         <td><code>ITEM</code></td>
-        <td>One specific item number (or a defined list).</td>
-        <td>Spot-count after suspicious transaction history.</td>
+        <td>Un item number spécifique (ou liste définie).</td>
+        <td>Spot-count après historique de transactions suspect.</td>
       </tr>
       <tr>
         <td><code>ROTATING</code></td>
-        <td>Only items with the Rotating? flag = true.</td>
-        <td>Asset audit — verify each rotating asset is physically present.</td>
+        <td>Uniquement les items avec flag Rotating? = true.</td>
+        <td>Audit asset — vérifier que chaque rotating asset est physiquement présent.</td>
       </tr>
       <tr>
         <td><code>TOOLS</code></td>
-        <td>Only Tool-type items.</td>
-        <td>Tool crib audit; tools are high-loss-risk and require frequent counts.</td>
+        <td>Uniquement les items de type Tool.</td>
+        <td>Audit du tool crib ; les tools sont à haut risque de perte et exigent des counts fréquents.</td>
       </tr>
     </tbody>
   </table>
@@ -19389,8 +19389,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An auditor needs to verify the physical existence of all rotating assets currently stored in WH-MAIN before quarterly closing.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Sample Type is most appropriate?</div>
+  <div class="mcq-context">Un auditeur doit vérifier l'existence physique de tous les rotating assets actuellement stockés au WH-MAIN avant la clôture trimestrielle.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel Sample Type est le plus approprié ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-002-A"><input type="radio" name="c1000-208-mcq-7-2-002" value="A" id="c1000-208-mcq-7-2-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ROTATING</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-002-B"><input type="radio" name="c1000-208-mcq-7-2-002" value="B" id="c1000-208-mcq-7-2-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">TOOLS</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -19446,13 +19446,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A clerk has finished entering counts on a Count Book covering 30 items. Counts are within tolerance for 28 lines but variant beyond ±10% on 2 lines.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens when the clerk clicks "Reconcile Balances"?</div>
+  <div class="mcq-context">Un clerk vient de finir la saisie des counts sur un Count Book couvrant 30 items. Les counts sont dans la tolérance pour 28 lignes mais hors ±10% sur 2 lignes.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que se passe-t-il quand le clerk clique « Reconcile Balances » ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-A"><input type="radio" name="c1000-208-mcq-7-2-003" value="A" id="c1000-208-mcq-7-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">All 30 lines are reconciled blindly; out-of-tolerance also auto-posted</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-B"><input type="radio" name="c1000-208-mcq-7-2-003" value="B" id="c1000-208-mcq-7-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">All 30 lines are rejected because 2 are out-of-tolerance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-003-C"><input type="radio" name="c1000-208-mcq-7-2-003" value="C" id="c1000-208-mcq-7-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">28 within-tolerance lines auto-post (INVTRANS adjustments + GL); 2 out-of-tolerance lines flagged for recount or supervisor approval</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-D"><input type="radio" name="c1000-208-mcq-7-2-003" value="D" id="c1000-208-mcq-7-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo posts the 28 and silently writes off the 2 to a "Variance" account</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-A"><input type="radio" name="c1000-208-mcq-7-2-003" value="A" id="c1000-208-mcq-7-2-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les 30 lignes sont réconciliées aveuglément ; les hors-tolérance aussi auto-postées</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-B"><input type="radio" name="c1000-208-mcq-7-2-003" value="B" id="c1000-208-mcq-7-2-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les 30 lignes sont rejetées car 2 sont hors-tolérance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-003-C"><input type="radio" name="c1000-208-mcq-7-2-003" value="C" id="c1000-208-mcq-7-2-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les 28 lignes dans la tolérance sont auto-postées (ajustements INVTRANS + GL) ; les 2 lignes hors-tolérance sont flaguées pour recount ou approbation supervisor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-003-D"><input type="radio" name="c1000-208-mcq-7-2-003" value="D" id="c1000-208-mcq-7-2-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Maximo poste les 28 et passe silencieusement les 2 en perte sur un compte « Variance »</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -19503,13 +19503,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A clerk discovers that the on-hand balance for a single item is wrong (e.g. found 5 units in a corner bin not previously tracked). They want to correct this single line without setting up a Count Book.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the appropriate action?</div>
+  <div class="mcq-context">Un clerk découvre que la balance on-hand d'un item unique est fausse (ex. 5 unités trouvées dans un bin de coin non tracké auparavant). Il veut corriger cette ligne unique sans monter un Count Book.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'action appropriée ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-A"><input type="radio" name="c1000-208-mcq-7-2-004" value="A" id="c1000-208-mcq-7-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Wait for the next quarterly Count Book</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-004-B"><input type="radio" name="c1000-208-mcq-7-2-004" value="B" id="c1000-208-mcq-7-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Use Update Physical Count action in the Inventory app for this single item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-C"><input type="radio" name="c1000-208-mcq-7-2-004" value="C" id="c1000-208-mcq-7-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Create a new PO for the 5 units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-D"><input type="radio" name="c1000-208-mcq-7-2-004" value="D" id="c1000-208-mcq-7-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issue the 5 units to a fictitious WO to balance the books</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-A"><input type="radio" name="c1000-208-mcq-7-2-004" value="A" id="c1000-208-mcq-7-2-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Attendre le prochain Count Book trimestriel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-004-B"><input type="radio" name="c1000-208-mcq-7-2-004" value="B" id="c1000-208-mcq-7-2-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Utiliser l'action Update Physical Count dans l'app Inventory pour ce single item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-C"><input type="radio" name="c1000-208-mcq-7-2-004" value="C" id="c1000-208-mcq-7-2-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Créer un nouveau PO pour les 5 unités</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-004-D"><input type="radio" name="c1000-208-mcq-7-2-004" value="D" id="c1000-208-mcq-7-2-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Issuer les 5 unités à un WO fictif pour équilibrer les comptes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -19560,8 +19560,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom uses Inventory Count Groups to organize items by physical zone. The clerk wants to count Zone-B today.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Sample Type uses the Count Group classification?</div>
+  <div class="mcq-context">Un storeroom utilise les Inventory Count Groups pour organiser les items par zone physique. Le clerk veut compter Zone-B aujourd'hui.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel Sample Type utilise la classification Count Group ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-005-A"><input type="radio" name="c1000-208-mcq-7-2-005" value="A" id="c1000-208-mcq-7-2-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">BIN</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-005-B"><input type="radio" name="c1000-208-mcq-7-2-005" value="B" id="c1000-208-mcq-7-2-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">CNTFREQ</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
@@ -19617,13 +19617,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">After reconciling a Count Book, the supervisor discovers that 3 reconciliations posted yesterday were based on a clerical error (wrong unit of measure entered).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What action allows correcting these posted reconciliations?</div>
+  <div class="mcq-context">Après avoir réconcilié un Count Book, le superviseur découvre que 3 réconciliations postées hier étaient basées sur une erreur cléricale (mauvaise unité de mesure saisie).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action permet de corriger ces réconciliations postées ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-006-A"><input type="radio" name="c1000-208-mcq-7-2-006" value="A" id="c1000-208-mcq-7-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Unreconcile — reverses the prior reconciliation; audit-logged</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-B"><input type="radio" name="c1000-208-mcq-7-2-006" value="B" id="c1000-208-mcq-7-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Delete the Count Book entirely</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-C"><input type="radio" name="c1000-208-mcq-7-2-006" value="C" id="c1000-208-mcq-7-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Manually edit INVBALANCES via SQL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-D"><input type="radio" name="c1000-208-mcq-7-2-006" value="D" id="c1000-208-mcq-7-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Posted reconciliations cannot be reversed</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-7-2-006-A"><input type="radio" name="c1000-208-mcq-7-2-006" value="A" id="c1000-208-mcq-7-2-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Unreconcile — réverse la réconciliation précédente ; audit-logged</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-B"><input type="radio" name="c1000-208-mcq-7-2-006" value="B" id="c1000-208-mcq-7-2-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Supprimer le Count Book entièrement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-C"><input type="radio" name="c1000-208-mcq-7-2-006" value="C" id="c1000-208-mcq-7-2-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Éditer manuellement INVBALANCES via SQL</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-006-D"><input type="radio" name="c1000-208-mcq-7-2-006" value="D" id="c1000-208-mcq-7-2-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les réconciliations postées ne peuvent pas être réversées</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -19674,8 +19674,8 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom audit committee orders a complete annual physical count of every item in storeroom WH-MAIN.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Sample Type generates this Count Book?</div>
+  <div class="mcq-context">Un comité d'audit storeroom ordonne un comptage physique annuel complet de chaque item du storeroom WH-MAIN.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel Sample Type génère ce Count Book ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-007-A"><input type="radio" name="c1000-208-mcq-7-2-007" value="A" id="c1000-208-mcq-7-2-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">CNTFREQ</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
     <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-7-2-007-B"><input type="radio" name="c1000-208-mcq-7-2-007" value="B" id="c1000-208-mcq-7-2-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">ROTATING</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
