@@ -17520,15 +17520,15 @@ graph TD
 <section class="lesson" id="c1000-208-lesson-6-1">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.1</div>
   <div class="lesson-header">
-    <h1>Receive Items & Tools</h1>
+    <h1>Réception d'Items et Tools</h1>
     <div class="lesson-meta">
       <span class="meta-pill brand">Section 10%</span>
       <span class="meta-pill">~7 questions</span>
-      <span class="meta-pill">Hybrid</span>
+      <span class="meta-pill">Hybride</span>
     </div>
   </div>
 <figure class="lesson-hero">
-  <img src="assets/illustrations/lesson-c1000-208-6-1.svg" alt="C1000-208 lesson 6-1 illustration" width="1280" height="480" loading="lazy">
+  <img src="assets/illustrations/lesson-c1000-208-6-1.svg" alt="Illustration de la leçon C1000-208 6-1" width="1280" height="480" loading="lazy">
 </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-c1000-208-6-1" id="lt-c1000-208-6-1-c" class="lt-course" checked>
@@ -17542,63 +17542,63 @@ graph TD
         <!-- ============ LESSON c1000-208-6-1 CONTENT ============ -->
 <h2>📋 Objectifs IBM</h2>
 <div class="syllabus-box"><ul>
-  <li>Receive Materials, Tools, and Items requiring inspection from a <strong>Purchase Order</strong></li>
-  <li>Understand <strong>Receiving statuses</strong>: WAPPR, WMATL, COMP, WINSP, WASSET</li>
-  <li>Receive Tools from a PO using the same workflow as items</li>
-  <li>Receive <strong>Rotating Items</strong> from a PO and perform <strong>Asset Serialization</strong></li>
-  <li>Apply <strong>Item Assembly Structures (IAS)</strong> to auto-create child assets at receipt</li>
-  <li>Define the <strong>Rotating Items Receipt Status</strong> process flow</li>
-  <li>Manage <strong>Shipment Receiving</strong>: Partial Shipment Receipts and Shipment Receipt Status</li>
-  <li>Describe the role of the <strong>Holding Location</strong> for inspection-required receipts</li>
-  <li>Use the <strong>Inventory Receiving Role-Based Application (RBA)</strong> for streamlined receiving</li>
+  <li>Réceptionner les Materials, Tools et Items requérant inspection depuis une <strong>Purchase Order</strong></li>
+  <li>Comprendre les <strong>statuts Receiving</strong> : WAPPR, WMATL, COMP, WINSP, WASSET</li>
+  <li>Réceptionner les Tools depuis une PO avec le même workflow que les items</li>
+  <li>Réceptionner les <strong>Rotating Items</strong> depuis une PO et réaliser l'<strong>Asset Serialization</strong></li>
+  <li>Appliquer les <strong>Item Assembly Structures (IAS)</strong> pour auto-créer les child assets à la réception</li>
+  <li>Définir le process flow <strong>Rotating Items Receipt Status</strong></li>
+  <li>Gérer le <strong>Shipment Receiving</strong> : Partial Shipment Receipts et Shipment Receipt Status</li>
+  <li>Décrire le rôle de la <strong>Holding Location</strong> pour les receipts inspection-required</li>
+  <li>Utiliser l'<strong>Inventory Receiving Role-Based Application (RBA)</strong> pour un receiving rationalisé</li>
 </ul></div>
 
 <h2>💡 Points clés</h2>
 <div class="key-box"><ul>
-  <li><strong>Receiving</strong> — the process of acknowledging that ordered materials/tools/services have been delivered. Receipt creates a MATRECTRANS row, increments INVBALANCES (or sends to Holding for inspection), and may trigger AP voucher creation.</li>
-  <li><strong>Receiving statuses</strong> (RECEIPTSTATUS field): <em>WAPPR</em> = waiting approval, <em>WASSET</em> = waiting asset/serialization step, <em>WINSP</em> = waiting inspection (in Holding Location), <em>COMP</em> = complete (item fully integrated to inventory).</li>
-  <li><strong>Items requiring inspection</strong> — items with "Inspection Required" flag (set on Item Master or by site policy) sit in the <strong>Holding Location</strong> at WINSP after receipt; QA inspects, approves or rejects; on approval, status moves to COMP and INVBALANCES updates.</li>
-  <li><strong>Holding Location</strong> — a special storeroom location that holds items in transit/inspection. Stock there is NOT yet available for issue. Once inspection passes, items move to the final storeroom bin via an automatic transfer.</li>
-  <li><strong>Rotating items at receipt</strong> — receiving a rotating item REQUIRES the receiver to perform <strong>Asset Serialization</strong>: each unit received generates a unique ASSETNUM with a serial number. 5 rotating motors received = 5 ASSETNUM created in Assets app.</li>
-  <li><strong>Item Assembly Structure (IAS) cascade</strong> — if the rotating item's Item Master has an IAS defined (e.g. MOTOR_ASSY → PUMP, BEARING, SEAL), Asset Serialization creates not only the parent asset but also the children, with relationships preserved.</li>
-  <li><strong>Tools from a PO</strong> — tools follow the same receiving flow as inventory items but populate Tools application tables. Rotating tools also get serialized.</li>
-  <li><strong>Shipment Receiving</strong> — for inter-storeroom or inter-site transfers (Stock Transfer Order). Receipt ack at destination updates balances at both source and destination via MATUSETRANS at source + MATRECTRANS at destination [EOTRAG Query 14].</li>
-  <li><strong>Partial Shipment Receipts</strong> — a single PO line can be received over multiple shipments. Each shipment creates its own MATRECTRANS row; PO line tracks cumulative qty until COMP.</li>
-  <li><strong>Inventory Receiving RBA (Role-Based Application)</strong> — a streamlined UI tailored for the receiving clerk, with barcode scanning, simplified line entry, and direct PO lookup. Modernized alternative to the classic Receiving app.</li>
-  <li><strong>Receipt cost</strong> — per cost method: receipt updates AVGCOST in INVCOST table (WAC), or adds a new layer (FIFO/LIFO), or is locked at standard (STANDARD).</li>
-  <li><strong>Industry context</strong> — the Maximo project at Centrale d'équipements (MEQ) explicitly distinguishes high-value items requiring serialization from consumables [EOTRAG Query 14]: "Les articles de grande valeur ou dont le numéro de série doit être suivi seront des actifs tournants".</li>
+  <li><strong>Receiving</strong> — le processus d'acquittement que les materials/tools/services commandés ont été livrés. Le receipt crée une ligne MATRECTRANS, incrémente INVBALANCES (ou envoie en Holding pour inspection), et peut déclencher la création d'un AP voucher.</li>
+  <li><strong>Statuts Receiving</strong> (champ RECEIPTSTATUS) : <em>WAPPR</em> = waiting approval, <em>WASSET</em> = waiting asset/serialization, <em>WINSP</em> = waiting inspection (en Holding Location), <em>COMP</em> = complete (item entièrement intégré à l'inventory).</li>
+  <li><strong>Items requérant inspection</strong> — les items avec flag « Inspection Required » (réglé sur Item Master ou par politique site) vont dans la <strong>Holding Location</strong> au statut WINSP après réception ; la QA inspecte, approuve ou rejette ; à l'approbation, le statut passe à COMP et INVBALANCES est mis à jour.</li>
+  <li><strong>Holding Location</strong> — une location storeroom spéciale qui détient les items en transit/inspection. Le stock là-bas n'est PAS encore disponible pour issue. Une fois l'inspection passée, les items passent au bin storeroom final via un transfert automatique.</li>
+  <li><strong>Rotating items à la réception</strong> — réceptionner un rotating item EXIGE du receveur de réaliser l'<strong>Asset Serialization</strong> : chaque unité reçue génère un ASSETNUM unique avec un numéro de série. 5 rotating motors reçus = 5 ASSETNUM créés dans l'app Assets.</li>
+  <li><strong>Cascade Item Assembly Structure (IAS)</strong> — si l'Item Master du rotating item a une IAS définie (ex. MOTOR_ASSY → PUMP, BEARING, SEAL), l'Asset Serialization crée non seulement le parent asset mais aussi les enfants, avec les relations préservées.</li>
+  <li><strong>Tools depuis une PO</strong> — les tools suivent le même flow de réception que les items d'inventaire mais alimentent les tables de l'application Tools. Les rotating tools sont aussi sérialisés.</li>
+  <li><strong>Shipment Receiving</strong> — pour les transferts inter-storeroom ou inter-site (Stock Transfer Order). L'acquittement de réception au destination met à jour les balances à la source et au destination via MATUSETRANS à la source + MATRECTRANS au destination [EOTRAG Query 14].</li>
+  <li><strong>Partial Shipment Receipts</strong> — une ligne PO peut être réceptionnée sur plusieurs shipments. Chaque shipment crée sa propre ligne MATRECTRANS ; la ligne PO trace la qty cumulée jusqu'à COMP.</li>
+  <li><strong>Inventory Receiving RBA (Role-Based Application)</strong> — une UI rationalisée pour le receiving clerk, avec scan barcode, saisie de ligne simplifiée et lookup PO direct. Alternative modernisée à l'app Receiving classique.</li>
+  <li><strong>Coût de réception</strong> — par cost method : le receipt met à jour AVGCOST dans la table INVCOST (WAC), ou ajoute une nouvelle layer (FIFO/LIFO), ou est verrouillé au standard (STANDARD).</li>
+  <li><strong>Contexte industriel</strong> — le projet Maximo à la Centrale d'équipements (MEQ) distingue explicitement les items de grande valeur requérant la sérialisation des consommables [EOTRAG Query 14] : « Les articles de grande valeur ou dont le numéro de série doit être suivi seront des actifs tournants ».</li>
 </ul></div>
 
 
 <figure class="lesson-diagram" data-lesson="c1000-208-6-1-receiving">
   <pre class="mermaid">
 flowchart TD
-  PO["PO created<br/>(approved + sent to vendor)"]:::start
-  RECV["Goods physically received<br/>at receiving dock"]:::action
-  Q1{"Item flag<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
-  HOLD["<b>Holding Location</b><br/>status = WINSP<br/>(waiting inspection)<br/>NOT in active balance"]:::warn
-  QA{"QA inspection<br/>result ?"}:::decision
-  QUAR["Quarantine bin<br/>Receipt status: REJECTED<br/>→ Void or Return-to-Vendor<br/>(per STU §6.2)"]:::stop
-  STORE["Active storeroom bin<br/>balance += receipt_qty<br/>status = STORES"]:::ok
-  Q2{"Item flag<br/><b>Rotating ?</b>"}:::decision
-  SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
-  Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
-  IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
-  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::endNode
+  PO["PO créée<br/>(approuvée + envoyée au vendor)"]:::start
+  RECV["Goods physiquement reçus<br/>au dock de réception"]:::action
+  Q1{"Flag item<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
+  HOLD["<b>Holding Location</b><br/>statut = WINSP<br/>(waiting inspection)<br/>PAS dans la balance active"]:::warn
+  QA{"Résultat<br/>inspection QA ?"}:::decision
+  QUAR["Quarantine bin<br/>Statut Receipt : REJECTED<br/>→ Void ou Return-to-Vendor<br/>(selon STU §6.2)"]:::stop
+  STORE["Bin storeroom actif<br/>balance += receipt_qty<br/>statut = STORES"]:::ok
+  Q2{"Flag item<br/><b>Rotating ?</b>"}:::decision
+  SERIAL["<b>Asset Serialization</b><br/>1 unité reçue →<br/>1 ASSETNUM créé<br/>(ASSET cost = receipt cost)"]:::action
+  Q3{"Item Assembly<br/>Structure (IAS)<br/>définie ?"}:::decision
+  IAS["<b>Application cascade IAS</b><br/>auto-création des<br/>ASSETNUM enfants<br/>(BOM déployé en<br/>sub-assets)"]:::action
+  DONE["Receipt complet<br/>ligne MATRECTRANS<br/>+ posting GL"]:::endNode
 
   PO --> RECV
   RECV --> Q1
-  Q1 -- Yes --> HOLD
+  Q1 -- Oui --> HOLD
   HOLD --> QA
   QA -- Reject --> QUAR
   QA -- Approve --> STORE
-  Q1 -- No --> STORE
+  Q1 -- Non --> STORE
   STORE --> Q2
-  Q2 -- No --> DONE
-  Q2 -- Yes --> SERIAL
+  Q2 -- Non --> DONE
+  Q2 -- Oui --> SERIAL
   SERIAL --> Q3
-  Q3 -- No --> DONE
-  Q3 -- Yes --> IAS
+  Q3 -- Non --> DONE
+  Q3 -- Oui --> IAS
   IAS --> DONE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
@@ -17613,19 +17613,19 @@ flowchart TD
 </figure>
 <h2>⚠️ Piège IBM</h2>
 <div class="trap-box">
-  <p><strong>Holding Location confusion</strong> — Candidates often miss that Holding Location is a virtual transit point. Stock there is RECEIVED but NOT YET AVAILABLE for issue.</p>
+  <p><strong>Confusion sur la Holding Location</strong> — Les candidats oublient souvent que la Holding Location est un point de transit virtuel. Le stock là-bas est RECEIVED mais PAS ENCORE DISPONIBLE pour issue.</p>
   <ul>
-    <li>Trap: confusing Holding Location with the storeroom's standard bin. They are distinct.</li>
-    <li>Trap: thinking Asset Serialization is optional for rotating items. It is mandatory at receipt — you cannot complete a rotating PO receipt without entering serial numbers.</li>
-    <li>Trap: thinking IAS auto-cascade requires manual child creation. False — when IAS is defined on the parent item, Maximo auto-creates the children at serialization.</li>
-    <li>Trap: assuming partial receipts close the PO line. They don't — PO line stays open until cumulative qty = ordered qty (or PO is manually closed).</li>
+    <li>Piège : confondre la Holding Location avec le bin standard du storeroom. Ils sont distincts.</li>
+    <li>Piège : penser que l'Asset Serialization est optionnelle pour les rotating items. Elle est obligatoire à la réception — on ne peut pas compléter un receipt PO rotating sans saisir les numéros de série.</li>
+    <li>Piège : penser que la cascade IAS auto exige la création manuelle des enfants. Faux — quand une IAS est définie sur l'item parent, Maximo auto-crée les enfants à la sérialisation.</li>
+    <li>Piège : supposer que les partial receipts ferment la ligne PO. Elles ne le font pas — la ligne PO reste ouverte jusqu'à ce que la qty cumulée = qty commandée (ou que la PO soit fermée manuellement).</li>
   </ul>
 </div>
 
 <h2>🎯 Carte mémoire</h2>
 <div class="flash-q">
-  <p>Q. A rotating item with IAS defined as MOTOR_ASSY → 3 children (PUMP, BEARING, SEAL) is received from a PO of 1 unit. How many ASSETNUM records are created?</p>
-  <details><summary>Afficher la réponse</summary><p>4 ASSETNUM records: 1 parent (MOTOR_ASSY) + 3 children (PUMP, BEARING, SEAL). Asset Serialization at receipt cascades through the IAS, creating the parent asset and all child assets with the proper parent-child relationships preserved in the Assets application.</p></details>
+  <p>Q. Un rotating item avec IAS définie comme MOTOR_ASSY → 3 enfants (PUMP, BEARING, SEAL) est réceptionné depuis une PO de 1 unité. Combien de records ASSETNUM sont créés ?</p>
+  <details><summary>Afficher la réponse</summary><p>4 records ASSETNUM : 1 parent (MOTOR_ASSY) + 3 enfants (PUMP, BEARING, SEAL). L'Asset Serialization à la réception cascade à travers l'IAS, créant l'asset parent et tous les child assets avec les relations parent-enfant correctement préservées dans l'application Assets.</p></details>
 </div>
       </div>
       <div class="lt-panel lt-sit-panel">
@@ -17642,13 +17642,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A PO line for a non-rotating item with "Inspection Required" flag is received at the warehouse.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the immediate effect on the storeroom inventory balance?</div>
+  <div class="mcq-context">Une ligne PO pour un item non-rotating avec le flag « Inspection Required » est réceptionnée au warehouse.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est l'effet immédiat sur la balance d'inventaire du storeroom ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-A"><input type="radio" name="c1000-208-mcq-6-1-001" value="A" id="c1000-208-mcq-6-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The storeroom standard bin balance is incremented immediately</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-B"><input type="radio" name="c1000-208-mcq-6-1-001" value="B" id="c1000-208-mcq-6-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The receipt is rejected because inspection cannot occur at receiving</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-001-C"><input type="radio" name="c1000-208-mcq-6-1-001" value="C" id="c1000-208-mcq-6-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Items move to the Holding Location with status WINSP; storeroom standard bin is unchanged until inspection passes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-D"><input type="radio" name="c1000-208-mcq-6-1-001" value="D" id="c1000-208-mcq-6-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A new bin is auto-created and items split equally across all storeroom bins</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-A"><input type="radio" name="c1000-208-mcq-6-1-001" value="A" id="c1000-208-mcq-6-1-001-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La balance du bin standard du storeroom est incrémentée immédiatement</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-B"><input type="radio" name="c1000-208-mcq-6-1-001" value="B" id="c1000-208-mcq-6-1-001-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Le receipt est rejeté car l'inspection ne peut pas avoir lieu au receiving</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-001-C"><input type="radio" name="c1000-208-mcq-6-1-001" value="C" id="c1000-208-mcq-6-1-001-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les items vont en Holding Location avec statut WINSP ; le bin standard du storeroom est inchangé jusqu'à ce que l'inspection passe</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-001-D"><input type="radio" name="c1000-208-mcq-6-1-001" value="D" id="c1000-208-mcq-6-1-001-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un nouveau bin est auto-créé et les items sont répartis équitablement sur tous les bins du storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17689,32 +17689,32 @@ flowchart TD
         <figure class="lesson-diagram" data-lesson="c1000-208-6-1-receiving-c1000-208-mcq-6-1-001">
   <pre class="mermaid">
 flowchart TD
-  PO["PO created<br/>(approved + sent to vendor)"]:::start
-  RECV["Goods physically received<br/>at receiving dock"]:::action
-  Q1{"Item flag<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
-  HOLD["<b>Holding Location</b><br/>status = WINSP<br/>(waiting inspection)<br/>NOT in active balance"]:::warn
-  QA{"QA inspection<br/>result ?"}:::decision
-  QUAR["Quarantine bin<br/>Receipt status: REJECTED<br/>→ Void or Return-to-Vendor<br/>(per STU §6.2)"]:::stop
-  STORE["Active storeroom bin<br/>balance += receipt_qty<br/>status = STORES"]:::ok
-  Q2{"Item flag<br/><b>Rotating ?</b>"}:::decision
-  SERIAL["<b>Asset Serialization</b><br/>1 unit received →<br/>1 ASSETNUM created<br/>(ASSET cost = receipt cost)"]:::action
-  Q3{"Item Assembly<br/>Structure (IAS)<br/>defined ?"}:::decision
-  IAS["<b>Apply IAS cascade</b><br/>auto-create child<br/>ASSETNUM records<br/>(BOM expanded as<br/>sub-assets)"]:::action
-  DONE["Receipt complete<br/>MATRECTRANS row<br/>+ GL posting"]:::endNode
+  PO["PO créée<br/>(approuvée + envoyée au vendor)"]:::start
+  RECV["Goods physiquement reçus<br/>au dock de réception"]:::action
+  Q1{"Flag item<br/><b>Inspect on<br/>Receipt ?</b>"}:::decision
+  HOLD["<b>Holding Location</b><br/>statut = WINSP<br/>(waiting inspection)<br/>PAS dans la balance active"]:::warn
+  QA{"Résultat<br/>inspection QA ?"}:::decision
+  QUAR["Quarantine bin<br/>Statut Receipt : REJECTED<br/>→ Void ou Return-to-Vendor<br/>(selon STU §6.2)"]:::stop
+  STORE["Bin storeroom actif<br/>balance += receipt_qty<br/>statut = STORES"]:::ok
+  Q2{"Flag item<br/><b>Rotating ?</b>"}:::decision
+  SERIAL["<b>Asset Serialization</b><br/>1 unité reçue →<br/>1 ASSETNUM créé<br/>(ASSET cost = receipt cost)"]:::action
+  Q3{"Item Assembly<br/>Structure (IAS)<br/>définie ?"}:::decision
+  IAS["<b>Application cascade IAS</b><br/>auto-création des<br/>ASSETNUM enfants<br/>(BOM déployé en<br/>sub-assets)"]:::action
+  DONE["Receipt complet<br/>ligne MATRECTRANS<br/>+ posting GL"]:::endNode
 
   PO --> RECV
   RECV --> Q1
-  Q1 -- Yes --> HOLD
+  Q1 -- Oui --> HOLD
   HOLD --> QA
   QA -- Reject --> QUAR
   QA -- Approve --> STORE
-  Q1 -- No --> STORE
+  Q1 -- Non --> STORE
   STORE --> Q2
-  Q2 -- No --> DONE
-  Q2 -- Yes --> SERIAL
+  Q2 -- Non --> DONE
+  Q2 -- Oui --> SERIAL
   SERIAL --> Q3
-  Q3 -- No --> DONE
-  Q3 -- Yes --> IAS
+  Q3 -- Non --> DONE
+  Q3 -- Oui --> IAS
   IAS --> DONE
 
   classDef start fill:#3B82F6,stroke:#1E40AF,color:#FFFFFF,font-weight:600;
@@ -17743,13 +17743,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A PO for 3 rotating items (motors) is being received. The receiving clerk is at the screen.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What additional step is required at receipt for these rotating items, compared to non-rotating items?</div>
+  <div class="mcq-context">Une PO de 3 rotating items (motors) est en cours de réception. Le receiving clerk est devant l'écran.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle étape supplémentaire est requise à la réception pour ces rotating items, comparé aux non-rotating ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-A"><input type="radio" name="c1000-208-mcq-6-1-002" value="A" id="c1000-208-mcq-6-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">No additional step — rotating and non-rotating use the same flow</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-002-B"><input type="radio" name="c1000-208-mcq-6-1-002" value="B" id="c1000-208-mcq-6-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Asset Serialization — each unit must be assigned a unique ASSETNUM and serial number</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-C"><input type="radio" name="c1000-208-mcq-6-1-002" value="C" id="c1000-208-mcq-6-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Mandatory inspection regardless of Item Master flag</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-D"><input type="radio" name="c1000-208-mcq-6-1-002" value="D" id="c1000-208-mcq-6-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A separate Companies record must be created per unit</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-A"><input type="radio" name="c1000-208-mcq-6-1-002" value="A" id="c1000-208-mcq-6-1-002-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Aucune étape supplémentaire — rotating et non-rotating utilisent le même flow</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-002-B"><input type="radio" name="c1000-208-mcq-6-1-002" value="B" id="c1000-208-mcq-6-1-002-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Asset Serialization — chaque unité doit recevoir un ASSETNUM unique et un numéro de série</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-C"><input type="radio" name="c1000-208-mcq-6-1-002" value="C" id="c1000-208-mcq-6-1-002-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Inspection obligatoire peu importe le flag Item Master</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-002-D"><input type="radio" name="c1000-208-mcq-6-1-002" value="D" id="c1000-208-mcq-6-1-002-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Un record Companies séparé doit être créé par unité</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17800,13 +17800,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A rotating item MOTOR_ASSY has an Item Assembly Structure defined with 3 children: PUMP, BEARING, SEAL. A PO for 1 unit of MOTOR_ASSY is received.</div>
-  <div class="mcq-stem"><strong>Question :</strong> How many ASSETNUM records does Asset Serialization create at receipt?</div>
+  <div class="mcq-context">Un rotating item MOTOR_ASSY a une Item Assembly Structure définie avec 3 enfants : PUMP, BEARING, SEAL. Une PO pour 1 unité de MOTOR_ASSY est réceptionnée.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Combien de records ASSETNUM l'Asset Serialization crée-t-elle à la réception ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-A"><input type="radio" name="c1000-208-mcq-6-1-003" value="A" id="c1000-208-mcq-6-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">1 — only the parent MOTOR_ASSY; children are created later when used</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-B"><input type="radio" name="c1000-208-mcq-6-1-003" value="B" id="c1000-208-mcq-6-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">3 — only the children, since the parent is conceptual</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-C"><input type="radio" name="c1000-208-mcq-6-1-003" value="C" id="c1000-208-mcq-6-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">0 — IAS does not auto-create assets; manual creation in Assets app required</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-003-D"><input type="radio" name="c1000-208-mcq-6-1-003" value="D" id="c1000-208-mcq-6-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">4 — 1 parent (MOTOR_ASSY) + 3 children (PUMP, BEARING, SEAL), with parent-child relationships preserved</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-A"><input type="radio" name="c1000-208-mcq-6-1-003" value="A" id="c1000-208-mcq-6-1-003-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">1 — seulement le parent MOTOR_ASSY ; les enfants sont créés plus tard à l'usage</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-B"><input type="radio" name="c1000-208-mcq-6-1-003" value="B" id="c1000-208-mcq-6-1-003-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">3 — seulement les enfants, le parent étant conceptuel</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-003-C"><input type="radio" name="c1000-208-mcq-6-1-003" value="C" id="c1000-208-mcq-6-1-003-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">0 — l'IAS ne crée pas les assets automatiquement ; création manuelle requise dans Assets app</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-003-D"><input type="radio" name="c1000-208-mcq-6-1-003" value="D" id="c1000-208-mcq-6-1-003-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">4 — 1 parent (MOTOR_ASSY) + 3 enfants (PUMP, BEARING, SEAL), avec les relations parent-enfant préservées</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17865,13 +17865,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A rotating tool requiring inspection has just been received from a PO.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the typical receipt status sequence for this item?</div>
+  <div class="mcq-context">Un rotating tool requérant inspection vient d'être reçu d'une PO.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la séquence typique de statuts receipt pour cet item ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-004-A"><input type="radio" name="c1000-208-mcq-6-1-004" value="A" id="c1000-208-mcq-6-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">WINSP (inspection) → WASSET (serialization) → COMP</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-B"><input type="radio" name="c1000-208-mcq-6-1-004" value="B" id="c1000-208-mcq-6-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">COMP only — rotating tools skip both inspection and serialization</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-C"><input type="radio" name="c1000-208-mcq-6-1-004" value="C" id="c1000-208-mcq-6-1-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">WAPPR → REJECTED → CLOSED (default for tools)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-D"><input type="radio" name="c1000-208-mcq-6-1-004" value="D" id="c1000-208-mcq-6-1-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">RECEIVED → INSPECTED → SHIPPED (custom statuses required)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-004-A"><input type="radio" name="c1000-208-mcq-6-1-004" value="A" id="c1000-208-mcq-6-1-004-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">WINSP (inspection) → WASSET (sérialisation) → COMP</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-B"><input type="radio" name="c1000-208-mcq-6-1-004" value="B" id="c1000-208-mcq-6-1-004-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">COMP seulement — les rotating tools sautent inspection et sérialisation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-C"><input type="radio" name="c1000-208-mcq-6-1-004" value="C" id="c1000-208-mcq-6-1-004-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">WAPPR → REJECTED → CLOSED (par défaut pour les tools)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-004-D"><input type="radio" name="c1000-208-mcq-6-1-004" value="D" id="c1000-208-mcq-6-1-004-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">RECEIVED → INSPECTED → SHIPPED (statuts custom requis)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17922,13 +17922,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A PO line orders 100 units. The vendor ships 60 units initially, with the remaining 40 to follow.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What happens when the first shipment of 60 is received in Maximo?</div>
+  <div class="mcq-context">Une ligne PO commande 100 unités. Le vendor expédie 60 unités initialement, les 40 restantes à suivre.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que se passe-t-il quand le premier shipment de 60 est réceptionné dans Maximo ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-A"><input type="radio" name="c1000-208-mcq-6-1-005" value="A" id="c1000-208-mcq-6-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">The PO line is rejected because the quantity does not match</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-B"><input type="radio" name="c1000-208-mcq-6-1-005" value="B" id="c1000-208-mcq-6-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">The PO line auto-closes at 60 and the missing 40 are written off</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-005-C"><input type="radio" name="c1000-208-mcq-6-1-005" value="C" id="c1000-208-mcq-6-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">A MATRECTRANS row is created for the 60 units; PO line stays open with cumulative qty = 60, awaiting balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-D"><input type="radio" name="c1000-208-mcq-6-1-005" value="D" id="c1000-208-mcq-6-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">A new PO must be issued for the remaining 40 units</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-A"><input type="radio" name="c1000-208-mcq-6-1-005" value="A" id="c1000-208-mcq-6-1-005-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">La ligne PO est rejetée car la quantité ne correspond pas</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-B"><input type="radio" name="c1000-208-mcq-6-1-005" value="B" id="c1000-208-mcq-6-1-005-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">La ligne PO se ferme automatiquement à 60 et les 40 manquantes sont passées en perte</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-005-C"><input type="radio" name="c1000-208-mcq-6-1-005" value="C" id="c1000-208-mcq-6-1-005-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Une ligne MATRECTRANS est créée pour les 60 unités ; la ligne PO reste ouverte avec qty cumulée = 60, en attente du solde</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-005-D"><input type="radio" name="c1000-208-mcq-6-1-005" value="D" id="c1000-208-mcq-6-1-005-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Une nouvelle PO doit être émise pour les 40 unités restantes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -17979,13 +17979,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A central warehouse has shipped 25 units to a satellite storeroom via a Stock Transfer Order (STO).</div>
-  <div class="mcq-stem"><strong>Question :</strong> What does the satellite storeroom do when the shipment physically arrives?</div>
+  <div class="mcq-context">Un warehouse central a expédié 25 unités à un storeroom satellite via un Stock Transfer Order (STO).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Que fait le storeroom satellite quand le shipment arrive physiquement ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-A"><input type="radio" name="c1000-208-mcq-6-1-006" value="A" id="c1000-208-mcq-6-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Issue Items, since the items are now consumed at the satellite</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-006-B"><input type="radio" name="c1000-208-mcq-6-1-006" value="B" id="c1000-208-mcq-6-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Use Shipment Receiving to acknowledge the transfer and update destination balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-C"><input type="radio" name="c1000-208-mcq-6-1-006" value="C" id="c1000-208-mcq-6-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Manually adjust the inventory balance via Add Inventory Balance action</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-D"><input type="radio" name="c1000-208-mcq-6-1-006" value="D" id="c1000-208-mcq-6-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Create a new PO referencing the central warehouse as the vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-A"><input type="radio" name="c1000-208-mcq-6-1-006" value="A" id="c1000-208-mcq-6-1-006-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Issue Items, puisque les items sont maintenant consommés au satellite</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-006-B"><input type="radio" name="c1000-208-mcq-6-1-006" value="B" id="c1000-208-mcq-6-1-006-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Utiliser Shipment Receiving pour acquitter le transfer et mettre à jour la balance destination</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-C"><input type="radio" name="c1000-208-mcq-6-1-006" value="C" id="c1000-208-mcq-6-1-006-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Ajuster manuellement la balance d'inventory via l'action Add Inventory Balance</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-006-D"><input type="radio" name="c1000-208-mcq-6-1-006" value="D" id="c1000-208-mcq-6-1-006-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Créer une nouvelle PO référençant le warehouse central comme vendor</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18036,13 +18036,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">A storeroom clerk has been asked to streamline the receiving workflow with barcode scanning and a simplified UI.</div>
-  <div class="mcq-stem"><strong>Question :</strong> Which Maximo application is designed for this purpose?</div>
+  <div class="mcq-context">Un clerk de storeroom doit rationaliser le workflow de receiving avec scan barcode et UI simplifiée.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle application Maximo est conçue pour cet objectif ?</div>
   <ol class="mcq-options" type="A">
     <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-007-A"><input type="radio" name="c1000-208-mcq-6-1-007" value="A" id="c1000-208-mcq-6-1-007-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Inventory Receiving Role-Based Application (RBA)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-B"><input type="radio" name="c1000-208-mcq-6-1-007" value="B" id="c1000-208-mcq-6-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Companies application</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-C"><input type="radio" name="c1000-208-mcq-6-1-007" value="C" id="c1000-208-mcq-6-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Item Master with simplified mode toggle</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-D"><input type="radio" name="c1000-208-mcq-6-1-007" value="D" id="c1000-208-mcq-6-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Mobile Field Worker (separate license)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-B"><input type="radio" name="c1000-208-mcq-6-1-007" value="B" id="c1000-208-mcq-6-1-007-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Application Companies</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-C"><input type="radio" name="c1000-208-mcq-6-1-007" value="C" id="c1000-208-mcq-6-1-007-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Item Master avec toggle mode simplifié</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-007-D"><input type="radio" name="c1000-208-mcq-6-1-007" value="D" id="c1000-208-mcq-6-1-007-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Mobile Field Worker (license séparée)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
@@ -18093,13 +18093,13 @@ flowchart TD
     <span class="mcq-type-chip">T1 · Simple</span>
     <span class="mcq-status-badge" aria-live="polite"></span>
   </div>
-  <div class="mcq-context">An item with cost method = AVERAGE has 50 units on hand at $10 average. A new receipt of 30 units at $14 unit cost is being processed.</div>
-  <div class="mcq-stem"><strong>Question :</strong> What is the new average cost after this receipt?</div>
+  <div class="mcq-context">Un item avec cost method = AVERAGE a 50 unités on-hand à 10 $ de moyenne. Une nouvelle réception de 30 unités à 14 $ unit cost est traitée.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel est le nouveau coût moyen après cette réception ?</div>
   <ol class="mcq-options" type="A">
-    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-A"><input type="radio" name="c1000-208-mcq-6-1-008" value="A" id="c1000-208-mcq-6-1-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">$10 — average cost is locked at the value at item creation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-B"><input type="radio" name="c1000-208-mcq-6-1-008" value="B" id="c1000-208-mcq-6-1-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">$12 — simple average of $10 and $14</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-008-C"><input type="radio" name="c1000-208-mcq-6-1-008" value="C" id="c1000-208-mcq-6-1-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">$11.50 — weighted: (50×10 + 30×14) / 80 = 920/80</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
-    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-D"><input type="radio" name="c1000-208-mcq-6-1-008" value="D" id="c1000-208-mcq-6-1-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">$14 — the latest receipt cost overrides the prior average</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-A"><input type="radio" name="c1000-208-mcq-6-1-008" value="A" id="c1000-208-mcq-6-1-008-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">10 $ — le coût moyen est verrouillé à la valeur de création de l'item</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-B"><input type="radio" name="c1000-208-mcq-6-1-008" value="B" id="c1000-208-mcq-6-1-008-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">12 $ — moyenne simple de 10 $ et 14 $</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="c1000-208-mcq-6-1-008-C"><input type="radio" name="c1000-208-mcq-6-1-008" value="C" id="c1000-208-mcq-6-1-008-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">11,50 $ — pondéré : (50×10 + 30×14) / 80 = 920/80</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="c1000-208-mcq-6-1-008-D"><input type="radio" name="c1000-208-mcq-6-1-008" value="D" id="c1000-208-mcq-6-1-008-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">14 $ — le coût de la dernière réception remplace la moyenne précédente</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
   </ol>
   <div class="mcq-actions">
     <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
