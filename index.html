@@ -384,8 +384,11 @@
   .compare-table caption { caption-side: top; text-align: left; font-weight: 600; color: var(--text-1); margin-bottom: 8px; font-size: 14px; }
   .compare-table th { background: var(--brand); color: white; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.2px; }
   .compare-table td { padding: 8px 12px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .compare-table tbody tr:nth-child(even) { background: rgba(29,158,117,0.025); }
   .compare-table tbody tr:hover { background: var(--brand-soft); }
+  .compare-table tbody td:first-child { font-weight: 600; color: var(--text-1); }
   .compare-table code { background: var(--surface-2); padding: 1px 6px; border-radius: 3px; font-size: 12px; color: var(--brand); }
+  .compare-table th:not(:last-child), .compare-table td:not(:last-child) { border-right: 1px solid var(--border); }
 
 
   /* Phase 2.7 — Inline mini-figures inside MCQ rationales */
@@ -1967,28 +1970,175 @@
 <!-- 3.1 -->
 <section class="lesson" id="lesson-3-1">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.1</div>
-  <div class="lesson-header"><h1>Configure organizational options (Org level)</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Configurer les options Organization (niveau Org)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Architecture</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-1.svg" alt="Illustration de la leçon 3.1 — Architecture multi-Organization Maximo Manage" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-1" id="lt-3-1-c" class="lt-course" checked>
     <input type="radio" name="lt-3-1" id="lt-3-1-s" class="lt-sit">
     <div class="tabs-bar"><label for="lt-3-1-c">📚 Leçon</label><label for="lt-3-1-s">🎯 Scénarios d’examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Define when multiple organizations are required in a MAS Manage database</li>
-          <li>Identify the required fields on an Organization record</li>
-          <li>Describe the purpose of Sets</li>
-          <li>Identify the data requirement for saving vs activating an organization</li>
+          <li>Identifier les conditions business qui justifient la création de plusieurs Organizations dans une base Maximo Manage.</li>
+          <li>Reconnaître les champs obligatoires d'un record Organization avant le premier save.</li>
+          <li>Décrire la finalité des Sets (Item Set + Company Set) et leur rôle de référentiels partagés entre Organizations.</li>
+          <li>Identifier les prérequis data pour passer du statut Saved au statut Active sur une Organization.</li>
+          <li>Distinguer les niveaux de stockage Maximo (System, Set, Organization, Site) et savoir où chaque entité métier réside.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Multi-Org when</strong>: different currencies, distinct financial/purchasing rules, separate item sets</li>
-          <li><strong>Required Org fields</strong>: name, <strong>base currency</strong>, <strong>item set</strong>, <strong>company set</strong>, default site</li>
-          <li><strong>Sets</strong> (Item Set, Company Set) = shared references across Orgs</li>
-          <li><strong>Save</strong> = base fields | <strong>Activate</strong> = at least 1 site with default storeroom</li>
+          <li><strong>Architecture multi-niveaux</strong> — Maximo segmente ses données sur 4 niveaux : <code>System</code> (global), <code>Set</code> (Item Set + Company Set), <code>Organization</code> (entité légale), <code>Site</code> (unité opérationnelle).</li>
+          <li><strong>Multi-Org quand</strong> — devises de base différentes (<code>Base Currency 1</code>), catalogues items distincts, listes vendors séparées, règles GL radicalement différentes. Une Org = quasi-entité légale autonome.</li>
+          <li><strong>Champs Save Org obligatoires</strong> — <code>Base Currency 1</code>, <code>Item Set</code>, <code>Company Set</code>. Sans ces 3, le bouton Save reste grisé.</li>
+          <li><strong>Sets = data sharing fermé</strong> — uniquement 2 types : <code>Item Set</code> (catalogue Item Master partagé) et <code>Company Set</code> (vendors / manufacturers partagés). Pas d'Asset Set, pas de Location Set.</li>
+          <li><strong>Save vs Activate</strong> — Save crée le record Inactive ; Activate exige au moins un Site enfant avec Default Storeroom assigné.</li>
+          <li><strong>Site-level data</strong> — Assets, Locations, Work Orders, Inventory, Purchasing scopés par Site (clé composite <code>ASSETNUM</code> + <code>SITEID</code>).</li>
+          <li><strong>Org-level data</strong> — Hazards, Vendors (record principal), Chart of Accounts, GL segments, Workflow PRs, Autonumbering scopés par Organization.</li>
+          <li><strong>System-level data</strong> — Classifications, Domains, Persons (avant assignation à un Site), Currencies — globaux, partagés par toutes les Orgs.</li>
         </ul></div>
+
+        <h2>📐 Architecture des niveaux de stockage</h2>
+        <p>Le modèle Maximo applique un principe rigoureux : chaque entité métier est rangée à un niveau précis qui détermine sa portée de partage. Ce choix est <strong>structurel</strong> et ne peut pas être contourné — il découle directement du data model relationnel (présence ou absence de <code>SITEID</code> et <code>ORGID</code> sur la table).</p>
+        <p>Concrètement, plus on descend dans la hiérarchie, plus la portée se restreint : une donnée System est visible par tout l'enterprise ; une donnée Set est partagée par les Orgs qui y sont liées ; une donnée Organization reste cloisonnée à cette seule Org ; une donnée Site n'existe que pour ce Site précis.</p>
+
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-1-architecture">
+          <pre class="mermaid" data-mermaid-src="
+graph TD
+    A[System Level<br/>Pas de SITEID ni ORGID<br/>Classifications · Domains · Persons · Currencies]:::sys
+    B[Set Level<br/>ITEMSETID ou COMPANYSETID<br/>Item Master · Companies vendors]:::set
+    C[Organization Level<br/>ORGID<br/>Hazards · Chart of Accounts · Autonumbering · GL]:::org
+    D[Site Level<br/>ORGID + SITEID<br/>Assets · Locations · WO · Inventory · PO]:::site
+    A --&gt; B
+    B --&gt; C
+    C --&gt; D
+    classDef sys fill:#E0F2FE,stroke:#3B82F6,stroke-width:2px,color:#0F172A
+    classDef set fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+    classDef org fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef site fill:#D1FAE5,stroke:#1D9E75,stroke-width:2px,color:#0F172A
+"></pre>
+          <figcaption>Hiérarchie de stockage Maximo Manage : 4 niveaux concentriques. Plus on descend, plus la portée est restreinte. Une donnée System est visible par tous les users (sous réserve des Security Groups) ; une donnée Site n'est visible que dans ce Site précis sauf autorisation cross-Site explicite.</figcaption>
+        </figure>
+
+        <h2>📊 Comparaison des niveaux</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-1-levels">
+          <table class="compare-table">
+            <caption>Les 4 niveaux de stockage Maximo Manage et leur portée</caption>
+            <thead>
+              <tr>
+                <th>Niveau</th>
+                <th>Clé composite</th>
+                <th>Exemples d'entités</th>
+                <th>Partage entre Orgs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>System</code></td>
+                <td>(aucune)</td>
+                <td>Classifications · Domains · Persons · Currencies</td>
+                <td>Total</td>
+              </tr>
+              <tr>
+                <td><code>Set</code></td>
+                <td><code>ITEMSETID</code> · <code>COMPANYSETID</code></td>
+                <td>Item Master · Companies (vendors)</td>
+                <td>Sélectif (1 Set partagé par N Orgs)</td>
+              </tr>
+              <tr>
+                <td><code>Organization</code></td>
+                <td><code>ORGID</code></td>
+                <td>Hazards · Chart of Accounts · Autonumbering · GL</td>
+                <td>Aucun (cloisonné par Org)</td>
+              </tr>
+              <tr>
+                <td><code>Site</code></td>
+                <td><code>ORGID</code> + <code>SITEID</code></td>
+                <td>Assets · Locations · Work Orders · Inventory · PO</td>
+                <td>Aucun (cloisonné par Site)</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Plus on descend dans la hiérarchie, plus la portée de partage se restreint. Le placement d'une entité dépend de sa nature : référentiel global → System ; référentiel partagé entre Orgs → Set ; configuration légale/comptable → Organization ; opérationnel transactionnel → Site. Cette règle est <strong>structurelle</strong> et ne peut pas être contournée — elle découle directement de la présence ou absence de <code>SITEID</code> et <code>ORGID</code> sur la table sous-jacente.</figcaption>
+        </figure>
+
+        <h2>🏗️ Item Set + Company Set — les deux piliers du data sharing</h2>
+        <p>Maximo n'autorise <strong>qu'une seule forme de partage</strong> entre Organizations : les Sets. Le modèle est volontairement fermé à 2 types stricts, qu'aucune customisation ne peut étendre :</p>
+        <div class="key-box"><ul>
+          <li><strong>Item Set</strong> — référentiel <code>Item Master</code> (codes items, descriptions, specifications, rotating items, item assembly structures). Une Organization référence exactement <strong>1</strong> Item Set ; un Item Set peut être référencé par <strong>N</strong> Organizations.</li>
+          <li><strong>Company Set</strong> — référentiel <code>Companies</code> (vendors, manufacturers, contacts, contracts source). Même cardinalité : 1 Org → 1 Company Set ; 1 Company Set → N Orgs.</li>
+        </ul></div>
+        <p>Ce design force une gouvernance claire : on peut centraliser <em>« quoi est acheté »</em> (items + vendors) tout en isolant <em>« où ni comment »</em> (assets, opérations, comptabilité). C'est le contrat IBM Docs : « <em>You must associate each organization with only one company set... only one item set.</em> »</p>
+        <p>Conséquence pratique : avant de créer la <strong>première</strong> Organization de votre déploiement, vous devez créer au moins 1 Item Set et 1 Company Set vides. La validation Maximo bloque sinon le save initial.</p>
+
+        <h2>🔄 Cycle de vie d'une Organization</h2>
+        <p>La séquence Save → Activate suit un chemin strict imposé par les validations ORM Maximo. Les transitions ne sont pas négociables — c'est une porte verrouillée pour éviter les transactions orphelines (WO sans contexte, MR sans destination, Inventory sans Storeroom).</p>
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-1-lifecycle">
+          <pre class="mermaid" data-mermaid-src="
+stateDiagram-v2
+    [*] --&gt; Draft: Nouveau record
+    Draft --&gt; Saved: Save<br/>(Base Currency 1 + Item Set + Company Set)
+    Saved --&gt; Configured: Créer Sites<br/>+ Default Storeroom
+    Configured --&gt; Active: Cocher flag Active
+    Active --&gt; Inactive: Décocher Active
+    Inactive --&gt; Active: Réactiver
+"></pre>
+          <figcaption>Lifecycle Organization Maximo : 4 transitions clés. Chaque transition est gardée par une règle d'intégrité (présence des prérequis). Une fois Active, une Org peut être désactivée temporairement (Inactive) sans perte de données — utile lors des migrations ou réorganisations.</figcaption>
+        </figure>
+
+        <h2>📊 Exemples canoniques IBM</h2>
+        <p><strong>Exemple 1 — Utilities + Fleet partageant les vendors</strong> (référence IBM Docs <em>Planning for Multiple Sites</em>) : entreprise avec opérations utilités et flotte de véhicules basées à Denver. Les vendors sont communs (mêmes fournisseurs pour les deux), mais les items sont radicalement différents (transformateurs vs. pneus).</p>
+        <ul>
+          <li>2 Organizations : <code>UTIL</code> et <code>FLEET</code></li>
+          <li>3 Sites : <code>UTIL-DENVER</code>, <code>UTIL-LARAMIE</code>, <code>FLT-DENVER</code></li>
+          <li>1 Company Set partagé entre les 2 Orgs</li>
+          <li>2 Item Sets distincts (un par Org)</li>
+        </ul>
+        <p><strong>Exemple 2 — Production US + RSA partageant items et vendors</strong> : production manufacturing identique aux États-Unis et en Afrique du Sud, mêmes pièces, mêmes fournisseurs, mais entités légales et devises distinctes.</p>
+        <ul>
+          <li>2 Organizations : <code>USORG</code> (Base Currency = USD) et <code>RSAORG</code> (Base Currency = ZAR)</li>
+          <li>2 Sites par Org (maintenance + IT service desk)</li>
+          <li>1 Item Set partagé (mêmes pièces de production)</li>
+          <li>1 Company Set partagé (mêmes fournisseurs internationaux)</li>
+        </ul>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 5 confusions les plus fréquentes</strong> sur les Organizations / Sites / Sets à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — confondre « ajouter une devise » avec « créer une Org ». Si seule la devise diffère sans changement de catalogue ni de vendor, une <code>Currency</code> additionnelle dans la même Org peut suffire (<code>Base Currency 2</code>).</li>
+            <li><strong>Piège 2</strong> — penser qu'un Asset Set existe. Faux : seuls Item Set et Company Set existent dans Maximo. Les Assets sont strictement Site-scoped.</li>
+            <li><strong>Piège 3</strong> — croire qu'on peut activer une Org sans Site. Faux : Activate requiert au minimum 1 Site avec Default Storeroom assigné.</li>
+            <li><strong>Piège 4</strong> — placer Locations au niveau Organization. Faux : les Locations héritent obligatoirement d'un <code>SITEID</code>. Pas de Location partagée entre Sites.</li>
+            <li><strong>Piège 5</strong> — confondre Security Groups avec multi-Org. Les Security Groups opèrent <em>cross-Organization</em> et n'imposent jamais une nouvelle Org.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quels sont les 3 champs obligatoires pour sauver une Organization pour la première fois ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Base Currency 1</strong>, <strong>Item Set</strong>, <strong>Company Set</strong>. Sans ces 3 valeurs, le bouton Save reste grisé. Default Site, Clearing Account et structures GL se configurent ensuite, après le save initial.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quelle est la séquence lifecycle complète d'une Organization, du nouveau record jusqu'à l'activation ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>1.</strong> Populer les 3 prérequis (Base Currency 1 + Item Set + Company Set) → <strong>2.</strong> Save (insert dans <code>MAXORG</code>, statut Inactive) → <strong>3.</strong> Créer au moins 1 Site avec Default Storeroom → <strong>4.</strong> Cocher le flag Active. Ordre inverse impossible : les validations ORM bloquent toute désynchronisation.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. À quel niveau de stockage résident les Assets et les Locations ?</p>
+          <details><summary>Afficher la réponse</summary><p>Niveau <strong>Site</strong>. Clé composite <code>ASSETNUM</code> + <code>SITEID</code> pour les Assets, <code>LOCATION</code> + <code>SITEID</code> pour les Locations. Deux Sites différents peuvent porter un Asset <code>PUMP-001</code> sans collision — chaque Site a son propre namespace opérationnel.</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq-progress" data-section="3"><span class="mcq-progress-label"><strong>0</strong> / 0 répondues</span><div class="mcq-progress-bar"><div class="mcq-progress-fill"></div></div><span class="mcq-progress-stats">0 correctes · 0%</span><button type="button" class="mcq-reset-section-btn" data-action="reset-section" data-section="3">Réinitialiser la section</button></div>
 <p style="color:var(--text-3);font-size:12px;margin:-6px 0 10px 0;">Questions d’examen de style IBM. Cliquez une option, puis « Vérifier ma réponse ». Progression enregistrée localement.</p>
@@ -2008,14 +2158,48 @@
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D1</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A</p>
-    <p><strong>Pourquoi A (correct)</strong> — La création d'une nouvelle Organization dans Maximo Manage est une décision architecturale majeure qui ne doit jamais être prise à la légère. Les vrais <em>business drivers</em> qui <strong>requièrent</strong> une Organization séparée sont : (1) <strong>Base Currency 1 différente</strong> — l'Organization est liée à une currency de base unique, donc deux entités avec USD et EUR exigent deux Orgs, (2) <strong>Item Set distinct</strong> — si chaque subsidiary a son propre catalogue d'items avec numérotations et descriptions indépendantes, (3) <strong>Company Set distinct</strong> — si les vendors ne sont pas partagés, (4) <strong>règles comptables et GL structures radicalement différentes</strong>. Une Organization = une entité légale quasi-autonome dans Maximo. Les multi-sites d'une même company partagent une Organization commune — on crée des <em>Sites</em> pas des <em>Organizations</em>.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : les Crews appartiennent au domaine Labor (Labor records, Calendars), entièrement orthogonal à l'Organization. On gère plusieurs crews dans un même Site sans besoin de nouvelle Org.</p>
-    <p><strong>Pourquoi C est faux</strong> — D1 legacy term : la structure des GL segments est une option configurable <em>au sein</em> d'une Organization (Chart of Accounts), mais n'exige pas à elle seule une nouvelle Org — deux subsidiaries avec GL distincts peuvent toujours cohabiter dans la même Org si currency et item set sont identiques.</p>
-    <p><strong>Pourquoi D est faux</strong> — D3 wrong scope : les Security Groups opèrent <em>cross-Organization</em> par construction — c'est un mécanisme Security System-wide. Ils ne dictent jamais la création d'une nouvelle Org ; confusion de niveaux.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.1 demande explicitement de savoir <em>quand</em> il est obligatoire de créer plusieurs Organizations. C'est la question de gouvernance la plus structurante du déploiement Maximo : créer une Org de trop mène à un coût d'administration explosif (chaque Org dupliquée demande sa propre configuration GL, ses workflow PRs, son autonumbering, ses calendars) ; en oublier une mène à un mélange de devises ou de catalogues qui rend les rapports comptables faussés.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Une <code>Organization</code> dans Maximo Manage représente une entité légale ou semi-autonome avec son propre référentiel financier. Le data model relationnel impose qu'une Org soit liée à exactement <strong>1</strong> <code>Base Currency 1</code>, <strong>1</strong> <code>Item Set</code> et <strong>1</strong> <code>Company Set</code>. Toute différence sur l'un de ces 3 axes oblige à créer une seconde Org. Les autres dimensions (security groups, GL segments internes, crews, calendars) restent configurables <em>à l'intérieur</em> d'une Org existante.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; New Organization &gt; saisir <code>Base Currency 1</code> + <code>Item Set</code> + <code>Company Set</code> + Description. Les sub-tabs (GL Account Configuration, Workflow Settings, Site list) configurent ensuite les politiques opérationnelles. Une fois saved, l'Org reste Inactive jusqu'à création d'au moins 1 Site avec Default Storeroom. Master-map.pdf p.98 et IBM Docs <em>Planning for Multiple Sites</em> chapitre 1 décrivent les 6 conditions canoniques.</p>
+
+      <p><strong>Exemple chiffré</strong> — Groupe industriel international : entité US (transactions USD, catalogue Items pneus &amp; pièces auto, vendors NA) + entité Allemagne (transactions EUR, catalogue items machines-outils, vendors EU). Décision : 2 Orgs (devise différente, item set différent, company set différent). Configuration : <code>USORG</code> avec USD + Item Set "AUTO" + Company Set "VEND-NA" ; <code>DEORG</code> avec EUR + Item Set "MACHINE" + Company Set "VEND-EU". Coût admin annuel : ≈ 2× la maintenance Maximo (acceptable car opérations vraiment distinctes).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme deux comptes bancaires distincts pour deux entreprises légales : on ne mélange pas l'argent même si la même personne les gère. La devise et le catalogue sont l'équivalent de la nature légale du compte — incompatibles dans un même conteneur.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Les Crews appartiennent au domaine Labor (Labor records, Calendars), entièrement orthogonal à l'Organization. Plusieurs crews dans un même Site se gèrent via la <code>Crews</code> app sans créer une nouvelle Org. <strong>Pattern D4 Demi-vérité</strong> : multiple crews est un cas réel mais ne nécessite jamais une Org.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — La structure des GL segments est une option configurable <em>au sein</em> d'une Organization (Chart of Accounts) ; deux subsidiaries avec GL distincts peuvent cohabiter dans la même Org tant que currency et item set sont identiques. <strong>Pattern D1 Hérité</strong> : pratique legacy d'avant Maximo 7.5 où les segments GL étaient strictement Org-scoped.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Les Security Groups opèrent <em>cross-Organization</em> par construction — c'est un mécanisme Security System-wide. Ils ne dictent jamais la création d'une nouvelle Org. <strong>Pattern D3 Inverse</strong> : confusion de niveau, le candidat applique une logique opérationnelle à un mécanisme structurel.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Org = entité légale</strong> avec 1 Base Currency 1, 1 Item Set, 1 Company Set.</li>
+          <li><strong>Sites</strong> = unités opérationnelles à l'intérieur d'une Org (transactions WO, Inventory, PO).</li>
+          <li><strong>Drivers Multi-Org</strong> : devise / catalogue items / liste vendors.</li>
+          <li><strong>Pas Multi-Org</strong> : crews, GL segments, security groups, calendars.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Devise différente OU catalogue différent OU vendors différents = nouvelle Org.</li>
+          <li>Tout le reste = configuration interne à l'Org existante.</li>
+          <li>Une Org en trop = coût admin × 2.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Creating organizations : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-creating" target="_blank" rel="noopener">Org business drivers</a></li>
-      <li>Maximo Secrets — Organizations and Sites : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Multi-Org decision tree</a></li>
+      <li>STU C1000-183 sub-objective 3.1 — « Define when multiple organizations are required »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9, p.98 « Planning for Multiple Sites — Multisite capability »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-creating" target="_blank" rel="noopener">Creating organizations</a> &amp; Maximo Secrets <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Multi-Org decision tree</a></li>
     </ul></div>
   </div>
 </div>
@@ -2035,14 +2219,48 @@
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D7</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, C</p>
-    <p><strong>Pourquoi A, C</strong> — Pour sauver un nouveau record Organization dans Maximo Manage, 3 champs sont strictement obligatoires : <strong>Base Currency 1</strong>, <strong>Item Set</strong>, <strong>Company Set</strong>. Parmi les options proposées, les 2 correctes sont Base Currency 1 et Item Set (Company Set non listé). <strong>Base Currency 1</strong> fixe la devise principale dans laquelle toutes les transactions (WO costs, PO totals, inventory valuation) seront capturées en natif. <strong>Item Set</strong> définit le catalogue de référence Item Master partagé par cette Organization — on peut réutiliser un Set existant ou en créer un nouveau. <strong>Company Set</strong> (non listé ici) fixe le référentiel vendors. Sans ces 3 champs, le save est bloqué par validation UI/ORM. D'autres champs (Default Site, Clearing Account, GL structures, Default Storeroom) se configurent <em>après</em> pour activer l'Org ou raffiner son comportement, mais pas pour le save initial.</p>
-    <p><strong>Pourquoi B est faux</strong> — D3 wrong scope : Default Storeroom est requis <em>au niveau Site</em> pour pouvoir activer le Site (transacter des WOs, MR, inventory), pas au niveau Organization save initial.</p>
-    <p><strong>Pourquoi D est faux</strong> — D9 near-synonym : Clearing Account fait partie des GL configurations (Chart of Accounts) et se définit dans l'Org <em>après</em> save initial ; distracteur crédible pour qui confond le modèle financier.</p>
-    <p><strong>Why E wrong</strong> — D7 non-existent : aucun champ Tax Code Rate n'est demandé à la création d'une Organization ; Tax Type et Tax Rate se configurent ensuite dans Taxes (Org-level après save).</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance précise des prérequis save d'une Organization. Cette question est la garde-fou du déploiement : un FA qui ne connaît pas ces 3 champs aboutit à un blocage UI inexpliqué et fait perdre des heures à l'équipe technique. Le STU 3.1 demande explicitement « Identify the required fields on an Organization record ».</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Toute insertion dans la table <code>MAXORG</code> (PostgreSQL ou DB2 selon le tier) déclenche une validation Pydantic-like côté ORM. Trois <code>NOT NULL</code> sans default existent au niveau base : <code>BASECURRENCY1</code>, <code>ITEMSETID</code>, <code>COMPANYSETID</code>. Le save échoue silencieusement (button grisé) si l'un manque. Les autres champs (Description, Default Site, Clearing Account, Tax Code) sont nullable au save et se configurent après.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; New Organization. Maximo affiche immédiatement les 3 champs en haut du form (rouge si vide, vert si rempli). Sub-tabs disabled tant que le save initial n'est pas effectué. Une fois saved, on accède à GL Account Configuration, Sites, Workflow Settings, Autonumber Setup, Taxes — qui sont tous post-save. Master-map.pdf p.444 « Managing organizations » confirme cette séquence.</p>
+
+      <p><strong>Exemple chiffré</strong> — Création d'une Org <code>ACMEUS</code> : Base Currency 1 = USD ; Item Set = "ACME-ITEMS" (créé avant ou existant) ; Company Set = "ACME-VENDORS". Save → succès, MAXORG row insérée avec ACTIVE=N. Tentative inverse (Base Currency 1 vide) → button Save grisé, message tooltip « Base Currency 1 is required ». Test reproductible 100 % des cas sur sandbox MAS Trial.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'inscription à l'État civil d'une nouvelle entreprise : il faut nom légal + devise comptable + numéro fiscal au minimum avant d'obtenir le récépissé. Les détails (siège social, salariés, partenaires) viennent ensuite.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Default Storeroom est requis <em>au niveau Site</em> pour pouvoir activer le Site (transacter WOs, MR, inventory), pas au niveau Organization save initial. <strong>Pattern D3 Inverse</strong> : le candidat inverse les niveaux Org et Site.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Clearing Account fait partie des GL configurations (Chart of Accounts) et se définit dans l'Org <em>après</em> save initial. <strong>Pattern D9 Quasi-synonyme</strong> : distracteur crédible pour qui confond le modèle financier (Clearing Account semble fondamental, mais Maximo l'autorise nullable au save).</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Aucun champ <em>Tax Code Rate</em> n'est demandé à la création d'une Organization ; Tax Type et Tax Rate se configurent ensuite dans Taxes (Org-level, post-save). <strong>Pattern D7 Inexistant</strong> : nom de champ inventé pour piéger.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>3 NOT NULL au save Org</strong> : Base Currency 1, Item Set, Company Set.</li>
+          <li><strong>Champs nullable au save</strong> : Description, Default Site, Clearing Account, Tax Code.</li>
+          <li><strong>Sub-tabs disabled</strong> tant que save initial non effectué.</li>
+          <li><strong>Validation ORM</strong> : button Save grisé si l'un des 3 manque.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Save Org = Base Currency 1 + Item Set + Company Set (point).</li>
+          <li>Tout le reste = post-save.</li>
+          <li>Default Storeroom = Site-level, pas Org-level.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Creating organizations : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-creating" target="_blank" rel="noopener">Mandatory fields</a></li>
-      <li>Maximo Secrets — Organization setup : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Base Currency + Sets</a></li>
+      <li>STU C1000-183 sub-objective 3.1 — « Identify the required fields on an Organization record »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9, p.444 « Managing organizations »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-creating" target="_blank" rel="noopener">Creating organizations — mandatory fields</a></li>
     </ul></div>
   </div>
 </div>
@@ -2062,14 +2280,48 @@
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D7</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C</p>
-    <p><strong>Pourquoi C (correct)</strong> — Dans Maximo Manage, <strong>Sets</strong> sont un niveau de stockage au-dessus des Organizations, conçu exclusivement pour partager 2 types de référentiels : (1) <strong>Item Set</strong> — le catalogue Item Master (items, rotating items, specifications) peut être partagé par N Organizations, évitant la duplication des codes items entre subsidiaries, (2) <strong>Company Set</strong> — le référentiel vendors/manufacturers (Companies) partagé entre Orgs pour uniformiser la base fournisseurs du groupe. Ces 2 Set types sont les <em>seuls</em> qui existent dans l'architecture Maximo — le modèle est fermé. Toutes les autres entités (Assets, Locations, Work Orders, PMs, Classifications, Hazards, Chart of Accounts…) sont scopées Organization ou Site, jamais en Set. Cette contrainte force la gouvernance : on peut partager "quoi est acheté" (items + vendors) mais pas "où ni comment" (assets, operations).</p>
-    <p><strong>Pourquoi A est faux</strong> — D9 near-synonym : Chart of Accounts est une GL configuration Organization-level, pas un Set ; les structures comptables sont indépendantes par Org, pas partagées en Set.</p>
-    <p><strong>Pourquoi B est faux</strong> — D3 wrong scope : Locations sont maintenues <em>per Site</em> — elles portent obligatoirement un SITEID et ne peuvent pas exister au niveau Set.</p>
-    <p><strong>Pourquoi D est faux</strong> — D7 non-existent : il n'existe <strong>pas d'Asset Set</strong> dans Maximo. Les Assets sont Site-scoped. Distracteur tentant pour qui extrapole à tort depuis l'existence d'Item Set.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.1 explicite « Describe the purpose of Sets ». IBM teste la rigueur du candidat à reconnaître que le modèle est <em>fermé</em> à 2 types de Sets exclusivement. Inventer un Asset Set ou un Location Set est une erreur fondamentale qui révèle un déploiement Maximo mal conçu.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le niveau <code>Set</code> est conceptuellement supérieur à l'Organization dans la hiérarchie de stockage Maximo. Sa raison d'être unique : permettre à plusieurs Orgs de partager des référentiels d'items et de vendors. Les autres entités métier (Assets, Locations, Work Orders, Classifications) ont des contraintes opérationnelles ou structurelles qui empêchent leur partage en Set : un Asset physique appartient à un Site précis, une Location est ancrée géographiquement, un WO porte un contexte transactionnel.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Sets</code> app &gt; List view affiche uniquement 2 colonnes Type : ITEM et COMPANY. Aucun autre type sélectionnable. Les tables <code>ITEMSET</code> et <code>COMPANYSET</code> ont les colonnes <code>ITEMSETID</code> / <code>COMPANYSETID</code> en clé primaire. La FK depuis <code>MAXORG</code> contraint chaque Organization à référencer exactement 1 ligne de chaque. IBM Docs : « <em>You can create as many item sets and company sets as your business practices require. </em>»</p>
+
+      <p><strong>Exemple chiffré</strong> — Groupe avec 4 Orgs : <code>USORG</code>, <code>CAORG</code>, <code>UKORG</code>, <code>DEORG</code>. Architecture Sets choisie : 1 Item Set "GROUP-ITEMS" partagé par toutes les 4 Orgs (catalogue commun) + 2 Company Sets ("VEND-NA" partagé US+CA, "VEND-EU" partagé UK+DE). Résultat : 4 Orgs × 1 Item Set + 2 Company Sets = data sharing optimal sans duplication.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Sets = catalogue commun d'une chaîne de franchise. McDonald's France et McDonald's Belgique partagent le même catalogue produits (Item Set) et la même liste de fournisseurs grossistes (Company Set), mais chaque franchise reste juridiquement distincte avec sa propre comptabilité (Org).</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Chart of Accounts est une GL configuration Organization-level, pas un Set ; les structures comptables sont indépendantes par Org, jamais partagées en Set. <strong>Pattern D9 Quasi-synonyme</strong> : distracteur tentant car COA est aussi un référentiel.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Locations sont maintenues <em>per Site</em> — elles portent obligatoirement un <code>SITEID</code> et ne peuvent pas exister au niveau Set. <strong>Pattern D3 Inverse</strong> : confusion descendante (Site → Set au lieu de Site → Org → Set).</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Il n'existe <strong>pas d'Asset Set</strong> dans Maximo. Les Assets sont Site-scoped. <strong>Pattern D7 Inexistant</strong> : extrapolation à tort depuis Item Set, mais le modèle est fermé.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>2 types de Sets seulement</strong> : Item Set, Company Set.</li>
+          <li><strong>Cardinalité</strong> : 1 Org → 1 Item Set + 1 Company Set ; 1 Set → N Orgs.</li>
+          <li><strong>Tables DB</strong> : <code>ITEMSET</code>, <code>COMPANYSET</code>.</li>
+          <li><strong>Contrainte ORM</strong> : FK NOT NULL depuis MAXORG.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Sets = Items + Companies, point final.</li>
+          <li>Partage entre Orgs : oui pour ces 2 types, non pour le reste.</li>
+          <li>Asset Set, Location Set, COA Set : n'existent pas.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Creating Sets : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sets-creating" target="_blank" rel="noopener">Item Set + Company Set only</a></li>
-      <li>Maximo Secrets — Sets and Organizations : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Data sharing architecture</a></li>
+      <li>STU C1000-183 sub-objective 3.1 — « Describe the purpose of Sets »</li>
+      <li>[EOTRAG] Query — IBM Maximo Multiple Sites Configuration, ch.1 « Item sets and data sharing between organizations »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sets-creating" target="_blank" rel="noopener">Creating Sets — Item + Company only</a></li>
     </ul></div>
   </div>
 </div>
@@ -2089,11 +2341,44 @@
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C, D</strong></div>
     
-    <div class="mcq-explanation-body"><p><strong>Correct order:</strong> 1 → 2 → 3 → 4</p>
-    <p><strong>Pourquoi cet ordre</strong> — La séquence lifecycle d'une Organization dans Maximo Manage suit un chemin strict imposé par les validations ORM : <strong>Étape 1</strong> — Populer les 3 prérequis (Base Currency 1, Item Set, Company Set) — sans ces valeurs, le bouton Save reste grisé. <strong>Étape 2</strong> — Sauver l'Org (INSERT dans <code>MAXORG</code>) avec status <em>Inactive</em> par défaut. <strong>Étape 3</strong> — Créer au minimum un Site enfant avec <em>Default Storeroom</em> assigné — une Org sans Site activé ne peut transacter aucun WO ou inventory. <strong>Étape 4</strong> — Cocher le flag <em>Active</em> sur l'Org (champ <code>ACTIVE</code>) qui la rend disponible pour les users et les transactions. Ordre inverse impossible : on ne peut pas activer une Org qui n'a pas été sauvée, et l'activation validée nécessite au moins un Site avec Default Storeroom. Logique d'intégrité data pour éviter les transactions orphelines.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Ordre correct :</strong> 1 → 2 → 3 → 4 (A → B → C → D)</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.1 demande la séquence opérationnelle exacte d'activation. Cette question type T4 (drag-drop) teste la maîtrise de l'ordre — IBM construit ce piège pour vérifier que le candidat n'a pas mémorisé en désordre les étapes lues dans la documentation.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — La séquence lifecycle Save → Configure → Active suit un chemin verrouillé par les validations ORM Maximo. Chaque transition est gardée par une règle d'intégrité référentielle qui empêche de sauter une étape. La logique sous-jacente : éviter les transactions orphelines (un WO sans Site assigné, un MR sans destination Storeroom, un PO sans Vendor référencé).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — <strong>Étape 1</strong> : Populer les 3 prérequis Save (<code>Base Currency 1</code>, <code>Item Set</code>, <code>Company Set</code>) — sans ces 3 valeurs, le bouton Save reste grisé. <strong>Étape 2</strong> : Sauver l'Org (INSERT dans <code>MAXORG</code> avec <code>ACTIVE = N</code> par défaut). <strong>Étape 3</strong> : Créer au minimum 1 Site enfant via la sub-tab Sites avec Default Storeroom assigné — une Org sans Site activé ne peut transacter aucun WO ou inventory. <strong>Étape 4</strong> : Cocher le flag Active sur l'Org (champ <code>MAXORG.ACTIVE</code> = Y) qui la rend disponible pour les users et les transactions.</p>
+
+      <p><strong>Exemple chiffré</strong> — Création réelle d'une Org "ACME" sur sandbox MAS Trial : T+0s saisie 3 champs Save → T+5s Save (MAXORG row inséré, ACTIVE=N) → T+15s création Site "ACME-MAIN" + assignation Storeroom "MAIN-WH" comme Default → T+20s checkbox Active = Y → Org disponible pour les users. Tentative de cocher Active à T+5s (avant Site) → message d'erreur « At least one active site is required. »</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la création d'un compte bancaire pro : on ne peut pas faire de virements (Active) avant d'avoir validé l'identité (Save) ET reçu la carte (Site + Default Storeroom). Chaque étape est une porte verrouillée par la précédente.</p>
+
+      <p><strong>Note sur les ordres alternatifs</strong> — Ordre inverse impossible : (a) on ne peut pas activer une Org non sauvée (no row in MAXORG to UPDATE) ; (b) l'activation requiert au moins 1 Site avec Default Storeroom (validation cross-table) ; (c) on ne peut pas créer un Site sans Org parent (FK SITE.ORGID NOT NULL).</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>4 étapes lifecycle</strong> : Populate → Save → Configure Sites → Activate.</li>
+          <li><strong>Validations</strong> : ORM côté UI + DB triggers cross-table.</li>
+          <li><strong>État intermédiaire</strong> : Saved-Inactive (utilisable pour configuration mais pas transactions).</li>
+          <li><strong>Désactivation</strong> : possible à tout moment, sans perte de données.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>1 Populate → 2 Save → 3 Site + Storeroom → 4 Active.</li>
+          <li>Ordre verrouillé par validations cross-table.</li>
+          <li>Pas de raccourci possible.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Activating an organization : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-activating-organization" target="_blank" rel="noopener">Lifecycle sequence</a></li>
-      <li>Maximo Secrets — Organization activation : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Save + activate mechanics</a></li>
+      <li>STU C1000-183 sub-objective 3.1 — « Identify the data requirement for saving vs activating an organization »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9, p.444 « Managing organizations » et p.98 lifecycle</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-activating-organization" target="_blank" rel="noopener">Activating an organization</a></li>
     </ul></div>
   </div>
 </div>
@@ -2113,25 +2398,261 @@
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D6</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A</p>
-    <p><strong>Pourquoi A (correct)</strong> — L'architecture Maximo définit quatre niveaux de stockage : <strong>System</strong> (table sans ORGID ni SITEID), <strong>Set</strong> (ITEMSETID ou COMPANYSETID), <strong>Organization</strong> (ORGID), <strong>Site</strong> (ORGID + SITEID). Les <em>Assets</em>, <em>Locations</em>, <em>Work Orders</em>, <em>Inventory</em> et <em>Purchasing</em> sont tous stockés au niveau <strong>Site</strong> — leur unicité est enforced par la clé composite (ASSETNUM + SITEID). Deux sites d'une même Organization peuvent donc avoir un asset <code>PUMP-001</code> indépendant sans collision. Cette séparation par Site est le cœur de la data separation Maximo (vs Sets + Org qui font du data sharing). IBM Docs : « Assets and Locations must be unique within a Site ».</p>
-    <p><strong>Pourquoi B est faux</strong> — D3 wrong scope : les Sets sont une catégorie spéciale au-dessus de l'Organization mais existent uniquement pour <em>Item</em> (partage du catalogue d'items) et <em>Company</em> (partage vendor). Aucun Asset Set ni Location Set dans Maximo — les Assets/Locations ne sont jamais partagés entre Organizations.</p>
-    <p><strong>Pourquoi C est faux</strong> — D9 near-synonym : certaines tables SONT à Organization level (Hazards, Vendors, GL segments, PRS workflow). Un candidat peu attentif applique le même raisonnement aux Assets. Mais la règle Maximo est claire : tout ce qui est <em>opérationnel transactionnel</em> (WO, Asset, Location, Inventory) est Site-level ; tout ce qui est <em>référentiel partagé</em> (Hazard, Vendor) est Org-level.</p>
-    <p><strong>Pourquoi D est faux</strong> — D6 wrong cardinality : System level existe bien (Classifications, Domains, Persons avant assignation) mais place les records à portée <em>globale</em>. Un Asset au niveau System signifierait un même pump partagé par toutes les Orgs — contraire aux besoins métier (chaque plant a ses propres assets physiques distincts). System est trop large pour Asset/Location.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Cette question est la pierre angulaire de l'architecture Maximo : connaître les 4 niveaux de stockage et savoir y placer chaque entité. C'est le test de maturité par excellence. Un candidat qui se trompe ici a une compréhension structurellement défaillante du data model — ce qui le rendra incapable de concevoir des reports, des intégrations ou des règles RBAC corrects.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Maximo définit 4 niveaux de stockage hiérarchiques avec des clés composites distinctes : <code>System</code> (aucune clé de scope, table globale), <code>Set</code> (<code>ITEMSETID</code> ou <code>COMPANYSETID</code>), <code>Organization</code> (<code>ORGID</code>), <code>Site</code> (<code>ORGID</code> + <code>SITEID</code>). Le placement d'une entité dépend de son rôle : référentiel partagé → System ou Set ; configuration légale/comptable → Organization ; opérationnel transactionnel → Site.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Les <code>ASSET</code>, <code>LOCATIONS</code>, <code>WORKORDER</code>, <code>INVBALANCES</code>, <code>POLINE</code> ont toutes <code>SITEID</code> en colonne <code>NOT NULL</code> + index unique sur (entity_id + SITEID). Deux Sites d'une même Org peuvent porter <code>ASSETNUM = "PUMP-001"</code> indépendamment sans collision. C'est ce qui rend Maximo réellement multi-site : chaque Site a son namespace opérationnel propre. IBM Docs MAM SaaS : « <em>Assets and Locations must be unique within a Site.</em> »</p>
+
+      <p><strong>Exemple chiffré</strong> — Org <code>ACMEUS</code> avec 3 Sites : <code>ACME-DENVER</code>, <code>ACME-DALLAS</code>, <code>ACME-PHX</code>. Chaque Site a 200 assets numérotés <code>P-001</code> à <code>P-200</code>. Total = 600 records ASSET avec contraintes (P-001, ACME-DENVER), (P-001, ACME-DALLAS), (P-001, ACME-PHX) — 3 clés composites uniques distinctes. Aucune collision malgré le même <code>ASSETNUM</code>. Si on tentait de placer Assets au niveau Org, on aurait 600 lignes mais on devrait renommer 200 assets pour éviter le doublon — perte de cohérence métier.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les numéros de salle dans un hôpital. La salle « 101 » existe au 1er étage <em>et</em> au 2e étage <em>et</em> au 3e — chaque étage est un namespace propre. Le numéro est unique par étage, pas globalement. Si on voulait un numéro globalement unique, on perdrait l'utilité du numéro court (1er-101, 2e-101, 3e-101 deviendrait 0101, 0201, 0301 partout).</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Sets sont au-dessus d'Organization mais existent uniquement pour <em>Item</em> et <em>Company</em>. Aucun Asset Set. <strong>Pattern D3 Inverse</strong> : confusion ascendante (placer Site → Set au lieu de Site → Org → Set).</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Certaines tables sont Org-level (Hazards, Vendors record principal, GL segments, Workflow PRs) mais pas Assets. <strong>Pattern D9 Quasi-synonyme</strong> : confusion entre référentiel partagé Org-level et opérationnel Site-level.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — System level existe (Classifications, Domains, Persons, Currencies) mais place les records à portée globale. Un Asset au niveau System signifierait un même pump partagé par toutes les Orgs — absurde métier. <strong>Pattern D6 Mauvaise-cardinalité</strong> : trop large pour Assets/Locations.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>4 niveaux</strong> : System, Set, Organization, Site.</li>
+          <li><strong>Site-level</strong> : Assets, Locations, WO, Inventory, PO (clé composite + SITEID).</li>
+          <li><strong>Org-level</strong> : Hazards, Vendors, COA, GL, Autonumbering.</li>
+          <li><strong>Set-level</strong> : Item Master, Companies (vendors).</li>
+          <li><strong>System-level</strong> : Classifications, Domains, Persons, Currencies.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Asset + Location = Site-level (clé : ASSETNUM + SITEID).</li>
+          <li>Si on doute : appliquer le test « est-ce un objet physique avec localisation ? » → Site.</li>
+          <li>Si « est-ce un référentiel administratif partagé » → Org ou Set.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Data storage levels for sites (MAM SaaS) : <a href="https://www.ibm.com/docs/en/mam-saas/7.6.0.6?topic=sites-data-storage-levels" target="_blank" rel="noopener">Asset/Location = Site level</a></li>
-      <li>Maximo Secrets — Organizations and Sites (Portaluri, 2016) : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Data separation architecture</a></li>
-      <li>TRM — Establishing Organizations, Sites, and Sets (2023) : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-creating" target="_blank" rel="noopener">Multi-site deployment guide</a></li>
-      <li>Giovani Pereira — Maximo Multisite Architecture Basics : <a href="https://www.ibm.com/docs/en/mam-saas/7.6.0.6?topic=sites-data-storage-levels" target="_blank" rel="noopener">System / Set / Org / Site levels</a></li>
+      <li>STU C1000-183 sub-objective 3.1 — « Identify data storage levels and their entities »</li>
+      <li>[EOTRAG] Query — IBM Maximo Multiple Sites Configuration p.7 « Data storage levels »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/mam-saas/7.6.0.6?topic=sites-data-storage-levels" target="_blank" rel="noopener">Data storage levels for sites</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-1-157" data-lesson="3-1" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q6 · Sous-rubrique 3.1 · Type 1 · Set sharing cardinality</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un architecte conçoit un déploiement Maximo pour un groupe avec 4 Organizations situées sur 3 continents. Le DSI veut centraliser le catalogue d'items entre toutes les Orgs mais maintenir des listes vendors distinctes par région.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle architecture Sets minimise la duplication tout en respectant les contraintes Maximo ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-1-157-A"><input type="radio" name="mcq-3-1-157" value="A" id="mcq-3-1-157-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">4 Item Sets distincts + 4 Company Sets distincts (un de chaque par Org)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-1-157-B"><input type="radio" name="mcq-3-1-157" value="B" id="mcq-3-1-157-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">1 Item Set partagé par les 4 Orgs + 3 Company Sets distincts (1 par région)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-1-157-C"><input type="radio" name="mcq-3-1-157" value="C" id="mcq-3-1-157-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">1 Item Set + 1 Company Set partagés par les 4 Orgs</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-1-157-D"><input type="radio" name="mcq-3-1-157" value="D" id="mcq-3-1-157-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">4 Item Sets partagés en cascade hiérarchique + 1 Company Set racine</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D4 Demi-vérité</span><span class="mcq-dpattern-chip">D7 Inexistant</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Tester l'application concrète du modèle Sets sur un cas réel. La cardinalité Set-Org est cruciale : 1 Org → 1 Item Set (mais 1 Item Set → N Orgs). Cette dissymétrie est ce qui permet le data sharing optimal sans duplication.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le contrat IBM est explicite : « <em>You must associate each organization with only one company set... only one item set.</em> » Mais inversement, il n'y a pas de limite supérieure : un même Item Set peut être référencé par 1, 4, 100 Orgs. Le centralisation = 1 Set partagé par toutes les Orgs concernées. La distinction = N Sets, 1 par Org distincte.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Sets</code> app &gt; créer 1 Item Set "GROUP-CATALOG" + 3 Company Sets "VEND-NA", "VEND-EU", "VEND-APAC". Puis créer 4 Orgs : <code>USORG</code> (Item Set GROUP-CATALOG, Company Set VEND-NA), <code>CAORG</code> (idem + VEND-NA), <code>UKORG</code> (idem + VEND-EU), <code>JPORG</code> (idem + VEND-APAC). Total : 1 Item Set + 3 Company Sets référencés par 4 Orgs.</p>
+
+      <p><strong>Exemple chiffré</strong> — Catalogue centralisé "GROUP-CATALOG" : 5 000 items partagés. Avec architecture B : 1 saisie de chaque item. Avec architecture A (4 Item Sets) : 4 × 5 000 = 20 000 lignes à maintenir, synchronisation manuelle entre Sets, dérive inévitable des descriptions, codes UNSPSC à dupliquer. Coût admin annuel : ratio ≈ 1:5 en faveur de B.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un catalogue de produits commun à plusieurs filiales d'un même groupe, mais des comptes fournisseurs régionaux. Le catalogue se met à jour au siège ; les fournisseurs varient par marché.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — 4 Item Sets distincts duplique la maintenance et perd l'objectif de centralisation du catalogue. <strong>Pattern D4 Demi-vérité</strong> : techniquement valide (Maximo permet 4 Sets distincts) mais inefficace.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Contredit la contrainte du DSI (vendors distincts par région). <strong>Pattern D2 Inventé</strong> : ignore une partie de l'énoncé.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Aucune cascade hiérarchique entre Sets dans Maximo. Les Sets sont plats, pas imbriqués. <strong>Pattern D7 Inexistant</strong> : invente un mécanisme.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Cardinalité Set-Org</strong> : 1 Org → 1 Set ; 1 Set → N Orgs.</li>
+          <li><strong>Centralisation</strong> : 1 Set partagé.</li>
+          <li><strong>Distinction</strong> : N Sets, 1 par groupe d'Orgs.</li>
+          <li><strong>Sets plats</strong> : pas de hiérarchie ni cascade.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Item Set partagé = catalogue centralisé.</li>
+          <li>Company Sets distincts = vendors régionaux.</li>
+          <li>Mix possible et recommandé selon le besoin.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.1 — « Sets architecture and data sharing »</li>
+      <li>[EOTRAG] Query — IBM Maximo Multiple Sites Configuration p.16-17 « Item sets and data sharing between organizations »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sites-organizations-overview" target="_blank" rel="noopener">Multisite capability examples</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-1-158" data-lesson="3-1" data-mode="single" data-correct="C">
+  <div class="mcq-head">
+    <span class="mcq-num">Q7 · Sous-rubrique 3.1 · Type 1 · Org activation gate</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un FA tente d'activer une Organization fraîchement sauvée mais le système refuse l'activation avec un message d'erreur. Aucun Site n'a encore été créé sous cette Org.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la cause exacte du blocage et l'action correctrice ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-1-158-A"><input type="radio" name="mcq-3-1-158" value="A" id="mcq-3-1-158-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Le Clearing Account n'a pas été configuré dans Chart of Accounts</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-1-158-B"><input type="radio" name="mcq-3-1-158" value="B" id="mcq-3-1-158-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Aucun Security Group n'a été assigné à l'Org</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="mcq-3-1-158-C"><input type="radio" name="mcq-3-1-158" value="C" id="mcq-3-1-158-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Au moins un Site avec Default Storeroom assigné est requis avant activation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-1-158-D"><input type="radio" name="mcq-3-1-158" value="D" id="mcq-3-1-158-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le flag Active est en lecture seule jusqu'à approbation d'un PR Workflow</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D9 Quasi-synonyme</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Tester la connaissance précise du gate d'activation. C'est un piège classique IBM : le FA mémorise les 3 prérequis Save mais oublie le 4e prérequis Activate (Site + Default Storeroom). Sur un déploiement réel, ce blocage cause des heures de debug sans erreur Maximo claire si le FA ne connaît pas la règle.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le passage Saved → Active ajoute une validation cross-table : <code>SELECT COUNT(*) FROM SITE WHERE ORGID = ? AND DEFSTOREROOM IS NOT NULL</code>. Si le résultat est 0, l'activation échoue avec « At least one active site with a default storeroom is required. » C'est la garantie d'intégrité Maximo : pas de transaction orpheline possible (un WO doit toujours pouvoir être issued depuis un Storeroom).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; sub-tab Sites &gt; New Site &gt; remplir SITEID + Description + cocher Active + Default Storeroom (sélectionner ou créer un Storeroom). Save. Retour à l'onglet Organization &gt; cocher Active &gt; Save. Org maintenant disponible pour les transactions de tous les users authorized.</p>
+
+      <p><strong>Exemple chiffré</strong> — Org "ACME" sauvée à T+0. Tentative d'activation directe à T+10s → erreur. Création Site "ACME-MAIN" à T+30s + Default Storeroom "MAIN-WH" → save Site. Retour Org → cochage Active → save Org → succès à T+60s. Total : 60 secondes de procédure correcte vs. 10 minutes de debug si on ignore la règle.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'ouverture d'un magasin physique : on ne peut pas accueillir des clients (Active) tant qu'on n'a pas au moins une vitrine et un stock (Site + Storeroom). Le permis d'enseigne (Save) ne suffit pas.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Clearing Account est nullable au save Org et n'est pas requis pour l'activation initiale. <strong>Pattern D9 Quasi-synonyme</strong> : autre champ GL crédible mais hors scope.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Security Groups sont system-wide, pas Org-scoped. Les assigner n'est pas une étape lifecycle Org. <strong>Pattern D6 Mauvaise-app</strong> : confusion entre Org configuration et Security configuration.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Aucun Workflow PR n'est imposé par défaut sur l'activation Org (un client peut configurer un Workflow custom mais c'est l'exception). <strong>Pattern D2 Inventé</strong> : extrapolation à partir des Workflow PRs sur d'autres entités.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Gate d'activation</strong> : COUNT(SITE WHERE ORGID = ? AND DEFSTOREROOM NOT NULL) ≥ 1.</li>
+          <li><strong>Default Storeroom</strong> : champ Site, pas Org.</li>
+          <li><strong>Site sub-tab</strong> sur Organizations app pour gérer la relation.</li>
+          <li><strong>Validation cross-table</strong> au moment du flag Active.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Activate Org = ≥ 1 Site avec Default Storeroom.</li>
+          <li>Si erreur d'activation : aller sur sub-tab Sites en premier.</li>
+          <li>Pas de Workflow par défaut sur Org activation.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.1 — « Save vs Activate organization gates »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Activating an organization »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-activating-organization" target="_blank" rel="noopener">Activating an organization</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-1-159" data-lesson="3-1" data-mode="single" data-correct="D">
+  <div class="mcq-head">
+    <span class="mcq-num">Q8 · Sous-rubrique 3.1 · Type 1 · Multi-Org pre-creation requirement</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant prépare la première Organization d'un déploiement Maximo greenfield. La base de données est vide.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est l'étape obligatoire <em>avant</em> de pouvoir créer la première Organization ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-1-159-A"><input type="radio" name="mcq-3-1-159" value="A" id="mcq-3-1-159-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Créer au moins un Site avec Default Storeroom</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-1-159-B"><input type="radio" name="mcq-3-1-159" value="B" id="mcq-3-1-159-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Configurer le Chart of Accounts complet</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-1-159-C"><input type="radio" name="mcq-3-1-159" value="C" id="mcq-3-1-159-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Importer la liste des Items et Vendors via Migration Manager</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="mcq-3-1-159-D"><input type="radio" name="mcq-3-1-159" value="D" id="mcq-3-1-159-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Créer au moins un Item Set et un Company Set (peuvent être vides)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>D</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3 Inverse</span><span class="mcq-dpattern-chip">D10 Procédure-plausible</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.1 fait la distinction subtile entre <em>prérequis save</em> (Item Set + Company Set + Base Currency 1) et <em>prérequis pre-création</em> (les Sets doivent EXISTER avant). Cette question teste la chronologie globale du déploiement greenfield. Beaucoup de candidats pensent qu'on peut créer Sets et Org dans le même formulaire — faux.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — IBM Docs explicite : « <em>You must create at least one item set and one company set before you can create an organization.</em> » C'est une dépendance FK : la table MAXORG a deux colonnes <code>NOT NULL</code> (<code>ITEMSETID</code> et <code>COMPANYSETID</code>) qui pointent vers les tables <code>ITEMSET</code> et <code>COMPANYSET</code>. Sans ligne dans ces tables référence, le INSERT échoue.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Sets</code> app &gt; New Set &gt; Type = ITEM (puis Type = COMPANY pour le second). Description optionnelle. Save. À ce stade les Sets sont vides. Puis aller sur <code>Organizations</code> app &gt; New Organization &gt; sélectionner les Sets créés. Le catalogue Item Master et la base Companies se peupleront ensuite progressivement.</p>
+
+      <p><strong>Exemple chiffré</strong> — Déploiement greenfield "ACME" : T+0 base vide. T+5s créer Item Set "ACME-ITEMS" (vide). T+10s créer Company Set "ACME-VENDORS" (vide). T+20s créer Org ACMEUS avec Base Currency USD + référence aux 2 Sets. T+25s save Org succès. Process inverse impossible : tentative de créer Org en premier → button Save grisé jusqu'à ce que les Sets existent.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme remplir un bordereau d'inscription avec un numéro de compte bancaire. Il faut que le compte EXISTE (créé chez la banque) avant de pouvoir inscrire son numéro sur un autre formulaire. L'inscription peut se faire avec un compte vide, mais le compte doit exister.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Sites se créent <em>après</em> l'Org (relation FK SITE.ORGID → MAXORG.ORGID). <strong>Pattern D3 Inverse</strong> : confusion sur l'ordre.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Chart of Accounts est configuré <em>au sein</em> de l'Org après save initial. <strong>Pattern D10 Procédure-plausible</strong> : étape de configuration crédible mais hors timing.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Migration Manager est utilisé pour transférer des configurations entre environnements (DEV → PROD), pas pour le bootstrap initial. Les items et vendors se peuplent après. <strong>Pattern D2 Inventé</strong> : utilisation déplacée d'un outil réel.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Pré-création</strong> : Item Set + Company Set (vides OK).</li>
+          <li><strong>Save Org</strong> : référence aux Sets + Base Currency 1.</li>
+          <li><strong>Post-Save</strong> : Site, Default Storeroom, GL config.</li>
+          <li><strong>Activate</strong> : flag Active après création Site complet.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Sets en premier (vides OK), Org ensuite.</li>
+          <li>Validation FK NOT NULL bloque sinon.</li>
+          <li>Greenfield : Sets → Org → Site → Active.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.1 — « Sets pre-creation prerequisite »</li>
+      <li>[EOTRAG] Query — IBM Maximo System Administration Guide ch.17 « Managing organizations »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sets-creating" target="_blank" rel="noopener">Creating Sets — must exist before Organization</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-2-3" class="btn-nav"><span class="dir">← Précédent</span>2.3 Depreciation</a>
-    <a href="#lesson-3-2" class="btn-nav next"><span class="dir">Suivant →</span>3.2 Org Site-level</a>
+    <a href="#lesson-2-3" class="btn-nav"><span class="dir">← Précédent</span>2.3 Dépréciation</a>
+    <a href="#lesson-3-2" class="btn-nav next"><span class="dir">Suivant →</span>3.2 Org niveau Site</a>
   </div>
 </section>
 
