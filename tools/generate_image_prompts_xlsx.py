@@ -250,6 +250,59 @@ PROMPTS = [
             "visual coherence with lesson 3.2."
         ),
     },
+    {
+        "lesson_id": "c1000-183-3-5",
+        "image_path": "assets/illustrations/lesson-c1000-183-3-5.svg",
+        "figure_type": "hero",
+        "title_fr": "Hiérarchie workforce Labor / Craft / Crew",
+        "subject": (
+            "Isometric organizational diagram showing the IBM Maximo Manage workforce hierarchy: at the "
+            "top, a Person silhouette icon (identity), connecting down to a Labor record icon (timesheet), "
+            "branching out to a Craft icon (toolbox + qualification stamp). On the right side, a Crew Type "
+            "template (blueprint icon with empty slots labeled Craft/Tool/Labor) connected to a Crew "
+            "instance (3-figure team grouping with crane icon for Tool and small Premium Pay badges). "
+            "At the bottom right, a larger Crew Work Group container holding 3 mini-crews. Subtle visual "
+            "separation between template (left/center) and instance (right) sides."
+        ),
+        "style": (
+            "Clean technical isometric illustration matching the C1000-183 series visual language. "
+            "Vector flat with soft depth shading. Stripe Press / Linear marketing infographic aesthetic."
+        ),
+        "composition": (
+            "Left column: Person → Labor → Craft vertical flow (identity to qualification). Right column: "
+            "Crew Type (blueprint) → Crew (instance team) → Crew Work Group (regional grouping) vertical "
+            "flow. Connecting arrow horizontal mid-canvas labeled 'fill' between Craft and Crew Type. "
+            "Premium Pay badge floats near Craft. Subtle topographic background."
+        ),
+        "color_palette": (
+            "Person blue #3B82F6, Labor slate gray #475569, Craft amber #F59E0B (qualification), "
+            "Premium Pay red #EF4444 (subtle accent), Crew Type amber #F59E0B (template), Crew teal "
+            "#1D9E75 (instance), Crew Work Group bold teal #1D9E75 (grouping), white background, "
+            "topographic pattern at 5% alpha."
+        ),
+        "lighting": "Soft directional from top-left, gentle ambient occlusion under each entity",
+        "mood": "Professional, didactic, structured, neutral business",
+        "technical_directives": (
+            "1280x480px aspect (cinematic banner). SVG-friendly clean lines and flat fills. Visual "
+            "coherence with lessons 3.1-3.4 hero (same color system, same isometric perspective)."
+        ),
+        "negative_prompt": (
+            "no realistic faces, no detailed human features, no realistic photo textures, no shadow "
+            "gradients, no text labels (added in HTML), no IBM logos, no Maximo logos, no trademarks, "
+            "no 3D render look, no skeuomorphism"
+        ),
+        "references": (
+            "IBM Docs Crews https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-creating ; "
+            "lessons 3.1-3.4 hero (visual coherence) ; Stripe Press infographics"
+        ),
+        "priority": "P1",
+        "notes": (
+            "Hero image for lesson 3.5. The hierarchy must clearly separate the template side (Person → "
+            "Labor → Craft + Premium Pay + Crew Type) from the instance side (Crew → Crew Work Group). "
+            "Connection arrow 'fill' shows that templates are instantiated. Color amber for templates, "
+            "teal for instances, blue for identity (Person), gray for capacity (Labor)."
+        ),
+    },
 ]
 
 
