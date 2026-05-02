@@ -303,6 +303,58 @@ PROMPTS = [
             "teal for instances, blue for identity (Person), gray for capacity (Labor)."
         ),
     },
+    {
+        "lesson_id": "c1000-183-3-6",
+        "image_path": "assets/illustrations/lesson-c1000-183-3-6.svg",
+        "figure_type": "hero",
+        "title_fr": "Les 6 types de Domains Maximo",
+        "subject": (
+            "Isometric grid layout showing the 6 IBM Maximo Manage domain types as 6 distinct icon "
+            "boxes arranged in a 3x2 grid: ALN (alphabet letters icon), Numeric (digits 0-9 icon), "
+            "Numeric Range (slider with min/max bounds), Table (database table with WHERE clause "
+            "highlighted), Crossover (two records with copy arrows between them), Synonym (two languages "
+            "speech bubbles). Each box has a distinct color theme but consistent visual language. "
+            "Bottom of canvas shows a small 'Database Configuration' anchor showing where domains "
+            "are bound to attributes."
+        ),
+        "style": (
+            "Clean technical isometric illustration matching the C1000-183 series visual language. "
+            "Vector flat with soft depth shading. Stripe Press / Linear marketing infographic aesthetic."
+        ),
+        "composition": (
+            "3x2 grid of domain type boxes, equal spacing, labeled below. Top row: ALN, Numeric, "
+            "Numeric Range. Bottom row: Table, Crossover, Synonym. Below grid: small Database "
+            "Configuration anchor with arrow showing 'binding' connection. Subtle topographic "
+            "background pattern at 5% opacity."
+        ),
+        "color_palette": (
+            "ALN slate gray #475569 (static text), Numeric blue #3B82F6 (static numeric), Numeric Range "
+            "amber #F59E0B (interval), Table teal #1D9E75 (dynamic SQL), Crossover orange #F97316 "
+            "(propagation), Synonym purple #8B5CF6 (i18n translation), white background, brand "
+            "topographic pattern at 5% alpha."
+        ),
+        "lighting": "Soft directional from top-left, gentle ambient occlusion under each box",
+        "mood": "Professional, didactic, structured, neutral business",
+        "technical_directives": (
+            "1280x480px aspect (cinematic banner). SVG-friendly clean lines and flat fills. Visual "
+            "coherence with lessons 3.1-3.5 hero (same color system, same isometric perspective)."
+        ),
+        "negative_prompt": (
+            "no realistic faces, no detailed human features, no realistic photo textures, no shadow "
+            "gradients, no text labels (added in HTML), no IBM logos, no Maximo logos, no trademarks, "
+            "no 3D render look, no skeuomorphism"
+        ),
+        "references": (
+            "IBM Docs Domains https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-overview ; "
+            "lessons 3.1-3.5 hero (visual coherence) ; Stripe Press infographics"
+        ),
+        "priority": "P1",
+        "notes": (
+            "Hero image for lesson 3.6. The 6 types must each be visually distinct via icons and color, "
+            "but the grid layout must communicate they are siblings (alternative choices). Database "
+            "Configuration anchor reinforces the binding step often forgotten by candidates."
+        ),
+    },
 ]
 
 
