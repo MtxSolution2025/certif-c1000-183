@@ -4591,33 +4591,148 @@ graph LR
 <!-- 3.5 -->
 <section class="lesson" id="lesson-3-5">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.5</div>
-  <div class="lesson-header"><h1>Create and manage Labor, Crafts, and Crews</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer Labor, Crafts et Crews</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Workforce</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-5.svg" alt="Illustration de la leçon 3.5 — Hiérarchie Labor / Craft / Crew avec Premium Pay et Crew Work Groups" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-5" id="lt-3-5-c" class="lt-course" checked>
     <input type="radio" name="lt-3-5" id="lt-3-5-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-5-c">📚 Leçon</label><label for="lt-3-5-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-5-c">📚 Leçon</label><label for="lt-3-5-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Purpose of Labor records · usage of Craft records</li>
-          <li>Where premium pay codes can be configured on a Craft</li>
-          <li><strong>3 types of premium pay codes</strong></li>
-          <li>Components of a Crew · how crew hourly rate overrides craft</li>
-          <li>Required components on a Required Craft in a Crew</li>
-          <li>Positions in a Crew · where new Crew Positions are created</li>
-          <li>Where Crew Work Groups are created</li>
+          <li>Décrire la finalité des records Labor et l'usage des records Craft.</li>
+          <li>Identifier où configurer les Premium Pay codes sur un Craft / Labor.</li>
+          <li>Lister les <strong>3 types de Premium Pay codes</strong> (Percent, Amount, Rate).</li>
+          <li>Décrire les composants d'une Crew et le mécanisme du Crew Hourly Rate override.</li>
+          <li>Identifier les <strong>3 types de positions</strong> sur un Crew Type (Craft, Tool, Labor).</li>
+          <li>Identifier où sont créées les nouvelles Crew Positions et les Crew Work Groups.</li>
+          <li>Distinguer Crew Type (template) de Crew (instance runtime).</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Labor</strong> = a person's work capacity | <strong>Craft</strong> = trade + rate (Electrician, Welder)</li>
-          <li><strong>3 premium pay types</strong>: <strong>Percent, Amount, Rate</strong> ⭐</li>
-          <li><strong>Crew</strong> = Craft + Tools + Labor combination</li>
-          <li>Flag <strong>"Use Crew Hourly Rate"</strong> overrides craft rate</li>
-          <li><strong>Crew positions</strong>: Craft, Tool, Labor</li>
-          <li><strong>Crew Types</strong> app → new positions | <strong>Crew Work Groups</strong> dedicated app</li>
+          <li><strong>Labor</strong> — record d'un individu pouvant transiger dans Maximo (capacité de travail). Lié à un Person via PERSONID.</li>
+          <li><strong>Craft</strong> — métier / qualification (Electrician, Welder, Pipefitter) + Skill Level + Standard Rate. Permet de matcher la compétence requise sur un WO/JP au labor disponible.</li>
+          <li><strong>3 types de Premium Pay</strong> — <code>Percent</code> (multiplicateur, ex: 150%), <code>Amount</code> (flat add-on, ex: +5 $/h), <code>Rate</code> (replacement rate, ex: 35 $/h flat). Configuré sur le Labor/Craft.</li>
+          <li><strong>Crew</strong> — instance runtime regroupant Labor + Craft + Tools (équipement). Gérée dans <code>Crews</code> app.</li>
+          <li><strong>Crew Type</strong> — template de Crew avec positions définies. Géré dans <code>Crew Types</code> app. Architecture template/instance classique.</li>
+          <li><strong>3 types de positions</strong> sur Crew Type — <code>Craft</code> (compétence requise), <code>Tool</code> (équipement requis), <code>Labor</code> (personne nominative, optionnel).</li>
+          <li><strong>Use Crew Labor Rate</strong> — flag sur le Crew record qui force un crew hourly rate négocié à overrider la somme des rates individuels (utile pour contrats forfaitaires).</li>
+          <li><strong>Crew Work Groups</strong> — app dédiée pour regrouper plusieurs crews en groupes opérationnels (ex: « Maintenance Northeast Region »).</li>
         </ul></div>
+
+        <h2>📐 Hiérarchie workforce Maximo</h2>
+        <p>Le modèle workforce Maximo s'articule autour de 4 entités complémentaires : <code>Person</code> (identité), <code>Labor</code> (capacité de travail Maximo), <code>Craft</code> (qualification/rate), et <code>Crew</code> (équipe opérationnelle). Cette séparation permet de distinguer l'identité de la personne (Person) de sa capacité à transiger dans Maximo (Labor) — un employé externe peut avoir un Person sans Labor s'il ne fait pas saisir d'heures.</p>
+        <p>Les Crafts sont des codes qualification partagés (Electrician Class A) qui sont attachés aux Labor (un labor peut avoir plusieurs Crafts) et matchés aux Job Plans / WO requirements. Les Crews regroupent plusieurs Labor avec une combinaison Craft+Tools pour des opérations team-based. Les Crew Work Groups regroupent plusieurs Crews pour le management régional.</p>
+
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-5-hierarchy">
+          <pre class="mermaid" data-mermaid-src="
+graph TD
+    P[Person<br/>People app<br/>identité]:::person
+    L[Labor<br/>Labor app<br/>capacité Maximo]:::labor
+    C[Craft<br/>Crafts app<br/>qualification + rate]:::craft
+    PP[Premium Pay<br/>3 types<br/>Percent · Amount · Rate]:::pp
+    CT[Crew Type<br/>Crew Types app<br/>template positions]:::ct
+    CR[Crew<br/>Crews app<br/>instance runtime]:::crew
+    CWG[Crew Work Group<br/>Crew Work Groups app<br/>regroupement]:::cwg
+    P --&gt; L
+    L --&gt; C
+    C --&gt; PP
+    CT --&gt; CR
+    L --&gt; CR
+    CR --&gt; CWG
+    classDef person fill:#E0F2FE,stroke:#3B82F6,stroke-width:2px,color:#0F172A
+    classDef labor fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+    classDef craft fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef pp fill:#FEE2E2,stroke:#EF4444,stroke-width:2px,color:#0F172A
+    classDef ct fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef crew fill:#D1FAE5,stroke:#1D9E75,stroke-width:2px,color:#0F172A
+    classDef cwg fill:#D1FAE5,stroke:#1D9E75,stroke-width:3px,color:#0F172A
+"></pre>
+          <figcaption>L'architecture workforce Maximo sépare identité (Person), capacité (Labor), qualification (Craft + Premium Pay), et organisation team-based (Crew Type → Crew → Crew Work Group). Chaque entité a son app dédiée. Les FK relient le tout en respectant les principes de séparation des responsabilités.</figcaption>
+        </figure>
+
+        <h2>📊 Premium Pay — 3 types</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-5-premium-pay">
+          <table class="compare-table">
+            <caption>Les 3 types de Premium Pay codes Maximo</caption>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Calcul</th>
+                <th>Exemple (base 20 $/h)</th>
+                <th>Cas d'usage typique</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Percent</code></td>
+                <td>base × multiplicateur</td>
+                <td>150% → 30 $/h</td>
+                <td>Heures de nuit, weekends</td>
+              </tr>
+              <tr>
+                <td><code>Amount</code></td>
+                <td>base + add-on flat</td>
+                <td>+5 $/h → 25 $/h</td>
+                <td>Prime forfaitaire, hazard pay</td>
+              </tr>
+              <tr>
+                <td><code>Rate</code></td>
+                <td>replacement rate (ignore base)</td>
+                <td>35 $/h flat</td>
+                <td>Tarif spécial négocié, emergency call-out</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Les 3 types couvrent les scénarios classiques de rémunération dérogatoire. Chaque Premium Pay code est attaché à un trigger condition (shift, holiday, emergency) et activé automatiquement quand le Labor transige dans cette condition. Pas de 4e type comme « shift differential index » ou « hourly stipend » qui sont des inventions de distracteurs.</figcaption>
+        </figure>
+
+        <h2>👥 Crew Type vs Crew — template vs instance</h2>
+        <p>Maximo applique le pattern <strong>template/instance</strong> pour les crews :</p>
+        <ul>
+          <li><strong>Crew Type</strong> (app <code>Crew Types</code>) — définit le template avec ses positions structurelles. Ex: « Maintenance Mécanique » a 1 Foreman + 2 Mechanics + 1 Apprentice + 1 Welder + 2 Tools (crane + welding kit).</li>
+          <li><strong>Crew</strong> (app <code>Crews</code>) — instance runtime qui hérite du template et fill chaque position avec un Labor record spécifique et des Tools réservés. Ex: Crew « MECH-CREW-NYC-A » avec John (Foreman), Mary + Pete (Mechanics), etc.</li>
+        </ul>
+        <p>Architecture bénéfique : modifier le template (ajouter position « Rigger ») se propage aux futures instances. Les crews existants ne sont pas affectés rétroactivement (audit-friendly).</p>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 5 confusions fréquentes</strong> sur la workforce à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — penser qu'il y a 4+ types de Premium Pay. Faux : <strong>3 seulement</strong> (Percent, Amount, Rate). « Shift differential », « Overtime code », « Hourly stipend » sont des distracteurs.</li>
+            <li><strong>Piège 2</strong> — créer une nouvelle position dans <code>Crews</code> app. Faux : les positions structurelles se définissent dans <code>Crew Types</code> app uniquement.</li>
+            <li><strong>Piège 3</strong> — penser qu'Asset peut être une position de Crew Type. Faux : 3 types seulement (Craft, Tool, Labor). Asset est la cible du WO, pas une position du crew.</li>
+            <li><strong>Piège 4</strong> — confondre Crew Hourly Rate (Crew-level override) avec Premium Pay (Labor-level majoration). Mécanismes distincts qui peuvent se cumuler.</li>
+            <li><strong>Piège 5</strong> — chercher Crew Work Groups dans <code>Crews</code> app. Faux : c'est une app dédiée séparée.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quels sont les 3 types de Premium Pay codes ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Percent</strong> (multiplicateur), <strong>Amount</strong> (add-on flat), <strong>Rate</strong> (replacement rate). 3 types exclusivement.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quels sont les 3 types de positions sur un Crew Type ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Craft</strong> (qualification requise), <strong>Tool</strong> (équipement requis), <strong>Labor</strong> (personne nominative). Pas Asset, pas Storeroom, pas Location.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quelle est la différence entre Crew Type et Crew ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Crew Type</strong> = template (pattern réutilisable avec positions structurelles), <strong>Crew</strong> = instance runtime avec Labor records spécifiques fillant les positions. Pattern template/instance classique.</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-5-136" data-lesson="3-5" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -4635,14 +4750,48 @@ graph LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D1</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D7</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D9</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B, C</p>
-    <p><strong>Pourquoi A, B, C</strong> — Les <strong>3 seuls types de Premium Pay codes</strong> configurables sur un Labor record dans Maximo Manage sont : (1) <strong>Percent</strong> — multiplicateur appliqué au base rate (ex: 150% pour heures de nuit → si base $20/h, premium $30/h), (2) <strong>Amount</strong> — flat add-on en monnaie ajouté au base rate (ex: +$5/h pour shift de nuit → base $20/h devient $25/h), (3) <strong>Rate</strong> — replacement rate qui remplace complètement le base rate (ex: $35/h flat pour weekend → ignore le base $20/h). Ces 3 types couvrent les scénarios classiques de rémunération dérogatoire : majoration proportionnelle (Percent), prime forfaitaire (Amount), tarif spécial (Rate). Chaque premium pay code est attaché à une Skill ou craft combo et activé via un trigger condition (shift, holiday, emergency call-out). Piège IBM classique : nombre (3) et non-existence de "4e type" comme shift differential index fabriqué.</p>
-    <p><strong>Pourquoi D est faux</strong> — D1 legacy : "Shift differential index" sonne familier mais n'est pas un type Maximo ; distracteur pour candidats pensant Oracle HR/SAP.</p>
-    <p><strong>Why E wrong</strong> — D4 adjacent : Overtime code est une transaction payroll (tracked sur Labor Transactions) mais pas un <em>type</em> de Premium Pay — confusion de niveaux.</p>
-    <p><strong>Why F wrong</strong> — D7 non-existent : « Hourly stipend » est une invention sans aucune correspondance Maximo — les 3 seuls Premium Pay types officiels sont Percent, Amount, Rate. Distracteur piège importé du vocabulaire HR/payroll générique qui ne s'applique pas au modèle de labor costing Maximo.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 demande explicitement « 3 types of premium pay codes ». IBM teste la mémorisation des 3 noms officiels et la résistance aux distracteurs importés du vocabulaire HR/SAP/Oracle (« shift differential », « overtime code », « hourly stipend »).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le Premium Pay est un mécanisme de rémunération dérogatoire activé sur un Labor sous certaines conditions (shift, holiday, hazardous, emergency). Maximo offre exactement 3 types qui couvrent les patterns mathématiques courants : multiplicateur, add-on flat, replacement. Aucun 4e type ne peut être ajouté — le modèle est fermé.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Labor</code> app &gt; ouvrir le Labor record &gt; tab <em>Premium Pay</em> &gt; New Row &gt; saisir Premium Pay Code (ex: « NIGHT-SHIFT »), Type (Percent / Amount / Rate), valeur, et trigger condition. Stockage en table <code>LABORCRAFTRATE</code> avec colonnes <code>PREMIUMPAYCODE</code>, <code>PREMIUMPAYTYPE</code>, <code>PREMIUMPAYRATE</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Labor John, base rate 20 $/h. Premium Pay codes : (1) NIGHT type Percent 150% → 30 $/h sur shift nuit, (2) HAZARD type Amount +8 $/h → 28 $/h sur sites hazardeux, (3) EMERGENCY type Rate 50 $/h flat → 50 $/h sur appel d'urgence. Au moment du WO, Maximo applique le code adapté selon le trigger condition automatiquement.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les majorations salariales d'un contrat de travail : (1) majoration nuit +50% (Percent), (2) prime de panier +5 €/h (Amount), (3) heures supplémentaires à 25 €/h flat (Rate). 3 types mathématiques distincts.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — « Shift differential index » est un terme Oracle HR / SAP, pas Maximo. <strong>Pattern D1 Hérité</strong>.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Overtime code est une transaction payroll (Labor Transactions), pas un type de Premium Pay. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi F est faux</strong> — « Hourly stipend » n'existe pas dans Maximo. <strong>Pattern D7 Inexistant</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>3 types</strong> : Percent (multiplicateur), Amount (add-on), Rate (replacement).</li>
+          <li><strong>Configuration</strong> : <code>Labor</code> app &gt; tab Premium Pay.</li>
+          <li><strong>Table DB</strong> : <code>LABORCRAFTRATE</code>.</li>
+          <li><strong>Trigger</strong> : shift / holiday / hazard / emergency.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Premium Pay = Percent + Amount + Rate (3 types).</li>
+          <li>Pas Shift differential, pas Overtime, pas Stipend.</li>
+          <li>Activé selon trigger conditions sur Labor.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Premium Pay codes : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=labor-creating-premium-pay-codes" target="_blank" rel="noopener">Percent/Amount/Rate</a></li>
-      <li>Maximo Secrets — Labor premium pay : <a href="https://maximosecrets.com/2020/10/10/premium-pay/" target="_blank" rel="noopener">3 types model</a></li>
+      <li>STU C1000-183 sub-objective 3.5 — « 3 types of premium pay codes »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Premium Pay codes Percent/Amount/Rate »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=labor-creating-premium-pay-codes" target="_blank" rel="noopener">Premium Pay codes — 3 types</a></li>
     </ul></div>
   </div>
 </div>
@@ -4662,12 +4811,49 @@ graph LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D1</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D4</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B, C</p>
-    <p><strong>Pourquoi A, B, C</strong> — Les <strong>Crew Types</strong> définissent des templates de crew avec 3 types de positions : (1) <strong>Craft</strong> — compétence métier requise (ex: Electrician Class A, Welder Level 2), une position Craft définit quantité + qualification level, le Craft est assigné sans user spécifique au niveau Crew Type, (2) <strong>Tool</strong> — équipement requis pour le travail du crew (ex: "2 crane 50T", "1 generator 100kW"), position Tool définit item + quantité, (3) <strong>Labor</strong> — position nominative pour un Labor spécifique si identifié au niveau template (rare mais permet de pré-assigner). Ces 3 types modélisent le <em>qui + quoi</em> d'un crew réutilisable. Quand une instance concrète de Crew est créée (Crews app), elle hérite des positions et les fills avec des Labor records spécifiques et des Tools réservés. Architecture type/instance classique : Crew Types = template, Crews = instance runtime.</p>
-    <p><strong>Pourquoi D est faux</strong> — D1 legacy : Asset était une position dans Maximo 6-7 legacy mais retirée pour cohérence ; aujourd'hui un Asset est la cible du WO, pas la position du crew.</p>
-    <p><strong>Why E wrong</strong> — D2 invented : Storeroom ne peut pas être position sur Crew Type — c'est un container inventory, pas une compétence.</p>
-    <p><strong>Why F wrong</strong> — D3 wrong scope : Location est un référentiel topographique, pas une position de crew — sémantiquement incompatible.</p></div>
-    <div class="mcq-source"><strong>Source:</strong> <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-types" target="_blank" rel="noopener">https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-types</a></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 mentionne explicitement « Positions in a Crew ». IBM teste la mémorisation des 3 types officiels (Craft, Tool, Labor) et la distinction avec d'autres entités Maximo (Asset, Storeroom, Location) qui ne peuvent pas être positions de crew.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Un Crew Type définit un template de crew avec ses positions structurelles. Maximo permet 3 types de positions exclusivement, qui modélisent le « qui + quoi » d'un crew réutilisable : compétences (Craft), équipement (Tool), personne nominative (Labor). Cette granularité permet de définir un crew abstrait (« 1 Foreman Welder + 2 Mechanics + 1 Crane 50T ») qui peut être instancié N fois avec différents Labor records.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Crew Types</code> app &gt; ouvrir un Crew Type &gt; tab <em>Positions</em> &gt; New Row &gt; choisir Position Type (Craft / Tool / Labor) &gt; saisir Position Name + Required Quantity. Quand un Crew est instancié dans <code>Crews</code> app, il hérite des positions et les fills avec des Labor records spécifiques et des Tools réservés.</p>
+
+      <p><strong>Exemple chiffré</strong> — Crew Type « MAINT-MECH » avec 5 positions : 1 Foreman (Craft = MECH-CHIEF), 2 Mechanics (Craft = MECH-CLASS-A, qty=2), 1 Apprentice (Craft = MECH-APPR), 1 Crane (Tool = CRANE-50T). Une instance Crew « MAINT-MECH-NYC-A » hérite et fill : John Smith (Foreman), Mary + Pete (Mechanics), Tom (Apprentice), Crane #C-105 réservé. Total 4 Labor + 1 Tool effectivement assignés.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un casting de film : le scénario définit les rôles (Crew Type avec positions Craft/Tool/Labor), puis le réalisateur attribue des acteurs (Labor) et accessoires (Tools) spécifiques pour le tournage. Le scénario abstrait permet de réutiliser le même casting pattern pour différentes productions.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Asset est la cible d'un WO, pas la position d'un crew. <strong>Pattern D1 Hérité</strong> (Maximo 6-7 legacy).</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Storeroom est un container inventory, pas une compétence. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi F est faux</strong> — Location est un référentiel topographique, sémantiquement incompatible avec position de crew. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>3 types positions</strong> : Craft (qualification), Tool (équipement), Labor (personne).</li>
+          <li><strong>Configuration</strong> : <code>Crew Types</code> app &gt; Positions tab.</li>
+          <li><strong>Required Quantity</strong> par position pour le sizing.</li>
+          <li><strong>Pas Asset, pas Storeroom, pas Location</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Crew Type positions = Craft + Tool + Labor (3 types).</li>
+          <li>Définies dans Crew Types app, fillées dans Crews app.</li>
+          <li>Architecture template/instance.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.5 — « Positions in a Crew »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Crew Types positions Craft/Tool/Labor »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-types" target="_blank" rel="noopener">Crew Types — 3 position types</a></li>
+    </ul></div>
   </div>
 </div>
 <div class="mcq" data-uid="mcq-3-5-138" data-lesson="3-5" data-mode="single" data-correct="C">
@@ -4686,14 +4872,48 @@ graph LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D5</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D2</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C</p>
-    <p><strong>Pourquoi C (correct)</strong> — Les <strong>définitions de positions</strong> (ex: nouvelle position "Rigger" avec 2 slots requis) se font <strong>exclusivement dans l'application Crew Types</strong>. Étapes : ouvrir le Crew Type concerné, onglet <em>Positions</em>, New Row, Position Type = Craft (ou Labor/Tool), Position = "Rigger", Required Quantity = 2, Craft = "Rigger Level II", Save. Cette définition devient template pour toutes les instances futures de crews qui héritent du Crew Type. Quand une instance de crew est créée dans <em>Crews</em>, elle affiche automatiquement les 2 positions Rigger à filler avec des Labor records spécifiques. Séparation stricte template/instance : Crew Types définit les positions (quoi est requis), Crews les fills (qui est affecté). Cette architecture permet de modifier le template (ajouter position Rigger) et propager aux futures instances sans toucher aux crews existants.</p>
-    <p><strong>Pourquoi A est faux</strong> — D5 inversée : l'app Crews <em>consomme</em> le template Crew Type et ne définit pas les positions — sens renversé.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : l'app Labor gère les Person+Craft individuels mais ne crée pas les positions structurelles des crews ; hors scope.</p>
-    <p><strong>Pourquoi D est faux</strong> — D2 invented : aucune "Crew Options" n'existe dans Organizations — totalement fabriqué.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 demande « where new Crew Positions are created ». IBM teste la séparation template/instance — les positions structurelles vivent dans Crew Types, pas dans Crews qui sont des instances runtime.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le pattern template/instance Maximo : Crew Types = template (positions structurelles abstraites), Crews = instance runtime (positions filled avec Labor specifiques). Modifier le template propage aux futures instances mais ne touche pas aux crews existants (audit-friendly). Cette séparation est cohérente avec les principes DDD (Bounded Context) et permet de gérer plusieurs crews avec le même template sans dupliquer la définition structurelle.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Crew Types</code> app &gt; ouvrir le Crew Type concerné &gt; tab <em>Positions</em> &gt; New Row &gt; Position Type = Craft &gt; Position Name = « Rigger » &gt; Required Quantity = 2 &gt; Craft = « RIGGER-LEVEL-II » &gt; Save. Stockage : table <code>CREWTYPEPOSITION</code>. Les futures instances Crews qui héritent du Crew Type affichent automatiquement les 2 slots Rigger à filler.</p>
+
+      <p><strong>Exemple chiffré</strong> — Crew Type « HEAVY-LIFT » : 4 positions originelles (1 Foreman, 2 Mechanics, 1 Crane). Ajout position « Rigger » qty 2 → 6 positions au total. Les 3 instances de Crew existantes (« HEAVY-LIFT-NYC-A », « HEAVY-LIFT-NYC-B », « HEAVY-LIFT-LA-A ») gardent leurs 4 positions originelles. La 4e instance créée après la modification (« HEAVY-LIFT-NYC-C ») hérite des 6 positions et demande à filler 2 Riggers.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un règlement de copropriété (template) : modifier le règlement (ajouter règle X) ne s'applique pas rétroactivement aux baux signés avant. Les nouveaux baux signés après héritent de la nouvelle règle.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Crews app consume le template, ne définit pas les positions. <strong>Pattern D5 Champ-frère</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Labor app gère les individus, pas les structures crew. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Aucune action « Crew Options » dans Organizations. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>App</strong> : <code>Crew Types</code> &gt; tab Positions.</li>
+          <li><strong>Pattern</strong> : template/instance (Crew Types vs Crews).</li>
+          <li><strong>Propagation</strong> : modifications template aux futures instances seulement.</li>
+          <li><strong>Table</strong> : <code>CREWTYPEPOSITION</code>.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Nouvelle position = Crew Types app.</li>
+          <li>Crews app = instances seulement.</li>
+          <li>Template/instance pattern audit-friendly.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Crew Types Positions : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-types" target="_blank" rel="noopener">Adding positions</a></li>
-      <li>Maximo Secrets — Crew templates : <a href="https://maximosecrets.com/2020/10/15/crews/" target="_blank" rel="noopener">Positions workflow</a></li>
+      <li>STU C1000-183 sub-objective 3.5 — « Where new Crew Positions are created »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Crew Types positions »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-types" target="_blank" rel="noopener">Crew Types — adding positions</a></li>
     </ul></div>
   </div>
 </div>
@@ -4713,22 +4933,192 @@ graph LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>D</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> D</p>
-    <p><strong>Pourquoi D (correct)</strong> — Le flag <strong>Use Crew Labor Rate</strong> (aussi nommé "Crew Hourly Rate Override") se configure sur le Crew record individuel (Crews app). Quand activé, le costing engine utilise le <em>crew hourly rate</em> négocié plutôt que de sommer les rates individuels des Labor members. Cas d'usage : un crew de 4 techniciens avec rates variés (20+25+30+22 = $97/h théorique) mais le client a négocié un forfait de $85/h crew — le flag force l'utilisation de $85/h sur tous les labor transactions du crew, harmonisant la facturation. Sans ce flag, chaque Labor member est valué à son rate individuel, créant des incohérences entre charges client et coûts réels. Cette override est critique pour les contrats forfaitaires et permet une facturation prédictible indépendamment du mix exact de labor présent le jour J.</p>
-    <p><strong>Pourquoi A est faux</strong> — D2 invented : "Calculated Crew Rate" est fabriqué — aucun tel flag sur Crew Types ; distracteur crédible.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : l'app Labor gère les rates individuels par Person, mais ne peut pas override au niveau crew ; ce flag est sur la table <code>CREW</code>, pas <code>LABOR</code>.</p>
-    <p><strong>Pourquoi C est faux</strong> — D3 wrong scope : Premium Pay est par-Labor (majoration horaire individuelle) et ne remplace pas le costing crew — mécanisme différent, calculé en aval.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 mentionne « how crew hourly rate overrides craft ». IBM teste la connaissance précise du flag Use Crew Labor Rate et la distinction avec Premium Pay (mécanisme distinct, calculé à un niveau différent).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le costing engine Maximo applique normalement le rate individuel de chaque Labor member dans une Crew (somme des rates). Pour les contrats forfaitaires où un Crew Hourly Rate est négocié globalement, Maximo offre un override : le flag « Use Crew Labor Rate » sur le Crew record force l'utilisation du rate négocié plutôt que des rates individuels. Mécanisme cohérent avec les pratiques de facturation B2B où le client paye un forfait équipe peu importe le mix exact présent.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Crews</code> app &gt; ouvrir un Crew &gt; cocher checkbox <em>Use Crew Labor Rate</em> &gt; saisir le Crew Hourly Rate négocié (ex: 85 $/h) &gt; Save. Au moment des Labor Transactions sur un WO assigné à ce Crew, le costing engine utilise 85 $/h × heures_passées au lieu de sommer les rates individuels. Stockage : champ <code>CREW.USELABORRATE</code> et <code>CREW.LABORRATE</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Crew « MAINT-NYC-A » avec 4 Labor (rates 20+25+30+22 = 97 $/h théorique somme). Sans flag : un WO de 10h → coût 970 $. Avec flag activé + Crew Hourly Rate 85 $/h : même WO → coût 850 $. Différence de 120 $ par WO de 10h, prédictible pour le client. Sur 100 WO/an : économie 12 000 $ pour le client (ou perte non-billable pour le contractor selon le sens du forfait).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un forfait jour pour une équipe d'artisans BTP : 800 €/jour peu importe que ce soit 4 charpentiers junior ou 2 charpentiers senior. Le client paie le forfait équipe, pas la somme des cachets individuels.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — « Calculated Crew Rate » n'existe pas comme option Crew Types. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Labor app gère les rates individuels mais ne peut pas override au niveau crew. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Premium Pay est par-Labor, mécanisme différent qui se calcule en aval. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Flag</strong> : Use Crew Labor Rate sur Crew record.</li>
+          <li><strong>App</strong> : <code>Crews</code> app (pas Crew Types, pas Labor).</li>
+          <li><strong>Effet</strong> : remplace somme des rates individuels par crew rate négocié.</li>
+          <li><strong>Cas d'usage</strong> : contrats forfaitaires, facturation prédictible.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Use Crew Labor Rate = flag sur Crew record.</li>
+          <li>Override la somme des rates Labor individuels.</li>
+          <li>Pas confondre avec Premium Pay (Labor-level).</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Creating crews : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-creating" target="_blank" rel="noopener">Use Crew Labor Rate flag</a></li>
-      <li>Maximo Secrets — Crew costing : <a href="https://maximosecrets.com/2020/10/15/crews/" target="_blank" rel="noopener">Rate override mechanics</a></li>
+      <li>STU C1000-183 sub-objective 3.5 — « how crew hourly rate overrides craft »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Use Crew Labor Rate flag »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-creating" target="_blank" rel="noopener">Creating Crews — Crew Hourly Rate</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-5-166" data-lesson="3-5" data-mode="single" data-correct="A">
+  <div class="mcq-head">
+    <span class="mcq-num">Q21 · Sous-rubrique 3.5 · Type 1 · Crew Work Groups location</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un manager veut regrouper 5 crews de maintenance en un Crew Work Group « Maintenance Northeast Region ».</div>
+  <div class="mcq-stem"><strong>Question :</strong> Dans quelle application est créé ce Crew Work Group ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="mcq-3-5-166-A"><input type="radio" name="mcq-3-5-166" value="A" id="mcq-3-5-166-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Crew Work Groups (application dédiée)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-5-166-B"><input type="radio" name="mcq-3-5-166" value="B" id="mcq-3-5-166-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Crews app, sub-tab Work Groups</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-5-166-C"><input type="radio" name="mcq-3-5-166" value="C" id="mcq-3-5-166-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Crew Types app, action Group Crews</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-5-166-D"><input type="radio" name="mcq-3-5-166" value="D" id="mcq-3-5-166-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Organizations app, sub-tab Crew Hierarchy</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 mentionne explicitement « Where Crew Work Groups are created ». IBM teste la séparation app dédiée vs sub-tab d'autres apps. Connaître l'app dédiée évite des confusion lors d'audits ou refactor opérationnels.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Maximo dédie une app spécifique aux Crew Work Groups car ils ont leur propre cycle de vie et leur propre security. Cette séparation respecte le pattern Maximo « 1 entité métier = 1 app ». Mélanger les apps (Crew Work Groups dans Crews ou Crew Types) compliquerait le menu et la sécurité granulaire.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : module Resources &gt; <code>Crew Work Groups</code> app &gt; New Crew Work Group &gt; saisir CWGNUM, Description &gt; tab Crews &gt; ajouter les Crews à inclure. Stockage : table <code>CREWWORKGROUP</code> avec FK <code>CREW.CWGNUM</code> sur les crews membres.</p>
+
+      <p><strong>Exemple chiffré</strong> — Crew Work Group « MAINT-NE-REGION » regroupant 5 crews (3 NYC + 2 BOS). Manager Sarah responsable du group. Reports régionaux générés depuis ce group : OEE moyen 87%, MTBF 240h, total labor hours 8 200/mois. Ces métriques agrégées seraient impossibles sans regroupement Crew Work Group.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme une « division régionale » dans un organigramme : groupe plusieurs équipes pour reporting management, distinct des équipes elles-mêmes. App dédiée = département RH dédié pour la gestion des divisions.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Crews app n'a pas de sub-tab Work Groups. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Crew Types n'a pas d'action Group Crews. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Organizations app n'a pas de sub-tab Crew Hierarchy. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>App dédiée</strong> : <code>Crew Work Groups</code>.</li>
+          <li><strong>Pattern Maximo</strong> : 1 entité métier = 1 app.</li>
+          <li><strong>Table</strong> : <code>CREWWORKGROUP</code>.</li>
+          <li><strong>Usage</strong> : reporting management régional.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Crew Work Groups = app dédiée.</li>
+          <li>Pas sub-tab de Crews ni Crew Types.</li>
+          <li>Module Resources.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.5 — « Where Crew Work Groups are created »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Crew Work Groups dedicated app »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-crew-work-groups" target="_blank" rel="noopener">Crew Work Groups</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-5-167" data-lesson="3-5" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q22 · Sous-rubrique 3.5 · Type 1 · Required Craft components</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant définit une « Required Craft » sur un Crew Type pour spécifier la qualification exacte du membre attendu.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quels composants minimum doivent être renseignés sur une Required Craft d'un Crew Type ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-5-167-A"><input type="radio" name="mcq-3-5-167" value="A" id="mcq-3-5-167-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Craft + Skill Level + Person ID nominatif</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-5-167-B"><input type="radio" name="mcq-3-5-167" value="B" id="mcq-3-5-167-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Craft + Skill Level + Required Quantity</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-5-167-C"><input type="radio" name="mcq-3-5-167" value="C" id="mcq-3-5-167-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Craft + Asset criticality + Site</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-5-167-D"><input type="radio" name="mcq-3-5-167" value="D" id="mcq-3-5-167-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Craft + Premium Pay code + Calendar</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D5 Champ-frère</span><span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D4 Demi-vérité</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.5 mentionne « Required components on a Required Craft in a Crew ». IBM teste la connaissance des champs minimum NOT NULL pour un Required Craft.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Une Required Craft sur un Crew Type spécifie une compétence requise abstraite (pas un Person nominatif). Composants minimum : <strong>Craft</strong> (quel métier — Electrician, Welder, etc.), <strong>Skill Level</strong> (quel niveau — Class A, B, C), <strong>Required Quantity</strong> (combien de personnes avec cette qualification). Le Person specifique est filled au runtime quand une instance Crew est créée. Le Premium Pay et Calendar ne sont pas nécessaires sur la position structurelle — ils sont au niveau Labor individuel.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Crew Types</code> app &gt; ouvrir Crew Type &gt; tab Positions &gt; Position Type = Craft &gt; saisir Craft (FK vers <code>CRAFT</code> table) + Skill Level (FK <code>CRAFTRATE</code>) + Required Quantity. Save. Stockage : <code>CREWTYPEPOSITION</code> avec colonnes <code>CRAFT</code>, <code>SKILLLEVEL</code>, <code>REQUIREDQTY</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Crew Type « HEAVY-LIFT » : position Required Craft = WELDER + Skill Level = CLASS-A + Required Quantity = 2. Au runtime, l'instance Crew « HEAVY-LIFT-NYC-A » fill avec John (Welder Class A) et Mary (Welder Class A). Si seul Pete (Welder Class B) est disponible, le système flag la position non-remplie (validation runtime).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme une fiche de poste : « Recherchons 2 ingénieurs civils niveau senior » (Craft + Skill Level + Required Quantity). Le candidat spécifique est trouvé après publication du poste, pas listé dans la fiche.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Person ID nominatif est filled à l'instance, pas au template. <strong>Pattern D5 Champ-frère</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Asset criticality et Site n'ont rien à voir avec Required Craft. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Premium Pay et Calendar sont au niveau Labor, pas au niveau Required Craft template. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>3 composants minimum</strong> : Craft + Skill Level + Required Quantity.</li>
+          <li><strong>Person nominatif</strong> : au runtime (Crews instance), pas template.</li>
+          <li><strong>Premium Pay / Calendar</strong> : niveau Labor, pas niveau template.</li>
+          <li><strong>Table</strong> : <code>CREWTYPEPOSITION</code>.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Required Craft = Craft + Skill Level + Required Quantity.</li>
+          <li>Pas Person nominatif (runtime).</li>
+          <li>Pas Premium Pay ni Calendar (Labor-level).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.5 — « Required components on a Required Craft »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Crew Type required craft components »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=crews-required-crafts" target="_blank" rel="noopener">Required Crafts</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-5">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-4" class="btn-nav"><span class="dir">← Précédent</span>3.4 Calendars</a>
+    <a href="#lesson-3-4" class="btn-nav"><span class="dir">← Précédent</span>3.4 Calendars et Shifts</a>
     <a href="#lesson-3-6" class="btn-nav next"><span class="dir">Suivant →</span>3.6 Domains</a>
   </div>
 </section>
