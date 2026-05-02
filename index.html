@@ -2659,31 +2659,197 @@ stateDiagram-v2
 <!-- 3.2 -->
 <section class="lesson" id="lesson-3-2">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.2</div>
-  <div class="lesson-header"><h1>Configure organizational options (Site level)</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Configurer les options Organization (niveau Site)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Configuration</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-2.svg" alt="Illustration de la leçon 3.2 — Options Site-level dans Organizations app" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-2" id="lt-3-2-c" class="lt-course" checked>
     <input type="radio" name="lt-3-2" id="lt-3-2-s" class="lt-sit">
     <div class="tabs-bar"><label for="lt-3-2-c">📚 Leçon</label><label for="lt-3-2-s">🎯 Scénarios d’examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Describe where application options are configured</li>
-          <li>Identify where autonumbering is set up</li>
-          <li>Identify Site-level Organization options</li>
-          <li>Identify where shipment requirements can be configured</li>
-          <li>Identify where reservations can be automatically created for approved WOs</li>
+          <li>Décrire où les options applicatives Site-level sont configurées dans Maximo Manage.</li>
+          <li>Identifier où l'autonumbering est paramétré (Système / Organization / Site) et la précédence appliquée.</li>
+          <li>Reconnaître les options Site-level vs Org-level dans l'app <code>Organizations</code>.</li>
+          <li>Identifier où configurer les exigences de Shipment pour les transferts inter-site.</li>
+          <li>Identifier où activer la création automatique de réservations à l'approbation d'un WO.</li>
+          <li>Maîtriser la procédure de désactivation d'un Site (Make Inactive vs Delete).</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Autonumbering</strong> → <strong>Organizations</strong> app (Action → Autonumber Setup) ⭐</li>
-          <li><strong>Disable site</strong> = action <strong>"Make inactive"</strong> ⭐</li>
-          <li><strong>Shipment requirements</strong> → Organizations → Purchasing Options</li>
-          <li><strong>Auto-create reservations on approved WO</strong> → Organizations → Work Order Options → Reservation Requirements</li>
+          <li><strong>App centrale</strong> — <code>Organizations</code> app héberge à la fois les options Org-level et Site-level via le menu <em>Select Action</em>. La granularité est explicite par item du menu.</li>
+          <li><strong>Autonumbering 3 niveaux</strong> — actions <em>System Level Autonumber Setup</em>, <em>Organization Level Autonumber Setup</em>, <em>Site Level Autonumber Setup</em> dans <code>Organizations</code> app. Précédence : Site > Org > System.</li>
+          <li><strong>Désactivation Site</strong> — action <em>Make Inactive</em> sur le record Site (champ <code>SITE.ACTIVE</code> = N). Aucune suppression possible si transactions historiques existent.</li>
+          <li><strong>Shipment Required</strong> — <em>Inventory Options</em> par Site. Force le workflow Issue → Transit → Receive pour les transferts inter-site.</li>
+          <li><strong>Auto-reserve on APPR</strong> — <em>Work Order Options → Reservation Requirements</em> par Site. Trigger : passage du WO à status <code>APPR</code>.</li>
+          <li><strong>Default Insert Site</strong> — propriété user (<code>DEFAULTSITE</code> sur <code>MAXUSER</code>), pas Site-level config. À ne pas confondre avec Default Storeroom.</li>
+          <li><strong>Default Storeroom</strong> — checkbox au niveau Storeroom (<code>INVENTORY.DEFSTOREROOM</code>) pour marquer le storeroom par défaut du Site. Utilisé par Material Requisitions self-service.</li>
+          <li><strong>Workflow Settings</strong> — par Org dans <code>Organizations</code>. Définit les workflows automatiques (auto-init, auto-route).</li>
         </ul></div>
-        <h2>🎯 Carte mémoire</h2>
-        <div class="flash-q"><p>Q. How can a site be disabled?</p><details><summary>Afficher la réponse</summary><p><strong>Make the site inactive</strong> (not Delete, not Change status to decommissioned, not Move).</p></details></div>
+
+        <h2>📐 Site-level vs Org-level — où chaque option vit</h2>
+        <p>Le menu <em>Select Action</em> de l'app <code>Organizations</code> est la console centrale pour toutes les options de configuration. Chaque action est explicitement étiquetée Org-level ou Site-level dans son titre — la lecture rapide du menu permet d'identifier la portée. Cette séparation est <strong>structurelle</strong> : un changement Org-level affecte tous les Sites de l'Org ; un changement Site-level n'affecte qu'un Site précis.</p>
+        <p>La règle métier sous-jacente : ce qui touche à la <em>politique opérationnelle locale</em> (réservations auto, shipment workflow, calendars d'ouverture) est Site-level pour permettre aux différents sites de fonctionner avec leurs propres process. Ce qui touche à la <em>politique légale ou comptable</em> (Chart of Accounts, GL segments, Tax codes, Workflow Settings) est Org-level pour assurer la cohérence dans toute l'entité.</p>
+
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-2-options-scope">
+          <pre class="mermaid" data-mermaid-src="
+graph LR
+    O[Organizations app<br/>Select Action menu]:::app
+    O --&gt; OL[Org-level options]:::org
+    O --&gt; SL[Site-level options]:::site
+    OL --&gt; OL1[Chart of Accounts]
+    OL --&gt; OL2[GL Account Configuration]
+    OL --&gt; OL3[Taxes]
+    OL --&gt; OL4[Workflow Settings]
+    SL --&gt; SL1[Work Order Options]
+    SL --&gt; SL2[Inventory Options]
+    SL --&gt; SL3[Purchasing Options]
+    SL --&gt; SL4[Bulletin Board Options]
+    classDef app fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef org fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef site fill:#D1FAE5,stroke:#1D9E75,stroke-width:2px,color:#0F172A
+"></pre>
+          <figcaption>Le menu Select Action de l'app Organizations expose 2 catégories d'options. Org-level (jaune) impacte toute l'Organization ; Site-level (vert) ne touche qu'un Site précis. Cette dualité permet de mixer les politiques globales (comptables) avec les politiques locales (opérationnelles).</figcaption>
+        </figure>
+
+        <h2>📊 Cartographie des options — où chaque chose se configure</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-2-options-map">
+          <table class="compare-table">
+            <caption>Options de configuration courantes — lieu et portée</caption>
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>App / Action</th>
+                <th>Portée</th>
+                <th>Effet</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Autonumber seeds</td>
+                <td><code>Organizations</code> &gt; System / Org / Site Level Autonumber Setup</td>
+                <td>System · Org · Site</td>
+                <td>Précédence Site &gt; Org &gt; System</td>
+              </tr>
+              <tr>
+                <td>Auto-reserve on APPR WO</td>
+                <td><code>Organizations</code> &gt; Work Order Options &gt; Reservation Requirements</td>
+                <td>Site</td>
+                <td>INVRESERVE rows à l'approbation du WO</td>
+              </tr>
+              <tr>
+                <td>Shipment Required (transferts inter-site)</td>
+                <td><code>Organizations</code> &gt; Inventory Options</td>
+                <td>Site</td>
+                <td>Force workflow Issue → Transit → Receive</td>
+              </tr>
+              <tr>
+                <td>Tax codes / rates</td>
+                <td><code>Organizations</code> &gt; Taxes</td>
+                <td>Org</td>
+                <td>Cohérence comptable inter-Sites</td>
+              </tr>
+              <tr>
+                <td>Chart of Accounts / GL segments</td>
+                <td><code>Chart of Accounts</code> app · GL Account Config dans Organizations</td>
+                <td>Org</td>
+                <td>Structure comptable</td>
+              </tr>
+              <tr>
+                <td>Workflow Settings</td>
+                <td><code>Organizations</code> &gt; Workflow Settings</td>
+                <td>Org</td>
+                <td>Auto-init / auto-route processes</td>
+              </tr>
+              <tr>
+                <td>Make Site Inactive</td>
+                <td><code>Organizations</code> &gt; Sites sub-tab &gt; décocher Active</td>
+                <td>Site</td>
+                <td>Bloque nouvelles transactions, préserve historique</td>
+              </tr>
+              <tr>
+                <td>Default Insert Site (user)</td>
+                <td><code>Users</code> app &gt; record user</td>
+                <td>User</td>
+                <td>Site auto-affecté aux records créés par cet user</td>
+              </tr>
+              <tr>
+                <td>Default Storeroom (Site)</td>
+                <td><code>Storerooms</code> app &gt; record storeroom &gt; checkbox Default</td>
+                <td>Storeroom (Site-scoped)</td>
+                <td>MR self-service insère ce storeroom par défaut</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Mémorisation cible : pour chaque option, identifier (1) l'app, (2) l'action / sub-tab, (3) la portée. À l'examen, IBM teste typiquement la <em>localisation</em> d'une option (« Where do you configure X ? ») — connaître ce tableau évite les erreurs D6 (Mauvaise-app).</figcaption>
+        </figure>
+
+        <h2>🔢 Hiérarchie de précédence Autonumbering</h2>
+        <p>L'autonumbering Maximo applique une règle de précédence stricte au moment où un nouveau record numéroté est créé (WO, PO, PR, Asset, Inventory, etc.). Le système cherche un seed configuré dans cet ordre : (1) Site, (2) Organization, (3) System. Le premier trouvé l'emporte. Cette hiérarchie permet aux administrateurs de segmenter les numéros par site (ex: <code>WO-NYC-00001</code> vs <code>WO-LA-00001</code>) tout en gardant un fallback global pour les Sites sans configuration spécifique.</p>
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-2-autonumber">
+          <pre class="mermaid" data-mermaid-src="
+flowchart TD
+    A[Création nouveau record WO/PO/Asset/...]
+    A --&gt; B{Seed Site Level<br/>configuré ?}
+    B -- Oui --&gt; B1[Utiliser seed Site<br/>+ prefix Site<br/>ex WO-NYC-00001]
+    B -- Non --&gt; C{Seed Org Level<br/>configuré ?}
+    C -- Oui --&gt; C1[Utiliser seed Org<br/>+ prefix Org<br/>ex WO-USORG-00001]
+    C -- Non --&gt; D{Seed System Level<br/>configuré ?}
+    D -- Oui --&gt; D1[Utiliser seed System<br/>+ prefix System<br/>ex WO-00001]
+    D -- Non --&gt; D2[Erreur configuration<br/>seed manquant]
+"></pre>
+          <figcaption>L'hiérarchie de fallback est descendante du plus spécifique (Site) au plus général (System). Configurer uniquement au niveau System suffit pour démarrer ; ajouter des seeds Site permet de différencier visuellement les records par localisation.</figcaption>
+        </figure>
+
+        <h2>🚫 Désactivation d'un Site — Make Inactive vs Delete</h2>
+        <p>Maximo n'autorise <strong>jamais</strong> la suppression d'un Site qui possède des transactions historiques. La table <code>SITE</code> a une contrainte référentielle FK vers <code>WORKORDER.SITEID</code>, <code>ASSET.SITEID</code>, <code>INVENTORY.SITEID</code>, etc. Un DELETE viole cette FK et est refusé par l'ORM.</p>
+        <p>La méthode officielle pour retirer un Site d'usage est <strong>Make Inactive</strong> (champ <code>SITE.ACTIVE</code> = N). Effets immédiats :</p>
+        <ul>
+          <li>Le Site disparaît du dropdown <em>Select Insert Site</em> de tous les users.</li>
+          <li>Aucune nouvelle transaction (WO, PM, PO, Inventory) ne peut être créée pour ce Site.</li>
+          <li>Les records historiques restent intacts et consultables via searches Site = "retired".</li>
+          <li>L'audit trail (<code>TLOAM</code>), la comptabilité (cost history) et les métriques pluriannuelles (MTBF, KPI) sont préservés.</li>
+        </ul>
+        <p>Cette approche est cohérente avec le principe ISO 55000 « cradle-to-grave traceability » et les exigences SOX/IFRS de conservation des écritures.</p>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 5 confusions les plus fréquentes</strong> sur les options Site-level à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — chercher l'autonumbering dans <code>System Properties</code> ou <code>Database Configuration</code>. Faux : c'est exclusivement dans <code>Organizations</code> app via 3 actions Select Action. Le piège mental : autonumbering « semble » global, donc on extrapole vers System Properties — erreur D1 Hérité (avant Maximo 7.5).</li>
+            <li><strong>Piège 2</strong> — confondre Default Insert Site (user-level, app <code>Users</code>) avec Default Storeroom (Storeroom-level, app <code>Storerooms</code>). Les deux contiennent le mot « default » mais opèrent sur des entités différentes.</li>
+            <li><strong>Piège 3</strong> — penser qu'on peut supprimer un Site retiré. Faux : impossible si transactions existent. Seule action légale : Make Inactive.</li>
+            <li><strong>Piège 4</strong> — placer Tax codes au niveau Site. Faux : Tax codes / rates sont Org-level pour cohérence comptable. Site-level pour Tax serait un cauchemar de réconciliation comptable.</li>
+            <li><strong>Piège 5</strong> — supposer que <em>Auto-reserve</em> se déclenche à WAPPR. Faux : trigger = APPR. Confusion classique entre les statuts WO du workflow.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Comment désactive-t-on un Site retraité tout en conservant son historique ?</p>
+          <details><summary>Afficher la réponse</summary><p>Action <strong>Make Inactive</strong> dans <code>Organizations</code> app &gt; Sites sub-tab. Décocher la checkbox Active. Le Site disparaît du dropdown de sélection mais ses records (WOs, Assets, Inventory) restent intacts et consultables.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Où configure-t-on les autonumber seeds pour WONUM ?</p>
+          <details><summary>Afficher la réponse</summary><p><code>Organizations</code> app &gt; Select Action menu &gt; <em>System Level Autonumber Setup</em> ou <em>Organization Level Autonumber Setup</em> ou <em>Site Level Autonumber Setup</em> selon la portée souhaitée. Précédence : Site &gt; Org &gt; System.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quelle est la différence entre Default Insert Site et Default Storeroom ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Default Insert Site</strong> = propriété <em>user</em> (app <code>Users</code>), Site auto-affecté aux records créés par cet user. <strong>Default Storeroom</strong> = propriété <em>storeroom</em> (app <code>Storerooms</code>), checkbox qui marque le storeroom par défaut du Site pour les Material Requisitions self-service.</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-2-147" data-lesson="3-2" data-mode="single" data-correct="B">
   <div class="mcq-head">
@@ -2701,14 +2867,49 @@ stateDiagram-v2
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D1</span><span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D4</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> B</p>
-    <p><strong>Pourquoi B (correct)</strong> — L'autonumbering (seeds + prefixes pour WONUM, PONUM, ASSETNUM, etc.) se configure dans l'application <strong>Organizations</strong> via 3 actions hiérarchiques du menu Select Action : (1) <em>System Level Autonumber Setup</em> — définit les seeds globaux (System scope), (2) <em>Organization Level Autonumber Setup</em> — override par Org, (3) <em>Site Level Autonumber Setup</em> — override par Site. Pour chaque objet numéroté (WORKORDER, PO, PR, ASSET, INVENTORY…), l'admin saisit : le <em>seed</em> (valeur de départ, ex: 10000), le <em>prefix</em> optionnel (ex: "WO-"), et l'increment (par défaut 1). Quand un nouveau WO est créé, Maximo cherche d'abord un seed au Site, puis Org, puis System. Cette hiérarchie permet de différencier visuellement les numéros par site (ex: WO-NYC-00001 vs WO-LA-00001).</p>
-    <p><strong>Pourquoi A est faux</strong> — D1 legacy term : System Properties stocke les paramètres globaux (<code>mxe.*</code>) mais pas les autonumber seeds ; confusion historique avec Maximo 5-6.</p>
-    <p><strong>Pourquoi C est faux</strong> — D3 wrong scope : Database Configuration définit les attributs de table (types, longueurs, persistence) mais pas les valeurs de sequence ; niveau structurel, pas runtime.</p>
-    <p><strong>Pourquoi D est faux</strong> — D4 adjacent : Application Designer contrôle les layouts UI (onglets, fields visibility) ; aucun rapport avec la numérotation des records.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste systématiquement la <em>localisation</em> des options de configuration. L'autonumbering est un piège classique : son nom évoque un mécanisme global (« système »), ce qui pousse les candidats inexpérimentés vers System Properties. La bonne réponse demande de connaître le menu Select Action de l'app <code>Organizations</code> par cœur. C'est l'objectif STU 3.2 « Identify where autonumbering is set up. »</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — L'autonumbering Maximo gère la numérotation séquentielle de tous les records métier (WORKORDER, PO, PR, ASSET, INVENTORY, INVOICE, RECEIPT…). Trois niveaux de configuration coexistent avec une hiérarchie de précédence stricte : Site &gt; Org &gt; System. Quand un nouveau record est créé, Maximo cherche un seed au Site, puis Org, puis System ; le premier trouvé l'emporte. Cette flexibilité permet aux administrateurs de différencier visuellement les numéros (ex: <code>WO-NYC-00001</code>) ou de garder un fallback global.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; menu Select Action &gt; choisir <em>System Level Autonumber Setup</em> OU <em>Organization Level Autonumber Setup</em> OU <em>Site Level Autonumber Setup</em>. Pour chaque objet (WONUM, PONUM, ASSETNUM, etc.), saisir : le <em>seed</em> (valeur de départ, ex: 10000), le <em>prefix</em> optionnel (ex: « WO- »), l'<em>increment</em> (défaut 1). Save. La table <code>AUTOKEY</code> stocke ces seeds avec colonnes <code>SETNAME</code>, <code>SITEID</code>, <code>ORGID</code>, <code>AUTOKEYNAME</code>, <code>SEED</code>, <code>PREFIX</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Configuration d'un déploiement : System level seed WONUM = 1 (prefix vide) ; Org USORG seed = 10000 (prefix « WOUS- ») ; Site NYC seed = 100 (prefix « WONYC- »). Création d'un WO sur Site NYC → numéro <code>WONYC-100</code> (Site gagne). Création d'un WO sur Site LA (pas de seed Site) → fallback Org → <code>WOUS-10000</code>. Création d'un WO sur Org canadienne (pas de seed Org/Site) → fallback System → <code>1</code>.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la numérotation des chambres dans une chaîne hôtelière internationale. Chaque hôtel peut avoir son propre format (Hilton-NYC-101) ou hériter d'un format régional (Hilton-USA-1001) ou utiliser le format global de la chaîne (HIL-1). La précédence va du plus local au plus général.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — System Properties stocke les paramètres globaux d'instance (<code>mxe.int.aibrokerapikey</code>, <code>mxe.crontask.donotrun</code>, etc.) mais pas les autonumber seeds. <strong>Pattern D1 Hérité</strong> : confusion historique avec Maximo 5-6 où certains paramètres étaient effectivement dans system.properties.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Database Configuration définit les attributs de table (types, longueurs, persistence, indexes) mais pas les valeurs de sequence runtime. <strong>Pattern D3 Inverse</strong> : confusion entre niveau structurel (DB Config) et runtime (Autonumber).</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Application Designer contrôle les layouts UI (onglets, fields visibility, dialogs) ; aucun rapport avec la numérotation des records. <strong>Pattern D4 Demi-vérité</strong> : c'est aussi une app de configuration, mais sur un domaine totalement différent.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>App</strong> : <code>Organizations</code>.</li>
+          <li><strong>Actions</strong> : <em>System / Organization / Site Level Autonumber Setup</em>.</li>
+          <li><strong>Précédence</strong> : Site &gt; Org &gt; System.</li>
+          <li><strong>Champs</strong> : seed, prefix, increment, autokey name.</li>
+          <li><strong>Table DB</strong> : <code>AUTOKEY</code>.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Autonumber seeds = <code>Organizations</code> app, pas System Properties.</li>
+          <li>3 actions (System / Org / Site) avec précédence Site gagne.</li>
+          <li>Table sous-jacente : <code>AUTOKEY</code>.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Autonumbering : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-autonumbering" target="_blank" rel="noopener">System/Org/Site setup</a></li>
-      <li>Maximo Secrets — Autonumber configuration : <a href="https://maximosecrets.com/2020/09/10/autonumbering/" target="_blank" rel="noopener">3-level hierarchy</a></li>
+      <li>STU C1000-183 sub-objective 3.2 — « Identify where autonumbering is set up »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Autonumbering setup hierarchy »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-autonumbering" target="_blank" rel="noopener">Autonumbering — System/Org/Site setup</a></li>
     </ul></div>
   </div>
 </div>
@@ -2728,14 +2929,48 @@ stateDiagram-v2
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>D</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D5</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> D</p>
-    <p><strong>Pourquoi D (correct)</strong> — Pour retirer un Site opérationnel tout en conservant l'historique, la méthode IBM-supportée est de <strong>décocher le flag Active</strong> sur le Site (champ <code>ACTIVE</code> dans <code>MAXSITE</code>). Effets immédiats : (1) les users ne peuvent plus sélectionner ce Site dans leur dropdown Select Insert Site, (2) aucun nouveau WO, PM, PO, Inventory transaction ne peut être créé pour ce Site, (3) les records existants (WOs historiques, assets décommissionnés, labor transactions passées) restent intacts et consultables via searches Site = "retired plant". Cette approche "make inactive" préserve l'audit trail, la comptabilité (cost history), et les métriques pluriannuelles (MTBF historique). Supprimer un Site est <em>interdit</em> par Maximo dès qu'il existe des transactions — l'ORM bloque le DELETE pour intégrité référentielle.</p>
-    <p><strong>Pourquoi A est faux</strong> — D9 near-synonym : les Sites ne portent pas de status RETIRED — le seul mécanisme est le flag booléen Active/Inactive ; distracteur crédible pour qui extrapole depuis les statuts Asset (ACTIVE/DECOMMISSIONED).</p>
-    <p><strong>Pourquoi B est faux</strong> — D2 invented : l'application Domains gère les listes de valeurs (ALN, Numeric, Synonym, Crossover, Table domains) mais n'a aucune fonction "Archive Site" ; totalement fabriqué.</p>
-    <p><strong>Pourquoi C est faux</strong> — D5 inversée : les Sites ne peuvent pas être détachés de leur Organization parent — la FK <code>SITE.ORGID → ORGANIZATION.ORGID</code> est immuable après création ; impossibilité architecturale.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance du cycle de vie d'un Site retiré et la préservation de l'historique. C'est un piège classique IBM avec 3 distracteurs très tentants (RETIRED status, Archive via Domains, Remove from Org) qui semblent logiques pour qui ne connaît pas la mécanique exacte. SAM Q4 sample teste exactement ce point.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — La table <code>SITE</code> a une contrainte référentielle FK vers <code>WORKORDER.SITEID</code>, <code>ASSET.SITEID</code>, <code>INVENTORY.SITEID</code>, <code>POLINE.SITEID</code>, etc. Un DELETE viole ces FK et est refusé par l'ORM. Le seul mécanisme légal pour retirer un Site est le flag booléen <code>SITE.ACTIVE</code> = N. Cette logique est cohérente avec ISO 55000 « cradle-to-grave traceability » et SOX/IFRS qui exigent la conservation des écritures.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; ouvrir l'Org parent &gt; Sites sub-tab &gt; sélectionner le Site retiré &gt; décocher la checkbox Active &gt; Save. Effets immédiats : (1) le Site disparaît du dropdown Select Insert Site de tous les users, (2) aucune nouvelle transaction (WO, PM, PO, Inventory) ne peut être créée pour ce Site, (3) les records existants restent consultables via searches Site = "retired-site-id". L'audit trail (<code>TLOAM</code>) est préservé, la comptabilité historique (cost history) reste intacte, les métriques pluriannuelles (MTBF, KPI annuels) restent calculables.</p>
+
+      <p><strong>Exemple chiffré</strong> — Plant ACME-PHX retiré au 31 décembre 2025. Inventaire : 1 247 WO historiques, 380 assets, 5 ans d'écritures GL. Tentative de DELETE → erreur « Cannot delete site : referenced by 1247 work orders. » Action correcte : décocher Active. Au 1er janvier 2026, les users ne voient plus ACME-PHX dans leur Insert Site dropdown ; le rapport annuel SOX consulté en mars 2026 affiche toujours les 1 247 WOs et leurs coûts.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la fermeture d'une succursale bancaire physique. La banque ne peut pas « supprimer » la succursale dans son SI : les comptes clients qui y étaient, l'historique des transactions, les écritures comptables doivent rester accessibles pour conformité. La succursale passe en statut « fermée » (équivalent Inactive) — invisible aux nouveaux clients mais auditable.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Les Sites ne portent pas de status RETIRED — le seul mécanisme est le flag booléen Active/Inactive. <strong>Pattern D9 Quasi-synonyme</strong> : extrapolation depuis les statuts Asset (ACTIVE/DECOMMISSIONED) qui existent réellement.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — L'app Domains gère les listes de valeurs (ALN, Numeric, Synonym, Crossover, Table domains) mais n'a aucune fonction « Archive Site ». <strong>Pattern D2 Inventé</strong> : fabrication totale, aucun mécanisme de ce nom dans Maximo.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Les Sites ne peuvent pas être détachés de leur Organization parent — la FK <code>SITE.ORGID → MAXORG.ORGID</code> est immuable après création. <strong>Pattern D5 Champ-frère</strong> : confusion avec les déplacements d'Assets entre Sites (qui sont possibles via Asset Move).</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Action correcte</strong> : Make Inactive (champ <code>SITE.ACTIVE</code> = N).</li>
+          <li><strong>DELETE interdit</strong> si transactions historiques.</li>
+          <li><strong>Effets</strong> : disparition du dropdown, blocage nouvelles transactions, préservation historique.</li>
+          <li><strong>Conformité</strong> : ISO 55000 + SOX/IFRS exigent traçabilité.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Site retiré = Make Inactive, jamais Delete.</li>
+          <li>Pas de status RETIRED sur Site (vs Asset).</li>
+          <li>FK SITE.ORGID immuable.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Creating Sites : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sites-creating" target="_blank" rel="noopener">Deactivation via Active flag</a></li>
-      <li>Maximo Secrets — Site lifecycle : <a href="https://maximosecrets.com/2016/11/27/organizations-and-sites/" target="_blank" rel="noopener">Make inactive vs delete</a></li>
+      <li>STU C1000-183 sub-objective 3.2 — « Identify how to disable a site (SAM Q4 sample) »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Site lifecycle and deactivation »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=sites-creating" target="_blank" rel="noopener">Creating Sites — Active flag</a></li>
     </ul></div>
   </div>
 </div>
@@ -2755,14 +2990,48 @@ stateDiagram-v2
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D7</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> B, C</p>
-    <p><strong>Pourquoi B, C</strong> — L'application Organizations héberge des dizaines d'options, certaines scopées Organization, d'autres Site. Parmi les <em>Site-level application options</em> configurés dans Organizations, 2 exemples classiques IBM : (1) <strong>Automatically create reservations for approved work orders</strong> — dans Select Action → <em>Work Order Options → Edit Rules</em>, flag par Site qui déclenche la création automatique de reservations inventory dès qu'un WO passe à APPR, (2) <strong>Require shipment receiving for internal transfers</strong> — dans Select Action → <em>Inventory Options</em>, force la création d'un Shipment record lors d'un Site-to-Site transfer et oblige le receiving physique côté destination avant que le stock soit on-hand. Ces options sont <em>par Site</em> pour permettre des politiques différentes (ex: Site NYC applique reservations auto, Site LA non). La granularité Site permet de coller aux process locaux sans forcer une uniformité.</p>
-    <p><strong>Pourquoi A est faux</strong> — D3 wrong scope : tax code defaults se configurent <em>au niveau Organization</em> (Taxes application, Org-scoped) pour assurer la cohérence comptable ; pas Site-level.</p>
-    <p><strong>Pourquoi D est faux</strong> — D4 adjacent : Domains (ALN, Numeric, Synonym) est une application propre qui gère les value lists, indépendante des Work Order Options ; hors scope.</p>
-    <p><strong>Why E wrong</strong> — D7 non-existent : API Keys est une application séparée pour gérer les credentials d'intégration externe ; n'a rien à voir avec les Site-level options dans Organizations.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la capacité à distinguer Site-level vs Org-level vs hors-scope. C'est une question type Pick-2 (T2) avec 5 options dont 3 distracteurs très tentants. Le candidat doit connaître le menu Select Action de l'app <code>Organizations</code> par cœur.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — L'app <code>Organizations</code> est la console centrale pour les options de configuration métier. Elle expose deux familles via le menu Select Action : (1) options Org-level (Chart of Accounts, Taxes, GL Account Configuration, Workflow Settings) — politique légale/comptable cohérente sur toute l'Org ; (2) options Site-level (Work Order Options, Inventory Options, Purchasing Options, Bulletin Board Options) — politique opérationnelle locale qui peut varier d'un Site à l'autre.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Pour <em>Auto-reserve on APPR</em> : Path = <code>Organizations</code> &gt; Select Action &gt; <em>Work Order Options</em> &gt; sélectionner Site &gt; tab <em>Reservation Requirements</em> &gt; cocher « Automatically create reservations for approved work orders ». Pour <em>Shipment Required</em> : Path = <code>Organizations</code> &gt; Select Action &gt; <em>Inventory Options</em> &gt; sélectionner Site &gt; cocher « Require shipment receiving for internal transfers ». Les deux options modifient les colonnes correspondantes dans <code>SITE</code> ou <code>ORGOPTIONS</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Groupe industriel avec 5 Sites. Site NYC (production critique) active Auto-reserve + Shipment Required pour discipline maximale. Site PHX (warehouse régional) désactive ces deux options pour rapidité. Site DAL hybrid : Auto-reserve activé, Shipment Required désactivé. Cette flexibilité par Site évite d'imposer un compromis uniforme aux 5 Sites — chaque Site optimise selon son volume et sa criticité.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les politiques de retour produits dans une chaîne de magasins. La politique de prix (Org-level) est uniforme dans tous les magasins ; la politique d'horaires d'ouverture (Site-level) varie selon le centre commercial où chaque magasin est implanté.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Tax code defaults se configurent <em>au niveau Organization</em> (Taxes app, Org-scoped) pour assurer la cohérence comptable. Une variation tax par Site rendrait la consolidation financière impossible. <strong>Pattern D3 Inverse</strong> : confusion de scope.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Domains (ALN, Numeric, Synonym, Crossover, Table) est une application propre (<code>Domains</code> app) qui gère les value lists, indépendante des Work Order Options. <strong>Pattern D4 Demi-vérité</strong> : c'est aussi de la configuration, mais sur un domaine totalement différent.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — API Keys est une application séparée (<code>API Keys</code> app dans le module Administration) pour gérer les credentials d'intégration externe ; aucun rapport avec les Site-level options dans <code>Organizations</code>. <strong>Pattern D7 Inexistant</strong> : extrapolation absurde.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Site-level options</strong> : Work Order Options, Inventory Options, Purchasing Options, Bulletin Board Options.</li>
+          <li><strong>Org-level options</strong> : Chart of Accounts, Taxes, GL Account Configuration, Workflow Settings.</li>
+          <li><strong>Auto-reserve</strong> : Work Order Options &gt; Reservation Requirements (Site).</li>
+          <li><strong>Shipment Required</strong> : Inventory Options (Site).</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Auto-reserve + Shipment Required = Site-level.</li>
+          <li>Tax + COA + Workflow = Org-level.</li>
+          <li>Tout est dans <code>Organizations</code> app, mais portée différente.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Organizations Work Order Options : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-work-order-options" target="_blank" rel="noopener">Site-level options list</a></li>
-      <li>Maximo Secrets — Organizations settings : <a href="https://maximosecrets.com/2020/09/15/organizations-options/" target="_blank" rel="noopener">Org vs Site scopes</a></li>
+      <li>STU C1000-183 sub-objective 3.2 — « Identify Site-level Organization options »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Work Order Options + Inventory Options »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-work-order-options" target="_blank" rel="noopener">Organizations — Site-level options list</a></li>
     </ul></div>
   </div>
 </div>
@@ -2782,14 +3051,48 @@ stateDiagram-v2
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D5</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A</p>
-    <p><strong>Pourquoi A (correct)</strong> — Le flag <em>Automatically create reservations for approved work orders</em> agit au moment exact où le WO transite vers status <strong>APPR</strong> (Approved) : Maximo scanne les items planifiés dans le Plans tab du WO et crée automatiquement des inventory reservations (records dans <code>INVRESERVE</code>) pour chaque item avec quantity prévue. Effet : le stock earmarked devient visible comme <em>Committed</em> dans l'inventory balance, le disponible baisse d'autant, les autres WOs ne peuvent plus réserver ces items (premier arrivé, premier servi). Si le stock est insuffisant, Maximo peut optionnellement auto-générer un PR (avec un autre flag). Sans ce flag, les reservations ne se créent qu'au premier <em>Issue Items</em> manuel. Cette automation évite les stockouts de WOs importants avalés par des WOs ad-hoc.</p>
-    <p><strong>Pourquoi B est faux</strong> — D5 inversée : WAPPR = "Waiting for Approval", status antérieur à la validation hiérarchique ; pas de reservations car le WO n'est pas encore approuvé.</p>
-    <p><strong>Pourquoi C est faux</strong> — D9 near-synonym : issuing consomme réellement le stock (décrémente <code>CURBAL</code>) ; reservation ne fait qu'earmarker sans toucher au balance. Confusion classique entre les 2 opérations inventory.</p>
-    <p><strong>Pourquoi D est faux</strong> — D3 wrong scope : la génération de PR est un mécanisme <em>direct issue / stockout</em> séparé, déclenché quand un item WO n'est pas stocké — rien à voir avec l'auto-reservation.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance précise du <em>trigger</em> de l'auto-reservation. Le piège est dans la confusion APPR vs WAPPR — deux statuts WO qui se ressemblent visuellement mais sont radicalement différents : WAPPR = en attente d'approbation, APPR = approuvé. Connaître le trigger exact évite des erreurs opérationnelles coûteuses (stockouts inattendus, double-réservations).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Une <em>reservation</em> Maximo est un earmark de stock : le système marque une quantité comme « réservée pour ce WO » sans la consommer physiquement. La reservation décrémente le <em>Available Balance</em> (Current − Reserved) tout en laissant le <em>Current Balance</em> intact. Cette distinction est centrale pour la planification : si Site PHX a 100 unités d'item BEARING-X dont 80 réservées pour WO-501, le planner d'un autre WO ne voit que 20 disponibles et évite la collision.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Quand un WO transite vers status <code>APPR</code> (transition WAPPR → APPR ou directement après création si auto-approuvé), Maximo scanne les items planifiés dans le tab Plans &gt; Materials du WO et crée automatiquement des records dans <code>INVRESERVE</code> avec colonnes ITEMNUM, ITEMSETID, WONUM, RESQTY. Le statut INVRESERVE est <code>HARDRES</code>. Les KPI Inventory affichent immédiatement le Reserved updated. Sans ce flag, les reservations ne se créent qu'au premier <em>Issue Items</em> manuel — perdant le bénéfice de visibilité prévisionnelle.</p>
+
+      <p><strong>Exemple chiffré</strong> — Site NYC, item PUMP-IMPELLER, Current Balance = 50, Reserved = 0, Available = 50. WO-1001 planifié avec 30 PUMP-IMPELLER, status WAPPR. Aucune reservation à ce stade (Available = 50). Le supervisor approuve → status passe à APPR. Auto-reserve flag activé → Maximo crée INVRESERVE row (RESQTY = 30, HARDRES) → Reserved = 30, Available = 20. Un second WO-1002 planifié avec 25 unités voit Available = 20 → flag stockout immédiat, planner alerté.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la réservation de billets d'avion. Le siège n'est pas encore vendu (= pas d'issue), mais il n'est plus disponible pour d'autres acheteurs (= reserved). La compagnie sait que ce siège est earmarked et adapte les prix dynamiques en conséquence.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — WAPPR (« Waiting for Approval ») est antérieur à la validation hiérarchique. Le WO n'est pas encore approuvé donc l'auto-reserve ne se déclenche pas. <strong>Pattern D5 Champ-frère</strong> : confusion entre les statuts adjacents WAPPR et APPR du workflow WO.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Issuing consomme réellement le stock (décrémente <code>CURBAL</code>) et crée une row dans <code>MATUSETRANS</code>. Reservation ne fait qu'earmarker sans toucher au Current Balance. <strong>Pattern D9 Quasi-synonyme</strong> : confusion entre 2 opérations inventory adjacentes.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — La génération automatique de PR est un mécanisme distinct (flag « Auto-create PR for stockouts ») déclenché quand un item WO n'est pas suffisamment stocké. Rien à voir avec l'auto-reservation. <strong>Pattern D3 Inverse</strong> : confusion entre 2 mécanismes de planning.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Trigger</strong> : transition vers status <code>APPR</code> (pas WAPPR).</li>
+          <li><strong>Effet</strong> : INVRESERVE row HARDRES créée par item planifié.</li>
+          <li><strong>Reserved vs Issued</strong> : reservation earmark, issue consomme.</li>
+          <li><strong>Available Balance</strong> = Current − Reserved.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Auto-reserve = au passage à APPR, pas WAPPR.</li>
+          <li>HARDRES dans INVRESERVE.</li>
+          <li>Available baisse, Current intact.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Work Order Options auto-reserve : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-work-order-options" target="_blank" rel="noopener">Reservations on APPR</a></li>
-      <li>Maximo Secrets — Inventory reservations : <a href="https://maximosecrets.com/2020/06/28/inventory-reservations/" target="_blank" rel="noopener">Lifecycle reserve → issue</a></li>
+      <li>STU C1000-183 sub-objective 3.2 — « Reservations created automatically on approved WOs »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Work Order approval triggers »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-work-order-options" target="_blank" rel="noopener">Auto-reserve on APPR</a></li>
     </ul></div>
   </div>
 </div>
@@ -2809,23 +3112,258 @@ stateDiagram-v2
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D5</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C</p>
-    <p><strong>Pourquoi C (correct)</strong> — Activer <em>Shipment Required</em> pour les inter-site transfers transforme un transfer "one-shot" en workflow 3 étapes auditable : (1) <strong>Issue</strong> depuis le Site source — le stock quitte le source storeroom (Current Balance diminue) et crée un <em>Shipment record</em> avec status IN-TRANSIT, (2) <strong>Transit</strong> — physiquement, les items voyagent du Site source au Site destination, Maximo voit ce stock comme "en transit" mais pas on-hand, (3) <strong>Receive</strong> au Site destination — le receveur confirme réception via <em>Shipment Receiving</em>, le stock devient on-hand sur le destination storeroom (Current Balance augmente). Sans Shipment Required, le transfer est instantané (issue + receive simultané). L'option Shipment Required est critique pour la traçabilité, la gestion des écarts de livraison (damaged/missing), et la conformité comptable (valorisation en transit).</p>
-    <p><strong>Pourquoi A est faux</strong> — D5 inversée : l'option <em>introduit</em> explicitement une étape de receiving, elle ne la bypasse pas — confusion sur le sens du flag.</p>
-    <p><strong>Pourquoi B est faux</strong> — D9 near-synonym : le return-on-reject est un workflow distinct (Returns app) pour les réceptions de POs vendors défectueuses — sémantiquement adjacent mais pas lié à Shipment Required inter-site.</p>
-    <p><strong>Pourquoi D est faux</strong> — D3 wrong scope : les inter-site transfers sont <em>internes</em> à une Organization — aucun vendor externe impliqué ; le distracteur confond avec les PO receipts.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance pratique du workflow Shipment Required. C'est une option d'audit critique : sans elle, les transferts inter-site sont instantanés et perdent la traçabilité physique du stock en transit. Avec elle, un workflow 3 étapes garantit conformité comptable et gestion des écarts.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Un transfer inter-site Maximo a deux modes opératoires : (1) <em>Direct transfer</em> (par défaut, Shipment Required = N) — issue source + receive destination en une seule transaction simultanée, (2) <em>Shipment workflow</em> (Shipment Required = Y) — workflow 3 étapes auditable Issue → Transit → Receive avec un Shipment record qui matérialise le stock en transit. Le second mode est obligatoire pour les organisations soumises à SOX/IFRS qui doivent valoriser et tracer le stock en transit dans leur bilan.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> &gt; Select Action &gt; <em>Inventory Options</em> &gt; sélectionner Site &gt; cocher « Require shipment receiving for internal transfers ». Workflow runtime : (1) Issue depuis source &gt; le stock quitte source storeroom (CURBAL−), création Shipment record status IN-TRANSIT ; (2) Transit physique des items vers destination ; (3) Receive au destination via app <code>Shipment Receiving</code> &gt; CURBAL+ destination, Shipment status RECEIVED. Tables : <code>SHIPMENT</code>, <code>SHIPMENTLINE</code>, <code>MATUSETRANS</code>, <code>MATRECTRANS</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Transfer 50 BEARING-X de Site NYC (CURBAL = 200) vers Site LA (CURBAL = 30). Avec Shipment Required : T+0 Issue NYC (CURBAL NYC = 150, Shipment SH-001 status IN-TRANSIT, qty 50). T+3 jours : truck arrive à LA. T+3.1 Receive (CURBAL LA = 80, SH-001 status RECEIVED). Pendant les 3 jours, comptabilité valorise les 50 BEARING-X en compte « Stock in transit » (~$5 000). Si camion accidenté → écart visible immédiatement. Sans Shipment Required : transfer instantané T+0 (CURBAL NYC = 150, CURBAL LA = 80) — perte de visibilité du transit physique.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'envoi d'un colis recommandé avec accusé de réception. L'expéditeur voit « envoyé », le destinataire signe « reçu », et entre les deux le colis a un statut « en cours d'acheminement » traçable. Sans recommandé, l'envoi est instantané mais sans preuve.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — L'option <em>introduit</em> explicitement une étape de receiving, elle ne la bypasse pas. <strong>Pattern D5 Champ-frère</strong> : confusion sur le sens du flag (introduit vs supprime).</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Le return-on-reject est un workflow distinct (app <code>Returns</code>) pour les réceptions de POs vendors défectueuses — sémantiquement adjacent mais pas lié à Shipment Required inter-site. <strong>Pattern D9 Quasi-synonyme</strong> : confusion entre 2 workflows de réception.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Les inter-site transfers sont <em>internes</em> à une Organization — aucun vendor externe impliqué. Le distracteur confond avec les PO receipts (réceptions externes vendors). <strong>Pattern D3 Inverse</strong> : confusion interne vs externe.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Workflow Shipment Required</strong> : Issue → Transit → Receive (3 étapes).</li>
+          <li><strong>Mode direct</strong> (sans flag) : Issue + Receive instantanés.</li>
+          <li><strong>Tables</strong> : <code>SHIPMENT</code>, <code>SHIPMENTLINE</code>.</li>
+          <li><strong>Conformité</strong> : SOX/IFRS exigent valorisation stock in transit.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Shipment Required = workflow 3 étapes auditable.</li>
+          <li>Configuré dans Inventory Options (Site-level).</li>
+          <li>Stock visible « in transit » entre issue et receive.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Inventory Options Shipment Required : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-inventory-options" target="_blank" rel="noopener">Issue-Transit-Receive</a></li>
-      <li>Maximo Secrets — Inter-site transfers : <a href="https://maximosecrets.com/2020/06/15/inter-site-transfers/" target="_blank" rel="noopener">Shipment workflow</a></li>
+      <li>STU C1000-183 sub-objective 3.2 — « Identify where shipment requirements can be configured »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Inter-site transfer Shipment workflow »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-inventory-options" target="_blank" rel="noopener">Inventory Options — Shipment Required</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-2-152" data-lesson="3-2" data-mode="single" data-correct="C">
+  <div class="mcq-head">
+    <span class="mcq-num">Q10 · Sous-rubrique 3.2 · Type 1 · Default Insert Site vs Default Storeroom</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un FA reçoit deux exigences distinctes du DSI : (1) chaque user doit avoir un Site auto-affecté à ses nouveaux records, (2) chaque Site doit avoir un storeroom par défaut pour les Material Requisitions self-service.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Où configure-t-on respectivement ces deux paramètres ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-2-152-A"><input type="radio" name="mcq-3-2-152" value="A" id="mcq-3-2-152-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les deux dans Organizations app &gt; Site Settings</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-2-152-B"><input type="radio" name="mcq-3-2-152" value="B" id="mcq-3-2-152-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les deux dans Storerooms app, sub-tab User Defaults</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="mcq-3-2-152-C"><input type="radio" name="mcq-3-2-152" value="C" id="mcq-3-2-152-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Default Insert Site dans Users app (per user) ; Default Storeroom dans Storerooms app (checkbox per Storeroom)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-2-152-D"><input type="radio" name="mcq-3-2-152" value="D" id="mcq-3-2-152-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Default Insert Site dans System Properties ; Default Storeroom dans Inventory app</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D9 Quasi-synonyme</span><span class="mcq-dpattern-chip">D1 Hérité</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la distinction entre 2 paramètres avec le mot « default » qui sont configurés à des endroits totalement différents et opèrent sur des entités distinctes. Confusion classique qui révèle un FA qui n'a pas exploré les apps Maximo en pratique.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — <strong>Default Insert Site</strong> est une propriété <em>user</em> stockée dans <code>MAXUSER.DEFAULTSITE</code>. C'est le Site auto-affecté quand cet user crée un nouveau record. <strong>Default Storeroom</strong> est une propriété <em>storeroom</em> stockée dans <code>INVENTORY.DEFSTOREROOM</code>. Quand activé, ce storeroom devient le destination par défaut pour les Material Requisitions self-service de ce Site.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Pour Default Insert Site : Path = <code>Users</code> app &gt; ouvrir record user &gt; tab User Defaults &gt; champ Default Insert Site &gt; sélectionner Site. Pour Default Storeroom : Path = <code>Storerooms</code> app &gt; ouvrir record Storeroom &gt; cocher checkbox Default Storeroom &gt; Save. Maximo permet 1 seul Default Storeroom par Site (validation cross-record).</p>
+
+      <p><strong>Exemple chiffré</strong> — User john.doe a Default Insert Site = NYC. Il crée un nouveau WO sans préciser Site → le record reçoit automatiquement SITEID = NYC. Storeroom MAIN-WH-NYC a checkbox Default cochée. John crée une MR self-service → destination par défaut = MAIN-WH-NYC, John peut override mais le default évite la friction de saisie.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Default Insert Site = comme l'adresse de livraison par défaut sur ton compte Amazon (par user). Default Storeroom = comme le retour Amazon par défaut d'un magasin (par site/store).</p>
+
+      <p><strong>Pourquoi A est faux</strong> — <code>Organizations</code> app n'a pas de tab « Site Settings » avec ces deux options. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — <code>Storerooms</code> app n'a pas de tab User Defaults — la gestion des préférences user est dans <code>Users</code> app. <strong>Pattern D9 Quasi-synonyme</strong> : confusion entre 2 apps adjacentes.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — System Properties stocke des paramètres globaux d'instance, pas des préférences user. Inventory app gère les items, pas les storerooms eux-mêmes. <strong>Pattern D1 Hérité</strong> : confusion historique avec versions antérieures de Maximo.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Default Insert Site</strong> : per user, app <code>Users</code>, champ <code>MAXUSER.DEFAULTSITE</code>.</li>
+          <li><strong>Default Storeroom</strong> : per Storeroom, app <code>Storerooms</code>, champ <code>INVENTORY.DEFSTOREROOM</code>.</li>
+          <li><strong>1 seul</strong> Default Storeroom par Site (validation).</li>
+          <li>Utilisé par Material Requisitions self-service.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Default Insert Site = user-level (Users app).</li>
+          <li>Default Storeroom = storeroom-level (Storerooms app).</li>
+          <li>Les deux ont « default » mais opèrent sur des entités différentes.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.2 — « Default Insert Site vs Default Storeroom »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Default settings hierarchy »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=storerooms-default" target="_blank" rel="noopener">Default storeroom checkbox</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-2-153" data-lesson="3-2" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q11 · Sous-rubrique 3.2 · Type 1 · Workflow Settings scope</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant configure un workflow d'approbation des PRs pour 3 Sites différents d'une même Organization. Il veut savoir si le workflow est défini par Site ou par Org.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la portée des Workflow Settings dans Organizations app ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-2-153-A"><input type="radio" name="mcq-3-2-153" value="A" id="mcq-3-2-153-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Site (un workflow distinct possible par Site)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-2-153-B"><input type="radio" name="mcq-3-2-153" value="B" id="mcq-3-2-153-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Organization (les Workflow Settings s'appliquent uniformément à tous les Sites de l'Org)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-2-153-C"><input type="radio" name="mcq-3-2-153" value="C" id="mcq-3-2-153-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">System (un seul workflow global pour toutes les Orgs)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-2-153-D"><input type="radio" name="mcq-3-2-153" value="D" id="mcq-3-2-153-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">User (chaque user configure son propre workflow)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3 Inverse</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la distinction Org-level vs Site-level pour les options de configuration. Workflow Settings touche à la politique d'approbation, considérée comme une politique légale/process — donc Org-level pour cohérence inter-Sites.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Maximo distingue les politiques opérationnelles locales (Site-level : Work Order Options, Inventory Options) des politiques structurelles globales (Org-level : Workflow Settings, Chart of Accounts, Taxes). La logique : un workflow d'approbation PR doit être uniforme dans toute l'Org pour assurer la conformité comptable et la séparation des duties (SOX). Permettre des workflows différents par Site casserait l'audit chain.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Organizations</code> app &gt; Select Action &gt; <em>Workflow Settings</em> &gt; configurer pour quels objets le workflow auto-init est activé (PR, PO, WO, etc.) et les routing rules. Ces settings s'appliquent à <strong>tous les Sites</strong> de l'Org — pas de granularité Site possible. Si une politique différente par Site est nécessaire, il faut créer 2 Orgs distinctes (mais c'est très lourd).</p>
+
+      <p><strong>Exemple chiffré</strong> — Org USORG avec 3 Sites (NYC, LA, DAL). Workflow Settings active auto-init pour PR avec route 1 approver. Tous les 3 Sites héritent de cette politique : un PR créé sur NYC, LA ou DAL passe par la même chaîne d'approbation. Audit trail uniforme, conformité SOX assurée.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la politique de signature des chèques d'une entreprise : uniforme dans toute la société, pas variable par succursale. Permettre aux succursales d'avoir leurs propres règles serait un risque de fraude.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Workflow Settings est Org-level. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Workflow Settings est par Org, pas global System. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Les users ne configurent pas leur propre workflow. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Workflow Settings</strong> : Org-level (cohérence légale).</li>
+          <li><strong>Path</strong> : <code>Organizations</code> &gt; Select Action &gt; Workflow Settings.</li>
+          <li><strong>Auto-init</strong> par type d'objet (PR, PO, WO, etc.).</li>
+          <li><strong>Routing rules</strong> : approbateurs, conditions.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Workflow Settings = Org-level uniforme.</li>
+          <li>Pas de granularité Site.</li>
+          <li>SOX-driven (cohérence audit).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.2 — « Workflow Settings scope »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Workflow auto-init configuration »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-workflow-settings" target="_blank" rel="noopener">Workflow Settings</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-2-154" data-lesson="3-2" data-mode="multi" data-correct="A,B,D">
+  <div class="mcq-head">
+    <span class="mcq-num">Q12 · Sous-rubrique 3.2 · Type 3 · Org-level options identification</span>
+    <span class="mcq-type-chip">T3 · Choix de 3</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un FA prépare une checklist de configuration d'une nouvelle Organization. Il liste les options à régler au niveau Org (vs au niveau Site).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Lesquelles des options suivantes sont configurées au niveau <strong>Organization</strong> ? (Choisir 3.)</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="mcq-3-2-154-A"><input type="checkbox" name="mcq-3-2-154" value="A" id="mcq-3-2-154-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Chart of Accounts segments</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-2-154-B"><input type="checkbox" name="mcq-3-2-154" value="B" id="mcq-3-2-154-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Tax codes and rates</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-2-154-C"><input type="checkbox" name="mcq-3-2-154" value="C" id="mcq-3-2-154-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Auto-create reservations on approved WO</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="mcq-3-2-154-D"><input type="checkbox" name="mcq-3-2-154" value="D" id="mcq-3-2-154-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Workflow Settings (auto-init et routing)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="E" data-correct="0"><label class="mcq-label" for="mcq-3-2-154-E"><input type="checkbox" name="mcq-3-2-154" value="E" id="mcq-3-2-154-E" class="mcq-input"><span class="mcq-letter">E</span><span class="mcq-option-text">Shipment Required pour transferts inter-site</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, D</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3 Inverse</span><span class="mcq-dpattern-chip">D3 Inverse</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B, D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Test de mémorisation de la cartographie Org-level vs Site-level. La règle générale : si l'option est <em>structurelle légale/comptable</em>, elle est Org-level ; si elle est <em>opérationnelle locale</em>, elle est Site-level.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Org-level options assurent la cohérence inter-Sites pour les politiques qui ne peuvent pas varier sans casser l'audit ou la conformité (Tax, GL, Workflow). Site-level options permettent l'adaptation locale pour les politiques opérationnelles qui peuvent varier sans impact comptable (Auto-reserve, Shipment Required, Bulletin Board).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — A. Chart of Accounts segments : structure comptable globale, configurée dans <code>Chart of Accounts</code> app + GL Account Configuration dans <code>Organizations</code> app. B. Tax codes : <code>Organizations</code> &gt; Taxes (Org-level). D. Workflow Settings : <code>Organizations</code> &gt; Workflow Settings (Org-level). C. Auto-reserve : <code>Organizations</code> &gt; Work Order Options (Site-level). E. Shipment Required : <code>Organizations</code> &gt; Inventory Options (Site-level).</p>
+
+      <p><strong>Exemple chiffré</strong> — Configuration Org USORG : Chart of Accounts (4 segments USD), Taxes (TVA 0% domestic + 15% RCT EU), Workflow Settings (auto-init PR avec 2 approvers). Configuration Site NYC (au sein de USORG) : Work Order Options Auto-reserve = ON, Inventory Options Shipment Required = ON. Configuration Site PHX (même Org) : Auto-reserve = OFF (pour rapidité). Tax + Workflow restent uniformes pour les 2 Sites.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Politique RH Globale (vacances, congés maladie, équité salariale) = Org-level. Politique d'horaires d'ouverture, policies de stationnement, choix de cafétéria = Site-level.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Auto-reserve est Site-level (Work Order Options). <strong>Pattern D3 Inverse</strong>.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Shipment Required est Site-level (Inventory Options). <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Org-level (uniformité légale)</strong> : COA, Taxes, Workflow Settings, GL Configuration.</li>
+          <li><strong>Site-level (politique locale)</strong> : Work Order Options, Inventory Options, Purchasing Options, Bulletin Board Options.</li>
+          <li><strong>Règle</strong> : structural / comptable = Org ; opérationnel / local = Site.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Org-level = COA + Taxes + Workflow.</li>
+          <li>Site-level = WO Options + Inventory Options + Shipment.</li>
+          <li>Test mental : « impact comptable inter-site ? » → Org.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.2 — « Org-level vs Site-level options mapping »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 ch. « Organizations options scope »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-overview" target="_blank" rel="noopener">Organizations app — options inventory</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-1" class="btn-nav"><span class="dir">← Précédent</span>3.1 Organizations</a>
-    <a href="#lesson-3-3" class="btn-nav next"><span class="dir">Suivant →</span>3.3 Security</a>
+    <a href="#lesson-3-1" class="btn-nav"><span class="dir">← Précédent</span>3.1 Configurer les options Organization (Org)</a>
+    <a href="#lesson-3-3" class="btn-nav next"><span class="dir">Suivant →</span>3.3 Security Groups</a>
   </div>
 </section>
 
