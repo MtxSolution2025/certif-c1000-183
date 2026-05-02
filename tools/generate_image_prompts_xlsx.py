@@ -37,7 +37,7 @@ COLUMNS = [
 ]
 
 
-# Lesson 3.1 — Configurer les options Organization (niveau Org)
+# Lesson prompts — densified lessons add 1 hero each
 PROMPTS = [
     {
         "lesson_id": "c1000-183-3-1",
@@ -90,6 +90,59 @@ PROMPTS = [
             "Hero image for lesson 3.1. The 4-level hierarchy must be unambiguously readable at a glance. "
             "Color coding: blue=System, gray=Set, amber=Org, teal=Site. Keep the visual minimal — viewers "
             "should grasp the concept in <3 seconds."
+        ),
+    },
+    {
+        "lesson_id": "c1000-183-3-2",
+        "image_path": "assets/illustrations/lesson-c1000-183-3-2.svg",
+        "figure_type": "hero",
+        "title_fr": "Options Site-level dans Organizations app",
+        "subject": (
+            "Isometric infographic showing the IBM Maximo Manage Organizations application as a central "
+            "control panel with two distinct branches emerging from a Select Action menu. Top branch labeled "
+            "'Org-level' (amber color theme) shows 4 stylized icons: Chart of Accounts (column chart), Taxes "
+            "(percent symbol), Workflow Settings (flow diagram), GL Configuration (ledger book). Bottom branch "
+            "labeled 'Site-level' (teal color theme) shows 4 stylized icons: Work Order Options (clipboard), "
+            "Inventory Options (boxes), Purchasing Options (cart), Bulletin Board (notice board). Two small "
+            "site cubes at the bottom right (NYC and LA) showing how site-level options can differ between "
+            "sites of the same Organization."
+        ),
+        "style": (
+            "Clean technical isometric illustration matching the lesson 3.1 visual language. Vector flat with "
+            "soft depth shading. Stripe Press / Linear marketing infographic aesthetic."
+        ),
+        "composition": (
+            "Center: Organizations app icon (server/console metaphor) with Select Action dropdown opened. Top "
+            "branching flow: 4 amber-tinted Org-level option icons in a horizontal row. Bottom branching flow: "
+            "4 teal-tinted Site-level option icons in a horizontal row. Bottom-right corner: 2 small site "
+            "cubes (NYC, LA) with subtle differentiation showing Site-level customization. Generous 80px "
+            "padding. Subtle topographic line pattern background at 5% opacity."
+        ),
+        "color_palette": (
+            "Primary teal #1D9E75 (Site-level branch + sites), accent amber #F59E0B (Org-level branch + central "
+            "console), neutral slate #475569 for connecting lines and labels, white #FFFFFF background, brand "
+            "topographic teal #1D9E75 at 5% alpha for background."
+        ),
+        "lighting": "Soft directional from top-left, gentle ambient occlusion under each option icon",
+        "mood": "Professional, didactic, structured, neutral business",
+        "technical_directives": (
+            "1280x480px aspect (cinematic banner). SVG-friendly clean lines and flat fills. No raster textures. "
+            "Visual coherence with lesson 3.1 hero (same color palette, same isometric style, same line weight)."
+        ),
+        "negative_prompt": (
+            "no people, no faces, no realistic photo textures, no shadow gradients, no text labels (added in "
+            "HTML), no IBM logos, no Maximo logos, no trademarks, no 3D render look, no skeuomorphism, "
+            "no neon glows, no chromatic aberration"
+        ),
+        "references": (
+            "IBM Docs Organizations Application https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=organizations-overview ; "
+            "lesson 3.1 hero (visual coherence) ; Stripe Press infographics ; Linear.app marketing"
+        ),
+        "priority": "P1",
+        "notes": (
+            "Hero image for lesson 3.2. The dual branch (Org-level vs Site-level) must be visually distinct "
+            "via color coding (amber vs teal). Site cubes at bottom-right reinforce that Site-level options "
+            "can vary between sites. Match the visual language of lesson 3.1 hero for series coherence."
         ),
     },
 ]
