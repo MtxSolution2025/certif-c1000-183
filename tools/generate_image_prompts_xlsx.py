@@ -197,6 +197,59 @@ PROMPTS = [
             "silhouette generic — no faces, no ethnicity markers."
         ),
     },
+    {
+        "lesson_id": "c1000-183-3-4",
+        "image_path": "assets/illustrations/lesson-c1000-183-3-4.svg",
+        "figure_type": "hero",
+        "title_fr": "Calendars centraux + 5 modules consumers",
+        "subject": (
+            "Isometric hub-and-spoke diagram showing the IBM Maximo Manage Calendars application as a "
+            "central hub (clock/calendar icon with working hours grid visible) with 5 spokes radiating "
+            "outward to consumer modules: Labor (worker silhouette), Preventive Maintenance (wrench + "
+            "calendar), SLA (stopwatch), Escalation (warning bell), Scheduler (Gantt chart). Each spoke "
+            "is a labeled arrow showing the FK reference (CALNUM or SHIFTNUM). Background subtly hints "
+            "at the working time pattern (small grid of cells, some highlighted as working, some grayed "
+            "as non-working including a holiday marker)."
+        ),
+        "style": (
+            "Clean technical isometric illustration matching the C1000-183 series visual language. "
+            "Vector flat with soft depth shading. Stripe Press / Linear marketing infographic aesthetic."
+        ),
+        "composition": (
+            "Center: large Calendars hub icon (amber tint) with visible 7-day grid showing some cells "
+            "as working (teal) and some as non-working (gray). 5 arrows radiating to 5 consumer module "
+            "icons positioned at clock-position 11-12-1-2-4 around the hub. Small FK labels on each arrow "
+            "(CALNUM, SHIFTNUM). Subtle topographic line pattern background at 5% opacity."
+        ),
+        "color_palette": (
+            "Calendars hub amber #F59E0B (Org-level color from lesson 3.2), consumer modules teal "
+            "#1D9E75 (Site-level color), arrows slate gray #475569, working cells teal #1D9E75, "
+            "non-working cells light gray #CBD5E1, holiday marker red #EF4444 hint, white background, "
+            "topographic pattern at 5% alpha."
+        ),
+        "lighting": "Soft directional from top-left, gentle ambient occlusion under hub and modules",
+        "mood": "Professional, didactic, structured, neutral business",
+        "technical_directives": (
+            "1280x480px aspect (cinematic banner). SVG-friendly clean lines and flat fills. Visual "
+            "coherence with lessons 3.1, 3.2, 3.3 hero (same color system, same isometric perspective)."
+        ),
+        "negative_prompt": (
+            "no realistic faces, no detailed human features, no realistic photo textures, no shadow "
+            "gradients, no text labels (added in HTML), no IBM logos, no Maximo logos, no trademarks, "
+            "no 3D render look, no skeuomorphism, no neon glows"
+        ),
+        "references": (
+            "IBM Docs Calendars https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-creating ; "
+            "lessons 3.1-3.3 hero (visual coherence) ; Stripe Press infographics"
+        ),
+        "priority": "P1",
+        "notes": (
+            "Hero image for lesson 3.4. The hub-and-spoke pattern is critical — viewers must immediately "
+            "grasp that Calendars is the central source of truth and 5 modules consume it. Color the hub "
+            "in amber (Org-level / structural) and the consumers in teal (operational / Site-level) for "
+            "visual coherence with lesson 3.2."
+        ),
+    },
 ]
 
 

@@ -4055,25 +4055,139 @@ flowchart LR
 <!-- 3.4 -->
 <section class="lesson" id="lesson-3-4">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.4</div>
-  <div class="lesson-header"><h1>Create and manage Calendars and Shifts</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1 question</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer les Calendars et Shifts</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1 question</span>
+      <span class="meta-pill">Scheduling</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-4.svg" alt="Illustration de la leçon 3.4 — Calendars centraux consommés par 5 modules (Labor, PM, SLA, Escalation, Scheduler)" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-4" id="lt-3-4-c" class="lt-course" checked>
     <input type="radio" name="lt-3-4" id="lt-3-4-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-4-c">📚 Leçon</label><label for="lt-3-4-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-4-c">📚 Leçon</label><label for="lt-3-4-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Identify where calendars can be used</li>
-          <li>Identify where availability can be modified</li>
+          <li>Identifier où les Calendars peuvent être utilisés (consumers : Labor, PM, SLA, Escalation, Scheduler).</li>
+          <li>Identifier où la disponibilité (availability) peut être modifiée — exclusivement dans l'app Calendars.</li>
+          <li>Décrire la relation entre Calendar (cadre temporel global) et Shifts (créneaux quotidiens).</li>
+          <li>Décrire comment les non-working time / holidays sont définis et propagés à tous les consumers.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Calendars</strong> used by: <strong>Labor, SLA, PM, Escalation, Scheduler</strong></li>
-          <li><strong>Availability</strong> modified in the Calendars app (non-working time, holidays)</li>
-          <li>Shifts: working hours within the day</li>
+          <li><strong>Centralisation</strong> — Calendars est l'unique point d'édition de la disponibilité temporelle. Tous les modules consument ces records sans logique calendar interne propre.</li>
+          <li><strong>5 consumers principaux</strong> — <code>Labor</code> (availability per labor), <code>Preventive Maintenance</code> (frequency calculation, skip non-working), <code>SLA</code> (elapsed time exclut non-working), <code>Escalation</code> (delay calc), <code>Scheduler</code> (planning et resource leveling).</li>
+          <li><strong>Calendar vs Shift</strong> — Calendar = cadre global (start date, end date, working pattern). Shift = créneau horaire au sein d'un jour (ex: 8h-17h, ou nuit 22h-6h).</li>
+          <li><strong>Work Periods</strong> — combinaison Calendar + Shift appliquée à des dates spécifiques. Permet override (jour particulier en non-working).</li>
+          <li><strong>Non-working Time</strong> — actions Select Action dans Calendars app pour marquer holidays, fermetures, jours spéciaux.</li>
+          <li><strong>Apply / Define Shifts</strong> — actions Calendars app pour créer ou propager les shifts sur le calendar.</li>
+          <li><strong>Site-scoped</strong> — Calendars sont créés au niveau Site (table CALENDAR avec ORGID + SITEID).</li>
+          <li><strong>1 Org peut avoir N calendars</strong> — Operations 24/7 + Admin 8h-17h + Security 24/7 différents simultanément.</li>
         </ul></div>
+
+        <h2>📐 Architecture des consumers de Calendar</h2>
+        <p>Les Calendars Maximo agissent comme une <strong>source de vérité unique</strong> pour la disponibilité temporelle. Chaque module qui a besoin de connaître les heures ouvrées / non-ouvrées (PM scheduling, SLA countdown, Labor availability, Escalation delays, Scheduler resource leveling) référence un Calendar via une FK et délègue tout le calcul horaire à la logique centrale.</p>
+        <p>Cette centralisation évite la duplication : on n'a pas à mettre à jour chaque PM, chaque SLA, chaque Labor record quand un nouveau jour férié est ajouté. On modifie le Calendar une fois, et tous les consumers respectent automatiquement le changement à la prochaine évaluation.</p>
+
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-4-consumers">
+          <pre class="mermaid" data-mermaid-src="
+graph LR
+    C[Calendars app<br/>source de vérité<br/>working time + holidays]:::cal
+    C --&gt; L[Labor<br/>availability par labor]:::cons
+    C --&gt; P[Preventive Maintenance<br/>frequency skip non-working]:::cons
+    C --&gt; S[SLA<br/>elapsed time exclut non-working]:::cons
+    C --&gt; E[Escalation<br/>delay calculation]:::cons
+    C --&gt; SC[Scheduler<br/>resource leveling et planning]:::cons
+    classDef cal fill:#FEF3C7,stroke:#F59E0B,stroke-width:3px,color:#0F172A
+    classDef cons fill:#D1FAE5,stroke:#1D9E75,stroke-width:2px,color:#0F172A
+"></pre>
+          <figcaption>Pattern « source de vérité unique » : Calendars centralise les working hours et non-working time, 5 modules y réfèrent. Modification du Calendar = mise à jour automatique pour tous les consumers à la prochaine évaluation. Cette architecture est cohérente avec les principes DDD (Single Source of Truth).</figcaption>
+        </figure>
+
+        <h2>📊 Détail des consumers — où le Calendar est référencé</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-4-consumers-detail">
+          <table class="compare-table">
+            <caption>Les 5 consumers principaux des Calendars Maximo</caption>
+            <thead>
+              <tr>
+                <th>Consumer</th>
+                <th>Champ FK</th>
+                <th>Effet de référencement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Labor</code></td>
+                <td><code>LABOR.CALNUM</code></td>
+                <td>Availability calculée pour assignation WO</td>
+              </tr>
+              <tr>
+                <td><code>Preventive Maintenance</code></td>
+                <td><code>PM.SHIFTNUM</code></td>
+                <td>Skip non-working days lors génération WO</td>
+              </tr>
+              <tr>
+                <td><code>SLA</code></td>
+                <td><code>SLA.CALNUM</code></td>
+                <td>Elapsed time countdown exclut non-working</td>
+              </tr>
+              <tr>
+                <td><code>Escalation</code></td>
+                <td><code>ESCALATION.CALNUM</code></td>
+                <td>Delay calculation pour notifications</td>
+              </tr>
+              <tr>
+                <td><code>Scheduler</code></td>
+                <td><code>SCHEDPROJECT.CALNUM</code></td>
+                <td>Resource leveling et capacity planning</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Chaque consumer a un champ FK propre vers le Calendar utilisé. Plusieurs consumers peuvent partager le même Calendar (ex: Labor « MAINT-CREW » + PM « MAINT-CREW » sur même horaire). La séparation des FK permet aux différents modules d'avoir des Calendars distincts si nécessaire.</figcaption>
+        </figure>
+
+        <h2>🏗️ Calendar vs Shift vs Work Period</h2>
+        <p>3 entités complémentaires définissent la disponibilité dans Maximo :</p>
+        <ul>
+          <li><strong>Calendar</strong> — cadre global (CALNUM, start date, end date, description, organization). Stockage : table <code>CALENDAR</code>.</li>
+          <li><strong>Shift</strong> — créneau horaire récurrent au sein d'un jour (SHIFTNUM, start time, end time, days of week). Ex: « DAY-SHIFT » 8h-17h Mon-Fri ; « NIGHT-SHIFT » 22h-6h tous les jours. Stockage : table <code>SHIFT</code>.</li>
+          <li><strong>Work Period</strong> — instance d'un Shift appliqué à un Calendar pour des dates spécifiques. Permet override : un Shift normal mais une date qui devient non-working. Stockage : table <code>WORKPERIOD</code>.</li>
+        </ul>
+        <p>Mécanique : on crée d'abord le Calendar (cadre), on définit ensuite les Shifts (templates horaires), puis on les applique au Calendar via Apply Shifts pour générer les Work Periods sur la période voulue. Les Holidays se définissent comme Work Periods avec « Entire day non-working ».</p>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 4 confusions fréquentes</strong> sur les Calendars à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — chercher la modification de disponibilité dans Labor app ou PM app. Faux : ces apps <em>consument</em> les Calendars mais ne permettent pas l'édition. Tout passe par <code>Calendars</code> app.</li>
+            <li><strong>Piège 2</strong> — penser que Database Configuration ou Application Designer gère les Calendars. Faux : ces apps gèrent le schéma et l'UI, jamais les données métier comme les calendars.</li>
+            <li><strong>Piège 3</strong> — confondre Calendar et Shift. Le Calendar est le <em>cadre temporel</em>, le Shift est le <em>créneau horaire</em>. Un Calendar contient ≥1 Shifts appliqués via Work Periods.</li>
+            <li><strong>Piège 4</strong> — penser que les non-working days sont au niveau Organization. Faux : Calendars sont Site-scoped (CALENDAR a ORGID + SITEID), permettant des calendars différents par Site.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quels sont les 5 modules consumers principaux de Calendars dans Maximo ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Labor</strong> (availability), <strong>Preventive Maintenance</strong> (frequency calculation), <strong>SLA</strong> (elapsed time), <strong>Escalation</strong> (delay calc), <strong>Scheduler</strong> (resource leveling).</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Où marque-t-on le 25 décembre comme non-working day ?</p>
+          <details><summary>Afficher la réponse</summary><p><code>Calendars</code> app &gt; ouvrir le calendar concerné &gt; Select Action &gt; <em>Non-working Time</em> &gt; ajouter date 25 décembre &gt; cocher Entire day non-working &gt; Save. Tous les consumers du calendar respecteront automatiquement à la prochaine évaluation.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quelle est la différence entre Calendar, Shift et Work Period ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Calendar</strong> = cadre global (start, end, description). <strong>Shift</strong> = créneau horaire récurrent (8h-17h Mon-Fri). <strong>Work Period</strong> = instance d'un Shift appliqué au Calendar pour dates spécifiques (avec possible override en non-working).</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-4-140" data-lesson="3-4" data-mode="multi" data-correct="C,D">
   <div class="mcq-head">
@@ -4091,14 +4205,48 @@ flowchart LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C, D</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D1</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D9</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C, D</p>
-    <p><strong>Pourquoi C, D</strong> — Les Calendars dans Maximo Manage sont des records centraux (Calendars app) qui définissent les shifts, working hours et non-working days. Ils sont consommés comme <em>input scheduling logic</em> par plusieurs modules : (1) <strong>Preventive Maintenance (PM)</strong> — quand le PMWoGenCronTask calcule la prochaine génération, il saute les non-working days définis sur le calendar associé à l'asset/location pour éviter des WOs un jour férié ; frequency extended mode tient compte uniquement des working days, (2) <strong>SLA (Service Level Agreements)</strong> — l'elapsed time countdown (response/resolution) exclut les non-working hours si le SLA est configuré "Applies To Calendar" sur un calendar business hours (ex: 8h-17h Mon-Fri), un ticket créé vendredi 16h50 expirant "dans 2h" se résout en fait lundi 9h50. D'autres consumers : Labor availability, Escalations, Scheduler.</p>
-    <p><strong>Pourquoi A est faux</strong> — D1 legacy : Database Configuration gère les attributs de table (types, longueurs, validation ALN), aucun lien avec les calendars.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : Application Designer gère les signature options UI, pas les calendars.</p>
-    <p><strong>Why E wrong</strong> — D9 near-synonym : Domains valide les value lists (ALN, Numeric), jamais les dates calendar.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C, D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.4 demande explicitement « Identify where calendars can be used ». IBM teste la mémorisation des 5 consumers principaux et la distinction avec d'autres apps adjacentes (DB Config, App Designer, Domains) qui semblent crédibles mais n'utilisent pas les Calendars.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le pattern « Single Source of Truth » est appliqué aux Calendars : une seule app centralise la définition de la disponibilité temporelle, et N modules y réfèrent via FK. Évite la duplication et garantit la cohérence. Les apps de configuration (DB Config, Application Designer, Domains) opèrent sur le schéma et l'UI, pas sur les données métier temporelles.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — PM : <code>PM.SHIFTNUM</code> FK vers Calendar. Quand <code>PMWoGenCronTask</code> calcule la prochaine génération, il évalue l'expression « due date + frequency » et skip les dates non-working selon le Shift associé. SLA : <code>SLA.CALNUM</code> FK. L'elapsed time countdown (response/resolution times) exclut les non-working hours si SLA configuré « Applies To Calendar ». Si SLA = 2h business hours, ticket créé vendredi 16h50 → expire lundi 9h50 (skip weekend).</p>
+
+      <p><strong>Exemple chiffré</strong> — PM 30 jours : créé 1er janvier, prochaine génération calculée à 31 janvier. Si le calendar marque 24-26 décembre comme non-working (3 jours), la prochaine génération est repoussée au 3 février (31 jan + 3 jours skip). SLA 4h business hours sur calendar 8h-17h Mon-Fri : ticket créé jeudi 15h, deadline serait normalement à 19h (hors business hours), donc deadline réelle = vendredi 11h (4h ouvrées restantes : jeudi 15h-17h = 2h + vendredi 8h-10h = 2h).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un standard téléphonique business hours : les promesses de rappel (« sous 2h ») excluent les heures de fermeture. Le calendar central définit les heures ouvrées, et tous les engagements (PM, SLA, Labor) le respectent automatiquement.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Database Configuration gère les attributs de table (types, longueurs, validation), aucun lien avec calendars. <strong>Pattern D1 Hérité</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Application Designer gère les layouts UI et signature options, pas les calendars. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Domains valide les value lists (ALN, Numeric, Crossover, Synonym), jamais les dates. <strong>Pattern D9 Quasi-synonyme</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>5 consumers</strong> : Labor, PM, SLA, Escalation, Scheduler.</li>
+          <li><strong>FK fields</strong> : <code>CALNUM</code> ou <code>SHIFTNUM</code> selon le module.</li>
+          <li><strong>Pattern</strong> : Single Source of Truth, modification centralisée.</li>
+          <li><strong>Non-consumers</strong> : DB Config, Application Designer, Domains, System Properties.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>5 consumers : Labor + PM + SLA + Escalation + Scheduler.</li>
+          <li>1 modification Calendar = update auto pour tous.</li>
+          <li>Pas DB Config, pas App Designer, pas Domains.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Calendars overview : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-creating" target="_blank" rel="noopener">PM + SLA consumers</a></li>
-      <li>Maximo Secrets — Calendars in Maximo : <a href="https://maximosecrets.com/2020/09/05/calendars/" target="_blank" rel="noopener">Scheduling consumers</a></li>
+      <li>STU C1000-183 sub-objective 3.4 — « Identify where calendars can be used »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Calendar consumers list »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-creating" target="_blank" rel="noopener">Calendars — PM + SLA + Labor consumers</a></li>
     </ul></div>
   </div>
 </div>
@@ -4118,23 +4266,325 @@ flowchart LR
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A</p>
-    <p><strong>Pourquoi A (correct)</strong> — Marquer une date non-working (comme 25 décembre) se fait <strong>exclusivement dans l'application Calendars</strong>, via l'action <em>Define/Apply Shifts</em> ou <em>Non-working Time</em> du menu Select Action. Étapes : ouvrir le calendar concerné (ex: "Maintenance Crew Main Calendar"), Select Action → <em>Non-working Time</em>, ajouter une entrée avec date 2024-12-25, cocher "Entire day non-working", sauvegarder. À partir de ce moment, tous les consumers du calendar (PMs, SLAs, Labor availability, Scheduler) respectent automatiquement cette journée fermée. Les PMs scheduleés le 25 décembre seront repoussés au jour working suivant, les labor assignments ne prévoient personne, les SLAs excluent cette journée de leur countdown. Principe Maximo : centralisation — un seul point de mise à jour pour tout le calendar-aware logic.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : l'app Labor <em>consomme</em> les calendars (via Labor → Calendar assignment) mais ne permet pas d'éditer les non-working days ; lecture seule sur ce champ.</p>
-    <p><strong>Pourquoi C est faux</strong> — D2 invented : aucune action "Seasonal Dates" n'existe dans PM — distracteur fabriqué pour piéger les candidats qui imaginent du per-PM tuning.</p>
-    <p><strong>Pourquoi D est faux</strong> — D3 wrong scope : les non-working days vivent sur le Calendar record, pas au niveau Organization — une Org peut avoir N calendars différents (ops, admin, security 24/7) avec des non-working days distincts.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.4 demande explicitement « Identify where availability can be modified ». IBM teste la centralisation : tout passe par <code>Calendars</code> app, pas par les apps consumers (Labor, PM, etc.).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le principe Single Source of Truth Maximo place toute édition de availability dans une seule app : Calendars. Les autres apps consument mais n'éditent pas. Cette séparation des responsabilités évite les incohérences et permet aux admins de centraliser la gestion des holidays.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Calendars</code> app &gt; ouvrir le calendar concerné (ex: « MAINT-CREW-MAIN ») &gt; Select Action &gt; <em>Non-working Time</em> &gt; ajouter row avec date 2024-12-25 &gt; cocher Entire day non-working &gt; Save. Stockage : nouvelle row dans <code>WORKPERIOD</code> avec NONWORKING = Y. À la prochaine évaluation des consumers (PMWoGenCronTask, SLA timer, etc.), la journée est respectée automatiquement.</p>
+
+      <p><strong>Exemple chiffré</strong> — Marie ajoute le 25 décembre comme non-working sur le calendar MAINT-CREW à T+0. À T+1h, le PMWoGenCronTask s'exécute pour générer les WO du lendemain : il voit que le 25 décembre est non-working, repousse les 12 PM concernés au 26. Aucun nouveau WO ne tombe sur Noël. Marie n'a rien dû modifier sur les 12 PMs individuellement.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la fermeture annuelle d'une entreprise : on l'inscrit dans le calendrier RH une fois, et tous les services (paie, RH, projets, planning) la respectent automatiquement. Personne ne modifie individuellement les 200 plannings.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Labor app consume les calendars (FK <code>LABOR.CALNUM</code>) mais ne permet pas l'édition. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Aucune action « Seasonal Dates » n'existe dans PM. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Les non-working days vivent sur le Calendar record (Site-scoped), pas au niveau Organization. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>App d'édition</strong> : <code>Calendars</code> exclusivement.</li>
+          <li><strong>Action</strong> : Select Action &gt; Non-working Time.</li>
+          <li><strong>Stockage</strong> : table <code>WORKPERIOD</code> avec NONWORKING = Y.</li>
+          <li><strong>Propagation</strong> : automatique à tous les consumers à la prochaine évaluation.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Édition non-working = Calendars app uniquement.</li>
+          <li>Single Source of Truth principle.</li>
+          <li>Action Select Action &gt; Non-working Time.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Defining shifts and non-working : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-defining-shifts" target="_blank" rel="noopener">Calendars app</a></li>
-      <li>Maximo Secrets — Non-working days : <a href="https://maximosecrets.com/2020/09/05/calendars/" target="_blank" rel="noopener">Centralized calendar edit</a></li>
+      <li>STU C1000-183 sub-objective 3.4 — « Identify where availability can be modified »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Defining non-working time »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-defining-shifts" target="_blank" rel="noopener">Calendars — Non-working Time</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-4-162" data-lesson="3-4" data-mode="single" data-correct="C">
+  <div class="mcq-head">
+    <span class="mcq-num">Q17 · Sous-rubrique 3.4 · Type 1 · Calendar vs Shift</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant doit modéliser une équipe de techniciens travaillant en 3×8 (3 shifts de 8h sur 24h) du lundi au vendredi.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle est la relation correcte entre Calendar et Shifts dans cette modélisation ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-4-162-A"><input type="radio" name="mcq-3-4-162" value="A" id="mcq-3-4-162-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">3 Calendars distincts (un par shift) sans Shifts internes</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-4-162-B"><input type="radio" name="mcq-3-4-162" value="B" id="mcq-3-4-162-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">1 Shift unique 0h-24h avec Calendar comme override</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="mcq-3-4-162-C"><input type="radio" name="mcq-3-4-162" value="C" id="mcq-3-4-162-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">1 Calendar avec 3 Shifts (DAY 6-14, EVE 14-22, NIGHT 22-6) appliqués via Apply Shifts</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-4-162-D"><input type="radio" name="mcq-3-4-162" value="D" id="mcq-3-4-162-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">3 Shifts indépendants sans Calendar parent</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D10 Procédure-plausible</span><span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D7 Inexistant</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la maîtrise du modèle Calendar / Shift / Work Period. Plusieurs anti-patterns existent (multi-Calendar, Shift sans Calendar) qui semblent logiques mais ne respectent pas l'architecture Maximo.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le modèle correct : 1 Calendar = cadre temporel global ; N Shifts = créneaux horaires templates ; les Shifts sont appliqués au Calendar via Apply Shifts pour générer les Work Periods. Pour un 3×8, on crée 1 Calendar « 24x5 » avec 3 Shifts (DAY, EVE, NIGHT). Chaque Shift a son own time range et days-of-week pattern. Ensuite Apply Shifts génère les Work Periods sur la période voulue.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : (1) <code>Calendars</code> app &gt; New Calendar « MAINT-3X8 » avec start date + end date, (2) tab <em>Shifts</em> &gt; New &gt; saisir DAY (06-14, Mon-Fri), New &gt; EVE (14-22, Mon-Fri), New &gt; NIGHT (22-06, Mon-Fri), (3) Select Action &gt; Apply Shifts pour générer les Work Periods sur les 12 prochains mois.</p>
+
+      <p><strong>Exemple chiffré</strong> — Calendar MAINT-3X8 : 1 record CALENDAR + 3 records SHIFT + ~780 records WORKPERIOD (260 working days × 3 shifts). Total = 784 lignes pour modéliser 1 année complète. Les techniciens DAY référencent SHIFTNUM=DAY, etc. Le Scheduler peut alors leveler les ressources entre les 3 shifts sans saturer un seul créneau.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un planning hôpital : 1 calendrier global de service, 3 équipes (matin / après-midi / nuit) avec leurs créneaux horaires propres, des plannings hebdomadaires qui combinent calendrier + équipe.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — 3 Calendars sans Shifts est over-engineering, multiplie la maintenance. <strong>Pattern D10 Procédure-plausible</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — 1 Shift 0h-24h ne représente pas 3 équipes distinctes. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Shifts sans Calendar parent impossible — Shifts ont FK <code>SHIFT.CALNUM</code>. <strong>Pattern D7 Inexistant</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>1 Calendar + N Shifts</strong> = pattern standard.</li>
+          <li><strong>Shifts</strong> = templates horaires.</li>
+          <li><strong>Work Periods</strong> = instances générées via Apply Shifts.</li>
+          <li><strong>FK</strong> : SHIFT.CALNUM, WORKPERIOD.CALNUM + WORKPERIOD.SHIFTNUM.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Calendar = cadre, Shift = créneau, Work Period = instance.</li>
+          <li>3×8 = 1 Calendar + 3 Shifts.</li>
+          <li>Apply Shifts génère les Work Periods.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.4 — « Calendar / Shift / Work Period model »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Apply Shifts to Calendar »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-defining-shifts" target="_blank" rel="noopener">Defining Shifts</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-4-163" data-lesson="3-4" data-mode="single" data-correct="A">
+  <div class="mcq-head">
+    <span class="mcq-num">Q18 · Sous-rubrique 3.4 · Type 1 · Calendar Site-scoped</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant déploie Maximo dans une Org avec 3 Sites : NYC (production 24/7), DAL (admin 8h-17h), PHX (security 24/7).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Combien de Calendars distincts faut-il créer minimum ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="mcq-3-4-163-A"><input type="radio" name="mcq-3-4-163" value="A" id="mcq-3-4-163-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">3 Calendars distincts (1 par Site avec son working pattern propre)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-4-163-B"><input type="radio" name="mcq-3-4-163" value="B" id="mcq-3-4-163-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">1 Calendar global pour les 3 Sites avec overrides per Site</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-4-163-C"><input type="radio" name="mcq-3-4-163" value="C" id="mcq-3-4-163-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">2 Calendars (24/7 + 8h-17h) partagés entre les 3 Sites</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-4-163-D"><input type="radio" name="mcq-3-4-163" value="D" id="mcq-3-4-163-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">9 Calendars (3 patterns × 3 Sites en cascade)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D4 Demi-vérité</span><span class="mcq-dpattern-chip">D10 Procédure-plausible</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Tester la portée Site-scoped des Calendars (CALENDAR.ORGID + CALENDAR.SITEID). Plusieurs distracteurs simulent des architectures hiérarchiques inexistantes dans Maximo.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Les Calendars sont Site-scoped : la table <code>CALENDAR</code> a colonnes ORGID + SITEID NOT NULL. Pas de Calendar « global » qui descendrait avec overrides — chaque Site a ses propres Calendars indépendants. Cette granularité reflète la réalité métier : différents Sites ont des working patterns distincts.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Calendars</code> app &gt; New Calendar &gt; saisir Site (NYC) + Description (« 24/7 PROD ») + start/end dates &gt; Save. Répéter pour DAL avec working pattern 8h-17h Mon-Fri. Répéter pour PHX 24/7 SECURITY. Total = 3 records dans <code>CALENDAR</code> avec SITEID distincts.</p>
+
+      <p><strong>Exemple chiffré</strong> — Site NYC : Calendar PROD-24x7, 1 Shift NIGHT (24h × 7 jours), Work Periods 8 760 (= 24×365). Site DAL : Calendar ADMIN-8x5, 1 Shift DAY (8h × Mon-Fri), Work Periods 2 080 (= 8×260). Site PHX : Calendar SEC-24x7. Total : 3 Calendars + 11 080 Work Periods sur 1 année. Indépendance complète.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les horaires de service public : la mairie de Paris (8h-17h) et le commissariat (24/7) ont des calendriers totalement indépendants — pas hérités d'un « calendrier France » global.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Aucun Calendar global avec overrides Site dans Maximo. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Calendars sont Site-scoped, ne peuvent pas être partagés entre Sites distincts. <strong>Pattern D4 Demi-vérité</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Aucune cascade hiérarchique entre Calendars. <strong>Pattern D10 Procédure-plausible</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Site-scoped</strong> : CALENDAR.ORGID + CALENDAR.SITEID NOT NULL.</li>
+          <li><strong>Pas de hiérarchie</strong> entre Calendars (modèle plat par Site).</li>
+          <li><strong>1 Site = N Calendars possibles</strong> (different patterns).</li>
+          <li><strong>1 Calendar = 1 Site</strong> (pas de partage).</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>3 Sites avec patterns différents = 3 Calendars distincts minimum.</li>
+          <li>Pas de Calendar global hérité.</li>
+          <li>Chaque Site gère ses Calendars indépendamment.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.4 — « Calendar storage level »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Calendars Site-scoped »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-creating" target="_blank" rel="noopener">Calendars — creating per Site</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-4-164" data-lesson="3-4" data-mode="multi" data-correct="A,C,D">
+  <div class="mcq-head">
+    <span class="mcq-num">Q19 · Sous-rubrique 3.4 · Type 3 · Multi-consumer impact</span>
+    <span class="mcq-type-chip">T3 · Choix de 3</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un admin ajoute 1er janvier comme jour férié sur le calendar « OPS-CREW » utilisé par l'équipe de maintenance.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelles 3 conséquences sont automatiquement appliquées par Maximo ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="mcq-3-4-164-A"><input type="checkbox" name="mcq-3-4-164" value="A" id="mcq-3-4-164-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Les PMs scheduledés sur OPS-CREW pour le 1er janvier sont repoussés au prochain working day</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-4-164-B"><input type="checkbox" name="mcq-3-4-164" value="B" id="mcq-3-4-164-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Les WO existants sur le 1er janvier sont automatiquement supprimés</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="mcq-3-4-164-C"><input type="checkbox" name="mcq-3-4-164" value="C" id="mcq-3-4-164-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Les Labor de l'équipe ne sont pas considérés disponibles pour assignation le 1er janvier</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="1"><label class="mcq-label" for="mcq-3-4-164-D"><input type="checkbox" name="mcq-3-4-164" value="D" id="mcq-3-4-164-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Les SLAs configurés sur OPS-CREW excluent le 1er janvier de leur countdown elapsed time</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="E" data-correct="0"><label class="mcq-label" for="mcq-3-4-164-E"><input type="checkbox" name="mcq-3-4-164" value="E" id="mcq-3-4-164-E" class="mcq-input"><span class="mcq-letter">E</span><span class="mcq-option-text">Les emails de notification sont mis en pause pour 24h</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>A, C, D</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, C, D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Tester la propagation automatique des modifications Calendar à tous les consumers. Vérifie aussi la connaissance des actions qui ne sont PAS gérées par Calendars (suppression de WO existants, notifications).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le modification d'un Calendar impacte les <em>évaluations futures</em> par les consumers : PMs (génération future), Labor (availability future), SLA (countdown elapsed time). Mais le Calendar ne touche pas aux records existants déjà créés (WO, notifications) — c'est la responsabilité d'autres mécanismes (workflow, scheduler manual reschedule).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — A : <code>PMWoGenCronTask</code> évalue PMs.NEXTDUEDATE et skip 1er jan. C : Scheduler queries <code>LABOR</code> avec join <code>WORKPERIOD</code> pour availability — exclut Labor lié à Calendar OPS-CREW pour cette date. D : SLA timer queries <code>WORKPERIOD</code> et exclut hours non-working du countdown.</p>
+
+      <p><strong>Exemple chiffré</strong> — Calendar OPS-CREW : 5 PMs prévus 1er jan, 12 Labor records, 8 SLAs actifs. Ajout du holiday : (1) 5 PMs repoussés au 2 jan automatiquement, (2) 12 Labor unavailable pour assignation 1 jan, (3) 8 SLAs avec countdowns ajustés (-24h sur deadlines en cours). Total : 25 records affectés sans intervention manuelle.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Marquer un jour férié national dans le calendrier RH : tous les services adaptent leurs plannings, mais les rendez-vous déjà fixés ce jour-là ne sont pas annulés automatiquement (l'humain doit les replanifier).</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Maximo ne supprime jamais les WO existants automatiquement. Ils restent au statut courant ; un planner doit les rescheduler manuellement. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Les emails / notifications passent par Communication Templates et Cron Tasks indépendants, pas par Calendars. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Modifications affectent</strong> : PM future generation, Labor availability future, SLA countdowns.</li>
+          <li><strong>Modifications n'affectent pas</strong> : WO existants, notifications.</li>
+          <li><strong>Évaluation</strong> à chaque cron task / lookup, pas en push.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Calendar holiday = PM repoussés + Labor non disponibles + SLA timer ajusté.</li>
+          <li>Pas suppression auto WO ni mute emails.</li>
+          <li>Évaluation lazy à la prochaine query.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.4 — « Calendar propagation effects »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Holiday handling and consumers »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-creating" target="_blank" rel="noopener">Calendars — propagation behavior</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-4-165" data-lesson="3-4" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q20 · Sous-rubrique 3.4 · Type 1 · Apply Shifts action</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un consultant a créé un Calendar et 2 Shifts (DAY 8-17, EVE 17-2) mais le Scheduler ne voit aucun working time disponible.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quelle action manque-t-il pour générer les Work Periods utilisables ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-4-165-A"><input type="radio" name="mcq-3-4-165" value="A" id="mcq-3-4-165-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Activer le Calendar via flag Active</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-4-165-B"><input type="radio" name="mcq-3-4-165" value="B" id="mcq-3-4-165-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Exécuter Select Action &gt; Apply Shifts pour propager les Shifts en Work Periods</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-4-165-C"><input type="radio" name="mcq-3-4-165" value="C" id="mcq-3-4-165-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Lancer le Cron Task <code>CalendarRebuild</code></span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-4-165-D"><input type="radio" name="mcq-3-4-165" value="D" id="mcq-3-4-165-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Synchroniser le Calendar via Integration Framework</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D7 Inexistant</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Tester la connaissance pratique du workflow Calendar : créer Calendar + Shifts ne suffit pas, il faut Apply Shifts pour générer les Work Periods que les consumers évalueront.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le modèle Maximo : Shifts sont des templates abstraits ; ils ne deviennent opérationnels qu'après Apply Shifts qui matérialise les instances concrètes (Work Periods) sur les dates voulues. Sans cette étape, les consumers (Scheduler, PM, SLA) voient un Calendar avec 0 working time.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Calendars</code> app &gt; ouvrir le Calendar &gt; vérifier Shifts définis &gt; Select Action &gt; <em>Apply Shifts</em> &gt; saisir start date + end date (typiquement 12 mois forward) &gt; Save. Maximo génère ~260 × N_shifts Work Periods (260 working days × N shifts) dans la table <code>WORKPERIOD</code>. Les consumers peuvent maintenant query.</p>
+
+      <p><strong>Exemple chiffré</strong> — Calendar avec 2 Shifts (DAY 8-17, EVE 17-2). Sans Apply Shifts : 0 row WORKPERIOD → Scheduler voit zéro availability. Avec Apply Shifts pour 1 année : ~520 Work Periods générés (260 jours × 2 shifts), Scheduler voit 4 160h working time disponibles (520 × 8h).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme avoir un planning vierge avec des templates d'équipe mais sans avoir copié-collé les semaines récurrentes — le calendrier reste vide jusqu'à ce que l'utilisateur fasse l'opération de propagation.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Pas de flag Active à cocher pour activer un Calendar. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Aucun Cron Task <code>CalendarRebuild</code> n'existe. <strong>Pattern D7 Inexistant</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Integration Framework synchronise data inter-systèmes, pas la logique interne Calendar. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Apply Shifts</strong> : action Select Action de Calendars app.</li>
+          <li><strong>Effet</strong> : génère Work Periods de start_date à end_date.</li>
+          <li><strong>Sans Apply</strong> : Calendar inutilisable (0 working time).</li>
+          <li><strong>Refresh</strong> : Apply Shifts à nouveau pour étendre la période.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Calendar + Shifts = templates → Apply Shifts → Work Periods.</li>
+          <li>Action obligatoire pour rendre le Calendar opérationnel.</li>
+          <li>Pas de Cron task ni Integration auto.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.4 — « Apply Shifts action »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Generating Work Periods »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=calendars-applying-shifts" target="_blank" rel="noopener">Apply Shifts to Calendar</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-4">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-3" class="btn-nav"><span class="dir">← Précédent</span>3.3 Security</a>
-    <a href="#lesson-3-5" class="btn-nav next"><span class="dir">Suivant →</span>3.5 Labor, Crafts, Crews</a>
+    <a href="#lesson-3-3" class="btn-nav"><span class="dir">← Précédent</span>3.3 Security Groups</a>
+    <a href="#lesson-3-5" class="btn-nav next"><span class="dir">Suivant →</span>3.5 Labor, Crafts et Crews</a>
   </div>
 </section>
 
