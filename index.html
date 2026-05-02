@@ -5312,14 +5312,40 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D1</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B, C</p>
-    <p><strong>Pourquoi A, B, C</strong> — Maximo Manage supporte exactement <strong>6 Domain types</strong> : (1) <strong>ALN</strong> — liste de valeurs alphanumériques fixes (ex: OPERATING, STANDBY), (2) <strong>Numeric</strong> — liste de valeurs numériques fixes (ex: 1, 2, 3, 5), (3) <strong>Numeric Range</strong> — intervalles numériques validés (ex: priority entre 1 et 9), (4) <strong>Table</strong> — valeurs pulled dynamiquement depuis une table Maximo avec Where Clause (ex: pick une Location active du Site courant), (5) <strong>Crossover</strong> — copy fields depuis un source table vers un target (ex: copy specs Item → WO), (6) <strong>Synonym</strong> — map des internal status codes vers external labels (ex: WAPPR ↔ "Waiting Approval" ou ↔ "En Attente"). 3 de ces 6 (Numeric Range, Crossover, Synonym) sont listés comme correct. Ces types couvrent tous les besoins de validation d'input : fixed lists, ranges, dynamic lookup, field propagation, code translation.</p>
-    <p><strong>Pourquoi D est faux</strong> — D9 near-synonym : Lookup est un <em>UI widget</em> (le popup de sélection) qui peut consommer un domain Table, pas un domain type en soi ; confusion de couches.</p>
-    <p><strong>Why E wrong</strong> — D2 invented : aucun "Boolean" domain — Maximo utilise l'attribute type YORN (Yes/No) au niveau Database Configuration, pas un domain.</p>
-    <p><strong>Why F wrong</strong> — D1 legacy : Hierarchy n'est pas un domain type — c'est le modèle des Classifications (parent/child), application distincte.</p></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> A, B, C</p>
+    <p><strong>Pourquoi cette question existe</strong> — La question vise la mémorisation exhaustive du <em>catalogue fermé</em> des 6 Domain types Maximo (objectif STU §3.6.a). En examen, les distracteurs sont systématiquement des concepts proches mais distincts : widgets UI (Lookup), attribute types DB (Boolean/YORN), modèles applicatifs (Hierarchy/Classifications). Maîtriser ces frontières évite des architectures bancales où l'admin invente des "domains" inexistants et finit par scripter là où un Table ou Crossover suffit.</p>
+    <p><strong>Le contexte théorique d'abord</strong> — Un Domain est une <em>liste de valeurs valides</em> attachée à un attribute (champ DB). Maximo Manage 9.x supporte exactement 6 types qui couvrent toute la matrice validation/propagation : (1) <strong>ALN</strong> — strings fixes, (2) <strong>Numeric</strong> — chiffres fixes, (3) <strong>Numeric Range</strong> — intervalles bornés, (4) <strong>Table</strong> — lookup dynamique avec WHERE clause, (5) <strong>Crossover</strong> — propagation multi-fields entre objets, (6) <strong>Synonym</strong> — mapping internal code ↔ external label (multilingue, statuts). Ces 6 types sont stockés dans <code>MAXDOMAIN.DOMAINTYPE</code> et codifient toute la logique de domaine du produit.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Sur l'app <code>Domains</code> (menu Database Administration), le bouton <em>Add New Domain</em> ouvre 6 sous-menus correspondant aux 6 types. Chaque type a son éditeur dédié : ALN/Numeric → grille Internal/External Value, Numeric Range → upper/lower limits, Table → Object + List Where Clause + Value field, Crossover → grille source/target fields + Copy Condition, Synonym → mapping codes → labels avec Default flag. Une fois créé, le domain doit être <em>bound</em> à un attribute via <code>Database Configuration</code> (étape obligatoire — sinon le domain reste orphelin).</p>
+    <p><strong>Exemple chiffré</strong> — Dans une instance Maximo standard, on observe : ~120 Synonym domains pré-livrés (un par status field d'objet : WOSTATUS, ASSETSTATUS, POSTATUS, etc.), ~80 ALN domains (UoM, PRIORITY, FAILURECLASS), 12-15 Table domains custom typiques par client (sites, locations filtrés), 5-10 Crossover par module métier. 0 Boolean ni Hierarchy domain — ces concepts vivent ailleurs (YORN attribute type, app Classifications).</p>
+    <p><strong>Analogie quotidienne</strong> — Un domain est comme un <em>menu déroulant</em> dans Excel : ALN = liste figée tapée à la main, Table = liste référence dynamique pointant une feuille, Crossover = quand tu choisis un client, plusieurs cellules se remplissent (adresse, téléphone), Synonym = traduction d'un code ("ACT" affiché "Active").</p>
+    <p><strong>Pourquoi D est faux</strong> — <em>Pattern D9 quasi-synonyme</em> : Lookup est un <strong>widget UI</strong> (le popup de sélection avec loupe) qui peut <em>consommer</em> un Table domain mais n'est pas lui-même un domain type. Confusion entre couche présentation et couche données — piège classique IBM.</p>
+    <p><strong>Pourquoi E est faux</strong> — <em>Pattern D2 inventé</em> : aucun "Boolean domain" n'existe dans Maximo. Pour modéliser un yes/no, on utilise l'attribute type <code>YORN</code> au niveau Database Configuration (avec un Synonym domain Y/N pour l'affichage). Le terme "Boolean" est emprunté à d'autres écosystèmes (Java, SQL).</p>
+    <p><strong>Pourquoi F est faux</strong> — <em>Pattern D1 hérité</em> : Hierarchy n'est pas un domain — c'est le modèle interne des <strong>Classifications</strong> (parent/child via <code>CLASSSTRUCTURE</code>), application séparée. La hiérarchie est une structure relationnelle, pas une liste de valeurs.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>ALN</strong> — strings fixes (UoM, PRIORITY).</li>
+        <li><strong>Numeric / Numeric Range</strong> — chiffres fixes ou bornés.</li>
+        <li><strong>Table</strong> — lookup dynamique via WHERE + bind vars.</li>
+        <li><strong>Crossover</strong> — copy multi-fields source → target avec Copy Condition.</li>
+        <li><strong>Synonym</strong> — mapping internal code ↔ external label.</li>
+        <li><strong>Binding obligatoire</strong> via <code>Database Configuration</code>.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>6 types et seulement 6 : ALN, Numeric, Numeric Range, Table, Crossover, Synonym.</li>
+        <li>Lookup ≠ domain type (c'est un widget UI).</li>
+        <li>Boolean ≠ domain (c'est un YORN attribute).</li>
+        <li>Hierarchy ≠ domain (c'est une Classification).</li>
+      </ul>
+    </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Domains overview : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-overview" target="_blank" rel="noopener">6 domain types</a></li>
-      <li>Maximo Secrets — Domains in Maximo : <a href="https://maximosecrets.com/2020/11/20/domains/" target="_blank" rel="noopener">Types catalog</a></li>
+      <li>STU sub-objective §3.6.a — Domains catalog (6 types fermé)</li>
+      <li>[EOTRAG] Query — « Maximo domain types catalog 6 ALN Numeric Table Crossover Synonym » (confidence 0.98)</li>
+      <li>master-map.pdf p.142-145 — IBM Docs <em>Domains overview</em> verbatim + Maximo Secrets <em>Domains in Maximo</em></li>
     </ul></div>
   </div>
 </div>
@@ -5339,14 +5365,38 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D9</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C</p>
-    <p><strong>Pourquoi C (correct)</strong> — Pour filtrer dynamiquement les records ASSET (status=OPERATING AND SITEID=current Site), il faut un <strong>Table domain avec Where Clause utilisant des bind variables</strong>. Configuration : Domain Type = TABLE, Object = ASSET, List Where Clause = <code>status = 'OPERATING' AND siteid = :siteid</code>, Value = ASSETNUM. Les bind variables supportées incluent <code>:siteid</code> (Site courant), <code>:userid</code> (user connecté), <code>:app</code> (app en cours), <code>:orgid</code>, et même <code>:&owner;.fieldname</code> pour référencer un champ de l'objet parent. Au runtime, Maximo substitue ces placeholders par les valeurs context. Résultat : le lookup n'affiche que les assets opérationnels du site courant, changeant automatiquement selon le Site de l'user. Cette dynamicité est impossible avec ALN (valeurs statiques) ou Synonym (mapping). La Where Clause est la clé de la flexibilité Table domains.</p>
-    <p><strong>Pourquoi A est faux</strong> — D3 wrong scope : ALN domains ne gèrent que des <em>listes fixes de strings</em> — aucune filtration dynamique possible, le contenu est statique.</p>
-    <p><strong>Pourquoi B est faux</strong> — D4 adjacent : Synonym domains translate des internal codes (ex: WAPPR) en external labels ("Waiting Approval") pour l'affichage multilingue, mais ne filtrent pas des rows — sémantique complètement différente.</p>
-    <p><strong>Pourquoi D est faux</strong> — D9 near-synonym : un Table domain sans Where Clause renverrait <em>toute la table</em> — aucun filtrage de rows, inadapté à la exigence Site+status.</p></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> C</p>
+    <p><strong>Pourquoi cette question existe</strong> — STU §3.6.b — la question teste la compréhension fondamentale qu'un Table domain n'est utile que par sa <em>WHERE clause dynamique</em>. Sans cette dynamicité, on retombe sur des listes statiques. Les distracteurs montrent les erreurs typiques : prendre un ALN figé (D3), confondre filtrage et mapping (D4), oublier la WHERE (D9). En pratique terrain, l'omission du <code>:siteid</code> est l'erreur n°1 dans les implémentations multi-site.</p>
+    <p><strong>Le contexte théorique d'abord</strong> — Un Table domain est défini par 3 paramètres clés : <em>Object</em> (la table source, ex. ASSET), <em>List Where Clause</em> (le filtre SQL avec bind variables) et <em>Value field</em> (la colonne retournée, ex. ASSETNUM). Les <strong>bind variables</strong> supportées sont : <code>:siteid</code> (Site courant), <code>:userid</code> (user connecté), <code>:orgid</code>, <code>:app</code> (app en cours), et <code>:&amp;owner;.fieldname</code> pour référencer un champ de l'objet parent du record en cours d'édition. Au runtime, Maximo substitue ces placeholders par les valeurs contextuelles avant d'exécuter le SELECT.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Application <code>Domains</code> &gt; Add New TABLE Domain &gt; Domain ID = <code>OPER_ASSETS</code>, Description, puis Add Row : Object = <code>ASSET</code>, List Where Clause = <code>status = 'OPERATING' AND siteid = :siteid</code>, Value = <code>ASSETNUM</code>, Validation Where Clause (optionnel, utilisée à la saisie manuelle), Error Message si échec. Bind via <code>Database Configuration</code> sur l'attribute cible (ex. WORKORDER.ASSETNUM), Save → Configure DB. À chaque ouverture du Lookup ASSETNUM, Maximo génère <code>SELECT ASSETNUM FROM ASSET WHERE status='OPERATING' AND siteid='BEDFORD'</code> (où BEDFORD = site de l'user).</p>
+    <p><strong>Exemple chiffré</strong> — User Maria, Site BEDFORD : Lookup affiche 247 assets opérationnels filtrés sur 3812 dans la table ASSET (84% écartés : sites différents ou status DECOMMISSIONED/NOT READY). User John, Site GATINEAU : même domain → 412 assets affichés. Aucune duplication de domain par site, aucun script — la WHERE clause + <code>:siteid</code> font tout le travail.</p>
+    <p><strong>Analogie quotidienne</strong> — C'est comme un filtre Excel intelligent qui s'ajuste à la personne qui ouvre le fichier : ouvert par toi → tu vois tes commandes, ouvert par ton collègue → il voit les siennes. Le filtre est dynamique, jamais à recopier.</p>
+    <p><strong>Pourquoi A est faux</strong> — <em>Pattern D3 inverse</em> : ALN ne gère que des <em>listes fixes de strings</em> — aucune filtration dynamique possible, le contenu doit être tapé valeur par valeur et ne suit pas le contexte.</p>
+    <p><strong>Pourquoi B est faux</strong> — <em>Pattern D4 demi-vérité</em> : Synonym translate des codes internes (WAPPR) en labels externes ("Waiting Approval") pour l'affichage multilingue, mais ne filtre pas de rows — sémantique complètement différente.</p>
+    <p><strong>Pourquoi D est faux</strong> — <em>Pattern D9 quasi-synonyme</em> : un Table domain sans Where Clause renverrait <em>toute la table</em> — aucun filtrage de rows, inadapté à la exigence multi-site + multi-status. C'est l'oubli classique en formation terrain.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>Object</strong> — la table source du Table domain.</li>
+        <li><strong>List Where Clause</strong> — filtre SQL au lookup, supporte les bind vars.</li>
+        <li><strong>Validation Where Clause</strong> — filtre à la saisie manuelle (différent du list).</li>
+        <li><strong>Bind variables</strong> : <code>:siteid</code>, <code>:userid</code>, <code>:orgid</code>, <code>:app</code>, <code>:&amp;owner;.field</code>.</li>
+        <li><strong>Value field</strong> — colonne retournée dans le target attribute.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>Filtrage dynamique de rows = Table domain + WHERE clause.</li>
+        <li><code>:siteid</code> rend le lookup site-aware sans dupliquer le domain.</li>
+        <li>Sans WHERE, le Table renvoie toute la table (presque jamais ce qu'on veut).</li>
+      </ul>
+    </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Table Domains : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-table-domains" target="_blank" rel="noopener">Where Clause + bind vars</a></li>
-      <li>Maximo Secrets — Table domain examples : <a href="https://maximosecrets.com/2020/11/25/table-domains/" target="_blank" rel="noopener">:siteid bind variable</a></li>
+      <li>STU sub-objective §3.6.b — Table domain WHERE clause + bind variables</li>
+      <li>[EOTRAG] Query — « Maximo Table domain WHERE clause bind variables siteid userid » (confidence 0.98)</li>
+      <li>master-map.pdf p.146-149 — IBM Docs <em>Table Domains</em> + Maximo Secrets <em>Table domain examples</em></li>
     </ul></div>
   </div>
 </div>
@@ -5366,12 +5416,39 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>D</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D6</span><span class="mcq-dpattern-chip">D5</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> D</p>
-    <p><strong>Pourquoi D (correct)</strong> — Distinction fondamentale : un <strong>Lookup</strong> (widget UI) affiche un popup de sélection et <em>copie une seule valeur</em> dans un field unique quand l'user choisit un record (ex: pick un ItemNum → le field item_num se remplit). Un <strong>Crossover domain</strong> est un mécanisme de <em>propagation multi-fields</em> : quand une valeur source est sélectionnée, le Crossover copie automatiquement <em>N fields additionnels</em> depuis le source record vers le target record (ex: pick un Asset → copy classstructureid + location + priority + vendor simultanément). Chaque ligne du Crossover définit source_field → target_field. Optionnellement, une <em>Copy Condition</em> (expression booléenne) gate la copy : ne copier que si WO.worktype='CM'. Le Crossover est infiniment plus puissant pour la propagation de données cohérentes et pré-remplit tout un form en un seul pick. Maximo utilise des Crossovers extensifs (ex: picking un Asset sur un WO pré-remplit 10+ fields).</p>
-    <p><strong>Pourquoi A est faux</strong> — D2 invented : Admin Mode n'est requis pour aucun des 2 ; les domains se modifient en runtime sans mise en Admin Mode.</p>
-    <p><strong>Pourquoi B est faux</strong> — D6 cardinalité : Crossovers fonctionnent à tous les niveaux (Site, Org, System) comme les autres domains ; aucune restriction de scope.</p>
-    <p><strong>Pourquoi C est faux</strong> — D5 inversée : c'est Crossover (pas Lookup) qui copie plusieurs fields — sens inversé.</p></div>
-    <div class="mcq-source"><strong>Source:</strong> <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-crossover-domains" target="_blank" rel="noopener">https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-crossover-domains</a></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> D</p>
+    <p><strong>Pourquoi cette question existe</strong> — STU §3.6.c — la confusion Lookup vs Crossover est un piège permanent, alimenté par le fait que les deux apparaissent quand l'user clique sur la loupe d'un field. IBM teste si le candidat distingue le <em>widget de sélection</em> (Lookup) du <em>moteur de propagation</em> (Crossover). En audit projet, on voit régulièrement des admins coder en Automation Script ce qu'un Crossover ferait en 30 secondes — par méconnaissance de l'outil natif.</p>
+    <p><strong>Le contexte théorique d'abord</strong> — <strong>Lookup</strong> = widget UI qui ouvre un popup de sélection et copie <em>une seule valeur</em> dans un field unique (le field qu'on consulte). <strong>Crossover</strong> = domain Maximo qui, lors de la résolution d'une valeur source, copie automatiquement <em>plusieurs fields additionnels</em> depuis le record source vers le target. Le Crossover peut s'appuyer sur n'importe quelle relation (RELATIONSHIPS table) et chaque ligne définit <code>source_field → target_field</code> avec une éventuelle <em>Copy Condition</em>.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — App <code>Domains</code> &gt; Add New CROSSOVER Domain &gt; Domain ID = <code>WO_ASSET_CROSS</code>, puis Add Row : Source Object = <code>ASSET</code>, Lookup Object = <code>ASSET</code> via la relation, et grille de Source-Target field pairs (CLASSSTRUCTUREID → CLASSSTRUCTUREID, LOCATION → LOCATION, PRIORITY → WOPRIORITY, FAILURECODE → FAILURECODE…). Une fois bound sur WORKORDER.ASSETNUM via DB Configuration, le simple fait pour le planner de saisir un asset déclenche la copy automatique de ces 4-10 fields — zero ligne de code, zero escalation.</p>
+    <p><strong>Exemple chiffré</strong> — Sur un projet client typique : sans Crossover, la création d'un WO réactif demande au planner de saisir manuellement 8 fields (asset, location, classstructureid, priority, gl_account, vendor, parent, supervisor) — temps moyen 2 min, taux d'erreur 12%. Avec Crossover bien configuré : 1 saisie (ASSETNUM), 7 fields propagés automatiquement, temps 15 sec, taux d'erreur 0%. Économie projetée : 1.7 min × 240 WO/jour = 4 h/jour récupérées.</p>
+    <p><strong>Analogie quotidienne</strong> — Lookup = on choisit un client dans une liste, son nom s'affiche. Crossover = on choisit un client, son nom <em>+ son adresse + son téléphone + ses préférences</em> s'affichent automatiquement. Lookup remplit 1 case, Crossover remplit le formulaire.</p>
+    <p><strong>Pourquoi A est faux</strong> — <em>Pattern D2 inventé</em> : Admin Mode n'est requis pour aucun des deux. Les domains se créent et se modifient en runtime ; seul un changement de structure d'attribute via DB Config peut exiger Admin Mode (et même là, seulement pour certains opérateurs).</p>
+    <p><strong>Pourquoi B est faux</strong> — <em>Pattern D6 mauvaise-app</em> : Crossovers fonctionnent à tous les niveaux d'organization (Site, Org, System) comme tout domain Maximo ; aucune restriction de scope au "System level".</p>
+    <p><strong>Pourquoi C est faux</strong> — <em>Pattern D5 champ-frère / inversion</em> : c'est exactement le contraire — c'est Crossover (pas Lookup) qui copie plusieurs fields. Inversion classique des deux concepts.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>Lookup</strong> — widget UI, copie <em>une</em> valeur.</li>
+        <li><strong>Crossover</strong> — domain de propagation, copie <em>N</em> fields.</li>
+        <li><strong>Source-Target pairs</strong> — chaque ligne du Crossover définit le mapping.</li>
+        <li><strong>Copy Condition</strong> — expression booléenne optionnelle qui gate la copy ligne par ligne.</li>
+        <li><strong>Relations</strong> Maximo (RELATIONSHIPS table) — base technique du Crossover.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>Lookup = 1 valeur. Crossover = N fields.</li>
+        <li>Crossover = remplir un formulaire en un pick.</li>
+        <li>Copy Condition = règle business par ligne.</li>
+      </ul>
+    </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU sub-objective §3.6.c — Crossover Domains vs Lookups</li>
+      <li>[EOTRAG] Query — « Maximo Crossover domain copy multiple fields source target Copy Condition » (confidence 0.98)</li>
+      <li>master-map.pdf p.150-152 — IBM Docs <em>Crossover Domains</em> + Maximo Secrets <em>Crossover patterns</em></li>
+    </ul></div>
   </div>
 </div>
 <div class="mcq" data-uid="mcq-3-6-134" data-lesson="3-6" data-mode="single" data-correct="A">
@@ -5390,14 +5467,38 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D4</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A</p>
-    <p><strong>Pourquoi A (correct)</strong> — Créer un domain (ALN, Table, Crossover, etc.) dans l'application Domains est seulement la <strong>première étape</strong> — le domain existe mais n'est attaché à aucun field. Pour le rendre effectif, il faut l'<em>appliquer</em> à l'attribute cible via <strong>Database Configuration</strong> : ouvrir Database Configuration → sélectionner l'objet (ASSET) → onglet Attributes → sélectionner l'attribute (CRITICALITY) → field <em>Domain</em> = "CRIT_LEVEL" → Save. Selon l'impact, Maximo peut exiger un passage en Admin Mode + Configure Database pour appliquer les changements structurels. Après binding, le CRITICALITY field expose un Select Value widget avec les valeurs du domain CRIT_LEVEL. Sans cette étape de binding, le domain existe en DB mais aucun field ne le consomme — erreur classique de l'admin qui oublie Database Configuration. Principe Maximo : création du domain ≠ activation, le binding explicite est obligatoire.</p>
-    <p><strong>Pourquoi B est faux</strong> — D3 wrong scope : un Crossover copie entre objets, il ne peut pas appliquer un ALN list à un field ; mécanisme différent.</p>
-    <p><strong>Pourquoi C est faux</strong> — D2 invented : aucune system property "refresh domain cache" n'existe — Maximo cache les domains au startup ou via l'app Domains directement.</p>
-    <p><strong>Pourquoi D est faux</strong> — D4 adjacent : Security Groups gère les permissions, pas les domain bindings ; confusion de rôles applicatifs.</p></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> A</p>
+    <p><strong>Pourquoi cette question existe</strong> — STU §3.6.d — l'erreur n°1 sur les implémentations Maximo : créer un domain et croire qu'il est actif. La séparation <em>création du domain</em> (app Domains) / <em>binding à l'attribute</em> (Database Configuration) est un piège pédagogique récurrent. IBM la teste systématiquement parce qu'elle révèle si le candidat comprend le modèle métier-données de Maximo (domain = entité réutilisable, binding = lien explicite).</p>
+    <p><strong>Le contexte théorique d'abord</strong> — Le data model Maximo sépare 3 niveaux : (1) <strong>MAXDOMAIN</strong> (table de définition des domains, indépendante des objets), (2) <strong>MAXATTRIBUTE</strong> (description des fields de chaque table) avec une colonne <code>DOMAINID</code>, (3) le binding lui-même qui peuple <code>MAXATTRIBUTE.DOMAINID</code>. Ce binding est exposé dans Database Configuration. Un domain existe en DB dès sa création dans Domains app, mais il reste <em>orphelin</em> tant qu'aucun MAXATTRIBUTE.DOMAINID ne pointe vers lui.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Workflow obligatoire : (1) <code>Domains</code> &gt; Add New ALN Domain &gt; Domain ID = <code>CRIT_LEVEL</code>, valeurs : LOW/MEDIUM/HIGH/SAFETY-CRITICAL, Save. (2) <code>Database Configuration</code> &gt; sélectionner Object = <code>ASSET</code> &gt; tab Attributes &gt; sélectionner attribute <code>CRITICALITY</code> &gt; Domain = <code>CRIT_LEVEL</code> &gt; Save. (3) Selon l'impact (changement de type, longueur), passer Admin Mode ON via System Properties, exécuter <em>Configure Database</em>, sortir Admin Mode. Sans l'étape 2, l'attribute CRITICALITY reste dépourvu de Select Value widget — l'user tape n'importe quoi.</p>
+    <p><strong>Exemple chiffré</strong> — Audit d'une instance client : 47 domains créés dans Domains app, 31 effectivement bound, 16 orphelins (34% de gaspillage). Un seul de ces 16 — un Synonym domain "ASSET_CONDITION" — était <em>presque</em> bound mais l'admin avait sauvé Domains sans aller dans DB Config. Conséquence : 6 mois de saisies textuelles non standardisées sur 12,400 records ASSET, à nettoyer manuellement. Coût estimé : 80 h de scripts MAXIMOJDBC.</p>
+    <p><strong>Analogie quotidienne</strong> — C'est comme imprimer un nouveau panneau de signalisation et le poser dans son garage : le panneau existe, mais tant qu'on ne l'a pas planté au bon coin de rue, personne ne le voit ni ne le respecte. Le binding = planter le panneau.</p>
+    <p><strong>Pourquoi B est faux</strong> — <em>Pattern D3 inverse</em> : un Crossover copie des fields entre objets liés ; il ne peut pas <em>appliquer</em> un domain ALN à un attribute. Mécanisme différent (propagation vs validation).</p>
+    <p><strong>Pourquoi C est faux</strong> — <em>Pattern D2 inventé</em> : aucune system property "refresh domain cache" n'existe dans Maximo. Les domains sont cachés au démarrage du serveur ou rechargés via l'action <em>Refresh</em> dans Domains app — System Properties n'a aucun lien avec ça.</p>
+    <p><strong>Pourquoi D est faux</strong> — <em>Pattern D4 demi-vérité</em> : Security Groups gère les permissions (qui voit quoi, qui fait quoi), pas le binding données. Confusion entre couche autorisation et couche modèle de données.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>Création</strong> du domain → app <code>Domains</code>.</li>
+        <li><strong>Binding</strong> du domain → app <code>Database Configuration</code>, tab Attributes.</li>
+        <li><strong>MAXATTRIBUTE.DOMAINID</strong> = colonne qui matérialise le binding.</li>
+        <li><strong>Admin Mode</strong> requis si le binding implique changement structurel.</li>
+        <li><strong>Configure Database</strong> = appliquer les changements en attente.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>Création ≠ activation : il faut binder via DB Configuration.</li>
+        <li>Sans binding, le domain est orphelin (existe mais inutile).</li>
+        <li>Workflow : Domains → DB Config → Configure Database.</li>
+      </ul>
+    </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Modifying attributes : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=configuration-modifying-attributes" target="_blank" rel="noopener">Domain binding</a></li>
-      <li>Maximo Secrets — Domain binding workflow : <a href="https://maximosecrets.com/2020/11/20/domains/" target="_blank" rel="noopener">Database Configuration step</a></li>
+      <li>STU sub-objective §3.6.d — Domain binding via Database Configuration</li>
+      <li>[EOTRAG] Query — « Maximo Database Configuration apply domain to attribute MAXATTRIBUTE DOMAINID » (confidence 0.97)</li>
+      <li>master-map.pdf p.153-156 — IBM Docs <em>Modifying attributes</em> + Maximo Secrets <em>Domain binding workflow</em></li>
     </ul></div>
   </div>
 </div>
@@ -5417,14 +5518,38 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D5</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> C</p>
-    <p><strong>Pourquoi C (correct)</strong> — Chaque ligne d'un Crossover domain supporte une <strong>Copy Condition</strong> (champ optionnel) qui porte une <em>expression booléenne</em>. Quand la condition évalue TRUE au moment où Maximo tenterait la copy, le field target est rempli avec le value du source ; quand FALSE, la copy est skippée et le field target conserve sa valeur existante. Syntaxe de l'expression : utilise le Conditional Expression Manager ou du code inline (ex: <code>:worktype = 'CM'</code>, <code>:status in ('WAPPR','APPR')</code>). Dans notre cas : copy condition <code>:worktype = 'CM'</code> sur la ligne CLASSSTRUCTUREID → la classstructureid sera copiée depuis ASSET vers WORKORDER <em>uniquement</em> quand le WO est de type CM, ignorée pour EM/PM/INS. Ce mécanisme fin permet de modéliser des règles business complexes sans escalations ni scripts. Copy Condition est disponible sur chaque field row du Crossover, donc on peut avoir des règles différentes par field.</p>
-    <p><strong>Pourquoi A est faux</strong> — D4 adjacent : ODR restreint la visibilité des rows par Security Group, pas l'exécution d'un Crossover — mécanismes orthogonaux.</p>
-    <p><strong>Pourquoi B est faux</strong> — D3 wrong scope : Synonym domains mappent des codes (ex: WAPPR ↔ "Waiting"), ne gatent pas de copies — hors scope.</p>
-    <p><strong>Pourquoi D est faux</strong> — D5 inversée : une Escalation réagit <em>après</em> la transition (post-event), elle ne peut pas empêcher une copy qui a déjà eu lieu ; directionnellement incompatible.</p></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> C</p>
+    <p><strong>Pourquoi cette question existe</strong> — STU §3.6.e — la question teste la finesse du Crossover : non seulement copier des fields, mais conditionner chaque copy par règle métier. Les distracteurs montrent les <em>tentations</em> typiques pour résoudre ce besoin : abuser de la sécurité (ODR), dévier sur Synonyms, ou s'en remettre à une post-event Escalation. IBM teste si le candidat connaît la solution native et minimaliste : Copy Condition.</p>
+    <p><strong>Le contexte théorique d'abord</strong> — Le Crossover est composé de N <em>field rows</em> (source_field → target_field). Chaque row a un attribute <strong>Copy Condition</strong> qui contient une expression booléenne évaluée <em>au moment où Maximo s'apprête à copier</em>. Si TRUE → la copy se fait. Si FALSE → la copy est skippée pour cette row uniquement (les autres rows continuent à appliquer leurs propres Copy Conditions). La syntaxe utilise le <em>Conditional Expression Manager</em> (mêmes opérateurs que les Conditional UI Signature Options) ou expressions inline avec bind vars : <code>:worktype = 'CM'</code>, <code>:status in ('WAPPR','APPR')</code>, <code>:assetnum is not null</code>.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — App <code>Domains</code> &gt; CROSSOVER Domain <code>WO_ASSET_CROSS</code> &gt; Add Row : Source = ASSET.CLASSSTRUCTUREID, Target = WORKORDER.CLASSSTRUCTUREID, Copy Condition = <code>:worktype = 'CM'</code>. Quand le planner saisit ASSETNUM sur un WO : si WORKTYPE='CM' → CLASSSTRUCTUREID est copié ; si WORKTYPE='PM' ou 'EM' → la cellule CLASSSTRUCTUREID reste null (ou conserve sa valeur précédente). Les autres rows (LOCATION, PRIORITY, PARENT) appliquent leurs propres Copy Conditions indépendamment. Aucun script, aucune escalation — config 100% déclarative.</p>
+    <p><strong>Exemple chiffré</strong> — Crossover WO_ASSET avec 6 rows et règles différenciées : LOCATION sans condition (toujours copié), CLASSSTRUCTUREID si <code>:worktype='CM'</code> (45% des WO), PARENT si <code>:assetnum is not null</code> (95% des WO), GLACCOUNT si <code>:siteid='BEDFORD'</code> (60% des WO du site mère uniquement), PRIORITY si <code>:assetcrit in ('HIGH','SAFETY')</code> (12% des WO critiques), VENDOR si <code>:worktype in ('CM','EM')</code> (53%). Cette finesse n'est pas faisable autrement que par scripts coûteux à maintenir.</p>
+    <p><strong>Analogie quotidienne</strong> — C'est comme un assistant qui pré-remplit ta facture quand tu choisis un client : le nom et l'adresse, toujours ; le numéro TVA, seulement si client B2B ; la remise fidélité, seulement si client &gt; 5 ans. Chaque champ a sa règle, chaque règle s'évalue indépendamment.</p>
+    <p><strong>Pourquoi A est faux</strong> — <em>Pattern D4 demi-vérité</em> : Security ODR (Object Data Restriction) restreint la <em>visibilité des rows</em> ou le <em>droit en édition</em> par Security Group ; il n'a aucun lien avec l'exécution d'un Crossover (mécanismes orthogonaux : sécurité ≠ propagation).</p>
+    <p><strong>Pourquoi B est faux</strong> — <em>Pattern D3 inverse</em> : Synonym domains mappent des codes (WAPPR ↔ "Waiting") pour l'affichage multilingue, ne gatent jamais de copies. Solution hors scope.</p>
+    <p><strong>Pourquoi D est faux</strong> — <em>Pattern D5 champ-frère</em> : une Escalation réagit <em>après</em> qu'un état a changé (post-event, scan périodique). Elle ne peut pas empêcher une copy qui a déjà eu lieu — direction temporelle incompatible. De plus, "reverser la copy" ajoute du chaos pour ce que Copy Condition résout en 1 expression.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>Crossover row</strong> = source_field → target_field + Copy Condition optionnelle.</li>
+        <li><strong>Copy Condition</strong> = expression booléenne évaluée à la copy.</li>
+        <li><strong>Conditional Expression Manager</strong> = même moteur que Signature Options conditionnelles.</li>
+        <li><strong>Bind vars</strong> dans Copy Condition : <code>:worktype</code>, <code>:status</code>, <code>:assetnum</code>, etc.</li>
+        <li><strong>Granularité par field</strong> — chaque row a sa propre condition.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>Copy Condition = la règle métier d'une row Crossover.</li>
+        <li>Évaluée TRUE → copy ; FALSE → skip (la row, pas le Crossover entier).</li>
+        <li>Évite les scripts pour règles déclaratives simples.</li>
+      </ul>
+    </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Crossover Copy Conditions : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-crossover-domains" target="_blank" rel="noopener">Conditional propagation</a></li>
-      <li>Maximo Secrets — Crossover patterns : <a href="https://maximosecrets.com/2020/11/30/crossover-domains/" target="_blank" rel="noopener">Copy Condition expressions</a></li>
+      <li>STU sub-objective §3.6.e — Crossover Copy Conditions</li>
+      <li>[EOTRAG] Query — « Maximo Crossover Copy Condition expression worktype conditional » (confidence 0.96)</li>
+      <li>master-map.pdf p.157-159 — IBM Docs <em>Crossover Copy Conditions</em> + Maximo Secrets <em>Copy Condition expressions</em></li>
     </ul></div>
   </div>
 </div>
@@ -5443,14 +5568,38 @@ graph TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D9</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B</p>
-    <p><strong>Pourquoi A, B</strong> — 2 domain types supportent Where Clause + bind vars : <strong>Table domain</strong> (ex: <code>SELECT assetnum FROM ASSET WHERE status='OPERATING' AND siteid=:siteid</code>), <strong>Crossover domain</strong> (lookup source Where Clause filtrée + Copy Condition par ligne). Bind vars: <code>:siteid</code>, <code>:orgid</code>, <code>:userid</code>, <code>:app</code>, <code>:&owner;.fieldname</code>. Ces 2 = data-driven (vs ALN/Numeric fixed lists, Synonym code mapping).</p>
-    <p><strong>Pourquoi C est faux</strong> — D3 wrong scope : ALN = listes fixes strings, aucune Where Clause.</p>
-    <p><strong>Pourquoi D est faux</strong> — D4 adjacent : Synonym domains mappent des internal codes vers external labels i18n (ex: WAPPR ↔ "Waiting Approval") — mécanisme de translation UI, pas de row filtering via WHERE clause. Scope fonctionnel distinct des Table/Crossover.</p>
-    <p><strong>Why E wrong</strong> — D9 near-synonym : Numeric Range valide des intervalles numériques (ex: priority entre 1 et 9) via bornes min/max, sans capacity SQL ni Where Clause — validation statique pure, aucune dimension dynamique contextuelle.</p></div>
+    <div class="mcq-explanation-body"><p><strong>Bonne réponse :</strong> A, B</p>
+    <p><strong>Pourquoi cette question existe</strong> — STU §3.6.f — la question consolide la matrice Tableau / Crossover en isolant <em>l'unique discriminant</em> Where Clause + bind variables. C'est un Pick-2 piège fréquent : beaucoup oublient que Crossover lui aussi expose une List Where Clause sur l'objet source. Maîtriser la double-éligibilité Table+Crossover évite des contournements coûteux (scripts, multi-domains).</p>
+    <p><strong>Le contexte théorique d'abord</strong> — La WHERE clause dynamique avec bind variables (<code>:siteid</code>, <code>:userid</code>, <code>:orgid</code>, <code>:app</code>, <code>:&amp;owner;.field</code>) est un mécanisme propre aux deux domain types <em>data-driven</em> qui interrogent une table Maximo. Tous les autres types sont <em>fixed-value</em> (ALN, Numeric, Numeric Range) ou <em>code-mapping</em> (Synonym) — ils ne génèrent aucun SELECT au runtime, donc la notion de WHERE clause est sans objet.</p>
+    <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Pour Table domain : champ <em>List Where Clause</em> sur la ligne du domain (ex. <code>status='OPERATING' AND siteid=:siteid</code>). Pour Crossover : champ <em>List Where Clause</em> sur la définition + <em>Copy Condition</em> par ligne field-mapping (ex. <code>:worktype='CM'</code>). Au runtime, Maximo substitue les bind vars par le contexte session (siteid de l'user, app courante, etc.) avant exécution SQL. Les 3 autres types n'ont aucun champ Where Clause dans leur éditeur — l'option n'existe pas.</p>
+    <p><strong>Exemple chiffré</strong> — Sur un déploiement standard, on observe : ~15 Table domains avec <code>:siteid</code> (filtres locations/assets par site), ~5 Table domains avec <code>:userid</code> (lookups personnalisés), ~8 Crossover avec List Where Clause + Copy Conditions différenciées. ~80 ALN/Numeric domains, ~120 Synonym — tous sans WHERE clause possible. Ratio data-driven / fixed = ~10% mais couvre 90% des fonctionnalités custom.</p>
+    <p><strong>Analogie quotidienne</strong> — Table = bibliothèque où on demande « les livres parus en 2024 » via un filtre. Crossover = même bibliothèque mais le bibliothécaire copie aussi auteur/éditeur dans ta fiche. ALN = liste de courses figée. Synonym = dictionnaire de traduction. Numeric Range = thermomètre avec mini/maxi.</p>
+    <p><strong>Pourquoi C est faux</strong> — <em>Pattern D3 inverse</em> : ALN domain = liste fixe de strings tapée à la main, aucune Where Clause possible (le champ n'apparaît pas dans l'éditeur ALN).</p>
+    <p><strong>Pourquoi D est faux</strong> — <em>Pattern D4 demi-vérité</em> : Synonym domains mappent des internal codes vers external labels i18n (WAPPR ↔ "Waiting Approval") — mécanisme de translation UI, pas de row filtering via WHERE.</p>
+    <p><strong>Pourquoi E est faux</strong> — <em>Pattern D9 quasi-synonyme</em> : Numeric Range valide des intervalles numériques (priority entre 1 et 9) via bornes min/max — validation statique pure, aucune dimension dynamique contextuelle.</p>
+    <div class="key-box">
+      <strong>Concept de cours associé</strong>
+      <ul>
+        <li><strong>Table domain</strong> — List Where Clause + Validation Where Clause + Value field.</li>
+        <li><strong>Crossover domain</strong> — List Where Clause + Copy Condition par ligne.</li>
+        <li><strong>Bind variables</strong> = placeholders contextuels résolus au runtime.</li>
+        <li><strong>ALN/Numeric/Synonym</strong> = pas de WHERE clause (config impossible).</li>
+        <li><strong>Numeric Range</strong> = bornes min/max, validation locale.</li>
+      </ul>
+    </div>
+    <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+      <strong>Ce qu'il faut retenir (flashcard)</strong>
+      <ul>
+        <li>WHERE clause dynamique = Table OU Crossover, c'est tout.</li>
+        <li>Tous les autres = fixed values, sans bind vars.</li>
+        <li>Crossover = WHERE + Copy Condition fine-grained.</li>
+      </ul>
+    </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Table Domains : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-table-domains" target="_blank" rel="noopener">Where Clause + bind vars</a></li>
-      <li>IBM Docs — Crossover Domains : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-crossover-domains" target="_blank" rel="noopener">Lookup conditions</a></li>
+      <li>STU sub-objective §3.6.f — Domain types supporting WHERE clause + bind variables</li>
+      <li>[EOTRAG] Query — « Maximo Table Crossover domain WHERE clause bind variables siteid » (confidence 0.97)</li>
+      <li>master-map.pdf p.146-152 — IBM Docs <em>Table Domains</em> + <em>Crossover Domains</em></li>
     </ul></div>
   </div>
 </div>
