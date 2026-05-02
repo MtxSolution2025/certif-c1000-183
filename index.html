@@ -8533,31 +8533,43 @@ graph TD
 <!-- 6.1 -->
 <section class="lesson" id="lesson-6-1">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.1</div>
-  <div class="lesson-header"><h1>Create and manage Job Plans and Routes</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer Job Plans et Routes</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~2 questions</span>
+      <span class="meta-pill">Work Mgmt</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-1.svg" alt="Illustration de la leçon 6.1 — Job Plans : Tasks, Resources, Flow Control, Qualifications, Nested" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-1" id="lt-6-1-c" class="lt-course" checked>
     <input type="radio" name="lt-6-1" id="lt-6-1-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-1-c">📚 Leçon</label><label for="lt-6-1-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-1-c">📚 Leçon</label><label for="lt-6-1-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Job plans · Dynamic job plans (Calculation Methods, Resources)</li>
-          <li>Qualifications on job plan/tasks (copy to WO, restrict assignment)</li>
-          <li>Flow Control (predecessor rules)</li>
-          <li>Nested job plans</li>
-          <li>Org settings & sys properties: <strong>Job Plan Revisioning</strong>, Job Plan Conditions</li>
+          <li>Créer et gérer les Job Plans et les Dynamic Job Plans (Calculation Methods, Resources).</li>
+          <li>Configurer les Qualifications sur job plan / tasks (copy to WO, restrict assignment).</li>
+          <li>Configurer le Flow Control avec predecessor rules sur les tasks.</li>
+          <li>Créer des Nested Job Plans (embed d'un autre job plan).</li>
+          <li>Configurer les Org settings et System Properties pour Job Plan Revisioning et Job Plan Conditions.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Revision Control Job Plans → Organizations app</strong> ⭐</li>
-          <li>Dynamic Job Plan Calculation Methods: <strong>Formula, Meter Based</strong></li>
-          <li>Resources supported: Labor, Craft, Material, Tool</li>
-          <li><strong>Qualifications</strong> → copied to WO → restrict assignment</li>
-          <li><strong>Flow Control</strong> = predecessor rules on tasks</li>
-          <li><strong>Nested</strong> = embed another job plan</li>
+          <li><strong>Revision Control Job Plans</strong> → app <code>Organizations</code> (pas Job Plans, pas System Properties) ⭐ — piège classique.</li>
+          <li><strong>Dynamic Job Plan</strong> avec 2 Calculation Methods : <code>Formula</code> et <code>Meter Based</code>.</li>
+          <li><strong>Resources supported</strong> : Labor, Craft, Material, Tool (4 types).</li>
+          <li><strong>Qualifications</strong> sur task → copiées sur WO → restreignent assignment (un user sans la qualif ne peut pas être assigned).</li>
+          <li><strong>Flow Control</strong> = predecessor rules entre tasks (task B ne démarre pas avant task A complete).</li>
+          <li><strong>Nested job plans</strong> = embed d'un autre job plan dans un job plan parent (réutilisabilité).</li>
         </ul></div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq-progress" data-section="6"><span class="mcq-progress-label"><strong>0</strong> / 0 répondues</span><div class="mcq-progress-bar"><div class="mcq-progress-fill"></div></div><span class="mcq-progress-stats">0 correctes · 0%</span><button type="button" class="mcq-reset-section-btn" data-action="reset-section" data-section="6">Réinitialiser la section</button></div>
 <p style="color:var(--text-3);font-size:12px;margin:-6px 0 10px 0;">Questions d’examen de style IBM. Cliquez une option, puis « Vérifier ma réponse ». Progression enregistrée localement.</p>
@@ -8755,7 +8767,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="6-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-5-3" class="btn-nav"><span class="dir">← Précédent</span>5.3 Receiving</a>
+    <a href="#lesson-5-3" class="btn-nav"><span class="dir">← Précédent</span>5.3 Réception et facturation</a>
     <a href="#lesson-6-2" class="btn-nav next"><span class="dir">Suivant →</span>6.2 Condition Monitoring</a>
   </div>
 </section>
@@ -8763,29 +8775,41 @@ graph TD
 <!-- 6.2 -->
 <section class="lesson" id="lesson-6-2">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.2</div>
-  <div class="lesson-header"><h1>Condition Monitoring</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~1 question</span></div></div>
+  <div class="lesson-header">
+    <h1>Condition Monitoring</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~1 question</span>
+      <span class="meta-pill">Monitoring</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-2.svg" alt="Illustration de la leçon 6.2 — Condition Monitoring : Measurement Points + Warning/Upper/Lower Limits + WO auto-generation" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-2" id="lt-6-2-c" class="lt-course" checked>
     <input type="radio" name="lt-6-2" id="lt-6-2-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-2-c">📚 Leçon</label><label for="lt-6-2-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-2-c">📚 Leçon</label><label for="lt-6-2-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Condition monitoring functionality</li>
-          <li>Create CM points · <strong>Warning Limits · Upper and Lower Limits</strong></li>
-          <li>Measurement Points functionality</li>
-          <li>Methods to generate WO from CM point</li>
-          <li><strong>MeasurePointWoGenCronTask</strong></li>
+          <li>Décrire la fonctionnalité Condition Monitoring (CM).</li>
+          <li>Créer des CM points avec <strong>Warning Limits</strong> et <strong>Upper/Lower Limits</strong>.</li>
+          <li>Décrire la fonctionnalité des Measurement Points.</li>
+          <li>Identifier les méthodes pour générer un WO depuis un CM point.</li>
+          <li>Maîtriser le cron <code>MeasurePointWoGenCronTask</code>.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Warning Limits</strong> = advisory (no auto-action)</li>
-          <li><strong>Upper/Lower Limits</strong> = action trigger (generate WO)</li>
-          <li>WO generation: manual action OR cron <strong>MeasurePointWoGenCronTask</strong></li>
-          <li>Measurement Points = locations where the meter is read</li>
+          <li><strong>Warning Limits</strong> — limites advisory (pas d'auto-action, juste alerte visuelle).</li>
+          <li><strong>Upper/Lower Limits</strong> — limites action trigger (génèrent automatiquement un WO quand dépassées).</li>
+          <li><strong>WO generation</strong> : manuelle (action sur Measurement Point) OU automatique via cron <code>MeasurePointWoGenCronTask</code>.</li>
+          <li><strong>Measurement Points</strong> = locations où le meter est lu (identification du point physique).</li>
         </ul></div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-2-059" data-lesson="6-2" data-mode="single" data-correct="A">
   <div class="mcq-head">
@@ -8901,37 +8925,50 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="6-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-1" class="btn-nav"><span class="dir">← Précédent</span>6.1 Job Plans</a>
-    <a href="#lesson-6-3" class="btn-nav next"><span class="dir">Suivant →</span>6.3 PM</a>
+    <a href="#lesson-6-1" class="btn-nav"><span class="dir">← Précédent</span>6.1 Job Plans et Routes</a>
+    <a href="#lesson-6-3" class="btn-nav next"><span class="dir">Suivant →</span>6.3 Preventive Maintenance</a>
   </div>
 </section>
 
 <!-- 6.3 -->
 <section class="lesson" id="lesson-6-3">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.3</div>
-  <div class="lesson-header"><h1>Preventive Maintenance</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Preventive Maintenance (PM)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Maintenance</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-3.svg" alt="Illustration de la leçon 6.3 — PM : Master PM, children, Earliest Next Due Date, génération WO" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-3" id="lt-6-3-c" class="lt-course" checked>
     <input type="radio" name="lt-6-3" id="lt-6-3-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-3-c">📚 Leçon</label><label for="lt-6-3-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-3-c">📚 Leçon</label><label for="lt-6-3-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Records associable with a PM</li>
-          <li>Modify PMs associated with Master PMs</li>
-          <li><strong>Earliest Next Due Date</strong> (location + usage)</li>
-          <li>Generate WOs from PM · Associate Job Plans</li>
-          <li>Prevent future updates to PM (break from master)</li>
+          <li>Identifier les records associables à un PM (asset, location, job plan, route, safety plan).</li>
+          <li>Modifier les PMs associés à des Master PMs et comprendre la propagation parent/child.</li>
+          <li>Maîtriser l'<strong>Earliest Next Due Date</strong> (location + usage) qui prévient l'over-generation.</li>
+          <li>Générer les WOs depuis un PM et associer des Job Plans.</li>
+          <li>Prévenir les futures updates d'un PM (Break from Master flag).</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li>Associated records: <strong>asset, location, job plan, route, safety plan</strong></li>
-          <li><strong>Master PM</strong> → children auto-inherit changes</li>
-          <li><strong>Earliest Next Due Date</strong>: prevents over-generation</li>
-          <li><strong>Break from master</strong>: flag to stop propagation</li>
+          <li><strong>Records associés</strong> : asset, location, job plan, route, safety plan.</li>
+          <li><strong>Master PM</strong> — children PMs héritent automatiquement les modifications du Master.</li>
+          <li><strong>Earliest Next Due Date</strong> — prévient l'over-generation : si la date est dans le futur, pas de WO généré même si la fréquence le justifierait.</li>
+          <li><strong>Break from Master</strong> — flag sur child PM pour stopper la propagation des changements Master.</li>
+          <li><strong>Frequency types</strong> : Time-based (jours/semaines/mois) ou Meter-based (heures de service, km).</li>
         </ul></div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-3-055" data-lesson="6-3" data-mode="single" data-correct="B">
   <div class="mcq-head">
@@ -9071,7 +9108,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="6-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-2" class="btn-nav"><span class="dir">← Précédent</span>6.2 CM</a>
+    <a href="#lesson-6-2" class="btn-nav"><span class="dir">← Précédent</span>6.2 Condition Monitoring</a>
     <a href="#lesson-6-4" class="btn-nav next"><span class="dir">Suivant →</span>6.4 Work Orders</a>
   </div>
 </section>
@@ -9079,31 +9116,51 @@ graph TD
 <!-- 6.4 -->
 <section class="lesson" id="lesson-6-4">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.4</div>
-  <div class="lesson-header"><h1>Create and manage Work Orders</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer les Work Orders</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~2 questions</span>
+      <span class="meta-pill">WO Lifecycle</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-4.svg" alt="Illustration de la leçon 6.4 — Work Orders : 3 sources, 3 priorities, Flow Control, CALCPRIORITY" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-4" id="lt-6-4-c" class="lt-course" checked>
     <input type="radio" name="lt-6-4" id="lt-6-4-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-4-c">📚 Leçon</label><label for="lt-6-4-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-4-c">📚 Leçon</label><label for="lt-6-4-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>WO creation sources: PM, CM point, manual</li>
-          <li>Failure reporting · Asset Downtime reporting</li>
-          <li>Maximo Route · assignments</li>
-          <li><strong>3 Priority fields</strong> · Target Finish date calculation</li>
+          <li>Identifier les 3 sources de création de WO : PM, Condition Monitoring point, manual.</li>
+          <li>Configurer Failure reporting et Asset Downtime reporting.</li>
+          <li>Configurer Maximo Route et assignments.</li>
+          <li>Maîtriser les <strong>3 Priority fields</strong> et le calcul Target Finish date.</li>
+          <li>Comprendre le flag <strong>Under Flow Control</strong> et son impact sur les work process flows.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li>WO created from: <strong>PM</strong>, <strong>Condition Monitoring</strong>, <strong>manual</strong></li>
-          <li><strong>3 priorities</strong>: Asset Priority, WO Priority, <strong>CALCPRIORITY</strong> (calculated)</li>
-          <li><strong>CALCPRIORITY formula configured in Assignment Manager</strong> ⭐</li>
-          <li><strong>Work process flows</strong> → flag <strong>"Under Flow Control"</strong> on WO ⭐</li>
-          <li>Route = sequence of assets/locations to inspect</li>
+          <li><strong>3 sources de WO</strong> : <code>PM</code> (auto-generated), <code>Condition Monitoring</code> (limit dépassé), <code>manual</code> (créé par user).</li>
+          <li><strong>3 Priority fields</strong> : Asset Priority (sur asset), WO Priority (saisie manuel), <code>CALCPRIORITY</code> (calculée par formule).</li>
+          <li><strong>CALCPRIORITY formula</strong> configurée dans <code>Assignment Manager</code> ⭐ (pas Formulas, pas Work Order Tracking).</li>
+          <li><strong>Under Flow Control</strong> = flag pour activer les work process flows entre WO/tasks (pas « Apply Sequence Logic » qui n'existe pas).</li>
+          <li><strong>Route</strong> = séquence d'assets/locations à inspecter pendant un WO unique.</li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box">"Apply Sequence Logic" does not exist. Flag for work process flows = <strong>Under Flow Control</strong>.<br><br>CALCPRIORITY formula in <strong>Assignment Manager</strong>, not Formulas (doesn't exist), not Work Order Tracking.</div>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Pièges classiques</strong> :</p>
+          <ul>
+            <li>« Apply Sequence Logic » n'existe pas. Le bon flag = <strong>Under Flow Control</strong>.</li>
+            <li>CALCPRIORITY formula = <strong>Assignment Manager</strong>, pas Formulas (n'existe pas), pas Work Order Tracking.</li>
+          </ul>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-4-050" data-lesson="6-4" data-mode="single" data-correct="C">
   <div class="mcq-head">
@@ -9296,48 +9353,66 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="6-4">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-3" class="btn-nav"><span class="dir">← Précédent</span>6.3 PM</a>
-    <a href="#lesson-6-5" class="btn-nav next"><span class="dir">Suivant →</span>6.5 AI Broker</a>
+    <a href="#lesson-6-3" class="btn-nav"><span class="dir">← Précédent</span>6.3 Preventive Maintenance</a>
+    <a href="#lesson-6-5" class="btn-nav next"><span class="dir">Suivant →</span>6.5 WO Intelligence (AI Broker)</a>
   </div>
 </section>
 
 <!-- 6.5 -->
 <section class="lesson" id="lesson-6-5">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.5</div>
-  <div class="lesson-header"><h1>Work Order Intelligence features (AI Broker)</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~2-3 questions</span><span class="meta-pill">⭐ v9</span></div></div>
+  <div class="lesson-header">
+    <h1>WO Intelligence features (AI Broker)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~2-3 questions</span>
+      <span class="meta-pill">⭐ MAS 9 New</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-5.svg" alt="Illustration de la leçon 6.5 — AI Broker : 3 System Properties + Granite 3.0 8B + Problem Code Classification" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-5" id="lt-6-5-c" class="lt-course" checked>
     <input type="radio" name="lt-6-5" id="lt-6-5-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-5-c">📚 Leçon</label><label for="lt-6-5-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-5-c">📚 Leçon</label><label for="lt-6-5-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li><strong>System Properties configuration of AI Broker</strong></li>
-          <li>Identify and configure AI Cron Tasks</li>
-          <li>Integration Framework apps enabling AI Broker</li>
-          <li>Load training data · Train the model</li>
-          <li>Accept AI Broker recommendations</li>
-          <li><strong>Improve Problem Code recommendations</strong> (Watson)</li>
+          <li>Configurer les 3 <strong>System Properties</strong> obligatoires de l'AI Broker.</li>
+          <li>Identifier et configurer les AI Cron Tasks.</li>
+          <li>Identifier les apps Integration Framework qui enable AI Broker.</li>
+          <li>Charger training data, entraîner le modèle, accepter les recommendations.</li>
+          <li>Améliorer les Problem Code recommendations via Watson.</li>
         </ul></div>
-        <h2>💡 3 System Properties</h2>
-        <div class="key-box"><pre><code>mxe.int.aibrokerapikey
-mxe.int.aibrokerapiurl
-mxe.int.aibrokertenantid</code></pre>
-        <ul>
-          <li>Model: <strong>pcc</strong> (problem code classification)</li>
-          <li>Base: <strong>Granite 3.0 8B Instruct</strong> (IBM watsonx)</li>
-          <li>App: <strong>AI Configuration</strong> (Administration module)</li>
-          <li>Publish Channel: <strong>WOPROBLEMCODE</strong></li>
-        </ul></div>
-        <h2>💡 2 crucial facts</h2>
+
+        <h2>💡 Points clés — 3 System Properties</h2>
+        <div class="key-box">
+          <p>3 properties à configurer dans System Properties app :</p>
+          <ul>
+            <li><code>mxe.int.aibrokerapikey</code></li>
+            <li><code>mxe.int.aibrokerapiurl</code></li>
+            <li><code>mxe.int.aibrokertenantid</code></li>
+          </ul>
+          <p>Stack technique : Model = <strong>pcc</strong> (Problem Code Classification), Base = <strong>IBM Granite 3.0 8B Instruct</strong> (watsonx), App de config = <strong>AI Configuration</strong> (module Administration), Publish Channel = <strong>WOPROBLEMCODE</strong>.</p>
+        </div>
+
+        <h2>💡 Points clés — Faits cruciaux examen</h2>
         <div class="key-box"><ul>
-          <li><strong>Source field of the model</strong> = <strong>Work Order Description</strong> ⭐</li>
+          <li><strong>Source field du modèle</strong> = Work Order <code>Description</code> ⭐ (PAS Work Log, PAS Failure Remarks, PAS Assignment Remarks).</li>
           <li><strong>Improving accuracy</strong> = sufficient <strong>Description detail</strong> in training WOs ⭐</li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box"><strong>Not Work Log, not Failure Remarks, not Assignment Remarks</strong>. The key field is the WO <strong>Description</strong>.<br><br>To improve the model: enrich the <strong>Descriptions</strong>, not "add more PMs" nor "add more Problem Codes".</div>
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Pièges classiques AI Broker</strong> :</p>
+          <ul>
+            <li>Source field = <strong>Description</strong> (pas Work Log, Failure Remarks, Assignment Remarks).</li>
+            <li>Pour améliorer le modèle : enrichir les <strong>Descriptions</strong> (pas « ajouter plus de PMs » ni « ajouter plus de Problem Codes »).</li>
+            <li>System properties préfixées <code>mxe.int.aibroker</code> (pas <code>mxe.ai.</code>, pas <code>mxe.watsonx.</code>).</li>
+          </ul>
+        </div>
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-5-045" data-lesson="6-5" data-mode="single" data-correct="D">
   <div class="mcq-head">
@@ -9475,33 +9550,47 @@ mxe.int.aibrokertenantid</code></pre>
   </div>
   <button class="mark-done-btn" data-done="6-5">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-4" class="btn-nav"><span class="dir">← Précédent</span>6.4 WO</a>
-    <a href="#lesson-6-6" class="btn-nav next"><span class="dir">Suivant →</span>6.6 Cost Rollup</a>
+    <a href="#lesson-6-4" class="btn-nav"><span class="dir">← Précédent</span>6.4 Work Orders</a>
+    <a href="#lesson-6-6" class="btn-nav next"><span class="dir">Suivant →</span>6.6 Maintenance Cost Rollup</a>
   </div>
 </section>
 
 <!-- 6.6 -->
 <section class="lesson" id="lesson-6-6">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.6</div>
-  <div class="lesson-header"><h1>Configure Asset Maintenance Cost Rollup</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~1 question</span></div></div>
+  <div class="lesson-header">
+    <h1>Configurer le Maintenance Cost Rollup</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~1 question</span>
+      <span class="meta-pill">Cost</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-6.svg" alt="Illustration de la leçon 6.6 — Maintenance Cost Rollup : 4 categories (Labor/Material/Tool/Service) → asset hierarchy" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-6" id="lt-6-6-c" class="lt-course" checked>
     <input type="radio" name="lt-6-6" id="lt-6-6-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-6-c">📚 Leçon</label><label for="lt-6-6-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-6-c">📚 Leçon</label><label for="lt-6-6-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Costs included in calculated maintenance cost</li>
-          <li>Enable automatic cost Rollup</li>
+          <li>Identifier les 4 categories de coûts inclus dans le calculated maintenance cost.</li>
+          <li>Enable l'automatic cost Rollup au niveau Organizations.</li>
+          <li>Comprendre le mécanisme de propagation parent/child dans la hiérarchie d'assets.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li>Costs included: <strong>labor, material, tool, service</strong></li>
-          <li>Auto rollup activated via <strong>Organizations</strong> settings</li>
-          <li>Roll-up = child costs → parent in asset hierarchy</li>
+          <li><strong>4 cost categories</strong> agrégées : <code>Labor</code>, <code>Material</code>, <code>Tool</code>, <code>Service</code> (pas Overhead, pas Depreciation).</li>
+          <li><strong>Auto rollup</strong> activé via <code>Organizations</code> settings (Asset Options).</li>
+          <li><strong>Roll-up</strong> = costs des child assets propagés vers le parent dans la hiérarchie.</li>
+          <li><strong>Sources</strong> : WO Labor Transactions, WO Material Issues, WO Tool charges, WO Service charges.</li>
         </ul></div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-6-043" data-lesson="6-6" data-mode="single" data-correct="A">
   <div class="mcq-head">
@@ -9590,7 +9679,7 @@ mxe.int.aibrokertenantid</code></pre>
   </div>
   <button class="mark-done-btn" data-done="6-6">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-5" class="btn-nav"><span class="dir">← Précédent</span>6.5 AI Broker</a>
+    <a href="#lesson-6-5" class="btn-nav"><span class="dir">← Précédent</span>6.5 WO Intelligence (AI Broker)</a>
     <a href="#lesson-6-7" class="btn-nav next"><span class="dir">Suivant →</span>6.7 Inspections</a>
   </div>
 </section>
@@ -9598,30 +9687,44 @@ mxe.int.aibrokertenantid</code></pre>
 <!-- 6.7 -->
 <section class="lesson" id="lesson-6-7">
   <div class="breadcrumb">Section 6 <span class="brand-dot">·</span> 6.7</div>
-  <div class="lesson-header"><h1>Usage of Inspections</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 16%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Inspections (Inspection Forms)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 16%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Inspections</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-6-7.svg" alt="Illustration de la leçon 6.7 — Inspections : 7 question types + Conditional + Follow-up + MVI integration" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-6-7" id="lt-6-7-c" class="lt-course" checked>
     <input type="radio" name="lt-6-7" id="lt-6-7-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-6-7-c">📚 Leçon</label><label for="lt-6-7-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-6-7-c">📚 Leçon</label><label for="lt-6-7-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Types of questions available on inspection forms</li>
-          <li><strong>Conditional questions</strong></li>
-          <li>Record types associable with inspection forms</li>
-          <li>Follow-up work: <strong>Require Action</strong>, <strong>Automation Script</strong></li>
-          <li><strong>MVI integration</strong> with Inspection Forms</li>
+          <li>Identifier les 7 types de questions disponibles sur les Inspection Forms.</li>
+          <li>Configurer des Conditional Questions (display dynamique selon réponse précédente).</li>
+          <li>Identifier les record types associables aux Inspection Forms (WO, Ticket, PM).</li>
+          <li>Configurer le Follow-up work : <strong>Require Action</strong> ou <strong>Automation Script</strong>.</li>
+          <li>Intégrer MVI (Maximo Visual Inspection) avec les Inspection Forms.</li>
         </ul></div>
-        <h2>💡 Question types</h2>
-        <div class="key-box">Yes/No · Numeric · Text · Choice · Multi-select · Date · <strong>Meter</strong>
-        <ul>
-          <li><strong>Conditional questions</strong>: show/hide based on previous answer</li>
-          <li>Associated with: <strong>WO, Ticket, PM</strong></li>
-          <li>Follow-up: <strong>Require Action</strong> OR <strong>Automation Script</strong></li>
-          <li>MVI: image question → auto damage analysis via watsonx</li>
-        </ul></div>
+
+        <h2>💡 Points clés — 7 types de questions</h2>
+        <div class="key-box">
+          <p>7 types : Yes/No · Numeric · Text · Choice · Multi-select · Date · <strong>Meter</strong></p>
+          <ul>
+            <li><strong>Conditional questions</strong> : show/hide une question basé sur la réponse précédente.</li>
+            <li><strong>Records associés</strong> : <code>WO</code>, <code>Ticket</code>, <code>PM</code>.</li>
+            <li><strong>Follow-up actions</strong> : <code>Require Action</code> (réponse failed force action) ou <code>Automation Script</code> attached au form.</li>
+            <li><strong>MVI integration</strong> : question Image → auto-analyse via watsonx Visual Inspection (détection damage).</li>
+          </ul>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-6-7-039" data-lesson="6-7" data-mode="single" data-correct="B">
   <div class="mcq-head">
@@ -9735,8 +9838,8 @@ mxe.int.aibrokertenantid</code></pre>
   </div>
   <button class="mark-done-btn" data-done="6-7">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-6-6" class="btn-nav"><span class="dir">← Précédent</span>6.6 Cost Rollup</a>
-    <a href="#lesson-7-1" class="btn-nav next"><span class="dir">Suivant →</span>7.1 Scheduler Apps</a>
+    <a href="#lesson-6-6" class="btn-nav"><span class="dir">← Précédent</span>6.6 Maintenance Cost Rollup</a>
+    <a href="#lesson-7-1" class="btn-nav next"><span class="dir">Suivant →</span>7.1 Planning &amp; Scheduling Apps</a>
   </div>
 </section>
 
