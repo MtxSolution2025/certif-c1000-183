@@ -3370,33 +3370,183 @@ flowchart TD
 <!-- 3.3 -->
 <section class="lesson" id="lesson-3-3">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.3</div>
-  <div class="lesson-header"><h1>Create & manage Security Groups</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~2-3 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer les Security Groups</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~2-3 questions</span>
+      <span class="meta-pill">RBAC</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-3.svg" alt="Illustration de la leçon 3.3 — Chaîne de sécurité Person → User → Security Group → Start Center" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-3" id="lt-3-3-c" class="lt-course" checked>
     <input type="radio" name="lt-3-3" id="lt-3-3-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-3-c">📚 Leçon</label><label for="lt-3-3-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-3-c">📚 Leçon</label><label for="lt-3-3-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>How user and person records get created · users must be linked to person records</li>
-          <li>Where default security groups can be configured</li>
-          <li>Permissions needed to add users to security groups</li>
-          <li>How start centers are assigned to users</li>
-          <li>How access is granted to applications · <strong>4 default permissions</strong></li>
-          <li><strong>3 types of Object Data restrictions</strong></li>
-          <li>How multi-site access can be granted</li>
+          <li>Décrire comment les records User et Person sont créés et la relation obligatoire User → Person.</li>
+          <li>Identifier où configurer les default security groups (assignation automatique aux nouveaux users).</li>
+          <li>Identifier les permissions nécessaires pour ajouter un user à un security group (séparation des duties).</li>
+          <li>Décrire comment les Start Centers sont assignés aux users via les Security Groups.</li>
+          <li>Décrire comment l'accès aux applications est accordé et lister les <strong>4 permissions object-level par défaut</strong>.</li>
+          <li>Identifier les <strong>3 types d'Optional Data Restrictions (ODR)</strong> et leur portée respective.</li>
+          <li>Décrire comment l'accès multi-site est accordé via Security Groups.</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li>Chain: <strong>Person → User → Security Group → Start Center</strong></li>
-          <li><strong>4 app permissions</strong>: <strong>READ, INSERT, SAVE, DELETE</strong> ⭐</li>
-          <li><strong>3 Object Data Restrictions</strong>: <strong>Qualified</strong> (WHERE), <strong>Conditional</strong> (expression), <strong>Hidden</strong> (invisible field) ⭐</li>
-          <li>Multi-site access = always via security group</li>
+          <li><strong>Chaîne de sécurité</strong> — <code>Person</code> (identité) → <code>User</code> (login) → <code>Security Group</code> (autorisations) → <code>Start Center</code> (UI personnalisée). Ordre strict, FK NOT NULL à chaque maillon.</li>
+          <li><strong>4 permissions object-level par défaut</strong> — <code>READ</code> (consulter), <code>INSERT</code> (créer), <code>SAVE</code> (modifier), <code>DELETE</code> (supprimer). Granularité par business object.</li>
+          <li><strong>3 types ODR</strong> — <code>Qualified</code> (clause WHERE row-level), <code>Conditional</code> (expression runtime-évaluée), <code>Hidden</code> (attribut retiré de l'UI column-level).</li>
+          <li><strong>Multi-site access</strong> — exclusivement via l'onglet Sites du Security Group. Une seule modification de group = mise à jour automatique de tous les users assignés.</li>
+          <li><strong>Application-level vs Object-level</strong> — 2 grants indépendants. Application access = ouvrir l'app dans le menu ; Object permissions = manipuler les business objects. Sans Object permission, l'app est une coquille vide.</li>
+          <li><strong>Default Security Groups</strong> — configurés dans <code>Security Groups</code> app (flag Default cochet sur le record group). Auto-assignation aux nouveaux users.</li>
+          <li><strong>Privilèges de menu</strong> — quels modules / apps un Security Group peut voir dans le menu (tickboxes par application). Configuré dans tab <em>Applications</em>.</li>
+          <li><strong>Authorize Group Reassignment</strong> — fenêtre dédiée dans Security Groups app pour permettre à un group de gérer l'assignation des users à d'autres groups (séparation des duties).</li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box">4 permissions = <strong>READ, INSERT, SAVE, DELETE</strong>. IBM uses "UPDATE", "MODIFY", "VIEW", "CREATE" as distractors.</div>
+
+        <h2>📐 Chaîne de sécurité Maximo</h2>
+        <p>L'architecture de sécurité Maximo Manage repose sur une chaîne hiérarchique stricte de 4 entités. Chaque maillon est une étape obligatoire avant la suivante, validée par des contraintes FK au niveau base de données. Cette séparation est volontaire : elle permet de gérer indépendamment les <strong>identités</strong> (Person), les <strong>logins</strong> (User), les <strong>autorisations</strong> (Security Group) et l'<strong>UI</strong> (Start Center).</p>
+        <p>La logique métier sous-jacente : un Person représente une personne physique réelle (un humain dans l'organigramme), un User représente son compte d'accès aux systèmes, un Security Group regroupe les autorisations communes à un rôle métier (technicien, planner, controller), un Start Center personnalise l'UI selon ce rôle. Cette granularité permet de gérer 1 000 users avec ~10-20 Security Groups sans dupliquer les configurations individuellement.</p>
+
+        <figure class="lesson-diagram" data-lesson="c1000-183-3-3-chain">
+          <pre class="mermaid" data-mermaid-src="
+flowchart LR
+    P[Person<br/>identité physique<br/>People app]:::person
+    U[User<br/>login + auth<br/>Users app]:::user
+    SG[Security Group<br/>autorisations<br/>Security Groups app]:::group
+    SC[Start Center<br/>UI personnalisée<br/>Start Centers app]:::sc
+    P --&gt; U
+    U --&gt; SG
+    SG --&gt; SC
+    classDef person fill:#E0F2FE,stroke:#3B82F6,stroke-width:2px,color:#0F172A
+    classDef user fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A
+    classDef group fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#0F172A
+    classDef sc fill:#D1FAE5,stroke:#1D9E75,stroke-width:2px,color:#0F172A
+"></pre>
+          <figcaption>Chaque entité est gérée dans une app dédiée. La création se fait dans cet ordre uniquement : <code>People</code> → <code>Users</code> → <code>Security Groups</code> → <code>Start Centers</code>. Inverser l'ordre est impossible (FK NOT NULL bloquent). Cette séparation permet d'auditer chaque couche indépendamment et de respecter les principes SOC2 / ISO 27001 de moindre privilège.</figcaption>
+        </figure>
+
+        <h2>🔑 Les 4 permissions object-level par défaut</h2>
+        <p>Maximo applique strictement 4 permissions primitives sur chaque business object (<code>WORKORDER</code>, <code>ASSET</code>, <code>LOCATION</code>, <code>PO</code>, <code>INVENTORY</code>, etc.). Ces 4 verbes forment le <strong>CRUD</strong> basique et chaque permission peut être accordée ou refusée indépendamment. L'examen IBM teste systématiquement ces 4 noms — c'est un piège classique avec des distracteurs comme « UPDATE », « MODIFY », « VIEW », « CREATE » qui n'existent PAS dans Maximo.</p>
+        <figure class="lesson-table" data-lesson="c1000-183-3-3-permissions">
+          <table class="compare-table">
+            <caption>Les 4 permissions object-level par défaut</caption>
+            <thead>
+              <tr>
+                <th>Permission</th>
+                <th>Verbe SQL</th>
+                <th>Action UI Maximo</th>
+                <th>Exemple révocation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>READ</code></td>
+                <td>SELECT</td>
+                <td>Voir / lister / rechercher les records</td>
+                <td>WO confidentiels masqués pour group « stagiaires »</td>
+              </tr>
+              <tr>
+                <td><code>INSERT</code></td>
+                <td>INSERT</td>
+                <td>Créer un nouveau record (button New)</td>
+                <td>Group « consultation » ne peut pas créer de WO</td>
+              </tr>
+              <tr>
+                <td><code>SAVE</code></td>
+                <td>UPDATE</td>
+                <td>Modifier un record existant (button Save)</td>
+                <td>Read-only group peut consulter sans modifier</td>
+              </tr>
+              <tr>
+                <td><code>DELETE</code></td>
+                <td>DELETE</td>
+                <td>Supprimer un record (button Delete)</td>
+                <td>Personne ne peut supprimer hors administrateur</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>4 permissions, point final. Pas de permission MODIFY (= SAVE), VIEW (= READ), CREATE (= INSERT), UPDATE (= SAVE) dans Maximo. Au-delà des 4 défauts, certains objets exposent des <em>signature options</em> (sigoption) spécifiques (ex: <code>APPR</code> sur WORKORDER pour l'approbation workflow) — ce sont des permissions étendues, pas object-level standard.</figcaption>
+        </figure>
+
+        <h2>🛡️ Les 3 types d'Optional Data Restrictions (ODR)</h2>
+        <p>Les ODRs permettent de filtrer dynamiquement les données visibles ou éditables par un Security Group, sans modifier le schéma sous-jacent. Les autres groups voient toujours les données complètes. Maximo offre exactement 3 types, avec des portées de filtrage différentes : 2 row-level (Qualified, Conditional) et 1 column/attribute-level (Hidden).</p>
+        <figure class="lesson-table" data-lesson="c1000-183-3-3-odr">
+          <table class="compare-table">
+            <caption>Les 3 types d'Optional Data Restrictions (ODR)</caption>
+            <thead>
+              <tr>
+                <th>Type ODR</th>
+                <th>Portée</th>
+                <th>Mécanisme</th>
+                <th>Exemple concret</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Qualified</code></td>
+                <td>Row-level</td>
+                <td>Clause SQL WHERE ajoutée à toutes les queries</td>
+                <td>« STATUS IN ('WAPPR','APPR') » pour cacher les WO terminés</td>
+              </tr>
+              <tr>
+                <td><code>Conditional</code></td>
+                <td>Row ou field</td>
+                <td>Expression évaluée au runtime via Conditional Expression Manager</td>
+                <td>« :user = assignedto » pour ne voir que ses propres WOs</td>
+              </tr>
+              <tr>
+                <td><code>Hidden</code></td>
+                <td>Field-level</td>
+                <td>Retire l'attribut de l'UI pour ce Security Group</td>
+                <td>Cacher SALARY pour groups non-HR</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Les 3 ODRs se cumulent : un même Security Group peut avoir une Qualified sur la table, une Conditional sur un field, et un Hidden sur un autre field. Les ODRs ne modifient pas la base de données — elles filtrent dynamiquement selon le user authentifié. Les autres Security Groups voient les données complètes sans aucune restriction.</figcaption>
+        </figure>
+
+        <h2>🌐 Multi-site access via Security Groups</h2>
+        <p>L'accès multi-Sites se gère <strong>exclusivement via l'onglet Sites d'un Security Group</strong>. Cette approche est scalable : un admin sélectionne le group, ouvre l'onglet Sites, ajoute chaque Site autorisé (BEDFORD, NASHUA, etc.) ou coche « Authorize All Sites » pour accès global. Tous les users assignés héritent automatiquement de l'accès — aucune config per-user requise.</p>
+        <p>Avantage majeur : quand un Site s'ajoute ou se retire, on modifie le group une fois au lieu de mettre à jour 200 users individuellement. Anti-pattern à éviter : créer un user par Site et faire switcher les logins (multiplie la gestion, brise l'audit trail). Une autre erreur courante : tenter d'ajouter les Sites au record Person — le Person porte l'identité (email, phone, supervisor) mais pas les autorisations Site.</p>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 5 confusions les plus fréquentes</strong> sur la sécurité à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — penser que les permissions sont CREATE / UPDATE / VIEW / MODIFY. Faux : les 4 permissions sont <code>READ</code>, <code>INSERT</code>, <code>SAVE</code>, <code>DELETE</code>. IBM utilise systématiquement les autres noms comme distracteurs.</li>
+            <li><strong>Piège 2</strong> — placer une ODR sur un User. Faux : les ODRs se définissent exclusivement sur les Security Groups, jamais sur les Users individuels.</li>
+            <li><strong>Piège 3</strong> — penser qu'Application access = Object access. Faux : ce sont 2 grants indépendants. Sans object permission, l'app est une coquille vide (pas de records visibles, boutons grisés).</li>
+            <li><strong>Piège 4</strong> — confondre Hidden ODR (retire un field) avec Conditional read-only (rend un field grisé). Hidden = absent de l'UI ; Conditional read-only = visible mais non éditable.</li>
+            <li><strong>Piège 5</strong> — assigner un user à un Security Group sans Person préalable. Faux : la chaîne FK exige Person → User → Group, sinon erreur de validation.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quelles sont les 4 permissions object-level par défaut dans Maximo Security Groups ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>READ</strong>, <strong>INSERT</strong>, <strong>SAVE</strong>, <strong>DELETE</strong>. Pas CREATE, pas UPDATE, pas MODIFY, pas VIEW.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quels sont les 3 types d'Optional Data Restrictions (ODR) ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Qualified</strong> (clause WHERE row-level), <strong>Conditional</strong> (expression runtime row ou field), <strong>Hidden</strong> (attribut retiré UI column-level). 2 row-level + 1 column-level.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Comment accorde-t-on l'accès multi-site à un user ?</p>
+          <details><summary>Afficher la réponse</summary><p>Via l'onglet <em>Sites</em> d'un Security Group dans <code>Security Groups</code> app. Ajouter les Sites souhaités ou cocher Authorize All Sites. Tous les users assignés au group héritent automatiquement.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quelle est la chaîne de création complète pour qu'un nouveau user puisse se connecter ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>1.</strong> Person record (<code>People</code> app) → <strong>2.</strong> User record (<code>Users</code> app, lié au Person via PERSONID) → <strong>3.</strong> Assignation à ≥1 Security Group → <strong>4.</strong> Start Center template associé au group. Ordre inverse impossible.</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-3-142" data-lesson="3-3" data-mode="order" data-correct="A,B,C,D">
   <div class="mcq-head">
@@ -3414,11 +3564,42 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C, D</strong></div>
     
-    <div class="mcq-explanation-body"><p><strong>Correct order:</strong> Person → User → Security Group → Start Center</p>
-    <p><strong>Pourquoi cet ordre</strong> — La chaîne de security enablement Maximo est strictement hiérarchique : <strong>Étape 1</strong> — Créer le <em>Person record</em> (People application) qui porte les données identité (nom, email, phone, locale, supervisor). Un Person est une entité business autonome, existe même sans accès Maximo (ex: craftworkers externes sur WOs). <strong>Étape 2</strong> — Créer le <em>User record</em> (Users application) lié au Person via <code>PERSONID</code>. Le User porte le login (USERID), password, authentication method (local ou LDAP/SAML), et le lien au Person parent. <strong>Étape 3</strong> — Assigner le User à ≥1 <em>Security Group</em> (Security Groups application) qui définit les permissions object-level (Read/Insert/Save/Delete), application-level (apps autorisées), Sites accessibles, ODRs (Optional Data Restrictions). <strong>Étape 4</strong> — Associer un <em>Start Center template</em> au Security Group qui devient automatiquement le Start Center par défaut du User. Ordre inverse impossible : User sans Person = violation FK.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Ordre correct :</strong> A → B → C → D (Person → User → Security Group → Start Center)</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la séquence canonique de création d'un user. C'est une question type T4 (drag-drop) qui exige la maîtrise complète de la chaîne. Les FA débutants se trompent souvent en plaçant Security Group avant User ou en oubliant le Person préalable.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — La chaîne de sécurité Maximo est strictement hiérarchique avec des FK NOT NULL à chaque maillon : <code>USER.PERSONID → PERSON.PERSONID</code>, <code>USERSECGROUP.USERID → MAXUSER.USERID</code>, etc. La création doit suivre l'ordre de dépendance : on ne peut pas insérer un User sans Person référencé, ni un Security Group assignment sans User. Cette séparation respecte les principes ISO 27001 / SOC2 de moindre privilège : identité (Person) ≠ login (User) ≠ autorisation (Group) ≠ UI (Start Center).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — <strong>Étape 1</strong> : <code>People</code> app → New Person record (PERSONID, FIRSTNAME, LASTNAME, email, supervisor, locale). <strong>Étape 2</strong> : <code>Users</code> app → New User → champ Person populé avec le PERSONID créé, saisir USERID + password + auth method (LOCAL ou LDAP). <strong>Étape 3</strong> : <code>Users</code> app &gt; tab Groups → ajouter ≥1 Security Group dans la table USERSECGROUP. <strong>Étape 4</strong> : Le Start Center associé au Security Group via le tab <em>Start Centers</em> du group devient automatiquement le default Start Center du User.</p>
+
+      <p><strong>Exemple chiffré</strong> — Onboarding du nouveau technicien Marie Dupont au Site NYC : T+0 saisie Person (PERSONID = MDUPONT, email, manager). T+30s save. T+45s Users app : USERID = mdupont, lié au PERSONID, password initial. T+1min save User. T+1min15 onglet Groups : assigner « TECH-NYC » security group. T+1min30 le Start Center du group « TECH-NYC » apparaît automatiquement dans le menu de Marie. Marie peut se logger immédiatement.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'embauche d'un nouvel employé : (1) inscription RH (Person = identité physique), (2) création badge / login IT (User = compte d'accès), (3) attribution à une équipe / fonction (Security Group = autorisations métier), (4) bureau / poste de travail attribué (Start Center = environnement personnalisé). Pas de saut possible.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>4 maillons</strong> : Person → User → Security Group → Start Center.</li>
+          <li><strong>Apps</strong> : People → Users → Security Groups → Start Centers.</li>
+          <li><strong>FK NOT NULL</strong> à chaque transition (validation ORM).</li>
+          <li><strong>Inverse impossible</strong> : User sans Person violera la FK.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Person → User → Security Group → Start Center.</li>
+          <li>Identité → Login → Autorisation → UI.</li>
+          <li>Ordre verrouillé par FK.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Security Groups : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=security-security-groups" target="_blank" rel="noopener">Enablement chain</a></li>
-      <li>Maximo Secrets — Users, Persons, Groups : <a href="https://maximosecrets.com/2020/07/20/users-persons-security-groups/" target="_blank" rel="noopener">Creation sequence</a></li>
+      <li>STU C1000-183 sub-objective 3.3 — « User and Person record creation sequence »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Security Groups creation chain »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=security-security-groups" target="_blank" rel="noopener">Security enablement chain</a></li>
     </ul></div>
   </div>
 </div>
@@ -3438,12 +3619,49 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D1</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B, C</p>
-    <p><strong>Pourquoi A, B, C</strong> — Les <strong>4 permissions object-level default</strong> dans Security Groups sont : <strong>READ</strong> (consulter les records), <strong>INSERT</strong> (créer un nouveau record), <strong>SAVE</strong> (modifier un record existant), <strong>DELETE</strong> (supprimer un record). Ces 4 primitives forment le CRUD basique de Maximo, accordées ou refusées indépendamment sur chaque business object (WORKORDER, ASSET, LOCATION, PO, etc.). 3 d'entre elles sont listées ici (READ, INSERT, DELETE — SAVE non listé). Granularité : on peut autoriser READ+SAVE sans INSERT (un user qui modifie mais ne crée pas), ou READ+INSERT sans DELETE (user qui ajoute mais ne supprime jamais). Au-delà des 4 default, certains objets exposent des <em>sigoption</em> spécifiques (ex: APPR sur WORKORDER pour l'approbation workflow) — ce sont des signature options, pas des permissions object-level standard.</p>
-    <p><strong>Pourquoi D est faux</strong> — D2 invented : EXECUTE n'existe pas comme permission object-level Maximo ; confusion possible avec les OS/DB permissions.</p>
-    <p><strong>Why E wrong</strong> — D9 near-synonym : APPROVE est une <em>signature option</em> (sigoption) attachée au workflow WORKORDER/PO, pas une permission object générique.</p>
-    <p><strong>Why F wrong</strong> — D1 legacy : PUBLISH est un terme legacy issu de MIF (Maximo Integration Framework) pour publisher des messages vers external systems ; aucun lien avec object security.</p></div>
-    <div class="mcq-source"><strong>Source:</strong> <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-application-security" target="_blank" rel="noopener">https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-application-security</a></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Les noms exacts des 4 permissions Maximo sont un piège de mémorisation classique. IBM utilise systématiquement « UPDATE » / « MODIFY » / « VIEW » / « CREATE » / « EXECUTE » / « APPROVE » comme distracteurs car ces termes existent dans d'autres systèmes (OS, DB, autres EAM) mais PAS dans Maximo. Cette question vérifie si le candidat connaît les 4 verbes Maximo officiels.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Maximo applique strictement 4 permissions primitives sur chaque business object (table Maximo) : <code>READ</code>, <code>INSERT</code>, <code>SAVE</code>, <code>DELETE</code>. Ces 4 verbes correspondent exactement au CRUD SQL (SELECT, INSERT, UPDATE, DELETE). Chaque permission est accordée indépendamment, ce qui permet une granularité fine : un group peut avoir READ+SAVE sans INSERT (modifie mais ne crée pas), READ+INSERT sans DELETE (ajoute mais ne supprime jamais), ou seulement READ (consultation pure).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Security Groups</code> app &gt; ouvrir un group &gt; tab <em>Applications</em> &gt; sélectionner une app dans la liste (ex: Work Order Tracking) &gt; cocher / décocher les checkboxes <code>READ</code>, <code>INSERT</code>, <code>SAVE</code>, <code>DELETE</code>. Save. La table sous-jacente <code>APPLICATIONAUTH</code> stocke ces permissions avec colonnes <code>GROUPNAME</code>, <code>APP</code>, <code>READACCESS</code>, <code>INSERTACCESS</code>, <code>SAVEACCESS</code>, <code>DELETEACCESS</code>.</p>
+
+      <p><strong>Exemple chiffré</strong> — Group « TECH-READONLY » : READ = Y, INSERT/SAVE/DELETE = N → 200 techniciens consultent les WO sans modifier. Group « PLANNERS-NYC » : READ + INSERT + SAVE = Y, DELETE = N → 30 planners créent et modifient mais ne suppriment pas (audit trail préservé). Group « ADMINS » : tout activé. Cette granularité empêche les accidents (DELETE imprudent) tout en permettant le travail quotidien.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les permissions de fichiers Linux : Read (lire), Write (créer/modifier), Execute (exécuter), Delete (supprimer). Maximo splitte le « Write » Linux en 2 permissions distinctes (INSERT pour créer, SAVE pour modifier) — granularité plus fine.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — EXECUTE n'existe pas comme permission object-level Maximo. <strong>Pattern D2 Inventé</strong> : confusion possible avec les permissions OS / DB.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — APPROVE est une <em>signature option</em> (sigoption) attachée au workflow WORKORDER / PO, pas une permission object générique. <strong>Pattern D9 Quasi-synonyme</strong>.</p>
+
+      <p><strong>Pourquoi F est faux</strong> — PUBLISH est un terme issu de MIF (Maximo Integration Framework) pour publier des messages vers systèmes externes. <strong>Pattern D1 Hérité</strong> : confusion entre integration et security.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>4 permissions</strong> : <code>READ</code>, <code>INSERT</code>, <code>SAVE</code>, <code>DELETE</code>.</li>
+          <li><strong>Mapping SQL</strong> : SELECT, INSERT, UPDATE, DELETE.</li>
+          <li><strong>Table</strong> : <code>APPLICATIONAUTH</code>.</li>
+          <li><strong>Au-delà</strong> : signature options (APPR, ROUTE, etc.) sur workflow.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>R-I-S-D : READ, INSERT, SAVE, DELETE.</li>
+          <li>Pas CREATE, pas UPDATE, pas MODIFY, pas VIEW.</li>
+          <li>Chaque permission accordée indépendamment.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.3 — « 4 default object-level permissions »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Application security permissions »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-application-security" target="_blank" rel="noopener">Application security — READ INSERT SAVE DELETE</a></li>
+    </ul></div>
   </div>
 </div>
 <div class="mcq" data-uid="mcq-3-3-144" data-lesson="3-3" data-mode="multi" data-correct="A,B,C">
@@ -3462,14 +3680,48 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B, C</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D7</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B, C</p>
-    <p><strong>Pourquoi A, B, C</strong> — Les <strong>Optional Data Restrictions (ODR)</strong> se configurent par Security Group et offrent exactement 3 types : (1) <strong>Qualified</strong> — restreint les <em>rows</em> visibles via une clause SQL WHERE (ex: "STATUS IN ('WAPPR','APPR')" sur WORKORDER), évite au group de voir les WOs terminés, (2) <strong>Conditional</strong> — restreint un champ basé sur une <em>condition expression</em> évaluée au runtime (ex: rendre un champ read-only si STATUS != 'WAPPR'), utilise le Conditional Expression Manager, (3) <strong>Hidden</strong> — <em>retire un attribut de l'UI</em> pour ce group (ex: cacher SALARY pour non-HR). Les ODRs se cumulent : un même group peut avoir une Qualified sur le table, une Conditional sur un field, un Hidden sur un autre field. Mécanisme : les ODRs filtrent dynamiquement les résultats de requête et les droits UI sans modifier le schéma sous-jacent ; les autres groups voient toujours les données complètes.</p>
-    <p><strong>Pourquoi D est faux</strong> — D2 invented : "Read-only override" ne correspond à aucune catégorie ODR ; confusion possible avec Conditional qui peut rendre read-only.</p>
-    <p><strong>Why E wrong</strong> — D9 near-synonym : le masking (afficher ***) est une feature <em>data privacy</em> portée par Database Configuration ou Automation Scripts, pas un ODR type.</p>
-    <p><strong>Why F wrong</strong> — D7 non-existent : l'encryption est une feature Database niveau (TDE, column-level encryption) gérée hors du domaine ODR ; jamais une ODR category.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B, C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.3 demande explicitement « Identify the 3 types of Object Data restrictions ». IBM teste la mémorisation des 3 noms officiels et la distinction avec d'autres mécanismes de privacy (masking, encryption) qui sont gérés hors ODR.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Les ODRs (Optional Data Restrictions) filtrent dynamiquement les données visibles ou éditables par un Security Group sans modifier le schéma sous-jacent. Mécanisme : Maximo intercepte chaque query SQL et applique les restrictions configurées pour le user authentifié. Les autres groups voient les données complètes. 3 types existent : 2 row-level (Qualified, Conditional) et 1 column-level (Hidden).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Security Groups</code> app &gt; ouvrir un group &gt; tab <em>Data Restrictions</em> &gt; New Row &gt; choisir Type (Qualified / Conditional / Hidden) &gt; sélectionner Object &gt; saisir l'expression. Les ODRs se cumulent : un même group peut avoir une Qualified sur la table, une Conditional sur un field, un Hidden sur un autre field. Stockage en table <code>RESTRICTION</code> avec colonnes <code>GROUPNAME</code>, <code>OBJECTNAME</code>, <code>TYPE</code>, <code>RESTRICTION</code> (l'expression).</p>
+
+      <p><strong>Exemple chiffré</strong> — Group « TECH-CONFIDENTIAL-VIEW » : Qualified ODR sur WORKORDER (« STATUS IN ('WAPPR','APPR') ») cache les WO terminés (CLOSE, COMP) → les techniciens ne voient que les WO actifs. Conditional ODR sur ASSET (« CLASSIFICATIONID = 'CONFIDENTIAL' ») rend l'asset read-only pour les non-supervisors. Hidden ODR sur LABOR.HOURLYRATE → cache la colonne salaire pour les groups non-HR. Les 3 ODRs s'appliquent simultanément.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme les filtres de sécurité dans une banque : (1) Qualified = teller voit uniquement les comptes de sa branche, (2) Conditional = lecture seule sur les comptes high-net-worth (sauf wealth managers), (3) Hidden = colonne « solde réel » masquée pour le personnel d'accueil.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — « Read-only override » ne correspond à aucune catégorie ODR officielle. <strong>Pattern D2 Inventé</strong> : confusion avec un effet possible de Conditional qui peut rendre un field read-only.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Le masking (afficher ***) est une feature <em>data privacy</em> portée par Database Configuration ou Automation Scripts, pas un ODR type. <strong>Pattern D9 Quasi-synonyme</strong>.</p>
+
+      <p><strong>Pourquoi F est faux</strong> — L'encryption est une feature Database niveau (TDE, column-level encryption) gérée hors du domaine ODR. <strong>Pattern D7 Inexistant</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>3 ODR types</strong> : Qualified (row), Conditional (row/field), Hidden (field).</li>
+          <li><strong>Configuration</strong> : <code>Security Groups</code> &gt; Data Restrictions tab.</li>
+          <li><strong>Cumul</strong> : 1 group peut avoir N ODRs simultanément.</li>
+          <li><strong>Mécanisme</strong> : intercepte queries, ne modifie pas schéma.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Qualified + Conditional + Hidden = 3 ODR types.</li>
+          <li>Pas Read-only, pas Masked, pas Encrypted (= autres mécanismes).</li>
+          <li>Cumul possible sur même group.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Data restrictions on Security Groups : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-data-restrictions" target="_blank" rel="noopener">Qualified / Conditional / Hidden</a></li>
-      <li>Maximo Secrets — ODR configuration : <a href="https://maximosecrets.com/2020/08/05/data-restrictions/" target="_blank" rel="noopener">3 ODR types</a></li>
+      <li>STU C1000-183 sub-objective 3.3 — « 3 types of Object Data restrictions »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Data restrictions on Security Groups »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-data-restrictions" target="_blank" rel="noopener">Data restrictions — Qualified Conditional Hidden</a></li>
     </ul></div>
   </div>
 </div>
@@ -3489,14 +3741,48 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D8</span><span class="mcq-dpattern-chip">D4</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> B</p>
-    <p><strong>Pourquoi B (correct)</strong> — L'accès multi-Sites se gère <strong>exclusivement via l'onglet Sites d'un Security Group</strong>. L'admin sélectionne le group, ouvre l'onglet <em>Sites</em>, ajoute chaque Site autorisé (BEDFORD, NASHUA) et coche éventuellement Authorize All Sites si l'accès doit être global. Chaque user assigné à ce group hérite automatiquement de l'accès à tous les Sites listés — aucune config per-user requise. Cette approche scalable permet de gérer 1000 users / 50 Sites avec une dizaine de Security Groups métier ("Technicien Multi-Site East", "Planner NYC+LA", etc.). Avantage majeur : quand un Site s'ajoute ou se retire, on modifie le group une fois au lieu de mettre à jour 200 users. Plus simple qu'une ODR Qualified sur SITEID, et IBM-idiomatique pour cette surface d'autorisation.</p>
-    <p><strong>Pourquoi A est faux</strong> — D8 verbe imprécis : dupliquer les users par Site est un anti-pattern Maximo — multiplie les logins à gérer, brise l'audit trail, confond l'utilisateur. Explicitement déconseillé par IBM.</p>
-    <p><strong>Pourquoi C est faux</strong> — D4 adjacent : le Person record porte email/phone/supervisor/locale mais ne contrôle aucun accès Site ; confusion de couche (Person = identité, Group = autorisation).</p>
-    <p><strong>Pourquoi D est faux</strong> — D3 wrong scope : les ODRs se définissent exclusivement sur les Security Groups, pas sur les Users individuels — architecture de groupe, pas individuelle.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance de la méthode IBM-idiomatique pour gérer le multi-site access. Plusieurs anti-patterns existent (multi-user, ODR custom, modification Person) qui semblent logiques mais ne respectent pas l'architecture Maximo.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — L'autorisation Site dans Maximo passe exclusivement par le Security Group qui porte un onglet Sites listant les Sites autorisés. Cette approche centralisée est scalable : modifier un group affecte automatiquement tous les users assignés. Les ODRs ne sont jamais utilisées pour le filtrage SITEID car Maximo a un mécanisme natif plus performant (l'évaluation Site-membership se fait au login, pas à chaque query).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Security Groups</code> app &gt; ouvrir le group &gt; tab <em>Sites</em> &gt; New Row &gt; sélectionner Site (BEDFORD, NASHUA, etc.). Possibilité de cocher checkbox <em>Authorize All Sites</em> pour accès global. Stockage en table <code>SITEAUTH</code> avec colonnes <code>GROUPNAME</code>, <code>SITEID</code>, <code>AUTHALLSITES</code>. Au login d'un user, Maximo agrège tous les SITEAUTH des groups dont le user est membre.</p>
+
+      <p><strong>Exemple chiffré</strong> — Groupe « TECH-EAST » : Sites BEDFORD + NASHUA + BURLINGTON ajoutés. 50 techniciens assignés. Si on ajoute le Site WORCESTER 6 mois plus tard, on modifie le group une fois → les 50 techniciens y ont accès immédiatement. Alternative anti-pattern (1 user par Site) : 50 × 4 = 200 records à maintenir, audit trail brisé, friction utilisateur (4 logins distincts).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme la liste des accès dans une carte d'identité d'entreprise. La carte (Security Group) liste les bâtiments autorisés. Modifier la carte = modifier l'accès pour tous les porteurs de ce type de carte. Ne pas créer une nouvelle carte par bâtiment, ce serait un cauchemar de gestion.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Dupliquer les users par Site est un anti-pattern Maximo. Multiplie les logins, brise l'audit, confond l'utilisateur. <strong>Pattern D8 Verbe-imprécis</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Le Person record porte email/phone/supervisor/locale mais ne contrôle aucun accès Site. <strong>Pattern D4 Demi-vérité</strong> : confusion de couche (identité vs autorisation).</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Les ODRs se définissent exclusivement sur les Security Groups, pas sur les Users individuels. De plus, l'autorisation Site a un mécanisme natif plus performant que les ODRs. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Tab Sites</strong> sur Security Group (table <code>SITEAUTH</code>).</li>
+          <li><strong>Authorize All Sites</strong> checkbox = accès global.</li>
+          <li><strong>Évaluation</strong> au login (pas à chaque query).</li>
+          <li><strong>Anti-pattern</strong> : multi-user par Site, ODR custom sur SITEID.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Multi-site = onglet Sites du Security Group.</li>
+          <li>Pas Person, pas ODR, pas multi-user.</li>
+          <li>Modification group = update auto pour tous les users.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Sites for Security Group : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-sites-for-security-group" target="_blank" rel="noopener">Sites tab</a></li>
-      <li>Maximo Secrets — Multi-site security : <a href="https://maximosecrets.com/2020/08/05/data-restrictions/" target="_blank" rel="noopener">Sites granting patterns</a></li>
+      <li>STU C1000-183 sub-objective 3.3 — « How multi-site access can be granted »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Sites for Security Group »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-sites-for-security-group" target="_blank" rel="noopener">Sites tab on Security Group</a></li>
     </ul></div>
   </div>
 </div>
@@ -3516,14 +3802,48 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>D</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D5</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D3</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> D</p>
-    <p><strong>Pourquoi D (correct)</strong> — Le modèle de sécurité Maximo sépare strictement 2 niveaux d'autorisation : (1) <strong>Application-level</strong> — autorise l'accès à l'UI d'une application (le user voit l'app dans le menu, peut l'ouvrir), (2) <strong>Object-level</strong> — autorise le CRUD sur les business objects manipulés par l'application. Ces 2 grants sont <em>indépendants</em>. Si un group a uniquement l'Application access à Work Order Tracking sans permission object sur WORKORDER, le runtime Maximo : ouvre l'app, affiche le layout, mais toute tentative de search retourne 0 rows (pas de READ), le bouton New Work Order est grisé (pas d'INSERT), Save échoue (pas de SAVE). L'user voit une coquille vide. Cette double barrière empêche les accès accidentels et force une autorisation explicite des données. Design voulu pour audit SOC2/ISO 27001.</p>
-    <p><strong>Pourquoi A est faux</strong> — D5 inversée : l'héritage ne confère jamais de CRUD automatique — chaque permission doit être explicitement grantée ; principle of least privilege.</p>
-    <p><strong>Pourquoi B est faux</strong> — D9 near-synonym : aucun READ implicite n'est accordé par le seul accès application ; distracteur tentant pour qui pense "au moins voir".</p>
-    <p><strong>Pourquoi C est faux</strong> — D3 wrong scope : masquer l'app du Start Center exigerait de retirer le grant application-level, pas l'absence d'object-level permission — mécanismes distincts.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> D</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la compréhension de la double barrière de sécurité (application-level vs object-level). C'est un concept fondamental : sans cette séparation, un user authorized sur l'app aurait automatiquement accès aux données — violation du principe de moindre privilège SOC2 / ISO 27001.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Maximo applique 2 grants indépendants : (1) Application-level = peut ouvrir l'UI d'une application (apparaît dans le menu, le bouton GO Maximo est cliquable) ; (2) Object-level = peut effectuer CRUD sur les business objects manipulés par cette application. Ces grants sont stockés dans 2 tables distinctes (<code>APPLICATIONAUTH</code> pour app, <code>SIGOPTION</code> pour signature options). Le design force une autorisation explicite à chaque couche.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Si un group a Application access sur Work Order Tracking mais zéro permission object sur WORKORDER : (1) le user ouvre l'app sans erreur (l'UI charge), (2) toute tentative de search retourne 0 rows (READ refusée), (3) le bouton New Work Order est grisé (INSERT refusée), (4) Save échoue (SAVE refusée), (5) Delete échoue (DELETE refusée). L'user voit une coquille vide. Pour avoir un usage fonctionnel, il faut grant explicitement READ + INSERT + SAVE (et DELETE selon politique).</p>
+
+      <p><strong>Exemple chiffré</strong> — Group « VISITOR » avec Application access sur Work Order Tracking + Asset + Inventory mais zéro object permission. 10 users assignés. Au login : ils voient les apps dans leur Start Center et peuvent les ouvrir. Mais aucun WO/Asset/Item n'est visible (READ = N), aucun bouton New ne fonctionne (INSERT = N). Coquille vide totale. Coût admin de cette config : 0 (puisque rien ne fonctionne). Utilité réelle : aucune — illustre l'importance de granter les 2 niveaux ensemble.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme avoir un badge d'accès au bâtiment d'une banque (Application access) sans avoir le code du coffre-fort (Object permission). Tu peux entrer dans le hall, voir le coffre, mais tu ne peux rien y prendre ni y mettre. La double barrière empêche l'accès accidentel aux assets sensibles.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — L'héritage ne confère jamais de CRUD automatique — chaque permission doit être explicitement grantée. <strong>Pattern D5 Champ-frère</strong> : confusion avec d'autres modèles de sécurité où l'app access implique du CRUD.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Aucun READ implicite n'est accordé par le seul accès application. <strong>Pattern D9 Quasi-synonyme</strong> : tentation de penser « au moins voir ».</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Masquer l'app du Start Center exigerait de retirer le grant application-level, pas l'absence d'object-level permission. <strong>Pattern D3 Inverse</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>2 grants indépendants</strong> : Application-level + Object-level.</li>
+          <li><strong>Sans Object</strong> : l'app est une coquille vide.</li>
+          <li><strong>Tables</strong> : <code>APPLICATIONAUTH</code> + <code>SIGOPTION</code>.</li>
+          <li><strong>Conformité</strong> : SOC2 / ISO 27001 principe de moindre privilège.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Application access ≠ Object access (2 grants).</li>
+          <li>Sans Object = app vide (0 records, boutons grisés).</li>
+          <li>Granter les 2 niveaux pour usage fonctionnel.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Application vs Object Security : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-application-security" target="_blank" rel="noopener">Separate grants</a></li>
-      <li>Maximo Secrets — Security layers : <a href="https://maximosecrets.com/2020/07/25/security-permissions/" target="_blank" rel="noopener">App + Object model</a></li>
+      <li>STU C1000-183 sub-objective 3.3 — « Application vs Object security »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « 2-layer security model »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-application-security" target="_blank" rel="noopener">Application vs Object security</a></li>
     </ul></div>
   </div>
 </div>
@@ -3542,23 +3862,193 @@ flowchart TD
   <div class="mcq-explanation" hidden>
     <div class="mcq-explanation-head">Bonne réponse : <strong>A, B</strong></div>
     <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D3</span><span class="mcq-dpattern-chip">D9</span><span class="mcq-dpattern-chip">D7</span></div>
-    <div class="mcq-explanation-body"><p><strong>Correct:</strong> A, B</p>
-    <p><strong>Pourquoi A, B</strong> — 3 types ODR, 2 filtrent row-level : <strong>Qualified</strong> (ajoute systematiquement WHERE à toutes queries, ex: <code>STATUS IN ('WAPPR','APPR')</code>), <strong>Conditional</strong> (expression runtime-évaluée, ex: row visible si <code>:user = assignedto</code>). Hidden ODR retire un <em>attribut</em> de l'UI (column-level).</p>
-    <p><strong>Pourquoi C est faux</strong> — D3 wrong scope : Hidden ODR opère au niveau <em>attribute/column</em> (retire un field spécifique de l'UI pour le Security Group) — pas au niveau row. Scope de filtrage complètement différent des 2 row-level types (Qualified + Conditional).</p>
-    <p><strong>Pourquoi D est faux</strong> — D9 near-synonym : Read-only = outcome d'un Conditional, pas type d'ODR distinct.</p>
-    <p><strong>Why E wrong</strong> — D7 non-existent : il n'existe pas de "Masked ODR" type dans Maximo — le data masking est une feature séparée gérée par Database Configuration ou Automation Scripts (column-level privacy), indépendante du mécanisme ODR des Security Groups.</p></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A, B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Pick-2 question type T2C qui demande de distinguer la portée row-level vs column-level parmi les 3 ODR types. La distinction est subtile : Hidden retire un attribut visible (colonne) ; Qualified/Conditional cachent ou conditionnent les rows entières.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Les 3 ODRs ont des portées différentes : <strong>Qualified</strong> et <strong>Conditional</strong> opèrent au niveau row (cachent ou conditionnent une ligne entière selon une expression sur ses colonnes). <strong>Hidden</strong> opère au niveau column (retire un attribut spécifique de l'UI tout en laissant les autres colonnes visibles). Cette distinction est importante pour choisir le bon ODR : si vous voulez cacher des WO selon leur statut → row-level (Qualified). Si vous voulez cacher la colonne SALARY mais garder le record visible → column-level (Hidden).</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Qualified : ajoute « AND <expression> » à toutes les queries de l'object pour ce group (ex: « AND STATUS NOT IN ('CLOSE','COMP') »). Conditional : évalue runtime via Conditional Expression Manager (ex: « owner = :user »). Hidden : retire l'attribut de la liste de colonnes UI pour ce group (le field n'apparaît dans aucun layout, list view, dialog). Stockage table <code>RESTRICTION</code> avec <code>TYPE</code> ∈ {QUALIFIED, CONDITIONAL, HIDDEN}.</p>
+
+      <p><strong>Exemple chiffré</strong> — Table <code>WORKORDER</code> avec 1 000 rows. Qualified ODR « WOPRIORITY ≤ 3 » : 800 rows visibles. Hidden ODR sur attribut OWNER : les 1 000 rows restent visibles mais la colonne OWNER est absente. Effets distincts : Qualified réduit le row count ; Hidden réduit la column count.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Qualified = filtrer une liste de transactions bancaires pour ne montrer que celles &lt; 1 000 €. Conditional = afficher une transaction en read-only si elle est antérieure à 30 jours. Hidden = cacher la colonne « solde » dans le tableau (les transactions s'affichent, mais sans solde).</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Hidden ODR opère au niveau attribute/column, pas row. <strong>Pattern D3 Inverse</strong> : confusion sur le scope.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Read-only n'est pas un type d'ODR distinct ; c'est un effet possible de Conditional. <strong>Pattern D9 Quasi-synonyme</strong>.</p>
+
+      <p><strong>Pourquoi E est faux</strong> — Masked ODR n'existe pas. Le masking (afficher ***) est géré par Database Configuration ou Automation Scripts. <strong>Pattern D7 Inexistant</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Row-level</strong> : Qualified (WHERE) + Conditional (expression runtime).</li>
+          <li><strong>Column-level</strong> : Hidden (retire attribut UI).</li>
+          <li><strong>Effet</strong> : row-level réduit row count ; column-level réduit column count.</li>
+          <li><strong>Cumul</strong> possible sur même group.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Row-level : Qualified + Conditional.</li>
+          <li>Column-level : Hidden.</li>
+          <li>3 ODR types, 2 row-level + 1 column-level.</li>
+        </ul>
+      </div>
+    </div>
     <div class="mcq-sources"><strong>Sources :</strong><ul>
-      <li>IBM Docs — Data restrictions : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-data-restrictions" target="_blank" rel="noopener">Qualified / Conditional / Hidden</a></li>
-      <li>Maximo Secrets — ODR patterns : <a href="https://maximosecrets.com/2020/08/05/data-restrictions/" target="_blank" rel="noopener">Row vs column filtering</a></li>
+      <li>STU C1000-183 sub-objective 3.3 — « ODR scopes — row vs column »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Data restriction types and scopes »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=groups-data-restrictions" target="_blank" rel="noopener">Data restrictions — scope and effect</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-3-160" data-lesson="3-3" data-mode="single" data-correct="C">
+  <div class="mcq-head">
+    <span class="mcq-num">Q15 · Sous-rubrique 3.3 · Type 1 · Default Security Group</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un admin veut s'assurer que tout nouveau user créé reçoit automatiquement les permissions minimales pour accéder à Self-Service.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Comment configure-t-on un Default Security Group qui sera auto-assigné aux nouveaux users ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-3-160-A"><input type="radio" name="mcq-3-3-160" value="A" id="mcq-3-3-160-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Dans Users app, cocher « Auto-assign on Create » sur chaque user</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-3-160-B"><input type="radio" name="mcq-3-3-160" value="B" id="mcq-3-3-160-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Dans Domains app, créer un domaine SECURITYGROUP avec valeur par défaut</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="1"><label class="mcq-label" for="mcq-3-3-160-C"><input type="radio" name="mcq-3-3-160" value="C" id="mcq-3-3-160-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Dans Security Groups app, cocher la checkbox Default sur le record du group</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-3-160-D"><input type="radio" name="mcq-3-3-160" value="D" id="mcq-3-3-160-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Dans System Properties, set <code>mxe.security.defaultgroup</code></span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>C</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span><span class="mcq-dpattern-chip">D1 Hérité</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> C</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.3 mentionne « Where default security groups can be configured ». IBM teste la connaissance de la checkbox Default dans Security Groups app, distincte des autres mécanismes de configuration.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le Default Security Group est un group spécial dont le flag <code>SECURITYGROUP.DEFAULTGRP</code> = Y. Quand un nouveau user est créé (via UI ou import), Maximo l'assigne automatiquement à tous les groups marqués Default. Mécanisme : assure que tout user a au minimum un set de permissions baseline (typiquement Self-Service ou Read-only) sans intervention manuelle.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Security Groups</code> app &gt; ouvrir le group de baseline (ex: « MAXEVERYONE » ou « SELF-SERVICE ») &gt; cocher la checkbox <em>Default Group for New Users</em> &gt; Save. À chaque création d'un User dans <code>Users</code> app, Maximo INSERT automatiquement une row dans USERSECGROUP liant le user à ce group. Possibilité de marquer plusieurs groups comme Default.</p>
+
+      <p><strong>Exemple chiffré</strong> — Group « MAXEVERYONE » avec Default = Y, permissions Self-Service uniquement. Onboarding mensuel : 50 nouveaux techniciens créés. Tous reçoivent automatiquement « MAXEVERYONE » + leur group métier (ex: « TECH-NYC »). Si « MAXEVERYONE » n'avait pas le flag Default, l'admin devrait l'ajouter manuellement à 50 users — risque d'oubli.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'inscription par défaut à une mailing list newsletter à l'inscription d'un nouveau membre. Pas besoin de cocher individuellement — c'est paramétré au niveau de la liste.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — La checkbox « Auto-assign on Create » n'existe pas dans Users app. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Domains app gère les listes de valeurs (ALN, Numeric, Crossover, etc.) pas les défauts groups. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Aucune system property <code>mxe.security.defaultgroup</code>. <strong>Pattern D1 Hérité</strong> : confusion avec d'anciennes versions de Maximo.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Default Security Group</strong> : checkbox dans Security Groups app.</li>
+          <li><strong>Champ DB</strong> : <code>SECURITYGROUP.DEFAULTGRP</code>.</li>
+          <li><strong>Effet</strong> : auto-assignation à chaque création de User.</li>
+          <li><strong>Plusieurs Defaults</strong> possibles (additifs).</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Default = checkbox dans Security Groups app.</li>
+          <li>Pas Domains, pas System Properties.</li>
+          <li>Auto-assignation à la création User.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.3 — « Where default security groups can be configured »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Default group flag »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=security-default-group" target="_blank" rel="noopener">Default Security Group flag</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-3-161" data-lesson="3-3" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q16 · Sous-rubrique 3.3 · Type 1 · Authorize Group Reassignment</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un manager doit pouvoir assigner ses techniciens à un Security Group « TECH-NYC » sans avoir les pleins droits administrateur Maximo (séparation des duties).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel mécanisme Maximo permet cette délégation contrôlée ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-3-161-A"><input type="radio" name="mcq-3-3-161" value="A" id="mcq-3-3-161-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Donner au manager les permissions full sur Users app + Security Groups app</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-3-161-B"><input type="radio" name="mcq-3-3-161" value="B" id="mcq-3-3-161-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Authorize Group Reassignment — fenêtre dédiée dans Security Groups app autorisant un group à gérer l'assignation des users à d'autres groups spécifiques</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-3-161-C"><input type="radio" name="mcq-3-3-161" value="C" id="mcq-3-3-161-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Créer un workflow d'approbation custom pour chaque assignation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-3-161-D"><input type="radio" name="mcq-3-3-161" value="D" id="mcq-3-3-161-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Le manager doit demander à l'administrateur Maximo central pour chaque assignation</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D8 Verbe-imprécis</span><span class="mcq-dpattern-chip">D10 Procédure-plausible</span><span class="mcq-dpattern-chip">D8 Verbe-imprécis</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.3 mentionne « Permissions needed to add users to security groups ». IBM teste la connaissance du mécanisme dédié pour la séparation des duties — éviter de donner les pleins droits admin à des managers métier.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — La séparation des duties (SOD) est un principe SOC2 / ISO 27001 : un manager d'équipe ne doit pas avoir les pleins droits Maximo central, mais doit pouvoir gérer son périmètre (assigner ses techniciens à un group spécifique). Maximo offre la fenêtre Authorize Group Reassignment qui définit précisément quels groups un manager peut gérer.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Security Groups</code> app &gt; ouvrir le group du manager (ex: « MGR-NYC ») &gt; Select Action menu &gt; <em>Authorize Group Reassignment</em> &gt; New Row &gt; ajouter le group autorisé (ex: « TECH-NYC »). Save. Maintenant les users du group « MGR-NYC » peuvent assigner / désassigner d'autres users au group « TECH-NYC », mais pas aux autres groups (ex: ils ne peuvent pas assigner « ADMIN » ou « FINANCE »).</p>
+
+      <p><strong>Exemple chiffré</strong> — Manager Jean a accès au group « MGR-NYC » avec Authorize Group Reassignment sur « TECH-NYC ». Il onboarde Marie : (1) Jean ouvre Marie dans Users app, (2) tab Groups, (3) ajoute « TECH-NYC » → autorisé. Tentative d'ajouter « ADMIN » → erreur « You are not authorized to assign this group. » Sans cette fenêtre, Jean aurait soit pleins droits (risque) soit aucun droit (friction).</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un manager RH local qui peut affecter ses employés à des projets de son équipe, mais ne peut pas les muter dans une autre filiale ou les promouvoir au comité de direction. Délégation contrôlée par périmètre.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — Donner les pleins droits viole la SOD. <strong>Pattern D8 Verbe-imprécis</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Workflow custom est over-engineering quand un mécanisme natif existe. <strong>Pattern D10 Procédure-plausible</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Goulot d'étranglement administratif évitable avec Authorize Group Reassignment. <strong>Pattern D8 Verbe-imprécis</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Authorize Group Reassignment</strong> : Select Action menu de Security Groups app.</li>
+          <li><strong>Délégation contrôlée</strong> : un group peut gérer l'assignation à des groups spécifiques.</li>
+          <li><strong>SOD</strong> : SOC2 / ISO 27001 séparation des duties.</li>
+          <li><strong>Évite</strong> les pleins droits admin pour managers locaux.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Authorize Group Reassignment = délégation Security Groups.</li>
+          <li>Périmètre limité aux groups autorisés.</li>
+          <li>SOC2 / ISO 27001 compliant.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.3 — « Permissions needed to add users to security groups »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 p.242 « Authorize Group Reassignment »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=security-authorize-group-reassignment" target="_blank" rel="noopener">Authorize Group Reassignment</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-2" class="btn-nav"><span class="dir">← Précédent</span>3.2 Org Site</a>
-    <a href="#lesson-3-4" class="btn-nav next"><span class="dir">Suivant →</span>3.4 Calendars</a>
+    <a href="#lesson-3-2" class="btn-nav"><span class="dir">← Précédent</span>3.2 Configurer les options Organization (Site)</a>
+    <a href="#lesson-3-4" class="btn-nav next"><span class="dir">Suivant →</span>3.4 Calendars et Shifts</a>
   </div>
 </section>
 
