@@ -145,6 +145,58 @@ PROMPTS = [
             "can vary between sites. Match the visual language of lesson 3.1 hero for series coherence."
         ),
     },
+    {
+        "lesson_id": "c1000-183-3-3",
+        "image_path": "assets/illustrations/lesson-c1000-183-3-3.svg",
+        "figure_type": "hero",
+        "title_fr": "Chaîne de sécurité Person → User → Group → Start Center",
+        "subject": (
+            "Isometric flow diagram showing the IBM Maximo Manage 4-link security chain: a stylized human "
+            "silhouette icon (Person) with an ID badge, connecting via arrow to a key/lock icon (User login), "
+            "connecting to a group of figures icon (Security Group with permission shields), connecting to a "
+            "dashboard/screen icon (Start Center showing widgets). 4 entities arranged horizontally in a "
+            "clear left-to-right flow with arrows. Each entity has a small label tag below showing the app "
+            "name (People / Users / Security Groups / Start Centers). Subtle indicators showing FK constraints "
+            "between entities (small chain link motifs)."
+        ),
+        "style": (
+            "Clean technical isometric illustration matching lessons 3.1 and 3.2 visual language. Vector flat "
+            "with soft depth shading. Stripe Press / Linear marketing infographic aesthetic."
+        ),
+        "composition": (
+            "Horizontal flow left to right, 4 entities at equal spacing. Person icon on left (blue tint), "
+            "User icon (gray tint), Security Group icon (amber tint), Start Center icon (teal tint). Arrows "
+            "between entities with small FK chain motifs. App name labels below each entity. Light subtle "
+            "background with topographic teal pattern at 5% opacity."
+        ),
+        "color_palette": (
+            "Person blue #3B82F6, User slate gray #475569, Security Group amber #F59E0B, Start Center teal "
+            "#1D9E75, white background, brand topographic teal at 5% alpha. Color progression matches the "
+            "4-level storage hierarchy from lesson 3.1."
+        ),
+        "lighting": "Soft directional from top-left, gentle ambient occlusion under each icon",
+        "mood": "Professional, didactic, structured, neutral business",
+        "technical_directives": (
+            "1280x480px aspect (cinematic banner). SVG-friendly clean lines and flat fills. Visual coherence "
+            "with lessons 3.1 and 3.2 hero illustrations (same color system, same isometric perspective)."
+        ),
+        "negative_prompt": (
+            "no realistic faces, no detailed human features (use silhouette), no realistic photo textures, "
+            "no shadow gradients, no text labels (added in HTML), no IBM logos, no trademarks, no 3D render "
+            "look, no skeuomorphism, no neon glows"
+        ),
+        "references": (
+            "IBM Docs Security Groups https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=security-security-groups ; "
+            "lessons 3.1 and 3.2 hero (visual coherence) ; Stripe Press infographics"
+        ),
+        "priority": "P1",
+        "notes": (
+            "Hero image for lesson 3.3. The 4-link chain Person → User → Group → Start Center must be "
+            "unambiguous via the directional flow. Color progression respects the lesson 3.1 hierarchy "
+            "(blue=System equivalent, gray=intermediate, amber=group, teal=interface). Keep the human "
+            "silhouette generic — no faces, no ethnicity markers."
+        ),
+    },
 ]
 
 
