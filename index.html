@@ -5126,35 +5126,157 @@ graph TD
 <!-- 3.6 -->
 <section class="lesson" id="lesson-3-6">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.6</div>
-  <div class="lesson-header"><h1>Create and manage Domains</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~2-3 questions</span><span class="meta-pill">⭐ Priority</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer les Domains</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~2-3 questions</span>
+      <span class="meta-pill">⭐ Priorité</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-6.svg" alt="Illustration de la leçon 3.6 — 6 types de Domains Maximo (ALN, Numeric, Numeric Range, Table, Crossover, Synonym)" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-6" id="lt-3-6-c" class="lt-course" checked>
     <input type="radio" name="lt-3-6" id="lt-3-6-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-6-c">📚 Leçon</label><label for="lt-3-6-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-6-c">📚 Leçon</label><label for="lt-3-6-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Domain types — decide which type fits a given scenario</li>
-          <li>Add, modify, delete domains</li>
-          <li>Org/Site-level restrictions for domains</li>
-          <li>Conditions for domain values</li>
-          <li><strong>Where clauses for Table domains</strong></li>
-          <li><strong>Source/target fields and conditions for Crossover domains</strong></li>
-          <li>Applying ALN domain to an attribute</li>
+          <li>Identifier les 6 types de Domain disponibles dans Maximo Manage et choisir le bon type selon le scénario.</li>
+          <li>Ajouter, modifier, supprimer des domains via l'application Domains.</li>
+          <li>Configurer les restrictions Org-level et Site-level pour les domains (limiter les valeurs visibles par scope).</li>
+          <li>Appliquer des conditions dynamiques sur les valeurs d'un domain (Conditional Expression Manager).</li>
+          <li>Maîtriser les <strong>Where Clauses</strong> avec bind variables pour les Table domains.</li>
+          <li>Maîtriser les <strong>Source/Target fields + Copy Conditions</strong> pour les Crossover domains.</li>
+          <li>Appliquer un domain à un attribute via Database Configuration (binding obligatoire).</li>
         </ul></div>
+
         <h2>💡 Points clés — 6 domain types</h2>
         <div class="key-box"><ul>
-          <li><strong>ALN</strong> — alphanumeric list</li>
-          <li><strong>Numeric</strong> — discrete numeric list</li>
-          <li><strong>Numeric Range</strong> — min/max interval</li>
-          <li><strong>Table</strong> — SQL <code>where clause</code> against another table</li>
-          <li><strong>Crossover</strong> — <em>copies values from source to target</em> on user selection</li>
-          <li><strong>Synonym</strong> — alternate values for same meaning (e.g. WO statuses)</li>
+          <li><strong>ALN</strong> (Alphanumeric) — liste fixe de valeurs alphanumériques (ex: OPERATING, STANDBY, DOWN). Pour state machines simples.</li>
+          <li><strong>Numeric</strong> — liste fixe de valeurs numériques discrètes (ex: priorities 1, 3, 5, 7, 9).</li>
+          <li><strong>Numeric Range</strong> — intervalles avec bornes min/max (ex: priority entre 1 et 9 inclus).</li>
+          <li><strong>Table</strong> — valeurs pulled dynamiquement depuis une table Maximo via <code>WHERE</code> clause + bind variables (<code>:siteid</code>, <code>:userid</code>, <code>:&owner;.fieldname</code>).</li>
+          <li><strong>Crossover</strong> — copie automatique de N source fields vers N target fields lors de la sélection. Optionnellement gardé par Copy Condition.</li>
+          <li><strong>Synonym</strong> — mapping internal code → external label pour i18n et UI (ex: WAPPR ↔ « En attente d'approbation »).</li>
         </ul></div>
-        <h2>⚠️ Piège IBM — Crossover vs Lookup</h2>
-        <div class="trap-box">Question pattern: "User needs to <strong>copy values</strong> from a source record into a target when selected" → <strong>Crossover</strong>. Not Lookup Map (only displays, does not copy).</div>
+
+        <h2>📊 Comparaison des 6 types — choix par scénario</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-6-domain-types">
+          <table class="compare-table">
+            <caption>Les 6 types de Domains Maximo — choisir selon le besoin</caption>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Statique / Dynamique</th>
+                <th>Use case typique</th>
+                <th>Particularité</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ALN</code></td>
+                <td>Statique</td>
+                <td>States simples, codes courts</td>
+                <td>Listes hardcoded, pas de WHERE</td>
+              </tr>
+              <tr>
+                <td><code>Numeric</code></td>
+                <td>Statique</td>
+                <td>Priorities discrètes, codes numériques fixes</td>
+                <td>Liste valeurs numériques séparées</td>
+              </tr>
+              <tr>
+                <td><code>Numeric Range</code></td>
+                <td>Statique</td>
+                <td>Validation intervalle (priority 1-9)</td>
+                <td>Min/Max bounds, pas une liste</td>
+              </tr>
+              <tr>
+                <td><code>Table</code></td>
+                <td>Dynamique</td>
+                <td>Pick d'un asset/location/item du Site courant</td>
+                <td>WHERE + bind vars (<code>:siteid</code>, <code>:userid</code>)</td>
+              </tr>
+              <tr>
+                <td><code>Crossover</code></td>
+                <td>Dynamique</td>
+                <td>Pré-remplir N fields target depuis source</td>
+                <td>Source/Target mapping + Copy Condition</td>
+              </tr>
+              <tr>
+                <td><code>Synonym</code></td>
+                <td>Statique</td>
+                <td>i18n labels, mapping codes legacy</td>
+                <td>Internal value ↔ external label</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Choix rapide : valeur dynamique contextuelle ? Table. Plusieurs fields à remplir ? Crossover. Mapping codes legacy ? Synonym. Liste fixe ? ALN/Numeric/Numeric Range selon type.</figcaption>
+        </figure>
+
+        <h2>🔍 Bind variables — la clé des Table domains dynamiques</h2>
+        <p>Les <strong>Table domains</strong> deviennent vraiment puissants avec les bind variables qui rendent la query contextuelle au runtime :</p>
+        <ul>
+          <li><code>:siteid</code> — Site courant de l'user (Default Insert Site).</li>
+          <li><code>:orgid</code> — Org courante.</li>
+          <li><code>:userid</code> — USERID du user authentifié.</li>
+          <li><code>:app</code> — Application en cours (ex: « ASSET », « WOTRACK »).</li>
+          <li><code>:&owner;.fieldname</code> — référence un field de l'objet parent (ex: <code>:&owner;.assetnum</code> pour filtrer par l'asset du WO en cours).</li>
+        </ul>
+        <p>Exemple complet : <code>SELECT assetnum FROM ASSET WHERE status='OPERATING' AND siteid=:siteid AND classstructureid=:&owner;.classstructureid</code> — filtre les assets opérationnels du Site courant ayant la même classification que l'asset parent du WO.</p>
+
+        <h2>🔄 Crossover — le multiplicateur de productivité</h2>
+        <p>Un Crossover domain copie <strong>plusieurs fields simultanément</strong> du source record vers le target record dès que l'user sélectionne une valeur. Architecture : 1 ligne par paire source_field/target_field, avec optionnellement une Copy Condition (expression booléenne) qui gate la copy.</p>
+        <p>Exemple : Crossover sur ASSET → WORKORDER avec 5 lignes :</p>
+        <ul>
+          <li>ASSET.LOCATION → WORKORDER.LOCATION (toujours)</li>
+          <li>ASSET.CLASSSTRUCTUREID → WORKORDER.CLASSSTRUCTUREID (Copy Condition: <code>:worktype = 'CM'</code>)</li>
+          <li>ASSET.PRIORITY → WORKORDER.WOPRIORITY (toujours)</li>
+          <li>ASSET.VENDOR → WORKORDER.VENDOR (Copy Condition: <code>:status = 'WAPPR'</code>)</li>
+          <li>ASSET.WARRANTYEXPDATE → WORKORDER.WARRANTYEXPDATE (toujours)</li>
+        </ul>
+        <p>Quand l'user pick l'asset PUMP-001, Maximo applique chaque Copy Condition et copie sélectivement les 5 fields. L'user voit son WO se pré-remplir en 1 sélection au lieu de 5 saisies manuelles.</p>
+
+        <h2>🛠️ Workflow d'application — création du domain ET binding</h2>
+        <p>Créer un domain est seulement la <strong>première étape</strong>. Pour le rendre effectif, il faut le binding à un attribute via Database Configuration :</p>
+        <ol>
+          <li>App <code>Domains</code> &gt; New Domain &gt; choisir Type + Domain ID + Description &gt; saisir valeurs ou Where Clause.</li>
+          <li>App <code>Database Configuration</code> &gt; sélectionner Object &gt; tab Attributes &gt; sélectionner Attribute &gt; saisir Domain dans le champ Domain &gt; Save.</li>
+          <li>Si changement structurel : passer en Admin Mode &gt; Configure Database &gt; revenir en Live Mode.</li>
+        </ol>
+        <p>Sans cette étape de binding, le domain existe en DB mais aucun field ne le consomme.</p>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 5 confusions les plus fréquentes</strong> sur les Domains à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1 — Crossover vs Lookup</strong> : Lookup affiche un popup et copie 1 valeur dans 1 field. Crossover copie N fields automatiquement. Pour « copy values from source to target on selection » → toujours Crossover.</li>
+            <li><strong>Piège 2 — Boolean / Hierarchy domain inexistants</strong> : Maximo a 6 types EXACTEMENT (ALN, Numeric, Numeric Range, Table, Crossover, Synonym). Boolean = attribute type YORN, pas domain. Hierarchy = Classifications app.</li>
+            <li><strong>Piège 3 — Création ≠ binding</strong> : créer un domain dans Domains app ne suffit pas. Il faut Database Configuration pour l'appliquer à un attribute.</li>
+            <li><strong>Piège 4 — Synonym pas pour filtrer</strong> : Synonym translate des codes en labels, ne filtre pas des rows. Pour filtrage dynamique → Table domain avec WHERE clause.</li>
+            <li><strong>Piège 5 — ODR ≠ Crossover</strong> : ODR (Optional Data Restrictions) restreint la <em>visibilité</em> des rows par Security Group. Crossover propage des <em>valeurs</em> entre fields. Mécanismes orthogonaux.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quels sont les 6 types de Domains Maximo ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>ALN</strong>, <strong>Numeric</strong>, <strong>Numeric Range</strong>, <strong>Table</strong>, <strong>Crossover</strong>, <strong>Synonym</strong>. 6 exclusivement. Boolean et Hierarchy sont d'autres mécanismes.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quels domain types supportent une WHERE clause dynamique avec bind variables ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Table domain</strong> (filtre les rows source) et <strong>Crossover domain</strong> (lookup source filter). Bind vars : <code>:siteid</code>, <code>:userid</code>, <code>:orgid</code>, <code>:app</code>, <code>:&owner;.fieldname</code>.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Pourquoi un domain créé dans Domains app n'apparaît pas dans le field cible ?</p>
+          <details><summary>Afficher la réponse</summary><p>Le domain n'a pas été <strong>appliqué à l'attribute</strong> via <code>Database Configuration</code> (étape de binding obligatoire). Création ≠ binding.</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-6-131" data-lesson="3-6" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -5313,48 +5435,244 @@ graph TD
       <li>IBM Docs — Crossover Domains : <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-crossover-domains" target="_blank" rel="noopener">Lookup conditions</a></li>
     </ul></div>
   </div>
-</div></div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-6-168" data-lesson="3-6" data-mode="single" data-correct="B">
+  <div class="mcq-head">
+    <span class="mcq-num">Q26 · Sous-rubrique 3.6 · Type 1 · Synonym domain use case</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Le DSI veut afficher les WO statuts en français pour les users francophones tout en gardant les codes internes inchangés (WAPPR reste WAPPR en DB).</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel domain type permet ce mapping internal code → external label ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="0"><label class="mcq-label" for="mcq-3-6-168-A"><input type="radio" name="mcq-3-6-168" value="A" id="mcq-3-6-168-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">ALN domain avec valeurs en français</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="1"><label class="mcq-label" for="mcq-3-6-168-B"><input type="radio" name="mcq-3-6-168" value="B" id="mcq-3-6-168-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Synonym domain mappant codes internes (WAPPR) vers labels FR (« En attente d'approbation »)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-6-168-C"><input type="radio" name="mcq-3-6-168" value="C" id="mcq-3-6-168-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Crossover domain copiant des valeurs FR</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-6-168-D"><input type="radio" name="mcq-3-6-168" value="D" id="mcq-3-6-168-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Table domain avec WHERE locale='FR'</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>B</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D2 Inventé</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span><span class="mcq-dpattern-chip">D2 Inventé</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> B</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — IBM teste la connaissance du Synonym domain qui est spécifiquement conçu pour le mapping internal/external labels (i18n et codes legacy).</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Le Synonym domain garde le code interne intact en DB tout en exposant à l'UI un label différent par locale. Mécanisme : table SYNONYMDOMAIN avec colonnes <code>VALUE</code> (code interne, ex: WAPPR), <code>MAXVALUE</code> (mapping vers une autre liste), <code>DESCRIPTION</code> (label affichable). Au runtime, Maximo affiche la description selon la locale du user.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Domains</code> app &gt; New Domain &gt; Type = SYNONYM &gt; saisir Internal Value (WAPPR) + Description (« En attente d'approbation » pour FR, « Waiting for Approval » pour EN). Maximo gère les variantes locale dans <code>L_MAXVALUE</code>. À l'écran, le user FR voit « En attente d'approbation » mais la DB stocke WAPPR.</p>
+
+      <p><strong>Exemple chiffré</strong> — WO statuses : 12 codes internes (WAPPR, APPR, INPRG, COMP, etc.). Synonym domain « WOSTATUS » avec 12 internal values + descriptions FR + EN. User FR voit les statuts en français, user EN voit les statuts en anglais. DB et reports utilisent toujours WAPPR/APPR.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme l'i18n d'un site web : le bouton « Submit » s'affiche « Soumettre » en FR, mais le code HTML/backend utilise toujours « Submit ». Le mapping i18n garde la cohérence interne tout en localisant l'UI.</p>
+
+      <p><strong>Pourquoi A est faux</strong> — ALN ne supporte pas le mapping internal/external. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — Crossover copie des fields, ne traduit pas. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Table domain filtre les rows, ne traduit pas. <strong>Pattern D2 Inventé</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Synonym domain</strong> : internal code ↔ external label.</li>
+          <li><strong>Table</strong> : <code>SYNONYMDOMAIN</code> avec <code>VALUE</code> + <code>DESCRIPTION</code>.</li>
+          <li><strong>Use case</strong> : i18n statuses, codes legacy.</li>
+          <li><strong>Spécificité</strong> : DB intacte, UI traduite.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Synonym = mapping code → label.</li>
+          <li>i18n WO statuses, codes legacy.</li>
+          <li>DB stocke code, UI affiche label.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.6 — « Synonym domain use cases »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Synonym Domains »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-synonym-domains" target="_blank" rel="noopener">Synonym Domains</a></li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="mcq" data-uid="mcq-3-6-169" data-lesson="3-6" data-mode="single" data-correct="A">
+  <div class="mcq-head">
+    <span class="mcq-num">Q27 · Sous-rubrique 3.6 · Type 1 · Domain Org/Site restriction</span>
+    <span class="mcq-type-chip">T1 · Simple</span>
+    <span class="mcq-status-badge" aria-live="polite"></span>
+  </div>
+  <div class="mcq-context">Un FA crée un ALN domain « ASSET-CRITICALITY » avec valeurs HIGH/MEDIUM/LOW mais veut limiter HIGH aux Sites de production critique uniquement.</div>
+  <div class="mcq-stem"><strong>Question :</strong> Quel mécanisme Maximo permet cette restriction Org/Site sur des valeurs spécifiques d'un domain ?</div>
+  <ol class="mcq-options" type="A">
+    <li class="mcq-option" data-letter="A" data-correct="1"><label class="mcq-label" for="mcq-3-6-169-A"><input type="radio" name="mcq-3-6-169" value="A" id="mcq-3-6-169-A" class="mcq-input"><span class="mcq-letter">A</span><span class="mcq-option-text">Renseigner Organization et/ou Site sur la ligne du domain value pour restreindre sa visibilité</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="B" data-correct="0"><label class="mcq-label" for="mcq-3-6-169-B"><input type="radio" name="mcq-3-6-169" value="B" id="mcq-3-6-169-B" class="mcq-input"><span class="mcq-letter">B</span><span class="mcq-option-text">Créer un domain séparé par Site (3 Sites = 3 domains)</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="C" data-correct="0"><label class="mcq-label" for="mcq-3-6-169-C"><input type="radio" name="mcq-3-6-169" value="C" id="mcq-3-6-169-C" class="mcq-input"><span class="mcq-letter">C</span><span class="mcq-option-text">Configurer un Conditional ODR sur ASSET.CRITICALITY</span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+    <li class="mcq-option" data-letter="D" data-correct="0"><label class="mcq-label" for="mcq-3-6-169-D"><input type="radio" name="mcq-3-6-169" value="D" id="mcq-3-6-169-D" class="mcq-input"><span class="mcq-letter">D</span><span class="mcq-option-text">Utiliser un Crossover avec Copy Condition <code>:siteid IN ('NYC','LA')</code></span><span class="mcq-mark" aria-hidden="true"></span></label></li>
+  </ol>
+  <div class="mcq-actions">
+    <button type="button" class="mcq-check-btn" data-action="check">Vérifier ma réponse</button>
+    <button type="button" class="mcq-reset-btn" data-action="reset" hidden>Réessayer</button>
+  </div>
+  <div class="mcq-explanation" hidden>
+    <div class="mcq-explanation-head">Bonne réponse : <strong>A</strong></div>
+    <div class="mcq-dpatterns">Patterns de distracteur : <span class="mcq-dpattern-chip">D10 Procédure-plausible</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span><span class="mcq-dpattern-chip">D6 Mauvaise-app</span></div>
+    <div class="mcq-explanation-body">
+      <p><strong>Correct :</strong> A</p>
+
+      <p><strong>Pourquoi cette question existe</strong> — Le STU 3.6 mentionne « Org/Site-level restrictions for domains ». IBM teste la connaissance du mécanisme natif Maximo (champs Organization + Site sur chaque ligne du domain) qui permet la restriction sans complexité externe.</p>
+
+      <p><strong>Le contexte théorique d'abord</strong> — Chaque ligne d'un ALN/Numeric/Synonym domain dispose de champs optionnels <code>ORGID</code> et <code>SITEID</code>. Si renseignés, la valeur n'est visible que pour les users de cet Org / Site. Si vides, valeur globale. Mécanisme natif intégré au domain, pas d'app externe nécessaire.</p>
+
+      <p><strong>Ce que Maximo en fait — version opérationnelle</strong> — Path : <code>Domains</code> app &gt; ouvrir ASSET-CRITICALITY &gt; ligne HIGH &gt; renseigner SITEID = NYC + DALLAS (création ligne dupliquée par Site) &gt; lignes MEDIUM/LOW SITEID vide (globales). Au runtime, user du Site PHX voit MEDIUM/LOW seulement, user NYC/DALLAS voit HIGH/MEDIUM/LOW.</p>
+
+      <p><strong>Exemple chiffré</strong> — Domain ASSET-CRITICALITY : 3 lignes HIGH (NYC, DALLAS, LA) + 1 ligne MEDIUM (vide) + 1 ligne LOW (vide). Stockage : 5 rows ALNDOMAIN dont 3 avec SITEID renseigné. Coût admin minimal vs créer 5 domains séparés.</p>
+
+      <p><strong>Analogie quotidienne</strong> — Comme un menu de restaurant avec « options réservées aux membres » : 1 menu général, certains plats marqués « Premium » uniquement visibles aux membres premium. Pas besoin de 2 menus complets.</p>
+
+      <p><strong>Pourquoi B est faux</strong> — Multiplier les domains est over-engineering quand le mécanisme natif existe. <strong>Pattern D10 Procédure-plausible</strong>.</p>
+
+      <p><strong>Pourquoi C est faux</strong> — ODR Conditional restreint la visibilité de rows par Security Group, pas par Site sur des valeurs de domain. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <p><strong>Pourquoi D est faux</strong> — Crossover copie des fields, ne filtre pas la visibilité d'un domain. <strong>Pattern D6 Mauvaise-app</strong>.</p>
+
+      <div class="key-box">
+        <strong>Concept de cours associé</strong>
+        <ul>
+          <li><strong>Org/Site fields</strong> sur chaque ligne du domain.</li>
+          <li><strong>Vide</strong> = valeur globale ; <strong>renseigné</strong> = restreint.</li>
+          <li><strong>Stockage</strong> : <code>ALNDOMAIN.ORGID</code> + <code>ALNDOMAIN.SITEID</code>.</li>
+          <li><strong>Pas d'ODR</strong> ni domain séparé nécessaire.</li>
+        </ul>
+      </div>
+
+      <div class="key-box" style="background:rgba(245,158,11,0.07);border-left-color:#f59e0b;">
+        <strong>Ce qu'il faut retenir (flashcard)</strong>
+        <ul>
+          <li>Restriction = champs Org/Site sur ligne du domain.</li>
+          <li>Mécanisme natif, simple.</li>
+          <li>Pas ODR, pas multi-domain.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mcq-sources"><strong>Sources :</strong><ul>
+      <li>STU C1000-183 sub-objective 3.6 — « Org/Site-level restrictions for domains »</li>
+      <li>[EOTRAG] Query — IBM Maximo Manage 9 « Domain Org Site restrictions »</li>
+      <li>master-map.pdf — IBM Docs <a href="https://www.ibm.com/docs/en/maximo-manage/9.0.0?topic=domains-restricting-organization-site" target="_blank" rel="noopener">Restricting domain values</a></li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
     </div>
   </div>
   <button class="mark-done-btn" data-done="3-6">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-5" class="btn-nav"><span class="dir">← Précédent</span>3.5 Labor/Craft</a>
-    <a href="#lesson-3-7" class="btn-nav next"><span class="dir">Suivant →</span>3.7 Database Config</a>
+    <a href="#lesson-3-5" class="btn-nav"><span class="dir">← Précédent</span>3.5 Labor, Crafts, Crews</a>
+    <a href="#lesson-3-7" class="btn-nav next"><span class="dir">Suivant →</span>3.7 Database Configuration</a>
   </div>
 </section>
 
 <!-- 3.7 -->
 <section class="lesson" id="lesson-3-7">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.7</div>
-  <div class="lesson-header"><h1>Database Configuration application</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~3-4 questions</span><span class="meta-pill">⭐ Critical</span></div></div>
+  <div class="lesson-header">
+    <h1>Application Database Configuration</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~3-4 questions</span>
+      <span class="meta-pill">⭐ Critique</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-7.svg" alt="Illustration de la leçon 3.7 — Database Configuration : objets, attributes, Admin Mode, Object Levels" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-7" id="lt-3-7-c" class="lt-course" checked>
     <input type="radio" name="lt-3-7" id="lt-3-7-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-7-c">📚 Leçon</label><label for="lt-3-7-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-7-c">📚 Leçon</label><label for="lt-3-7-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>DB Config app functionality · attribute types · SAMEAS</li>
-          <li>Persistent vs non-persistent objects/attributes</li>
-          <li><strong>Impact of enabling Admin Mode</strong></li>
-          <li>Object levels: <strong>system, org, site, sysorgsite</strong></li>
-          <li>E-Audit · E-Signature (synchronized user passwords as e-signature key)</li>
-          <li>Multi-language · search types · relationships · lookup maps</li>
+          <li>Décrire la fonctionnalité de l'app Database Configuration et le catalogue des attribute types.</li>
+          <li>Distinguer objets/attributes Persistent vs Non-persistent et leurs implications storage.</li>
+          <li>Maîtriser l'<strong>impact de l'activation d'Admin Mode</strong> et savoir quand il est requis.</li>
+          <li>Identifier les 4 Object Levels (System, Org, Site, SysOrgSite) et choisir le bon selon le scope.</li>
+          <li>Configurer E-Audit (audit trail) et E-Signature (synchronized password as signature key).</li>
+          <li>Configurer multi-language attributes, search types, relationships, lookup maps.</li>
         </ul></div>
+
         <h2>💡 Points clés — Admin Mode</h2>
-        <div class="key-box"><strong>REQUIRED</strong> for: Configure Database (structural change), E-Audit activation, adding persistent attributes.<br><br><strong>NOT REQUIRED</strong> for: <strong>Relationships</strong>, Domains, Automation Scripts, Workflows.</div>
-        <h2>💡 Points clés — Other</h2>
+        <div class="key-box">
+          <p><strong>REQUIS</strong> pour : <code>Configure Database</code> (changement structurel), activation <em>E-Audit</em>, ajout d'attributes persistents, modifications schéma table.</p>
+          <p><strong>NON-REQUIS</strong> pour : <strong>Relationships</strong>, <strong>Domains</strong>, <strong>Automation Scripts</strong>, <strong>Workflows</strong>, Lookup Maps. Ces modifs s'appliquent en runtime.</p>
+        </div>
+
+        <h2>💡 Points clés — Object Levels & Storage</h2>
         <div class="key-box"><ul>
-          <li><strong>Object levels</strong>: SYSTEM, ORG, SITE, <strong>SYSORGSITE</strong> (most flexible)</li>
-          <li><strong>Persistent</strong> = DB column | <strong>non-persistent</strong> = runtime transient</li>
-          <li>Attribute types: ALN, UPPER, LOWER, INTEGER, DECIMAL, DATETIME, <strong>YORN</strong>, BLOB, CLOB, AMOUNT</li>
-          <li>Search types: EXACT, WILDCARD, NONE, TEXT</li>
-          <li><strong>E-Signature</strong>: uses synchronized password as signature key</li>
+          <li><strong>4 Object Levels</strong> : <code>SYSTEM</code> (global), <code>ORG</code> (ORGID), <code>SITE</code> (ORGID+SITEID), <code>SYSORGSITE</code> (le plus flexible, nullable hybride).</li>
+          <li><strong>Persistent</strong> = colonne DB stockée. <strong>Non-persistent</strong> = transient au runtime, calculé.</li>
+          <li><strong>SAMEAS</strong> = inheritance d'attribute pour assurer cohérence (ex: WORKORDER.SITEID SAMEAS SITE.SITEID — type, longueur, domain partagés).</li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box"><strong>"Configure Database action can be launched when Admin Mode is OFF"</strong> = <strong>TRUE</strong>. The action always exists; it only applies changes when Admin Mode is ON.<br><br><strong>"New Relationships require Admin Mode"</strong> = <strong>FALSE</strong>.</div>
+
+        <h2>📊 Catalogue des attribute data types</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-7-types">
+          <table class="compare-table">
+            <caption>Attribute data types Maximo Database Configuration</caption>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Usage</th>
+                <th>Exemple</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>ALN</code></td><td>Alphanumérique case-sensitive</td><td>Description, Notes</td></tr>
+              <tr><td><code>UPPER</code></td><td>String forcé majuscules</td><td>WONUM, ASSETNUM</td></tr>
+              <tr><td><code>LOWER</code></td><td>String forcé minuscules</td><td>email</td></tr>
+              <tr><td><code>INTEGER</code></td><td>Entier</td><td>quantity, sequence</td></tr>
+              <tr><td><code>DECIMAL</code> / <code>AMOUNT</code></td><td>Décimal avec précision/scale</td><td>cost, hours</td></tr>
+              <tr><td><code>YORN</code></td><td>Booléen Y/N (1 char)</td><td>active, inspect_required</td></tr>
+              <tr><td><code>DATETIME</code> / <code>DATE</code> / <code>TIME</code></td><td>Temporel</td><td>created_date, due_date</td></tr>
+              <tr><td><code>CLOB</code></td><td>Character Large Object (long text)</td><td>WO description, notes longues</td></tr>
+              <tr><td><code>BLOB</code></td><td>Binary Large Object (fichiers)</td><td>attached PDF, photos</td></tr>
+              <tr><td><code>GL</code></td><td>General Ledger composite</td><td>GL account string</td></tr>
+            </tbody>
+          </table>
+          <figcaption>Pas de type ENUM, JSONB ni STRING dans Maximo. Les listes de valeurs passent par Domains (ALN + binding). Les structured data passent par relations ou CLOB+parsing applicatif.</figcaption>
+        </figure>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Les 4 confusions les plus fréquentes</strong> sur Database Configuration à l'examen :</p>
+          <ul>
+            <li><strong>Piège 1</strong> — penser que <em>Configure Database action</em> exige Admin Mode pour être lançable. Faux : l'action est toujours dispo, mais elle n'applique les changements que quand Admin Mode est ON.</li>
+            <li><strong>Piège 2</strong> — penser que créer une <em>Relationship</em> exige Admin Mode. Faux : les Relationships se créent en runtime.</li>
+            <li><strong>Piège 3</strong> — confondre Persistent et Non-persistent. Persistent = colonne DB ; Non-persistent = calculé runtime (formule, lookup).</li>
+            <li><strong>Piège 4</strong> — choisir Object Level ORG pour des transactions (WO, Asset). Faux : Site-level pour transactionnel, Org-level pour référentiel partagé.</li>
+          </ul>
+        </div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Quelles modifs nécessitent Admin Mode et quelles ne le nécessitent pas ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>Admin Mode REQUIS</strong> : Configure Database (changement structurel), E-Audit, attributes persistents. <strong>NON REQUIS</strong> : Relationships, Domains, Automation Scripts, Workflows, Lookup Maps.</p></details>
+        </div>
+        <div class="flash-q">
+          <p>Q. Quels sont les 4 Object Levels ?</p>
+          <details><summary>Afficher la réponse</summary><p><code>SYSTEM</code> (global), <code>ORG</code> (ORGID), <code>SITE</code> (ORGID+SITEID), <code>SYSORGSITE</code> (hybride flexible, le plus permissif).</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-7-125" data-lesson="3-7" data-mode="multi" data-correct="B,C,D">
   <div class="mcq-head">
@@ -5575,41 +5893,79 @@ graph TD
   <button class="mark-done-btn" data-done="3-7">Marquer comme étudiée</button>
   <div class="lesson-actions">
     <a href="#lesson-3-6" class="btn-nav"><span class="dir">← Précédent</span>3.6 Domains</a>
-    <a href="#lesson-3-8" class="btn-nav next"><span class="dir">Suivant →</span>3.8 Scripts</a>
+    <a href="#lesson-3-8" class="btn-nav next"><span class="dir">Suivant →</span>3.8 Automation Scripts</a>
   </div>
 </section>
 
 <!-- 3.8 -->
 <section class="lesson" id="lesson-3-8">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.8</div>
-  <div class="lesson-header"><h1>Automation Scripts</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Automation Scripts</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~2 questions</span>
+      <span class="meta-pill">Scripting</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-8.svg" alt="Illustration de la leçon 3.8 — Automation Scripts : 8 launch points et engine de scripting" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-8" id="lt-3-8-c" class="lt-course" checked>
     <input type="radio" name="lt-3-8" id="lt-3-8-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-8-c">📚 Leçon</label><label for="lt-3-8-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-8-c">📚 Leçon</label><label for="lt-3-8-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Architecture and benefits of Automation Scripting</li>
-          <li>Role of launch points and variables</li>
-          <li>Usage for integration</li>
-          <li>Implicit launch points: <strong>objects, appbeans, databeans</strong></li>
-          <li>Warning framework · automatic cleanup feature</li>
+          <li>Décrire l'architecture et les bénéfices de l'Automation Scripting Engine.</li>
+          <li>Identifier le rôle des launch points et des variables (in/out/return).</li>
+          <li>Maîtriser l'usage des scripts pour l'intégration (Enterprise Service, Publish Channel).</li>
+          <li>Identifier les launch points implicites : <strong>Object, App Bean, Data Bean</strong>.</li>
+          <li>Comprendre le warning framework et la feature de cleanup automatique des sessions.</li>
         </ul></div>
-        <h2>💡 Launch Points (scenario → type)</h2>
+
+        <h2>💡 Points clés — Launch Points par scénario</h2>
         <div class="key-box"><ul>
-          <li>Validate a field on entry → <strong>Attribute</strong></li>
-          <li>Compute at save → <strong>Object</strong></li>
-          <li>Custom button on a menu → <strong>Action</strong></li>
-          <li><strong>External JSON/XML data to manipulate → Integration</strong> ⭐</li>
-          <li>Condition on a sig option → <strong>Custom Condition</strong></li>
-          <li>Pre/post-process publication → <strong>Publish Channel</strong></li>
-          <li>Implicit: Object, App Bean, Data Bean</li>
+          <li>Valider un field à la saisie → <strong>Attribute</strong></li>
+          <li>Calculer au save → <strong>Object</strong></li>
+          <li>Bouton custom dans un menu → <strong>Action</strong></li>
+          <li><strong>Manipuler des données JSON/XML externes → Integration</strong> ⭐</li>
+          <li>Condition sur une sig option → <strong>Custom Condition</strong></li>
+          <li>Pré/post-traitement publication → <strong>Publish Channel</strong></li>
+          <li>Launch points implicites : <strong>Object</strong>, <strong>App Bean</strong>, <strong>Data Bean</strong></li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box">"Data from an external system needs to be manipulated" → <strong>Integration</strong> launch point. <strong>"Enterprise Service"</strong> does NOT exist as a launch point type.</div>
+
+        <h2>📊 Catalogue des 8 Launch Points</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-8-launch-points">
+          <table class="compare-table">
+            <caption>Les 8 Launch Points de l'Automation Scripting Engine</caption>
+            <thead><tr><th>Launch Point</th><th>Trigger</th><th>Use case typique</th></tr></thead>
+            <tbody>
+              <tr><td><code>Object</code></td><td>Save/init/delete d'un object</td><td>Validation cross-field, calcul total</td></tr>
+              <tr><td><code>Attribute</code></td><td>Modification d'un field</td><td>Recalcul instantané, validation runtime</td></tr>
+              <tr><td><code>Action</code></td><td>Click sur menu/button</td><td>Custom report, action batch</td></tr>
+              <tr><td><code>Integration</code></td><td>Inbound/outbound MIF</td><td>Transform JSON/XML payload</td></tr>
+              <tr><td><code>Publish Channel</code></td><td>Pre/post-publish event</td><td>Filter outbound message</td></tr>
+              <tr><td><code>Custom Condition</code></td><td>Évaluation sigoption</td><td>Conditional UI button enable</td></tr>
+              <tr><td><code>App Bean</code></td><td>Implicit, événement app</td><td>Custom UI behavior</td></tr>
+              <tr><td><code>Data Bean</code></td><td>Implicit, événement databean</td><td>Custom data manipulation</td></tr>
+            </tbody>
+          </table>
+          <figcaption>8 launch points = couverture complète des events lifecycle Maximo. Chaque type est optimisé pour un trigger spécifique. <em>Enterprise Service</em> et <em>Workflow Transition</em> n'existent PAS comme launch points.</figcaption>
+        </figure>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <ul>
+            <li><strong>Piège 1</strong> — « Data from external system needs to be manipulated » → <strong>Integration</strong> launch point. Pas Enterprise Service (= target, pas type).</li>
+            <li><strong>Piège 2</strong> — Workflow Transition launch point n'existe pas. Workflow events = Condition nodes du process.</li>
+            <li><strong>Piège 3</strong> — Escalation launch point n'existe pas. Escalations = engine séparé.</li>
+          </ul>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-8-120" data-lesson="3-8" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -5750,46 +6106,72 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="3-8">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-7" class="btn-nav"><span class="dir">← Précédent</span>3.7 DB Config</a>
-    <a href="#lesson-3-9" class="btn-nav next"><span class="dir">Suivant →</span>3.9 Workflow</a>
+    <a href="#lesson-3-7" class="btn-nav"><span class="dir">← Précédent</span>3.7 Database Configuration</a>
+    <a href="#lesson-3-9" class="btn-nav next"><span class="dir">Suivant →</span>3.9 Workflow Capabilities</a>
   </div>
 </section>
 
 <!-- 3.9 -->
 <section class="lesson" id="lesson-3-9">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.9</div>
-  <div class="lesson-header"><h1>Workflow Capabilities</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Capacités Workflow Designer</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~2 questions</span>
+      <span class="meta-pill">Workflow</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-9.svg" alt="Illustration de la leçon 3.9 — Workflow Designer : 8 node types et auto-init" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-9" id="lt-3-9-c" class="lt-course" checked>
     <input type="radio" name="lt-3-9" id="lt-3-9-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-9-c">📚 Leçon</label><label for="lt-3-9-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-9-c">📚 Leçon</label><label for="lt-3-9-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Customize an existing Workflow Process · create new</li>
-          <li>Elements of workflow process · how managed</li>
-          <li>Configure (auto-initiate) · administer</li>
-          <li>Sub-processes · node types</li>
-          <li>Add workflow support to applications</li>
-          <li>Workflow Assignment Role-Based app</li>
+          <li>Customiser un Workflow Process existant ou en créer un nouveau dans Workflow Designer.</li>
+          <li>Identifier les éléments d'un workflow process et leur gestion (états, transitions, assignments).</li>
+          <li>Configurer (auto-initiate) et administrer (Workflow Administration) les workflows.</li>
+          <li>Maîtriser les sub-processes et les 8 node types.</li>
+          <li>Ajouter le support workflow à une application via Application Designer.</li>
+          <li>Comprendre la Workflow Assignment Role-Based app vs Assignment Manager.</li>
         </ul></div>
-        <h2>💡 Node types</h2>
-        <div class="key-box"><strong>Start · Stop · Condition · Task · Manual Input · Subprocess · Wait · Interaction</strong>
-        <ul>
-          <li><strong>Task</strong> = human assignment</li>
-          <li><strong>Manual Input</strong> = user decision (approve/reject)</li>
-          <li><strong>Subprocess</strong> = reusable workflow</li>
-        </ul></div>
-        <h2>💡 Config</h2>
+
+        <h2>💡 Points clés — Node types</h2>
+        <div class="key-box">
+          <p><strong>8 types</strong> : Start · Stop · Condition · Task · Manual Input · Subprocess · Wait · Interaction</p>
+          <ul>
+            <li><strong>Task</strong> — assignation humaine (un user doit prendre action)</li>
+            <li><strong>Manual Input</strong> — décision utilisateur (approve / reject / re-assign)</li>
+            <li><strong>Condition</strong> — branchement automatique sur expression boolean</li>
+            <li><strong>Subprocess</strong> — workflow réutilisable embarqué (ex: sous-workflow d'approval)</li>
+            <li><strong>Wait</strong> — attendre un event externe (status change, timer)</li>
+            <li><strong>Interaction</strong> — invoque une UI dialog avec l'user</li>
+          </ul>
+        </div>
+
+        <h2>💡 Points clés — Configuration</h2>
         <div class="key-box"><ul>
-          <li>Configured: <strong>Workflow Designer</strong> | Administered: <strong>Workflow Administration</strong></li>
-          <li><strong>Auto-initiate</strong>: workflow starts on record save</li>
-          <li>Add workflow to app: Application Designer → Select Action → <strong>Add Workflow Support</strong></li>
+          <li><strong>Workflow Designer</strong> : configurer les processes (define, activate, validate).</li>
+          <li><strong>Workflow Administration</strong> : administrer (stop, restart, reassign sur instances en cours).</li>
+          <li><strong>Auto-initiate</strong> : workflow démarre automatiquement au save d'un record matchant la condition.</li>
+          <li><strong>Add Workflow Support</strong> : Application Designer → Select Action pour ajouter le bouton Route Workflow à une app.</li>
         </ul></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box"><strong>Workflow Assignments</strong> (role-based app to see tasks) ≠ <strong>Assignment Manager</strong> (WO scheduling + CALCPRIORITY). Two different apps.</div>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Confusion fréquente</strong> :</p>
+          <ul>
+            <li><strong>Workflow Assignments</strong> (Role-Based app) = liste des tasks workflow assignées à l'user.</li>
+            <li><strong>Assignment Manager</strong> = scheduling des WO avec CALCPRIORITY. Les 2 apps n'ont rien en commun.</li>
+          </ul>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-9-115" data-lesson="3-9" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -6009,40 +6391,67 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="3-9">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-8" class="btn-nav"><span class="dir">← Précédent</span>3.8 Scripts</a>
-    <a href="#lesson-3-10" class="btn-nav next"><span class="dir">Suivant →</span>3.10 Integration</a>
+    <a href="#lesson-3-8" class="btn-nav"><span class="dir">← Précédent</span>3.8 Automation Scripts</a>
+    <a href="#lesson-3-10" class="btn-nav next"><span class="dir">Suivant →</span>3.10 Integration Framework</a>
   </div>
 </section>
 
 <!-- 3.10 -->
 <section class="lesson" id="lesson-3-10">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.10</div>
-  <div class="lesson-header"><h1>Integration Framework</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Integration Framework (MIF)</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Integration</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-10.svg" alt="Illustration de la leçon 3.10 — MIF : Object Structures, JMS/Kafka queues, Publish/Invocation Channels" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-10" id="lt-3-10-c" class="lt-course" checked>
     <input type="radio" name="lt-3-10" id="lt-3-10-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-10-c">📚 Leçon</label><label for="lt-3-10-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-10-c">📚 Leçon</label><label for="lt-3-10-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>API Keys for Manage</li>
-          <li>Object Structures: aliasing, include/exclude, security, flat structure, pagination</li>
-          <li>Queries for object structures</li>
-          <li>Create and manage object structure for integration and migration</li>
-          <li>Configure <strong>JMS and KAFKA</strong> based queues</li>
-          <li>Publish channels and Invocation channels</li>
-          <li>Import and export data using MIF</li>
+          <li>Identifier le rôle des <strong>API Keys</strong> pour l'authentification Manage.</li>
+          <li>Maîtriser les Object Structures : aliasing, include/exclude, security, flatten, pagination.</li>
+          <li>Configurer les Queries pour Object Structures.</li>
+          <li>Créer et gérer Object Structures pour intégration et migration.</li>
+          <li>Configurer les queues <strong>JMS</strong> (legacy) et <strong>Kafka</strong> (modern MAS 9).</li>
+          <li>Distinguer Publish Channels (outbound) et Invocation Channels (Maximo calls external).</li>
+          <li>Import/export data via MIF (Migration Integration Framework).</li>
         </ul></div>
+
         <h2>💡 Points clés</h2>
         <div class="key-box"><ul>
-          <li><strong>Object Structures</strong>: flatten, pagination, aliasing, include/exclude, security</li>
-          <li>Queues: <strong>JMS</strong> (legacy) and <strong>Kafka</strong> (modern MAS)</li>
-          <li><strong>API Keys</strong> for MAS Manage auth</li>
-          <li><strong>Publish Channel</strong> = outbound | <strong>Invocation Channel</strong> = Maximo calls an external service</li>
-          <li><strong>MIF</strong> = Migration Integration Framework (XML/CSV import/export)</li>
+          <li><strong>Object Structures</strong> — définissent le schéma JSON/XML des intégrations (flatten parent/child, pagination, aliasing fields, include/exclude attributes, security per attribute).</li>
+          <li><strong>Queues</strong> — <code>JMS</code> (legacy) et <code>Kafka</code> (MAS 9 modern, recommended). MAS 9 supporte les deux mais Kafka est le standard pour les nouveaux déploiements.</li>
+          <li><strong>API Keys</strong> — auth standard pour MAS Manage 9 (header <code>apikey</code>). Remplacent <code>maxauth</code> Base64 legacy.</li>
+          <li><strong>Publish Channel</strong> = outbound (Maximo publie vers external system). <strong>Invocation Channel</strong> = Maximo appelle un external service (REST/SOAP).</li>
+          <li><strong>MIF</strong> = Migration Integration Framework : import/export XML/CSV pour migration data entre environnements (DEV → TEST → PROD).</li>
         </ul></div>
+
+        <h2>📊 Channels — direction et usage</h2>
+        <figure class="lesson-table" data-lesson="c1000-183-3-10-channels">
+          <table class="compare-table">
+            <caption>Channels MIF : direction et use cases</caption>
+            <thead><tr><th>Channel</th><th>Direction</th><th>Use case</th></tr></thead>
+            <tbody>
+              <tr><td><code>Publish Channel</code></td><td>Outbound</td><td>Maximo publie events (WO created, Asset updated) vers ERP/SAP</td></tr>
+              <tr><td><code>Enterprise Service</code></td><td>Inbound</td><td>External system pousse data dans Maximo (ex: ERP push items)</td></tr>
+              <tr><td><code>Invocation Channel</code></td><td>Outbound (sync)</td><td>Maximo appelle external service (ex: vérifier credit vendor)</td></tr>
+              <tr><td><code>Cron Task</code></td><td>Pull scheduled</td><td>Maximo poll periodic external system</td></tr>
+            </tbody>
+          </table>
+          <figcaption>4 mécanismes selon direction (in/out) et synchronicité (sync/async). Choisir selon le besoin métier : event-driven (Publish), command sync (Invocation), batch (Cron).</figcaption>
+        </figure>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-10-112" data-lesson="3-10" data-mode="single" data-correct="B">
   <div class="mcq-head">
@@ -6129,34 +6538,49 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="3-10">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-9" class="btn-nav"><span class="dir">← Précédent</span>3.9 Workflow</a>
-    <a href="#lesson-3-11" class="btn-nav next"><span class="dir">Suivant →</span>3.11 Role-based</a>
+    <a href="#lesson-3-9" class="btn-nav"><span class="dir">← Précédent</span>3.9 Workflow Capabilities</a>
+    <a href="#lesson-3-11" class="btn-nav next"><span class="dir">Suivant →</span>3.11 Role-based Apps</a>
   </div>
 </section>
 
 <!-- 3.11 -->
 <section class="lesson" id="lesson-3-11">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.11</div>
-  <div class="lesson-header"><h1>Configuring Role-based Applications</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1 question</span></div></div>
+  <div class="lesson-header">
+    <h1>Configurer les Role-Based Applications</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1 question</span>
+      <span class="meta-pill">RBA</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-11.svg" alt="Illustration de la leçon 3.11 — Role-Based Applications : 3 access areas et Security Templates" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-11" id="lt-3-11-c" class="lt-course" checked>
     <input type="radio" name="lt-3-11" id="lt-3-11-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-11-c">📚 Leçon</label><label for="lt-3-11-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-11-c">📚 Leçon</label><label for="lt-3-11-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Security configured for role-based applications</li>
-          <li>Usage of Security Templates</li>
-          <li>3 access areas: <strong>Application Access · Object Security · Application Options</strong></li>
+          <li>Configurer la sécurité pour les Role-Based Applications (RBA).</li>
+          <li>Utiliser les Security Templates pour réutiliser les configurations entre groups.</li>
+          <li>Maîtriser les <strong>3 access areas</strong> : Application Access, Object Security, Application Options.</li>
         </ul></div>
-        <h2>💡 3 access zones</h2>
+
+        <h2>💡 Points clés — 3 zones d'accès</h2>
         <div class="key-box"><ul>
-          <li><strong>Application Access</strong> — who can open the app</li>
-          <li><strong>Object Security</strong> — data restrictions (Qualified/Conditional/Hidden)</li>
-          <li><strong>Application Options</strong> — visible/disabled menu items</li>
-        </ul>Security Templates = reusable configurations across groups.</div>
+          <li><strong>Application Access</strong> — qui peut ouvrir l'app (apparait dans le menu).</li>
+          <li><strong>Object Security</strong> — restrictions data (Qualified / Conditional / Hidden ODRs).</li>
+          <li><strong>Application Options</strong> — items menu visibles / disabled (ex: cacher le bouton Delete pour certains roles).</li>
+        </ul></div>
+
+        <h2>📐 Security Templates — réutilisabilité</h2>
+        <p>Un <strong>Security Template</strong> est une configuration security réutilisable que l'on peut appliquer à plusieurs groups. Cela évite de répéter les mêmes settings pour chaque group similaire (ex: 3 groups Technicien différents avec exactement les mêmes permissions baseline). Le template définit Application Access + Object Security + Application Options, et chaque group qui l'applique hérite de la configuration.</p>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-11-110" data-lesson="3-11" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -6216,34 +6640,56 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="3-11">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-10" class="btn-nav"><span class="dir">← Précédent</span>3.10 Integration</a>
-    <a href="#lesson-3-12" class="btn-nav next"><span class="dir">Suivant →</span>3.12 Dashboards</a>
+    <a href="#lesson-3-10" class="btn-nav"><span class="dir">← Précédent</span>3.10 Integration Framework</a>
+    <a href="#lesson-3-12" class="btn-nav next"><span class="dir">Suivant →</span>3.12 Operational Dashboards</a>
   </div>
 </section>
 
 <!-- 3.12 -->
 <section class="lesson" id="lesson-3-12">
   <div class="breadcrumb">Section 3 <span class="brand-dot">·</span> 3.12</div>
-  <div class="lesson-header"><h1>Configure Operational Dashboards</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 26%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Configurer les Operational Dashboards</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 26%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Dashboards</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-3-12.svg" alt="Illustration de la leçon 3.12 — Operational Dashboards : 8 card types et Work Queue Manager" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-3-12" id="lt-3-12-c" class="lt-course" checked>
     <input type="radio" name="lt-3-12" id="lt-3-12-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-3-12-c">📚 Leçon</label><label for="lt-3-12-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-3-12-c">📚 Leçon</label><label for="lt-3-12-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Card types: <strong>Quick Actions · Favorites · KPI value · Table · External content · KPI Chart · KPI Comparison · Work Queues</strong></li>
-          <li>Related apps: <strong>Work Queue Manager</strong> · <strong>Workflow Assignments</strong></li>
-          <li>Create additional dashboards</li>
+          <li>Identifier les 8 types de cards : Quick Actions, Favorites, KPI value, Table, External content, KPI Chart, KPI Comparison, Work Queues.</li>
+          <li>Identifier les apps associées : <strong>Work Queue Manager</strong> et <strong>Workflow Assignments</strong>.</li>
+          <li>Créer des dashboards additionnels personnalisés.</li>
         </ul></div>
-        <h2>💡 8 cards (memorize)</h2>
+
+        <h2>💡 Points clés — 8 card types</h2>
         <div class="key-box"><ol>
-          <li>Quick Actions</li><li>Favorites</li><li>KPI value</li><li>Table</li><li>External content</li><li>KPI Chart</li><li>KPI Comparison</li><li><strong>Work Queues</strong> ← list of records to act on ⭐</li>
+          <li><strong>Quick Actions</strong> — raccourcis globaux (créer WO, créer PR)</li>
+          <li><strong>Favorites</strong> — apps favorites de l'user</li>
+          <li><strong>KPI value</strong> — valeur unique d'un KPI (ex: 87% OEE)</li>
+          <li><strong>Table</strong> — liste tabulaire de records (read-only)</li>
+          <li><strong>External content</strong> — embed iframe externe</li>
+          <li><strong>KPI Chart</strong> — graphe d'évolution KPI</li>
+          <li><strong>KPI Comparison</strong> — KPI multi-période ou multi-site</li>
+          <li><strong>Work Queues</strong> — liste de records actionnables (approve, reject, claim) ⭐</li>
         </ol></div>
-        <h2>⚠️ Piège IBM</h2>
-        <div class="trap-box">"Which card displays a list of records for user to review and act on?" → <strong>Work Queues</strong>. IBM uses "Table" (shows but no actions) and "Quick Actions" (global shortcuts) as distractors.</div>
+
+        <h2>⚠️ Pièges IBM</h2>
+        <div class="trap-box">
+          <p><strong>Confusion classique</strong> : « Which card displays a list of records for user to review and act on? » → <strong>Work Queues</strong> (actionnable). Pas <strong>Table</strong> (lecture seule) ni <strong>Quick Actions</strong> (raccourcis globaux). IBM utilise ces 2 distracteurs systématiquement.</p>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq" data-uid="mcq-3-12-108" data-lesson="3-12" data-mode="multi" data-correct="A,B,C">
   <div class="mcq-head">
@@ -6303,7 +6749,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="3-12">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-11" class="btn-nav"><span class="dir">← Précédent</span>3.11 Role-based</a>
+    <a href="#lesson-3-11" class="btn-nav"><span class="dir">← Précédent</span>3.11 Role-based Apps</a>
     <a href="#lesson-4-1" class="btn-nav next"><span class="dir">Suivant →</span>4.1 Assets</a>
   </div>
 </section>
