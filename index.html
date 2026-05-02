@@ -345,6 +345,27 @@
   .cert-switcher .cert-tab.active { background: var(--brand); color: white; box-shadow: 0 1px 3px rgba(29,158,117,0.3); }
   .cert-switcher .cert-tab[disabled] { opacity: 0.4; cursor: not-allowed; }
   .cert-switcher .cert-tab .cert-tab-status { display: block; font-size: 9px; font-weight: 600; opacity: 0.7; margin-top: 2px; text-transform: none; letter-spacing: 0; }
+  .cert-switcher .cert-tab.active { transform: scale(1.02); transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease; }
+
+  /* Barre de progression top pendant le switch de certif (feedback visuel immédiat) */
+  body.cert-switching::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--brand) 30%, var(--brand) 70%, transparent 100%);
+    background-size: 200% 100%;
+    animation: cert-switch-progress 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  @keyframes cert-switch-progress {
+    from { background-position: 200% 0; opacity: 1; }
+    to { background-position: -50% 0; opacity: 0; }
+  }
+  /* Légère transition d'opacité sur le contenu pour une sensation plus fluide */
+  [data-cert-content] { transition: opacity 0.15s ease; }
+  body.cert-switching [data-cert-content]:not([hidden]) { opacity: 0.6; }
 
 
   /* ========= Phase 2: illustrations + diagrams + charts + compare tables ========= */
@@ -20357,12 +20378,35 @@ flowchart TD
       : "C1000-183 — Maximo Manage Functional Deployment";
   }
 
+  // Switch fluide : feedback visuel immédiat (classe active + barre progrès), heavy DOM toggle au prochain frame.
   window.setActiveCert = function(cert){
     if(!VALID_CERTS.includes(cert)) return;
+    const current = window.getActiveCert();
+    if(current === cert){
+      // Déjà actif : no-op pour éviter reflow inutile
+      return;
+    }
+    // 1. Sync : marquer le tab cliqué actif + start progress bar (browser peint avant reflow)
+    document.querySelectorAll(".cert-tab").forEach(t => {
+      t.classList.toggle("active", t.dataset.cert === cert);
+    });
+    document.body.classList.add('cert-switching');
     localStorage.setItem(ACTIVE_CERT_KEY, cert);
-    applyCertVisibility(cert);
-    if(typeof window.updateUI === "function") window.updateUI();
-    if(typeof window.recomputeProgress === "function") window.recomputeProgress();
+    // 2. Async : reflow lourd sur prochain frame, après que le browser ait peint le feedback
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.querySelectorAll("[data-cert-content]").forEach(el => {
+          el.hidden = el.dataset.certContent !== cert;
+        });
+        document.title = cert === "c1000-208"
+          ? "C1000-208 — Maximo Inventory Management"
+          : "C1000-183 — Maximo Manage Functional Deployment";
+        if(typeof window.updateUI === "function") window.updateUI();
+        if(typeof window.recomputeProgress === "function") window.recomputeProgress();
+        // Retire la barre de progrès après animation (480ms)
+        setTimeout(() => document.body.classList.remove('cert-switching'), 480);
+      });
+    });
   };
 
   function applyHash(){
@@ -20692,9 +20736,13 @@ updateUI();
     // when the parent section is display:none (lesson tab not yet shown).
     renderAll();
 
-    // Re-render hook for cert switches (in case any failed first time)
+    // Re-render hook pour cert switches : seulement si certains diagrammes ont raté au 1er rendu.
+    // Évite un reflow inutile sur chaque clic — la majorité des Mermaid sont déjà rendus au boot.
     document.querySelectorAll('.cert-tab').forEach(tab => {
-      tab.addEventListener('click', () => setTimeout(renderAll, 120));
+      tab.addEventListener('click', () => {
+        const pending = document.querySelector('pre.mermaid:not([data-mermaid-rendered]), div.mermaid:not([data-mermaid-rendered])');
+        if (pending) setTimeout(renderAll, 200);
+      });
     });
 
     // Expose for manual trigger
@@ -20751,9 +20799,9 @@ updateUI();
     }
     // Also try immediate init for any chart already visible (c1000-183 active cert)
     document.querySelectorAll('.echart-init').forEach(tryInit);
-    // Re-resize when cert switches
+    // Re-resize quand cert switches : différé après le reflow du toggle visibility (~150ms safe).
     document.querySelectorAll('.cert-tab').forEach(tab => {
-      tab.addEventListener('click', () => setTimeout(resizeAll, 60));
+      tab.addEventListener('click', () => setTimeout(resizeAll, 200));
     });
     // Re-resize on window resize
     let rzTo;
