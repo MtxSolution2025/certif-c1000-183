@@ -384,8 +384,11 @@
   .compare-table caption { caption-side: top; text-align: left; font-weight: 600; color: var(--text-1); margin-bottom: 8px; font-size: 14px; }
   .compare-table th { background: var(--brand); color: white; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.2px; }
   .compare-table td { padding: 8px 12px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .compare-table tbody tr:nth-child(even) { background: rgba(29,158,117,0.025); }
   .compare-table tbody tr:hover { background: var(--brand-soft); }
+  .compare-table tbody td:first-child { font-weight: 600; color: var(--text-1); }
   .compare-table code { background: var(--surface-2); padding: 1px 6px; border-radius: 3px; font-size: 12px; color: var(--brand); }
+  .compare-table th:not(:last-child), .compare-table td:not(:last-child) { border-right: 1px solid var(--border); }
 
 
   /* Phase 2.7 — Inline mini-figures inside MCQ rationales */
@@ -2029,17 +2032,46 @@ graph TD
         </figure>
 
         <h2>📊 Comparaison des niveaux</h2>
-        <table>
-          <thead>
-            <tr><th>Niveau</th><th>Clé composite</th><th>Exemples d'entités</th><th>Partage entre Orgs</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>System</code></td><td>(aucune)</td><td>Classifications, Domains, Persons, Currencies</td><td>Total</td></tr>
-            <tr><td><code>Set</code></td><td><code>ITEMSETID</code> · <code>COMPANYSETID</code></td><td>Item Master, Companies (vendors)</td><td>Sélectif (1 Set partagé par N Orgs)</td></tr>
-            <tr><td><code>Organization</code></td><td><code>ORGID</code></td><td>Hazards, Chart of Accounts, Autonumbering, GL</td><td>Aucun (cloisonné par Org)</td></tr>
-            <tr><td><code>Site</code></td><td><code>ORGID</code> + <code>SITEID</code></td><td>Assets, Locations, Work Orders, Inventory, PO</td><td>Aucun (cloisonné par Site)</td></tr>
-          </tbody>
-        </table>
+        <figure class="lesson-table" data-lesson="c1000-183-3-1-levels">
+          <table class="compare-table">
+            <caption>Les 4 niveaux de stockage Maximo Manage et leur portée</caption>
+            <thead>
+              <tr>
+                <th>Niveau</th>
+                <th>Clé composite</th>
+                <th>Exemples d'entités</th>
+                <th>Partage entre Orgs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>System</code></td>
+                <td>(aucune)</td>
+                <td>Classifications · Domains · Persons · Currencies</td>
+                <td>Total</td>
+              </tr>
+              <tr>
+                <td><code>Set</code></td>
+                <td><code>ITEMSETID</code> · <code>COMPANYSETID</code></td>
+                <td>Item Master · Companies (vendors)</td>
+                <td>Sélectif (1 Set partagé par N Orgs)</td>
+              </tr>
+              <tr>
+                <td><code>Organization</code></td>
+                <td><code>ORGID</code></td>
+                <td>Hazards · Chart of Accounts · Autonumbering · GL</td>
+                <td>Aucun (cloisonné par Org)</td>
+              </tr>
+              <tr>
+                <td><code>Site</code></td>
+                <td><code>ORGID</code> + <code>SITEID</code></td>
+                <td>Assets · Locations · Work Orders · Inventory · PO</td>
+                <td>Aucun (cloisonné par Site)</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption>Plus on descend dans la hiérarchie, plus la portée de partage se restreint. Le placement d'une entité dépend de sa nature : référentiel global → System ; référentiel partagé entre Orgs → Set ; configuration légale/comptable → Organization ; opérationnel transactionnel → Site. Cette règle est <strong>structurelle</strong> et ne peut pas être contournée — elle découle directement de la présence ou absence de <code>SITEID</code> et <code>ORGID</code> sur la table sous-jacente.</figcaption>
+        </figure>
 
         <h2>🏗️ Item Set + Company Set — les deux piliers du data sharing</h2>
         <p>Maximo n'autorise <strong>qu'une seule forme de partage</strong> entre Organizations : les Sets. Le modèle est volontairement fermé à 2 types stricts, qu'aucune customisation ne peut étendre :</p>
