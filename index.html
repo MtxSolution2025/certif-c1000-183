@@ -6756,32 +6756,49 @@ graph TD
 <!-- 4.1 -->
 <section class="lesson" id="lesson-4-1">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.1</div>
-  <div class="lesson-header"><h1>Create and Manage Assets</h1>
-    <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1-2 questions</span></div></div>
+  <div class="lesson-header">
+    <h1>Créer et gérer les Assets</h1>
+    <div class="lesson-meta">
+      <span class="meta-pill brand">Section 15%</span>
+      <span class="meta-pill">~1-2 questions</span>
+      <span class="meta-pill">Asset Mgmt</span>
+    </div>
+  </div>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-1.svg" alt="Illustration de la leçon 4.1 — Asset lifecycle : Receive → Issue → Return → Downtime → Decommission" width="1280" height="480" loading="lazy">
+  </figure>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-1" id="lt-4-1-c" class="lt-course" checked>
     <input type="radio" name="lt-4-1" id="lt-4-1-s" class="lt-sit">
-    <div class="tabs-bar"><label for="lt-4-1-c">📚 Leçon</label><label for="lt-4-1-s">🎯 Scénarios d’examen</label></div>
+    <div class="tabs-bar"><label for="lt-4-1-c">📚 Leçon</label><label for="lt-4-1-s">🎯 Scénarios d'examen</label></div>
     <div class="lt-panels">
       <div class="lt-panel lt-course-panel">
+
         <h2>📋 Objectifs IBM</h2>
         <div class="syllabus-box"><ul>
-          <li>Purpose of Asset application</li>
-          <li>Linkable info: parent, location, vendor, status, custodian, maintenance cost</li>
-          <li>Consequence of linking a <strong>Rotating Item</strong> to an Asset</li>
-          <li>Asset Hierarchy</li>
-          <li><strong>Normal lifecycle</strong>: received, issued, returned, downtime, decommissioned</li>
+          <li>Décrire la finalité de l'Asset application.</li>
+          <li>Identifier les informations liables : parent, location, vendor, status, custodian, maintenance cost.</li>
+          <li>Comprendre la conséquence de lier un Rotating Item à un Asset (sérialization automatique).</li>
+          <li>Maîtriser l'Asset Hierarchy parent/child.</li>
+          <li>Maîtriser le <strong>cycle de vie normal</strong> : received, issued, returned, downtime, decommissioned.</li>
         </ul></div>
-        <h2>💡 Status transitions</h2>
+
+        <h2>💡 Points clés — Status transitions</h2>
         <div class="key-box"><ul>
-          <li><strong>Receive</strong> → NOT READY</li>
-          <li><strong>Issue</strong> → OPERATING</li>
-          <li><strong>Return</strong> → NOT READY</li>
-          <li><strong>Downtime reported</strong> → DOWN</li>
-          <li><strong>Decommission</strong> → DECOMMISSIONED</li>
-        </ul><strong>Rotating Item</strong> linked → serializes the asset (ASSETNUM auto-created at receipt).</div>
-        <h2>🎯 Carte mémoire</h2>
-        <div class="flash-q"><p>Q. Initial status of a received asset (rotating item from PO)?</p><details><summary>Afficher la réponse</summary><p><strong>NOT READY</strong> (OPERATING only after issue).</p></details></div>
+          <li><code>Receive</code> → <code>NOT READY</code> (statut initial après réception PO)</li>
+          <li><code>Issue</code> → <code>OPERATING</code> (asset mis en service)</li>
+          <li><code>Return</code> → <code>NOT READY</code> (retour au stock après usage)</li>
+          <li><code>Downtime reported</code> → <code>DOWN</code> (panne déclarée)</li>
+          <li><code>Decommission</code> → <code>DECOMMISSIONED</code> (mise au rebut, état terminal)</li>
+          <li><strong>Rotating Item linked</strong> → sérialise l'asset (ASSETNUM auto-créé à la réception PO).</li>
+        </ul></div>
+
+        <h2>🎯 Cartes mémoire</h2>
+        <div class="flash-q">
+          <p>Q. Statut initial d'un asset reçu (rotating item depuis PO) ?</p>
+          <details><summary>Afficher la réponse</summary><p><strong>NOT READY</strong>. OPERATING seulement après Issue (mise en service).</p></details>
+        </div>
+
       </div>
       <div class="lt-panel lt-sit-panel"><div class="mcq-progress" data-section="4"><span class="mcq-progress-label"><strong>0</strong> / 0 répondues</span><div class="mcq-progress-bar"><div class="mcq-progress-fill"></div></div><span class="mcq-progress-stats">0 correctes · 0%</span><button type="button" class="mcq-reset-section-btn" data-action="reset-section" data-section="4">Réinitialiser la section</button></div>
 <p style="color:var(--text-3);font-size:12px;margin:-6px 0 10px 0;">Questions d’examen de style IBM. Cliquez une option, puis « Vérifier ma réponse ». Progression enregistrée localement.</p>
@@ -6922,15 +6939,18 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-1">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-3-12" class="btn-nav"><span class="dir">← Précédent</span>3.12 Dashboards</a>
-    <a href="#lesson-4-2" class="btn-nav next"><span class="dir">Suivant →</span>4.2 Meters</a>
+    <a href="#lesson-3-12" class="btn-nav"><span class="dir">← Précédent</span>3.12 Operational Dashboards</a>
+    <a href="#lesson-4-2" class="btn-nav next"><span class="dir">Suivant →</span>4.2 Meters et Meter Groups</a>
   </div>
 </section>
 
 <!-- 4.2 -->
 <section class="lesson" id="lesson-4-2">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.2</div>
-  <div class="lesson-header"><h1>Create Meters and Meter Groups</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-2.svg" alt="Illustration de la leçon 4.2 — Meters et Meter Groups : Continuous, Gauge, Characteristic" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Créer Meters et Meter Groups</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1 question</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-2" id="lt-4-2-c" class="lt-course" checked>
@@ -7066,14 +7086,17 @@ graph TD
   <button class="mark-done-btn" data-done="4-2">Marquer comme étudiée</button>
   <div class="lesson-actions">
     <a href="#lesson-4-1" class="btn-nav"><span class="dir">← Précédent</span>4.1 Assets</a>
-    <a href="#lesson-4-3" class="btn-nav next"><span class="dir">Suivant →</span>4.3 Failure Codes</a>
+    <a href="#lesson-4-3" class="btn-nav next"><span class="dir">Suivant →</span>4.3 Failure Codes et Reliability</a>
   </div>
 </section>
 
 <!-- 4.3 -->
 <section class="lesson" id="lesson-4-3">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.3</div>
-  <div class="lesson-header"><h1>Failure Codes & Reliability Strategies</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-3.svg" alt="Illustration de la leçon 4.3 — Failure Codes hierarchy + Reliability Strategies (RCM/FMECA)" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Failure Codes et Reliability Strategies</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~2-3 questions</span><span class="meta-pill">⭐ v9</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-3" id="lt-4-3-c" class="lt-course" checked>
@@ -7291,7 +7314,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-3">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-4-2" class="btn-nav"><span class="dir">← Précédent</span>4.2 Meters</a>
+    <a href="#lesson-4-2" class="btn-nav"><span class="dir">← Précédent</span>4.2 Meters et Meter Groups</a>
     <a href="#lesson-4-4" class="btn-nav next"><span class="dir">Suivant →</span>4.4 Item Master</a>
   </div>
 </section>
@@ -7299,7 +7322,10 @@ graph TD
 <!-- 4.4 -->
 <section class="lesson" id="lesson-4-4">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.4</div>
-  <div class="lesson-header"><h1>Create and manage Item Master records</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-4.svg" alt="Illustration de la leçon 4.4 — Item Master : Item, Tool, Service, Rotating, Lotted, Capitalized" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Créer et gérer les Item Master records</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1 question</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-4" id="lt-4-4-c" class="lt-course" checked>
@@ -7406,15 +7432,18 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-4">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-4-3" class="btn-nav"><span class="dir">← Précédent</span>4.3 Failure Codes</a>
-    <a href="#lesson-4-5" class="btn-nav next"><span class="dir">Suivant →</span>4.5 Inventory</a>
+    <a href="#lesson-4-3" class="btn-nav"><span class="dir">← Précédent</span>4.3 Failure Codes et Reliability</a>
+    <a href="#lesson-4-5" class="btn-nav next"><span class="dir">Suivant →</span>4.5 Inventory Settings</a>
   </div>
 </section>
 
 <!-- 4.5 -->
 <section class="lesson" id="lesson-4-5">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.5</div>
-  <div class="lesson-header"><h1>Configure Inventory Settings and Processes</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-5.svg" alt="Illustration de la leçon 4.5 — Inventory Settings : ABC Analysis + Reorder Points + Cycle Counts" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Configurer les Inventory Settings et processus</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1-2 questions</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-5" id="lt-4-5-c" class="lt-course" checked>
@@ -7551,14 +7580,17 @@ graph TD
   <button class="mark-done-btn" data-done="4-5">Marquer comme étudiée</button>
   <div class="lesson-actions">
     <a href="#lesson-4-4" class="btn-nav"><span class="dir">← Précédent</span>4.4 Item Master</a>
-    <a href="#lesson-4-6" class="btn-nav next"><span class="dir">Suivant →</span>4.6 Inventory Usage</a>
+    <a href="#lesson-4-6" class="btn-nav next"><span class="dir">Suivant →</span>4.6 Inventory Usage app</a>
   </div>
 </section>
 
 <!-- 4.6 -->
 <section class="lesson" id="lesson-4-6">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.6</div>
-  <div class="lesson-header"><h1>Inventory Usage application</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-6.svg" alt="Illustration de la leçon 4.6 — Inventory Usage app : 4 Document Types + status workflow" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Application Inventory Usage</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1 question</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-6" id="lt-4-6-c" class="lt-course" checked>
@@ -7637,15 +7669,18 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-6">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-4-5" class="btn-nav"><span class="dir">← Précédent</span>4.5 Inventory</a>
-    <a href="#lesson-4-7" class="btn-nav next"><span class="dir">Suivant →</span>4.7 Mobile Inventory</a>
+    <a href="#lesson-4-5" class="btn-nav"><span class="dir">← Précédent</span>4.5 Inventory Settings</a>
+    <a href="#lesson-4-7" class="btn-nav next"><span class="dir">Suivant →</span>4.7 Inventory mobiles</a>
   </div>
 </section>
 
 <!-- 4.7 -->
 <section class="lesson" id="lesson-4-7">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.7</div>
-  <div class="lesson-header"><h1>Inventory Mobile Applications</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-7.svg" alt="Illustration de la leçon 4.7 — Inventory Mobile Apps : Issues, Returns, Counts on tablet" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Applications Inventory mobiles</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~2 questions</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-7" id="lt-4-7-c" class="lt-course" checked>
@@ -7813,7 +7848,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-7">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-4-6" class="btn-nav"><span class="dir">← Précédent</span>4.6 Usage</a>
+    <a href="#lesson-4-6" class="btn-nav"><span class="dir">← Précédent</span>4.6 Inventory Usage app</a>
     <a href="#lesson-4-8" class="btn-nav next"><span class="dir">Suivant →</span>4.8 Count Books</a>
   </div>
 </section>
@@ -7821,7 +7856,10 @@ graph TD
 <!-- 4.8 -->
 <section class="lesson" id="lesson-4-8">
   <div class="breadcrumb">Section 4 <span class="brand-dot">·</span> 4.8</div>
-  <div class="lesson-header"><h1>Count Books application</h1>
+  <figure class="lesson-hero">
+    <img src="assets/illustrations/lesson-c1000-183-4-8.svg" alt="Illustration de la leçon 4.8 — Count Books : 7 Sample Types + Reconciliation workflow" width="1280" height="480" loading="lazy">
+  </figure>
+  <div class="lesson-header"><h1>Application Count Books</h1>
     <div class="lesson-meta"><span class="meta-pill brand">Section 15%</span><span class="meta-pill">~1 question</span></div></div>
   <div class="lesson-tabs">
     <input type="radio" name="lt-4-8" id="lt-4-8-c" class="lt-course" checked>
@@ -7896,7 +7934,7 @@ graph TD
   </div>
   <button class="mark-done-btn" data-done="4-8">Marquer comme étudiée</button>
   <div class="lesson-actions">
-    <a href="#lesson-4-7" class="btn-nav"><span class="dir">← Précédent</span>4.7 Mobile</a>
+    <a href="#lesson-4-7" class="btn-nav"><span class="dir">← Précédent</span>4.7 Inventory mobiles</a>
     <a href="#lesson-5-1" class="btn-nav next"><span class="dir">Suivant →</span>5.1 Contracts</a>
   </div>
 </section>
